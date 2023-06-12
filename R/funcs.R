@@ -2,8 +2,6 @@
 ### biplotEZ functions
 ### ========================================================
 
-#' @importFrom magrittr "%>%"
-
 #' Create a new biplot
 #'
 #' @param X       Default dataset to use for the biplot. Dataframe or matrix.
@@ -22,6 +20,7 @@
 #' @export
 #'
 #' @examples
+#' @importFrom magrittr "%>%"
 biplot <- function(X, center = TRUE, scaled = FALSE)
 {
   # check for numeric vs non-numeric columns
