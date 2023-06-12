@@ -1,0 +1,26 @@
+Slides beamer
+\titlegraphic{\includegraphics[width=5 cm]{SU_horizontal_RGB.pdf}}
+
+\definecolor{SUmar}{RGB}{97, 34, 59} % SU maroon (primary)
+\definecolor{SUgold}{RGB}{183, 153, 98} % SU GOLD (secondary)
+\definecolor{SUems}{RGB}{44,204,211} % SU EMS
+\definecolor{SUgrey}{RGB}{77,83,86} % SU grey
+
+\setbeamercolor{palette primary}{bg=SUmar,fg=white}
+\setbeamercolor{palette secondary}{bg=SUgold,fg=white}
+\setbeamercolor{palette tertiary}{bg=SUgrey,fg=white}
+\setbeamercolor{palette quaternary}{bg=SUgrey,fg=white} %main toc
+
+% Override palette coloring with secondary
+\setbeamercolor{subsection in head/foot}{bg=SUgold,fg=white}
+
+\setbeamercolor{structure}{fg=SUmar} % itemize, enumerate, etc
+
+Assignments
+\begin{tcolorbox}[bottomrule=2mm,colback=white,title=\LARGE Chapter 2 Assignment,colframe=SUmar]
+
+Solutions
+\begin{tcolorbox}[width=\textwidth,colback={SUmar}, coltext={white}]    
+
+Proofs
+\begin{tcolorbox}[colback=white,title=Theorem 1: Uniform Distribution,colframe=SUmar]
