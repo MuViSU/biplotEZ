@@ -88,6 +88,10 @@ PCA.biplot <- function (bp, e.vects=1:2, ...)
   Z <- out$u[,e.vects] %*% diag(out$d[e.vects])
   bp$Z <- Z
   bp$Vr <- out$v[,e.vects]
+  bp$Xhat <- Z %*% t(bp$Vr)
+  if (bp$scaled) bp$Xhat <- scale(bp$Xhat, center=F, scale=1/bp$sd)
+  if (bp$center) bp$Xhat <- scale(bp$Xhat, center=-1*bp$means, scale=F)
+  bp$group.aes <- rep(1,nrow(X))
   bp
 }
 
