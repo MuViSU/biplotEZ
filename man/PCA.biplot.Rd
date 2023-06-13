@@ -4,10 +4,14 @@
 \alias{PCA.biplot}
 \title{PCA biplot}
 \usage{
-\method{PCA}{biplot}(bp, e.vects = 1:2)
+\method{PCA}{biplot}(bp, e.vects = 1:2, ...)
 }
 \arguments{
 \item{bp}{object of class biplot}
+
+\item{e.vects}{which principal components to extract, defaults to first two}
+
+\item{...}{more stuff}
 }
 \value{
 object of class PCA
