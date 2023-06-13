@@ -86,7 +86,8 @@ PCA.biplot <- function (bp, e.vects=1:2, ...)
 
   out <- svd(X)
   Z <- out$u[,e.vects] %*% diag(out$d[e.vects])
-  bp$samples = list(Z = Z, Vr=out$v[,e.vects])
+  bp$Z <- Z
+  bp$Vr <- out$v[,e.vects]
   bp
 }
 
@@ -111,24 +112,24 @@ samples <- function (bp, col = c("blue","green","gold","cyan","magenta","black",
                          pch = 3, cex = 1, label = F, label.cex = 0.75, label.side = "bottom",
                          connected=F, alpha = 1)
 {
-   J <- ncol(bp$X)
-   while (length(col) < J) col <- c(col, col)
-   col <- as.vector(col[1:J])
-   while (length(pch) < J) pch <- c(pch, pch)
-   pch <- as.vector(pch[1:J])
-   while (length(cex) < J) cex <- c(cex, cex)
-   cex <- as.vector(cex[1:J])
-   while (length(label) < J) label <- c(label, label)
-   label <- as.vector(label[1:J])
-   while (length(label.cex) < J) label.cex <- c(label.cex, label.cex)
-   label.cex <- as.vector(label.cex[1:J])
-   while (length(label.side) < J) label.side <- c(label.side, label.side)
-   label.side <- as.vector(label.side[1:J])
-   while (length(alpha) < J) alpha <- c(alpha, alpha)
+   g <- nlevels(factor(bp$group.aes))
+   while (length(col) < g) col <- c(col, col)
+   col <- as.vector(col[1:g])
+   while (length(pch) < g) pch <- c(pch, pch)
+   pch <- as.vector(pch[1:g])
+   while (length(cex) < g) cex <- c(cex, cex)
+   cex <- as.vector(cex[1:g])
+   while (length(label) < g) label <- c(label, label)
+   label <- as.vector(label[1:g])
+   while (length(label.cex) < g) label.cex <- c(label.cex, label.cex)
+   label.cex <- as.vector(label.cex[1:g])
+   while (length(label.side) < g) label.side <- c(label.side, label.side)
+   label.side <- as.vector(label.side[1:g])
+   while (length(alpha) < g) alpha <- c(alpha, alpha)
    if (length(connected)>1) connected <- connected[1]
-   alpha <- as.vector(alpha[1:J])
+   alpha <- as.vector(alpha[1:g])
 
-   bp$samples = list(Z = bp$samples$Z, col = col, pch = pch, cex = cex, label = label, label.cex = label.cex,
+   bp$samples = list(col = col, pch = pch, cex = cex, label = label, label.cex = label.cex,
                      label.side = label.side, connected=connected, alpha = alpha)
    bp
 }
@@ -150,7 +151,7 @@ plot.biplot <- function(x, y = NULL, ...)
   if (!("col") %in% sample.components)
     x$samples$col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple","salmon")
 
-  plot(x$samples$Z, col=x$samples$col)
+  plot(x$Z, col=x$samples$col)
   invisible(NULL)
 }
 
