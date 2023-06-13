@@ -18,9 +18,7 @@
 #'                means vector of column means
 #'                sd vector of column standard deviations
 #' @export
-#'
 #' @examples
-#' @importFrom magrittr "%>%"
 biplot <- function(X, center = TRUE, scaled = FALSE)
 {
   # check for numeric vs non-numeric columns
@@ -31,7 +29,7 @@ biplot <- function(X, center = TRUE, scaled = FALSE)
   X <- as.matrix(X)
   raw.X <- X
   means <- apply(X, 2, mean)
-  sd <- sqrt(apply(X, 2, var))
+  sd <- apply(X, 2, stats::sd)
   if (!center) {  X <- X
                   means <- rep(0, ncol(X))
                   sd <- rep(1, ncol(X))     }
@@ -57,13 +55,14 @@ biplot <- function(X, center = TRUE, scaled = FALSE)
 #' PCA method
 #'
 #' @param bp object of class biplot
+#' @param e.vects which principal components to extract, defaults to first two
 #' @param ... more stuff
 #'
 #' @return  object of class PCA
 #' @export
 #'
 #' @examples
-PCA <- function (bp, ...)
+PCA <- function (bp, e.vects=1:2, ...)
 {
   UseMethod("PCA")
 }
@@ -76,7 +75,7 @@ PCA <- function (bp, ...)
 #' @export
 #'
 #' @examples
-PCA.biplot <- function (bp, e.vects=1:2)
+PCA.biplot <- function (bp, e.vects=1:2, ...)
 {
   if (!bp$center)
   {
@@ -94,15 +93,15 @@ PCA.biplot <- function (bp, e.vects=1:2)
 # ----------------------------------------------------------------------------------------------
 #' Formatting of samples in biplot
 #'
-#' @param bp
-#' @param col
-#' @param pch
-#' @param cex
-#' @param label
-#' @param label.cex
-#' @param label.side
-#' @param connected
-#' @param alpha
+#' @param bp biplot objects
+#' @param col sample colour
+#' @param pch sample plotting character
+#' @param cex sample character expansion
+#' @param label logical, whether samples should be labelled or not
+#' @param label.cex label character expansion
+#' @param label.side side of the plotting character where label appears
+#' @param connected logical, whether samples are connected in order of rows of data matrix
+#' @param alpha opacity
 #'
 #' @return
 #' @export
@@ -132,53 +131,6 @@ samples <- function (bp, col = c("blue","green","gold","cyan","magenta","black",
    bp$samples = list(Z = bp$samples$Z, col = col, pch = pch, cex = cex, label = label, label.cex = label.cex,
                      label.side = label.side, connected=connected, alpha = alpha)
    bp
-}
-
-# ----------------------------------------------------------------------------------------------
-#' Formatting of classmeans in biplot
-#'
-#'
-#' @param bp
-#' @param col
-#' @param pch
-#' @param cex
-#' @param label
-#' @param label.cex
-#' @param label.side
-#' @param connected
-#' @param alpha
-#'
-#' @return
-#' @export
-#'
-#' @examples
-classmeans <-function(bp, col = c("blue","green","gold","cyan","magenta","black","red","#33A02C","purple","salmon"),
-                      pch = 3, cex = 1, label = F, label.cex = 0.75, label.side = "bottom",
-                      connected=F, alpha = 1)
-{
-  if (!all(is.numeric(which))) which <- match(which, class.names, nomatch = 0)
-  which <- which[which <= J]
-  which <- which[which > 0]
-  mean.num <- length(which)
-  while (length(col) < mean.num) col <- c(col, col)
-  col <- as.vector(col[1:mean.num])
-  while (length(pch) < mean.num) pch <- c(pch, pch)
-  pch <- as.vector(pch[1:mean.num])
-  while (length(cex) < mean.num) cex <- c(cex, cex)
-  cex <- as.vector(cex[1:mean.num])
-  while (length(label) < mean.num) label <- c(label, label)
-  label <- as.vector(label[1:mean.num])
-  while (length(label.cex) < mean.num) label.cex <- c(label.cex, label.cex)
-  label.cex <- as.vector(label.cex[1:mean.num])
-  while (length(label.side) < mean.num) label.side <- c(label.side, label.side)
-  label.side <- as.vector(label.side[1:mean.num])
-  while (length(alpha) < mean.num) alpha <- c(alpha, alpha)
-  alpha <- as.vector(alpha[1:mean.num])
-  #add connected
-
-  bp$classmeans = list(classmeans = bp$means, which = which, col = col, pch = pch, cex = cex, label = label, label.cex = label.cex, label.side = label.side, connected=connected,
-                       alpha = alpha)
-  bp
 }
 
 # ----------------------------------------------------------------------------------------------

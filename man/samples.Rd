@@ -18,7 +18,23 @@ samples(
 )
 }
 \arguments{
-\item{alpha}{}
+\item{bp}{biplot objects}
+
+\item{col}{sample colour}
+
+\item{pch}{sample plotting character}
+
+\item{cex}{sample character expansion}
+
+\item{label}{logical, whether samples should be labelled or not}
+
+\item{label.cex}{label character expansion}
+
+\item{label.side}{side of the plotting character where label appears}
+
+\item{connected}{logical, whether samples are connected in order of rows of data matrix}
+
+\item{alpha}{opacity}
 }
 \description{
 Formatting of samples in biplot

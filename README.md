@@ -1,2 +1,0 @@
-# biplotEZ
-Trying to sync
