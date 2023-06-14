@@ -4,94 +4,200 @@
 
 #' Create a new biplot
 #'
-#' @param X       Default dataset to use for the biplot. Dataframe or matrix.
-#' @param center  Logical value indicating whether to column centre the dataset.
-#' @param scaled  Logical value indicating wehther to standardise to unit
-#'                standard deviation.
+#' @description
+#'  This function produces a list of elements to be used when producing a biplot
 #'
-#' @return        returns an object of class biplot
-#'                An object of class "biplot" is a list containing at least the
-#'                following components
-#'                X dataset ready for biplot calculations
-#'                raw.X original data
-#'                scaled center ...
-#'                means vector of column means
-#'                sd vector of column standard deviations
+#' @param datmat A dataframe or matrix containing all variables the user wants to analyse
+#' @param center TRUE or FALSE
+#' @param scaled TRUE or FALSE
+#' @param group.aes Variable from the data to be used as a grouping variable
+#' @param Title Title
+#'
+#' @return a list with the following components
+#' \itemize{
+#' \item{X}{Matrix of the centered and scaled numeric variables}
+#' \item{raw.X}{Original data}
+#' \item{center}{TRUE or FALSE, should the numeric data be centred?}
+#' \item{scaled}{TRUE or FALSE, should the numeric data be scaled?}
+#' \item{means}{Vector of means for each numeric variable}
+#' \item{sd}{Vector of standard deviations for each numeric variable}
+#' \item{group.aes}{Vector of category levels for the grouping variable. This is to be used for color, pch and cex specifications}
+#' }
 #' @export
+#'
 #' @examples
-biplot <- function(X, center = TRUE, scaled = FALSE)
+#' biplot(datmat = iris)
+biplot <- function(datmat, group.aes = NULL, center = TRUE, scaled = FALSE, Title = NULL)
 {
-  # check for numeric vs non-numeric columns
+  dim.mat<-dim(datmat)
+  if(is.null(dim.mat)) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
+  if(ncol(datmat)<2) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
+
   # check for missing values
-  # more options for scaled, including value is a function
+  na.vec.df<-na.action(na.omit(datmat))
+  if (length(na.vec.df) == nrow(datmat))
+  {
+    stop("No observations left after deleting missing observations")
+  }
+  else if (!is.null(na.vec.df)) {
+    print(paste(
+      "Warning:",
+      length(na.vec.df),
+      "rows deleted due to missing values"
+    ))
+  }
+  datmat<-datmat[complete.cases(datmat),]
+
+  # Separating numeric and categorical data
+    # X is the matrix of numeric variables, if there are no numeric columns, then X = NULL
+    # Xcat is the dataframe of non-numeric variables, if there are no categorical columns, then Xcat = NULL
+
+    type.vec <- NULL
+    for (j in 1:ncol(datmat)) {
+      if (is.numeric(datmat[, j])) {
+        type.vec[j] <- "num"
+      }
+      else if (!is.numeric(datmat[, j])) {
+        type.vec[j] <- "cat"
+      }
+      else
+        NA
+    }
+    # type.vec contains either "num" or "cat"
+
+    if ("num" %in% type.vec) {
+      X <- as.matrix(datmat[, type.vec == "num", drop = FALSE])
+    } else X <- NULL
+
+    if ("cat" %in% type.vec) {
+      Xcat <- as.data.frame(datmat[, type.vec == "cat", drop = FALSE])
+    } else Xcat <- NULL
 
   # scaling of numeric data
-  X <- as.matrix(X)
-  raw.X <- X
-  means <- apply(X, 2, mean)
-  sd <- apply(X, 2, stats::sd)
-  if (!center) {  X <- X
-                  means <- rep(0, ncol(X))
-                  sd <- rep(1, ncol(X))     }
-  else { if (scaled) X <- scale(X)
-         else { X <- scale(X, scale = FALSE)
-                sd <- rep(1, ncol(X))        }
-       }
+  if(is.null(X))
+    {  means <- NULL
+       sd <- NULL
+    }
+  else
+    {
+      means <- apply(X, 2, mean)
+      sd <- apply(X, 2, stats::sd)
+      if (!center) {  X <- X
+                      means <- rep(0, ncol(X))
+                      sd <- rep(1, ncol(X))
+      }
+      else if (scaled) {X <- scale(X) }
+           else { X <- scale(X, scale = FALSE)
+                  sd <- rep(1, ncol(X))
+                }
+      if (is.null(rownames(X))) rownames(X) <- paste(1:nrow(X))
+      if (is.null(colnames(X))) colnames(X) <- paste("V", 1:ncol(X), sep = "")
+  }
 
-  # making sure we have row and column names
+  if(!is.null(Xcat))
+    {
+      if (is.null(rownames(Xcat))) rownames(Xcat) <- paste(1:nrow(Xcat))
+      if (is.null(colnames(Xcat))) colnames(Xcat) <- paste("F", 1:ncol(Xcat), sep = "")
+    }
 
-  if (is.null(rownames(X))) rownames(X) <- paste(1:nrow(X))
-  if (is.null(colnames(X))) colnames(X) <- paste("V", 1:ncol(X), sep = "")
+  if(is.null(group.aes)) { group.aes <- factor(rep(1,nrow(datmat))) }
+  g.names <-levels(group.aes)
+  g <- length(g.names)
 
-  # X is the matrix of numeric variables
-  # Xcat is the dataframe of non-numeric variables
-
-  object <- list(X = X, raw.X = raw.X, center=center, scaled=scaled, means = means, sd = sd)
+  object <- list(X = X, Xcat = Xcat, raw.X = datmat, na.action=na.vec.df, center=center, scaled=scaled,
+                 means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes,g.names = g.names,g = g, Title = Title)
   class(object) <- "biplot"
   object
 }
 
+# ************************
+# bp object of class PCA
+# we are not (yet) creating an object of class PCA
+# PCA should inherit from class biplot
+# **************************
+
 # -------------------------------------------------------------------------------------------
 #' PCA method
 #'
-#' @param bp object of class biplot
-#' @param e.vects which principal components to extract, defaults to first two
-#' @param ... more stuff
+#' @param bp object of class PCA
+#' @param dim.biplot dimension of the biplot. Only values 1, 2 and 3 are accepted, with default 2
+#' @param e.vects which eigevectors (principal components) to extract, defaults to `1:dim.biplot`
+#' @param group.aes optional vector of the same length as the number of rows in the data matrix
+#'                  for differentiated aesthetics for samples
+#' @param correlation.biplot defaults to FALSE. If FALSE, the distances between sample points are
+#'                           optimally approximated in the biplot. If TRUE, the correlations between
+#'                           variables are optimally approximated by the cosine of the angles between
+#'                           axes. See Gabriel (1971) The biplot graphic display of matrices with application
+#'                           to principal component analysis. Biometrika, 58(3), pp.453-467.
+#'
 #'
 #' @return  object of class PCA
 #' @export
 #'
 #' @examples
-PCA <- function (bp, e.vects=1:2, ...)
+PCA <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=NULL,
+                 correlation.biplot=FALSE, ...)
 {
   UseMethod("PCA")
 }
 
 #' PCA biplot
 #'
+#' @description Performs calculations for a PCA biplot
+#'
 #' @inheritParams PCA
 #'
-#' @return object of class PCA
+#' @return an object of class ??
 #' @export
 #'
 #' @examples
-PCA.biplot <- function (bp, e.vects=1:2, ...)
+#' biplot(iris[,1:4]) |> PCA()
+#'
+PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=NULL,
+                        correlation.biplot=FALSE, ...)
 {
+  dim.biplot <- dim.biplot[1]
+  if (dim.biplot != 1 & dim.biplot != 2 & dim.biplot != 3) stop("Only 1D, 2D and 3D biplots")
+  e.vects <- e.vects[1:dim.biplot]
+  if (!is.null(group.aes)) bp$group.aes <- factor(group.aes)
+  group.aes <- bp$group.aes
+
   if (!bp$center)
-  {
-    warning("PCA requires a centred datamatrix. Your data was centred before computation. Use center = TRUE in the call to biplot()")
-    bp <- biplot (bp$raw.X, center = TRUE, bp$scaled)
+  {  warning("PCA requires a centred datamatrix. Your data was centred before computation. Use center = TRUE in the call to biplot()")
+    bp <- biplot (bp$X, center = TRUE, scaled=bp$scaled)
   }
   X <- bp$X
+  n <- bp$n
+  p <- bp$p
+  J <- nlevels(group.aes)
 
-  out <- svd(X)
-  Z <- out$u[,e.vects] %*% diag(out$d[e.vects])
+  svd.out <- svd(X)
+  V.mat <- svd.out$v
+  U.mat <- svd.out$u
+  Sigma.mat <- diag(svd.out$d)
+  Vr <- svd.out$v[, e.vects, drop = F]
+
+  if (correlation.biplot)
+  {
+
+    if (dim.biplot>1) lambda.r <- diag(svd(t(X) %*% X)$d[1:dim.biplot])
+    else lambda.r <- matrix(svd(t(X) %*% X)$d, nrow=1, ncol=1)
+    Z <- sqrt(n - 1) * X %*% Vr %*% sqrt(solve(lambda.r))
+  }
+  else { Z <- X %*% Vr }
+  rownames(Z) <- rownames(X)
+
+  if (correlation.biplot)
+    axes.direction <- (sqrt(n - 1)/(diag(Vr %*% lambda.r %*% t(Vr)))) * Vr %*% sqrt(lambda.r)
+  else
+    axes.direction <- 1/(diag(Vr %*% t(Vr))) * Vr
+
   bp$Z <- Z
-  bp$Vr <- out$v[,e.vects]
+  bp$Vr <- Vr
   bp$Xhat <- Z %*% t(bp$Vr)
+  bp$axes.direction <- axes.direction
   if (bp$scaled) bp$Xhat <- scale(bp$Xhat, center=F, scale=1/bp$sd)
   if (bp$center) bp$Xhat <- scale(bp$Xhat, center=-1*bp$means, scale=F)
-  bp$group.aes <- rep(1,nrow(X))
   bp
 }
 
