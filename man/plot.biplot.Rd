@@ -2,20 +2,20 @@
 % Please edit documentation in R/funcs.R
 \name{plot.biplot}
 \alias{plot.biplot}
-\title{Plotting of the biplot}
+\title{Generic Plotting function of objects of class biplot}
 \usage{
-\method{plot}{biplot}(x, y = NULL, ...)
+\method{plot}{biplot}(x, exp.factor = 1.2, ...)
 }
 \arguments{
-\item{x}{object of class biplot}
+\item{x}{an object of class bp}
 
-\item{y}{NULL}
+\item{exp.factor}{factor to expand plotting area beyond samples}
 
-\item{...}{more arguments}
-}
-\value{
-biplot is created on graphics device
+\item{...}{additional arguments}
 }
 \description{
-Plotting of the biplot
+Generic Plotting function of objects of class biplot
+}
+\examples{
+biplot (iris[,1:4]) |> PCA() |> plot()
 }

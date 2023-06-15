@@ -4,27 +4,34 @@
 \alias{biplot}
 \title{Create a new biplot}
 \usage{
-biplot(X, center = TRUE, scaled = FALSE)
+biplot(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title = NULL)
 }
 \arguments{
-\item{X}{Default dataset to use for the biplot. Dataframe or matrix.}
+\item{data}{A dataframe or matrix containing all variables the user wants to analyse}
 
-\item{center}{Logical value indicating whether to column centre the dataset.}
+\item{group.aes}{Variable from the data to be used as a grouping variable}
 
-\item{scaled}{Logical value indicating wehther to standardise to unit
-standard deviation.}
+\item{center}{TRUE or FALSE}
+
+\item{scaled}{TRUE or FALSE}
+
+\item{Title}{Title}
 }
 \value{
-\if{html}{\out{<div class="sourceCode">}}\preformatted{   returns an object of class biplot
-           An object of class "biplot" is a list containing at least the
-           following components
-           X dataset ready for biplot calculations
-           raw.X original data
-           scaled center ...
-           means vector of column means
-           sd vector of column standard deviations
-}\if{html}{\out{</div>}}
+a list with the following components
+\itemize{
+\item{X}{Matrix of the centered and scaled numeric variables}
+\item{raw.X}{Original data}
+\item{center}{TRUE or FALSE, should the numeric data be centred?}
+\item{scaled}{TRUE or FALSE, should the numeric data be scaled?}
+\item{means}{Vector of means for each numeric variable}
+\item{sd}{Vector of standard deviations for each numeric variable}
+\item{group.aes}{Vector of category levels for the grouping variable. This is to be used for color, pch and cex specifications}
+}
 }
 \description{
 Create a new biplot
+}
+\examples{
+biplot(data = iris)
 }

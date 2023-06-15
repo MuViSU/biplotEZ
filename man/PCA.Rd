@@ -4,18 +4,39 @@
 \alias{PCA}
 \title{PCA method}
 \usage{
-PCA(bp, e.vects = 1:2, ...)
+PCA(
+  bp,
+  dim.biplot = c(2, 1, 3),
+  e.vects = 1:ncol(bp$X),
+  group.aes = NULL,
+  correlation.biplot = FALSE,
+  ...
+)
 }
 \arguments{
-\item{bp}{object of class biplot}
+\item{bp}{object of class PCA}
 
-\item{e.vects}{which principal components to extract, defaults to first two}
+\item{dim.biplot}{dimension of the biplot. Only values 1, 2 and 3 are accepted, with default 2}
 
-\item{...}{more stuff}
+\item{e.vects}{which eigevectors (principal components) to extract, defaults to \code{1:dim.biplot}}
+
+\item{group.aes}{optional vector of the same length as the number of rows in the data matrix
+for differentiated aesthetics for samples}
+
+\item{correlation.biplot}{defaults to FALSE. If FALSE, the distances between sample points are
+optimally approximated in the biplot. If TRUE, the correlations between
+variables are optimally approximated by the cosine of the angles between
+axes. See Gabriel (1971) The biplot graphic display of matrices with application
+to principal component analysis. Biometrika, 58(3), pp.453-467.}
+
+\item{...}{additional arguments}
 }
 \value{
 object of class PCA
 }
 \description{
 PCA method
+}
+\examples{
+biplot(iris[,1:4]) |> PCA()
 }

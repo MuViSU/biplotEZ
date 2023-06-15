@@ -2,12 +2,11 @@
 % Please edit documentation in R/funcs.R
 \name{samples}
 \alias{samples}
-\title{Formatting of samples in biplot}
+\title{Aesthetics for biplot samples}
 \usage{
 samples(
   bp,
-  col = c("blue", "green", "gold", "cyan", "magenta", "black", "red", "grey", "purple",
-    "salmon"),
+  col = ez.col,
   pch = 3,
   cex = 1,
   label = F,
@@ -18,7 +17,7 @@ samples(
 )
 }
 \arguments{
-\item{bp}{biplot objects}
+\item{bp}{biplot object}
 
 \item{col}{sample colour}
 
@@ -28,7 +27,7 @@ samples(
 
 \item{label}{logical, whether samples should be labelled or not}
 
-\item{label.cex}{label character expansion}
+\item{label.cex}{label text expansion}
 
 \item{label.side}{side of the plotting character where label appears}
 
@@ -36,6 +35,23 @@ samples(
 
 \item{alpha}{opacity}
 }
+\value{
+A list with the following components
+{
+\item{col}{Colour of the sample}
+\item{pch}{Plotting character of the sample}
+\item{cex}{Expansion of the plotting character}
+\item{label}{Logical parameter whether labels appear}
+\item{label.cex}{}
+\item{label.side}{}
+\item{connected}{}
+\item{alpha}{}
+\item{g}{number of groups}
+}
+}
 \description{
 Formatting of samples in biplot
+}
+\examples{
+biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> plot()
 }
