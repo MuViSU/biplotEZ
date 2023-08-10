@@ -350,10 +350,10 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
 control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
 {
   if (!all(is.numeric(which)))
-    which <- match(which, g.names, nomatch = 0)
+  which <- match(which, g.names, nomatch = 0)
   which <- which[which <= g]
   which <- which[which > 0]
-
+  lty.num <- c(1:length(alpha))
   if (length(alpha)>1)
   {
     temp.mat <- expand.grid(which, alpha)
@@ -362,20 +362,21 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
   }
   bag.num <- length(which)
   while (length(alpha) < bag.num)
-    alpha <- c(alpha, alpha)
+  alpha <- c(alpha, alpha)
   alpha <- as.vector(alpha[1:bag.num])
   if (any(alpha < 0 |
           alpha > 0.99))
     stop(message = "alpha not to be negative or larger than 0.99")
   alpha.entered <- alpha
   while (length(col) < bag.num)
-    col <- c(col, col)
-  col <- as.vector(col[1:bag.num])
+  col <- c(col, col)
+  col <- as.vector(col[which])
+  #col <- as.vector(rep(lty.num,each=length(lty.num)))
   while (length(lty) < bag.num)
-    lty <- c(lty, lty)
-  lty <- as.vector(lty[1:bag.num])
+  lty <- c(lty, lty)
+  lty <- as.vector(rep(lty.num,each=length(lty.num)))
   while (length(lwd) < bag.num)
-    lwd <- c(lwd, lwd)
+  lwd <- c(lwd, lwd)
   lwd <- as.vector(lwd[1:bag.num])
   list(which = which, alpha = alpha, col = col, lty = lty, lwd = lwd, max = max)
 }
@@ -1117,21 +1118,20 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   if (!all(is.numeric(which))) which <- match(which, g.names, nomatch = 0)
   which <- which[which <= g]
   which <- which[which > 0]
-
+  lwd.num <- 1:length(kappa)
   if (length(kappa)>1)
   {
     temp.mat <- expand.grid(which, kappa)
     which <- temp.mat[,1]
     kappa <- temp.mat[,2]
   }
-
   ellipse.num <- length(which)
   while (length(kappa) < ellipse.num) kappa <- c(kappa, kappa)
   kappa <- as.vector(kappa[1:ellipse.num])
   while (length(col) < ellipse.num) col <- c(col, col)
-  col <- as.vector(col[1:ellipse.num])
+  col <- as.vector(col[which])
   while (length(lty) < ellipse.num) lty <- c(lty, lty)
-  lty <- as.vector(lty[1:ellipse.num])
+  lty <- as.vector(rep(lwd.num,each=g))
   while (length(lwd) < ellipse.num) lwd <- c(lwd, lwd)
   lwd <- as.vector(lwd[1:ellipse.num])
   while (length(alpha.transparency) < ellipse.num) alpha.transparency <- c(alpha.transparency, alpha.transparency)
