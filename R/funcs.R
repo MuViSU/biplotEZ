@@ -1453,7 +1453,7 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
   if (is.numeric(std.markers)) std.markers <- zapsmall(std.markers)
   x.vals <- x.vals[invals]
   y.vals <- y.vals[invals]
-  if (ax.aes$tick.label[i]) label.on.off <- rep(1, sum(invals)) else rep(0, sum(invals))
+  if (ax.aes$tick.label[i]) label.on.off <- rep(1, sum(invals))  else label.on.off <- rep(0, sum(invals))
   # if (!ax.aes$tick.label[i]) label.on.off[c(1, length(label.on.off))] <- 1
   if(sum(invals)>0) apply(data.frame(x.vals, y.vals, std.markers, label.on.off), 1, .marker.func,
                           coef = lin.coef, col = ax.aes$tick.col[i], tick.size = ax.aes$tick.size[i],
