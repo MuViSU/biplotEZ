@@ -35,7 +35,7 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
   if (length(na.vec.df) == nrow(data)) stop("No observations left after deleting missing observations")
   else if (!is.null(na.vec.df))  warning(paste(length(na.vec.df), "rows deleted due to missing values"))
   data<-data[stats::complete.cases(data),]
-  if (!is.null(group.aes)) group.aes <- group.aes[na.vec.df]
+  if (!is.null(group.aes) & length(na.vec.df) > 0) group.aes <- group.aes[na.vec.df]
 
   # Separating numeric and categorical data
   type.vec <- unlist(lapply(data, is.numeric), use.names = FALSE)
