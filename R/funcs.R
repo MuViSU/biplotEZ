@@ -1254,7 +1254,7 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' @param alpha.transparency Level of opacity, with default \code{0.5}.
 #'
 #' @return A list with the following components is available:<br><br>
-#' \code{conc.ellipses}, a list of coordinates for the \eqn{\kappa}-ellipses for each group.
+#' \code{conc.ellipses}, a list of coordinates for the \eqn{\kappa}-ellipses for each group. <br><br>
 #' \code{col}, vector of colours for the \eqn{\kappa}-ellipses.<br><br>
 #' \code{lty}, vector of line types for the \eqn{\kappa}-ellipses.<br><br>
 #' \code{lwd}, vector of line widths for the \eqn{\kappa}-ellipses.<br><br>
@@ -1332,20 +1332,27 @@ calc.concentration.ellipse <- function (X, kappa=2, covmat = NULL)
 
 #' Determines which legends to make
 #'
-#' @param bp object of class biplot
-#' @param samples logical, whether legend should be printed for samples
-#' @param means logical, whether legend should be printed for means
-#' @param bags logical, whether legend should be printed for bags
-#' @param new logical, whether the legend should appear on a new page
-#' @param ... more arguments to be sent to `legend` function
+#' @param bp An object of class \code{biplot}.
+#' @param samples Logical argument indicating whether legend should be printed for samples, with default \code{FALSE}.
+#' @param means Logical argument indicating whether legend should be printed for means, with default \code{FLASE}.
+#' @param bags Logical argument indicating whether legend should be printed for bags, with default \code{FALSE}.
+#' @param new Logical argument indicating whether the legend should appear in a new window, with default \code{FALSE}.
+#' @param ... more arguments to be sent to `legend` function.
 #'
-#' @return an object of class biplot
+#' @return A list with the following components is available:<br><br>
+#' \code{samples}, whether legend was printed for samples, as specified.<br><br>
+#' \code{means}, whether legend was printed for means, as specified.<br><br>
+#' \code{bags}, whether legend was printed for bags, as specified.<br><br>
+#' \code{new}, whether legend was printed in a new window, as specified.
+#'
 #' @export
+#' @usage legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE,
+#' new = FALSE)
 #'
 #' @examples
 #' biplot (iris[,1:4], Title="Test biplot") |> PCA(group.aes = iris[,5]) |>
 #'     legend.type(samples=TRUE) |> plot()
-legend.type <- function (bp, samples = F, means = F, bags = F, new=FALSE, ...)
+legend.type <- function (bp, samples = FALSE, means = FALSE, bags = FALSE, new=FALSE, ...)
 {
   bp$legend <- list(samples=samples, means=means, bags=bags, new=new, arglist=list(...))
   bp
