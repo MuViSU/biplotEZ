@@ -1337,13 +1337,13 @@ calc.concentration.ellipse <- function (X, kappa=2, covmat = NULL)
 #' @param means Logical argument indicating whether legend should be printed for means, with default \code{FLASE}.
 #' @param bags Logical argument indicating whether legend should be printed for bags, with default \code{FALSE}.
 #' @param new Logical argument indicating whether the legend should appear in a new window, with default \code{FALSE}.
-#' @param ... more arguments to be sent to `legend` function.
+#' @param ... more arguments to be sent to \code{legend()} function
 #'
 #' @return A list with the following components is available:<br><br>
-#' \code{samples}, whether legend was printed for samples, as specified.<br><br>
-#' \code{means}, whether legend was printed for means, as specified.<br><br>
-#' \code{bags}, whether legend was printed for bags, as specified.<br><br>
-#' \code{new}, whether legend was printed in a new window, as specified.
+#' \code{samples}, \code{TRUE} or \code{FALSE}, as specified. <br><br>
+#' \code{means}, \code{TRUE} or \code{FALSE}, as specified. <br><br>
+#' \code{bags}, \code{TRUE} or \code{FALSE}, as specified. <br><br>
+#' \code{new}, \code{TRUE} or \code{FALSE}, as specified. <br><br>
 #'
 #' @export
 #' @usage legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE,
