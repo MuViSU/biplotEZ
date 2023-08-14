@@ -432,11 +432,12 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
 #'
 control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
 {
-  #JNS working on this
   if (!all(is.numeric(which)))
   which <- match(which, g.names, nomatch = 0)
   which <- which[which <= g]
   which <- which[which > 0]
+  rep.num <- length(which)
+  rep.alp <- length(alpha)
 
   if (length(alpha)>1)
   {
@@ -454,13 +455,13 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
   alpha.entered <- alpha
   while (length(col) < bag.num)
     col <- c(col, col)
-  col <- as.vector(col[1:bag.num])
+  col <- as.vector(rep(col[1:rep.num],rep.alp))
   while (length(lty) < bag.num)
     lty <- c(lty, lty)
-  lty <- as.vector(lty[1:bag.num])
+  lty <- as.vector(rep(lty[1:rep.alp],each=rep.num))
   while (length(lwd) < bag.num)
     lwd <- c(lwd, lwd)
-  lwd <- as.vector(lwd[1:bag.num])
+  lwd <- as.vector(rep(lwd[1:rep.alp],each=rep.num))
   list(which = which, alpha = alpha, col = col, lty = lty, lwd = lwd, max = max)
 }
 
@@ -473,9 +474,9 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
 #' @param bp An object of class biplot.
 #' @param alpha Value between 0 and 1 to determine coverage of bag (\eqn{\alpha}), with default \code{0.95}.
 #' @param which The selection of groups or classes to be fitted with \eqn{\alpha}-bags.
-#' @param col Vector of colours for the \eqn{\alpha}-bags.
-#' @param lty Vector of line types for the \eqn{\alpha}-bags.
-#' @param lwd Vector of line widths for the \eqn{\alpha}-bags.
+#' @param col Vector of colours for the \eqn{\alpha}-bags. Multiple \eqn{\alpha} bags for one group will be displayed in the same colour.
+#' @param lty Vector of line types for the \eqn{\alpha}-bags. The same line type will be used per value of \eqn{\alpha}.
+#' @param lwd Vector of line widths for the \eqn{\alpha}-bags. The same line width will be used per value of \eqn{\alpha}.
 #' @param max Maximum number of samples to include in \eqn{\alpha}-bag calculations, with default 2500. If
 #'              more samples are in the group, a random sample of size max is taken for the computations.
 #'
@@ -1216,6 +1217,7 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   which <- which[which <= g]
   which <- which[which > 0]
   lwd.num <- 1:length(kappa)
+
   if (length(kappa)>1)
   {
     temp.mat <- expand.grid(which, kappa)
@@ -1229,8 +1231,11 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   col <- as.vector(col[which])
   while (length(lty) < ellipse.num) lty <- c(lty, lty)
   lty <- as.vector(rep(lwd.num,each=g))
+  print(lty)
   while (length(lwd) < ellipse.num) lwd <- c(lwd, lwd)
-  lwd <- as.vector(lwd[1:ellipse.num])
+  #lwd <- as.vector(lwd[1:ellipse.num])
+  lwd <- as.vector(rep(lwd.num,each=g))
+  print(lwd)
   while (length(alpha.transparency) < ellipse.num) alpha.transparency <- c(alpha.transparency, alpha.transparency)
   alpha.transparency <- as.vector(alpha.transparency[1:ellipse.num])
 
@@ -1248,9 +1253,9 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' @param kappa Value to construct \eqn{\kappa}-ellipse (the value of \eqn{\kappa}).
 #' @param which The selection of the group for ellipse construction.
 #' @param alpha Size of \eqn{\alpha}-bag, with default \code{0.95}.
-#' @param col Colour of ellipse.
-#' @param lty Line type of ellipse.
-#' @param lwd Line width of ellipse.
+#' @param col Colour of ellipse. Multiple \eqn{\kappa}-ellipse for one group will be displayed in the same colour.
+#' @param lty Line type of ellipse. The same line type will be used per value of \eqn{\kappa}.
+#' @param lwd Line width of ellipse. The same line width will be used per value of \eqn{\kappa}.
 #' @param alpha.transparency Level of opacity, with default \code{0.5}.
 #'
 #' @return A list with the following components is available:<br><br>
