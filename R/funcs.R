@@ -213,7 +213,127 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 }
 # ---------------------------------------------------------------------------------------------
 
+# -------------------------------------------------------------------------------------------
+#' Canonical Variate Analysis (CVA) method
+#'
+#' @description
+#' This function produces a list of elements to be used for CVA biplot construction.
+#'
+#' @param bp Object of class biplot obtained from preceding function \code{biplot()}.
+#' @param dim.biplot Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.
+#' @param e.vects Which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.
+#' @param group.aes Vector of the same length as the number of rows in the data matrix
+#'                  for differentiated aesthetics for samples.
+#'
+#'
+#' @return  Object of class CVA with the following elements: <br><br>
+#' \code{X}, is a matrix of the centered and scaled numeric variables.<br><br>
+#' \code{Xcat}, is a matrix of the categorical variables.<br><br>
+#' \code{raw.X}, is the original data.<br><br>
+#' \code{na.action}, vector of observations that have been removed.<br><br>
+#' \code{center}, TRUE or FALSE, as specified.<br><br>
+#' \code{scaled}, TRUE or FALSE, as specified.<br><br>
+#' \code{means}, mean of each numerical variable. <br><br>
+#' \code{sd}, standard deviation of each numerical variable. <br><br>
+#' \code{n}, number of observations.<br><br>
+#' \code{p}, number of variables.<br><br>
+#' \code{group.aes},  vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples. <br><br>
+#' \code{g.names}, descriptive name to be used for group labels.<br><br>
+#' \code{g}, number of groups. <br><br>
+#' \code{Title}, Title of the biplot to be rendered, as specified.<br><br>
+#' \code{Z}, matrix with each row containing the details of the point to be plotted (i.e. coordinates). <br><br>
+#' \code{Xhat}, Predictions of the samples. <br><br>
+#' \code{ax.one.unit}, updated eigenvectors determined by specification of \code{correlation.biplot}.<br><br>
+#'
+#' @usage CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
+#' group.aes = bp$group.aes, correlation.biplot = FALSE)
+#'
+#' @export
+#'
+#'@references
+#' @examples
+#' biplot(iris[,1:4]) |> CVA()
+CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.aes = bp$group.aes,
+                ...)
+{
+  UseMethod("CVA")
+}
+
+#' CVA biplot
+#'
+#' @description Performs calculations for a CVA biplot
+#'
+#' @inheritParams CVA
+#'
+#' @return an object of class ??
+#' @export
+#'
+#' @examples
+#' biplot(iris[,1:4],iris[,5]) |> CVA()
+#'
+CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.aes = bp$group.aes,
+                       ...)
+{
+  dim.biplot <- dim.biplot[1]
+  if (dim.biplot != 1 & dim.biplot != 2 & dim.biplot != 3) stop("Only 1D, 2D and 3D biplots")
+  e.vects <- e.vects[1:dim.biplot]
+  if (!is.null(group.aes)) { bp$group.aes <- factor(group.aes)
+  bp$g.names <- levels(factor(group.aes))
+  bp$g <- length(bp$g.names)
+  }
+  
+  X <- bp$X
+  n <- bp$n
+  p <- bp$p
+  G <- indmat(group.aes)
+  
+  N <- t(G) %*% G
+  X_bar <- solve(N) %*% t(G) %*% X
+  W <- t(X) %*% X - t(X_bar) %*% N %*% X_bar
+  B <- t(X_bar) %*% N %*% X_bar
+  
+  W_minhalf <- eigen(W)$vectors %*% diag(1/sqrt(eigen(W)$values)) %*% t(eigen(W)$vectors)
+  L <- W_minhalf
+  eigenresult <- eigen(W_minhalf %*% B %*% W_minhalf)
+  V <- eigenresult$vectors
+  M <- L %*% V
+  
+  Z <- X %*% M[,1:dim.biplot]
+  ax.one.unit <- solve(diag(diag(t(solve(M)[1:dim.biplot,]) %*% solve(M)[1:dim.biplot,]))) %*% t(solve(M)[1:dim.biplot,])
+  
+  bp$Z <- Z
+  bp$ax.one.unit <- ax.one.unit
+  bp$Xhat <- X %*% M %*% solve(M)
+  if (bp$scaled) Xhat <- scale(bp$Xhat, center=F, scale=1/bp$sd)
+  if (bp$center) Xhat <- scale(bp$Xhat, center=-1*bp$means, scale=F)
+  
+  class(bp) <- append(class(bp),"CVA")
+  bp
+}
+
+# ---------------------------------------------------------------------------------------------
+
 ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple","salmon")
+
+# ----------------------------------------------------------------------------------------------
+
+#' Indmat
+#'
+#' @param groep.vec Grouping
+#'
+#' @return
+#' @export
+#'
+#' @examples
+#' @noRd
+indmat  <- function (groep.vec)
+{
+  elements <- levels(factor(groep.vec))
+  Y <- matrix(0, nrow = length(groep.vec), ncol = length(elements))
+  dimnames(Y) <- list(NULL, paste(elements))
+  for (i in 1:length(elements)) Y[groep.vec == elements[i], i] <- 1
+  return(Y)
+}
 
 # ----------------------------------------------------------------------------------------------
 #' Aesthetics for biplot samples
