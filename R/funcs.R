@@ -244,10 +244,10 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' \code{Title}, Title of the biplot to be rendered, as specified.<br><br>
 #' \code{Z}, matrix with each row containing the details of the point to be plotted (i.e. coordinates). <br><br>
 #' \code{Xhat}, Predictions of the samples. <br><br>
-#' \code{ax.one.unit}, updated eigenvectors determined by specification of \code{correlation.biplot}.<br><br>
+#' \code{ax.one.unit}, updated eigenvectors.<br><br>
 #'
 #' @usage CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-#' group.aes = bp$group.aes, correlation.biplot = FALSE)
+#' group.aes = bp$group.aes,weightedCVA = "weighted")
 #'
 #' @export
 #'
