@@ -224,6 +224,7 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' @param e.vects Which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.
 #' @param group.aes Vector of the same length as the number of rows in the data matrix
 #'                  for differentiated aesthetics for samples.
+#' @param weightedCVA The default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".
 #'
 #'
 #' @return  Object of class CVA with the following elements: <br><br>
@@ -254,7 +255,7 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' @examples
 #' biplot(iris[,1:4]) |> CVA()
 CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.aes = bp$group.aes,
-                ...)
+                weightedCVA = "weighted",...)
 {
   UseMethod("CVA")
 }
@@ -272,7 +273,7 @@ CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.aes = b
 #' biplot(iris[,1:4],iris[,5]) |> CVA()
 #'
 CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.aes = bp$group.aes,
-                       ...)
+                       weightedCVA = "weighted", ...)
 {
   dim.biplot <- dim.biplot[1]
   if (dim.biplot != 1 & dim.biplot != 2 & dim.biplot != 3) stop("Only 1D, 2D and 3D biplots")
@@ -281,32 +282,41 @@ CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.
   bp$g.names <- levels(factor(group.aes))
   bp$g <- length(bp$g.names)
   }
-  
+
   X <- bp$X
   n <- bp$n
   p <- bp$p
   G <- indmat(group.aes)
-  
+  J <- ncol(G)
+
   N <- t(G) %*% G
   X_bar <- solve(N) %*% t(G) %*% X
   W <- t(X) %*% X - t(X_bar) %*% N %*% X_bar
   B <- t(X_bar) %*% N %*% X_bar
-  
+
   W_minhalf <- eigen(W)$vectors %*% diag(1/sqrt(eigen(W)$values)) %*% t(eigen(W)$vectors)
   L <- W_minhalf
-  eigenresult <- eigen(W_minhalf %*% B %*% W_minhalf)
+  if (weightedCVA == "weighted")
+    Cmat <- N
+  if (weightedCVA == "unweightedI")
+    Cmat <- diag(J)
+  if (weightedCVA == "unweightedCent")
+    Cmat <- diag(J) - matrix(1/J, nrow = J, ncol = J)
+  if (is.na(match(weightedCVA, c("weighted", "unweightedI", "unweightedCent"))))
+    stop(" Argument 'weightedCVA' must be one of 'weighted','unweightedI','unweightedCent' ")
+  eigenresult <- eigen(W_minhalf %*% t(X_bar) %*% Cmat %*% X_bar %*% W_minhalf)
   V <- eigenresult$vectors
   M <- L %*% V
-  
+
   Z <- X %*% M[,1:dim.biplot]
   ax.one.unit <- solve(diag(diag(t(solve(M)[1:dim.biplot,]) %*% solve(M)[1:dim.biplot,]))) %*% t(solve(M)[1:dim.biplot,])
-  
+
   bp$Z <- Z
   bp$ax.one.unit <- ax.one.unit
   bp$Xhat <- X %*% M %*% solve(M)
   if (bp$scaled) Xhat <- scale(bp$Xhat, center=F, scale=1/bp$sd)
   if (bp$center) Xhat <- scale(bp$Xhat, center=-1*bp$means, scale=F)
-  
+
   class(bp) <- append(class(bp),"CVA")
   bp
 }
