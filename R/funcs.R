@@ -18,19 +18,19 @@
 #' @param scaled Logical argument indicating whether {data} should be standardized to unit column variances, with default \code{FALSE}.
 #' @param Title Optional argument. Title of the biplot to be rendered, enter text in "  ".
 #'
-#' @return A list with the following components is available:<br><br>
-#' \code{X}, is a matrix of the centered and scaled numeric variables.<br><br>
-#' \code{raw.X}, is the original data.<br><br>
-#' \code{center}, TRUE or FALSE, as specified.<br><br>
-#' \code{scaled}, TRUE or FALSE, as specified.<br><br>
-#' \code{means}, vector of means for each numeric variable.<br><br>
-#' \code{sd}, vector of standard deviations for each numeric variable.<br><br>
-#' \code{group.aes}, vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.
+#' @return A list with the following components is available:
+#' \item{X}{Matrix of the centered and scaled numeric variables.}
+#' \item{raw.X}{Original data.}
+#' \item{center}{TRUE or FALSE, as specified.}
+#' \item{scaled}{TRUE or FALSE, as specified.}
+#' \item{means}{Vector of means for each numeric variable.}
+#' \item{sd}{Vector of standard deviations for each numeric variable.}
+#' \item{group.aes}{Vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.}
 #'
 #' @references
-#' Gabriel (1971) The biplot graphic display of matrices with application to principal component analysis. Biometrika, 58(3), pp.453-467
-#' Gower, Gardner-Lubbe & Le Roux (2011) Understanding biplots
-#' Gower & Hand (1995) Biplots
+#' Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. <em>Biometrika.<em> 58(3):453–467.<br><br>
+#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. <em>Understanding Biplots.<em> Chichester, England: John Wiley & Sons Ltd.<br><br>
+#' Gower, J.C. & Hand, D.J. 1996. <em>Biplots.<em> London: Chapman & Hall.
 #'
 #' @usage biplot(data, group.aes = NULL, center = TRUE, scaled = FALSE,
 #' Title = NULL)
@@ -54,9 +54,9 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
 
   # Separating numeric and categorical data
   type.vec <- unlist(lapply(data, is.numeric), use.names = FALSE)
-  if (sum(type.vec)>0) X <- as.matrix(data[, type.vec, drop=F])
+  if (sum(type.vec)>0) X <- as.matrix(data[, type.vec, drop=FALSE])
   else X <- NULL
-  if (sum(type.vec)<length(type.vec)) Xcat <- as.data.frame(data[, !type.vec, drop=F])
+  if (sum(type.vec)<length(type.vec)) Xcat <- as.data.frame(data[, !type.vec, drop=FALSE])
   else Xcat <- NULL
 
   # scaling of numeric data
@@ -115,33 +115,34 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
 #'                           axes. Default is \code{FALSE}.
 #'
 #'
-#' @return  Object of class PCA with the following elements: <br><br>
-#' \code{X}, is a matrix of the centered and scaled numeric variables.<br><br>
-#' \code{Xcat}, is a matrix of the categorical variables.<br><br>
-#' \code{raw.X}, is the original data.<br><br>
-#' \code{na.action}, vector of observations that have been removed.<br><br>
-#' \code{center}, TRUE or FALSE, as specified.<br><br>
-#' \code{scaled}, TRUE or FALSE, as specified.<br><br>
-#' \code{means}, mean of each numerical variable. <br><br>
-#' \code{sd}, standard deviation of each numerical variable. <br><br>
-#' \code{n}, number of observations.<br><br>
-#' \code{p}, number of variables.<br><br>
-#' \code{group.aes},  vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples. <br><br>
-#' \code{g.names}, descriptive name to be used for group labels.<br><br>
-#' \code{g}, number of groups. <br><br>
-#' \code{Title}, Title of the biplot to be rendered, as specified.<br><br>
-#' \code{Z}, matrix with each row containing the details of the point to be plotted (i.e. coordinates). <br><br>
-#' \code{Vr}, matrix consisting of the eigenvectors as columns. <br><br>
-#' \code{Xhat}, Predictions of the samples. <br><br>
-#' \code{ax.one.unit}, updated eigenvectors determined by specification of \code{correlation.biplot}.<br><br>
+#' @return  Object of class PCA with the following elements:
+#' \item{X}{Matrix of the centered and scaled numeric variables.}
+#' \item{Xcat}{Matrix of the categorical variables.}
+#' \item{raw.X}{Original data.}
+#' \item{na.action}{Vector of observations that have been removed.}
+#' \item{center}{TRUE or FALSE, as specified.}
+#' \item{scaled}{TRUE or FALSE, as specified.}
+#' \item{means}{Mean of each numerical variable.}
+#' \item{sd}{Standard deviation of each numerical variable.}
+#' \item{n}{Number of observations.}
+#' \item{p}{Number of variables.}
+#' \item{group.aes}{Vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples.}
+#' \item{g.names}{Descriptive name to be used for group labels.}
+#' \item{g}{Number of groups.}
+#' \item{Title}{Title of the biplot to be rendered, as specified.}
+#' \item{Z}{Matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+#' \item{Vr}{Matrix consisting of the eigenvectors as columns.}
+#' \item{Xhat}{Predictions of the samples.}
+#' \item{ax.one.unit}{Updated eigenvectors determined by specification of \code{correlation.biplot}.}
 #'
 #' @usage PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 #' group.aes = NULL, correlation.biplot = FALSE)
 #'
 #' @export
 #'
-#'@references Gabriel (1971) The biplot graphic display of matrices with application
-#'                           to principal component analysis. Biometrika, 58(3), pp.453-467.
+#'@references
+#' Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. <em>Biometrika.<em> 58(3):453–467.
+#'
 #' @examples
 #' biplot(iris[,1:4]) |> PCA()
 PCA <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=NULL,
@@ -185,7 +186,7 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
   V.mat <- svd.out$v
   U.mat <- svd.out$u
   Sigma.mat <- diag(svd.out$d)
-  Vr <- svd.out$v[, e.vects, drop = F]
+  Vr <- svd.out$v[, e.vects, drop = FALSE]
 
   if (correlation.biplot)
   {
@@ -206,8 +207,8 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
   bp$Vr <- Vr
   bp$Xhat <- Z %*% t(bp$Vr)
   bp$ax.one.unit <- ax.one.unit
-  if (bp$scaled) bp$Xhat <- scale(bp$Xhat, center=F, scale=1/bp$sd)
-  if (bp$center) bp$Xhat <- scale(bp$Xhat, center=-1*bp$means, scale=F)
+  if (bp$scaled) bp$Xhat <- scale(bp$Xhat, center=FALSE, scale=1/bp$sd)
+  if (bp$center) bp$Xhat <- scale(bp$Xhat, center=-1*bp$means, scale=FALSE)
   class(bp)<-append(class(bp),"PCA")
   bp
 }
@@ -227,31 +228,30 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' @param weightedCVA The default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".
 #'
 #'
-#' @return  Object of class CVA with the following elements: <br><br>
-#' \code{X}, is a matrix of the centered and scaled numeric variables.<br><br>
-#' \code{Xcat}, is a matrix of the categorical variables.<br><br>
-#' \code{raw.X}, is the original data.<br><br>
-#' \code{na.action}, vector of observations that have been removed.<br><br>
-#' \code{center}, TRUE or FALSE, as specified.<br><br>
-#' \code{scaled}, TRUE or FALSE, as specified.<br><br>
-#' \code{means}, mean of each numerical variable. <br><br>
-#' \code{sd}, standard deviation of each numerical variable. <br><br>
-#' \code{n}, number of observations.<br><br>
-#' \code{p}, number of variables.<br><br>
-#' \code{group.aes},  vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples. <br><br>
-#' \code{g.names}, descriptive name to be used for group labels.<br><br>
-#' \code{g}, number of groups. <br><br>
-#' \code{Title}, Title of the biplot to be rendered, as specified.<br><br>
-#' \code{Z}, matrix with each row containing the details of the point to be plotted (i.e. coordinates). <br><br>
-#' \code{Xhat}, Predictions of the samples. <br><br>
-#' \code{ax.one.unit}, updated eigenvectors.<br><br>
+#' @return  Object of class CVA with the following elements:
+#' \item{X}{Matrix of the centered and scaled numeric variables.}
+#' \item{Xcat}{Matrix of the categorical variables.}
+#' \item{raw.X}{Original data.}
+#' \item{na.action}{Vector of observations that have been removed.}
+#' \item{center}{TRUE or FALSE, as specified.}
+#' \item{scaled}{TRUE or FALSE, as specified.}
+#' \item{means}{Mean of each numerical variable.}
+#' \item{sd}{Standard deviation of each numerical variable.}
+#' \item{n}{Number of observations.}
+#' \item{p}{Number of variables.}
+#' \item{group.aes}{Vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples. }
+#' \item{g.names}{Descriptive name to be used for group labels.}
+#' \item{g}{Number of groups.}
+#' \item{Title}{Title of the biplot to be rendered, as specified.}
+#' \item{Z}{Matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+#' \item{Xhat}{Predictions of the samples.}
+#' \item{ax.one.unit}{Updated eigenvectors.}
 #'
 #' @usage CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 #' group.aes = bp$group.aes,weightedCVA = "weighted")
 #'
 #' @export
 #'
-#'@references
 #' @examples
 #' biplot(iris[,1:4]) |> CVA()
 CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.aes = bp$group.aes,
@@ -314,8 +314,8 @@ CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.
   bp$Z <- Z
   bp$ax.one.unit <- ax.one.unit
   bp$Xhat <- X %*% M %*% solve(M)
-  if (bp$scaled) Xhat <- scale(bp$Xhat, center=F, scale=1/bp$sd)
-  if (bp$center) Xhat <- scale(bp$Xhat, center=-1*bp$means, scale=F)
+  if (bp$scaled) Xhat <- scale(bp$Xhat, center=FALSE, scale=1/bp$sd)
+  if (bp$center) Xhat <- scale(bp$Xhat, center=-1*bp$means, scale=FALSE)
 
   class(bp) <- append(class(bp),"CVA")
   bp
@@ -331,10 +331,11 @@ ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple"
 #'
 #' @param groep.vec Grouping
 #'
-#' @return
+#' @return Returns an indicator matrix.
+#' \code{Y}, indicator matrix per categorical variable
+#'
 #' @export
 #'
-#' @examples
 #' @noRd
 indmat  <- function (groep.vec)
 {
@@ -361,17 +362,16 @@ indmat  <- function (groep.vec)
 #' @param connected Logical argument, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.
 #' @param alpha Opacity of sample plotting character, default is \code{1}.
 #'
-#' @return A list with the following components is available:<br><br>
-#'
-#' \code{col}, the colour of the samples.<br><br>
-#' \code{pch}, the plotting character of the samples.<br><br>
-#' \code{cex}, the expansion of the plotting character of the samples.<br><br>
-#' \code{label}, \code{TRUE} or \code{FALSE}, as specified.<br><br>
-#' \code{label.cex}, the expansion of the label.<br><br>
-#' \code{label.side}, the side at which to plot the label of samples.<br><br>
-#' \code{connected}, \code{TRUE} or \code{FALSE}, as specified.<br><br>
-#' \code{alpha}, opacity of the samples.<br><br>
-#' \code{g}, number of groups.
+#' @return A list with the following components is available:
+#' \item{col}{Colour of the samples.}
+#' \item{pch}{Plotting character of the samples.}
+#' \item{cex}{Expansion of the plotting character of the samples.}
+#' \item{label}{TRUE or FALSE, as specified.}
+#' \item{label.cex}{Expansion of the label.}
+#' \item{label.side}{Side at which to plot the label of samples.}
+#' \item{connected}{TRUE or FALSE, as specified.}
+#' \item{alpha}{Opacity of the samples.}
+#' \item{g}{Number of groups.}
 #'
 #' @usage
 #' samples (bp,  col = ez.col, pch = 3, cex = 1, label = FALSE,
@@ -381,8 +381,8 @@ indmat  <- function (groep.vec)
 #'
 #' @examples biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> plot()
 samples <- function (bp,  col = ez.col,
-                     pch = 3, cex = 1, label = F, label.cex = 0.75, label.side = "bottom",
-                     connected=F, alpha = 1)
+                     pch = 3, cex = 1, label = FALSE, label.cex = 0.75, label.side = "bottom",
+                     connected=FALSE, alpha = 1)
 {
   ##g available in bp
   #to test now without bp$g.names
@@ -440,30 +440,30 @@ samples <- function (bp,  col = ez.col,
 #' @param orthogx ,the horizontal translation, with default \code{0}.
 #' @param orthogy ,the vertical translation with default \code{0}.
 #'
-#' @return A list with the following components is available:<br><br>
-#' \code{which}, a vector of the columns displayed as axes. <br><br>
-#' \code{col}, a vector of axis colours. <br><br>
-#' \code{lwd}, a vector of axis line widths. <br><br>
-#' \code{lty}, a vector of axis line types. <br><br>
-#' \code{label.dir}, the direction of the axis labels. <br><br>
-#' \code{label.col}, a vector of axis label colours. <br><br>
-#' \code{label.cex}, a vector of axis labels expansions.<br><br>
-#' \code{label.dist}, a vector of axis label distances from axes. <br><br>
-#' \code{ticks}, a vector representing the number of tick marks per axis. <br><br>
-#' \code{tick.col}, a vector of tick mark colours. <br><br>
-#' \code{tick.size}, a vector of tick mark sizes. <br><br>
-#' \code{tick.label}, a vector of logical values indicating whether axes are labelled. <br><br>
-#' \code{tick.label.col}, a vector of tick mark label colours. <br><br>
-#' \code{tick.label.cex}, a vector of tick mark label expansions. <br><br>
-#' \code{tick.label.side}, a vector of the side of tick mark labels. <br><br>
-#' \code{tick.label.offset}, a vector of tick mark label offsets. <br><br>
-#' \code{tick.label.pos}, a vector of the side of tick mark labels. <br><br>
-#' \code{predict.col}, a vector of colours for the predicted samples. <br><br>
-#' \code{predict.lty}, a vector of line types for the predicted samples. <br><br>
-#' \code{predict.lwd}, a vector of line widths for the predicted samples. <br><br>
-#' \code{names}, a vector of variable names defined by the user. <br><br>
-#' \code{orthogx}, a vector of the horisontal translations for each axis. <br><br>
-#' \code{orthogy}, a vector of the vertical translations for each axis. <br><br>
+#' @return A list with the following components is available:
+#' \item{which}{Vector of the columns displayed as axes.}
+#' \item{col}{Vector of axis colours.}
+#' \item{lwd}{Vector of axis line widths.}
+#' \item{lty}{Vector of axis line types.}
+#' \item{label.dir}{Direction of the axis labels.}
+#' \item{label.col}{Vector of axis label colours.}
+#' \item{label.cex}{Vector of axis labels expansions.}
+#' \item{label.dist}{Vector of axis label distances from axes.}
+#' \item{ticks}{Vector representing the number of tick marks per axis.}
+#' \item{tick.col}{Vector of tick mark colours.}
+#' \item{tick.size}{Vector of tick mark sizes.}
+#' \item{tick.label}{Vector of logical values indicating whether axes are labelled.}
+#' \item{tick.label.col}{Vector of tick mark label colours.}
+#' \item{tick.label.cex}{Vector of tick mark label expansions.}
+#' \item{tick.label.side}{Vector of the side of tick mark labels.}
+#' \item{tick.label.offset}{Vector of tick mark label offsets.}
+#' \item{tick.label.pos}{Vector of the side of tick mark labels.}
+#' \item{predict.col}{Vector of colours for the predicted samples.}
+#' \item{predict.lty}{Vector of line types for the predicted samples.}
+#' \item{predict.lwd}{Vector of line widths for the predicted samples.}
+#' \item{names}{Vector of variable names defined by the user.}
+#' \item{orthogx}{Vector of the horisontal translations for each axis.}
+#' \item{orthogy}{Vector of the vertical translations for each axis.}
 #'
 #' @usage
 #' axes(bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7),
@@ -483,7 +483,7 @@ samples <- function (bp,  col = ez.col,
 #'
 axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), lwd = 1, lty = 1,
                 label.dir = "Orthog", label.col = col, label.cex = 0.75, label.dist = 0, ticks = 5,
-                tick.col = col, tick.size = 1, tick.label = T, tick.label.col = tick.col, tick.label.cex = 0.6,
+                tick.col = col, tick.size = 1, tick.label = TRUE, tick.label.col = tick.col, tick.label.cex = 0.6,
                 tick.label.side = "left", tick.label.offset = 0.5, tick.label.pos = 1,
                 predict.col = col, predict.lwd = lwd, predict.lty = lty, ax.names = X.names,
                 orthogx = 0, orthogy = 0)
@@ -610,13 +610,14 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
 #' @param max Maximum number of samples to include in \eqn{\alpha}-bag calculations, with default 2500. If
 #'              more samples are in the group, a random sample of size max is taken for the computations.
 #'
-#' @return  A list with the following components is available:<br><br>
-#' \code{alpha.bags}, a list of coordinates for the \eqn{\alpha}-bags for each group.
-#' \code{col}, vector of colours for the \eqn{\alpha}-bags.<br><br>
-#' \code{lty}, vector of line types for the \eqn{\alpha}-bags.<br><br>
-#' \code{lwd}, vector of line widths for the \eqn{\alpha}-bags.
+#' @return  A list with the following components is available:
+#' \item{alpha.bags}{List of coordinates for the \eqn{\alpha}-bags for each group.}
+#' \item{col}{Vector of colours for the \eqn{\alpha}-bags.}
+#' \item{lty}{Vector of line types for the \eqn{\alpha}-bags.}
+#' \item{lwd}{Vector of line widths for the \eqn{\alpha}-bags.}
 #'
-#' @references Gower, Gardner-Lubbe & Le Roux (2011). Understanding biplots. John Wiley & Sons Ltd. Chichester, West Sussex, United Kingdom.
+#' @references
+#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. <em>Understanding Biplots.<em> Chichester, England: John Wiley & Sons Ltd.<br><br>
 #'
 #' @export
 #' @usage alpha.bags(bp, alpha=0.95, which = NULL, col = ez.col, lty = 1,
@@ -1388,14 +1389,15 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' @param lwd Line width of ellipse. The same line width will be used per value of \eqn{\kappa}.
 #' @param alpha.transparency Level of opacity, with default \code{0.5}.
 #'
-#' @return A list with the following components is available:<br><br>
-#' \code{conc.ellipses}, a list of coordinates for the \eqn{\kappa}-ellipses for each group. <br><br>
-#' \code{col}, vector of colours for the \eqn{\kappa}-ellipses.<br><br>
-#' \code{lty}, vector of line types for the \eqn{\kappa}-ellipses.<br><br>
-#' \code{lwd}, vector of line widths for the \eqn{\kappa}-ellipses.<br><br>
-#' \code{alpha}, vector of \eqn{\alpha} values.
+#' @return A list with the following components is available:
+#' \item{conc.ellipses}{List of coordinates for the \eqn{\kappa}-ellipses for each group.}
+#' \item{col}{Vector of colours for the \eqn{\kappa}-ellipses.}
+#' \item{lty}{Vector of line types for the \eqn{\kappa}-ellipses.}
+#' \item{lwd}{Vector of line widths for the \eqn{\kappa}-ellipses.}
+#' \item{alpha}{Vector of \eqn{\alpha} values.}
 #'
-#' @references Gower, Gardner-Lubbe & Le Roux (2011) Understanding biplots
+#' @references
+#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. <em>Understanding Biplots.<em> Chichester, England: John Wiley & Sons Ltd.<br><br>
 #' @export
 #' @usage concentration.ellipse(bp, df=2, kappa = NULL, which = NULL,
 #' alpha = 0.95, col = ez.col, lty = 1, lwd = 1, alpha.transparency = 0.5)
@@ -1465,7 +1467,10 @@ calc.concentration.ellipse <- function (X, kappa=2, covmat = NULL)
   Y + matrix(rep(1, 6284), ncol = 1) %*% t(means)
 }
 
-#' Determines which legends to make
+#'Legend type
+#'
+#' @description
+#' This function enables the user to format the legend and make a required selection to display.
 #'
 #' @param bp An object of class \code{biplot}.
 #' @param samples Logical argument indicating whether legend should be printed for samples, with default \code{FALSE}.
@@ -1474,11 +1479,11 @@ calc.concentration.ellipse <- function (X, kappa=2, covmat = NULL)
 #' @param new Logical argument indicating whether the legend should appear in a new window, with default \code{FALSE}.
 #' @param ... more arguments to be sent to \code{legend()} function
 #'
-#' @return A list with the following components is available:<br><br>
-#' \code{samples}, \code{TRUE} or \code{FALSE}, as specified. <br><br>
-#' \code{means}, \code{TRUE} or \code{FALSE}, as specified. <br><br>
-#' \code{bags}, \code{TRUE} or \code{FALSE}, as specified. <br><br>
-#' \code{new}, \code{TRUE} or \code{FALSE}, as specified. <br><br>
+#' @return A list with the following components is available:
+#' \item{samples}{TRUE or FALSE, as specified.}
+#' \item{means}{TRUE or FALSE, as specified.}
+#' \item{bags}{TRUE or FALSE, as specified.}
+#' \item{new}{TRUE or FALSE, as specified.}
 #'
 #' @export
 #' @usage legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE,
