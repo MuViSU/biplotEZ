@@ -253,7 +253,7 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' @export
 #'
 #' @examples
-#' biplot(iris[,1:4]) |> CVA()
+#' biplot(iris[,1:4],iris[,5]) |> CVA()
 CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.aes = bp$group.aes,
                 weightedCVA = "weighted",...)
 {
