@@ -1364,11 +1364,9 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   col <- as.vector(col[which])
   while (length(lty) < ellipse.num) lty <- c(lty, lty)
   lty <- as.vector(rep(lwd.num,each=g))
-  print(lty)
   while (length(lwd) < ellipse.num) lwd <- c(lwd, lwd)
   #lwd <- as.vector(lwd[1:ellipse.num])
   lwd <- as.vector(rep(lwd.num,each=g))
-  print(lwd)
   while (length(alpha.transparency) < ellipse.num) alpha.transparency <- c(alpha.transparency, alpha.transparency)
   alpha.transparency <- as.vector(alpha.transparency[1:ellipse.num])
 
