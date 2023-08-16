@@ -133,7 +133,7 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
 #' \item{Z}{Matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 #' \item{Vr}{Matrix consisting of the eigenvectors as columns.}
 #' \item{Xhat}{Predictions of the samples.}
-#' \item{ax.one.unit}{Updated eigenvectors determined by specification of \code{correlation.biplot}.}
+#' \item{ax.one.unit}{One unit in the positive direction of each biplot axis.}
 #'
 #' @usage PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 #' group.aes = NULL, correlation.biplot = FALSE)
@@ -245,7 +245,7 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' \item{Title}{Title of the biplot to be rendered, as specified.}
 #' \item{Z}{Matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 #' \item{Xhat}{Predictions of the samples.}
-#' \item{ax.one.unit}{Updated eigenvectors.}
+#' \item{ax.one.unit}{One unit in the positive direction of each biplot axis.}
 #'
 #' @usage CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 #' group.aes = bp$group.aes,weightedCVA = "weighted")
@@ -1349,7 +1349,8 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   if (!all(is.numeric(which))) which <- match(which, g.names, nomatch = 0)
   which <- which[which <= g]
   which <- which[which > 0]
-  lwd.num <- 1:length(kappa)
+  rep.num <- length(which)
+  rep.kappa <- length(kappa)
 
   if (length(kappa)>1)
   {
@@ -1361,14 +1362,14 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   while (length(kappa) < ellipse.num) kappa <- c(kappa, kappa)
   kappa <- as.vector(kappa[1:ellipse.num])
   while (length(col) < ellipse.num) col <- c(col, col)
-  col <- as.vector(col[which])
+  col <- as.vector(rep(col[1:rep.num],rep.kappa))
   while (length(lty) < ellipse.num) lty <- c(lty, lty)
-  lty <- as.vector(rep(lwd.num,each=g))
+  lty <- as.vector(rep(lty[1:rep.kappa],each=rep.num))
   while (length(lwd) < ellipse.num) lwd <- c(lwd, lwd)
   #lwd <- as.vector(lwd[1:ellipse.num])
-  lwd <- as.vector(rep(lwd.num,each=g))
+  lwd <- as.vector(rep(lwd[1:rep.kappa],each=rep.num))
   while (length(alpha.transparency) < ellipse.num) alpha.transparency <- c(alpha.transparency, alpha.transparency)
-  alpha.transparency <- as.vector(alpha.transparency[1:ellipse.num])
+  alpha.transparency <- as.vector(rep(alpha.transparency[1:rep.kappa],each=rep.num))
 
   list(which = which, kappa = kappa, col = col, lty = lty, lwd = lwd, alpha.transparency = alpha.transparency)
 }
@@ -1421,12 +1422,12 @@ concentration.ellipse <- function(bp, df=2, kappa = NULL, which = NULL, alpha = 
   all.ellipses <- list()
   for(a in 1:length(control.output$which))
   {
-    cat (paste("Computing", control.output$kappa[a], "-ellipse for",g.names[control.output$which[a]], "\n"))
+    cat (paste("Computing", round(control.output$kappa[a],2), "-ellipse for",g.names[control.output$which[a]], "\n"))
     Zgroup <- bp$Z[bp$group.aes==g.names[control.output$which[a]],]
     calc <- calc.concentration.ellipse(Zgroup, kappa=control.output$kappa[a])
     all.ellipses[[a]] <- calc
   }
-  names(all.ellipses) <- paste (g.names[control.output$which], control.output$kappa, sep="-")
+  names(all.ellipses) <- paste (g.names[control.output$which], round(control.output$kappa,2), sep="-")
 
   if (is.null(bp$conc.ellipses))  bp$conc.ellipses <- all.ellipses
   else bp$conc.ellipses <- append(bp$conc.ellipses, all.ellipses)
@@ -1483,16 +1484,17 @@ calc.concentration.ellipse <- function (X, kappa=2, covmat = NULL)
 #' \item{samples}{TRUE or FALSE, as specified.}
 #' \item{means}{TRUE or FALSE, as specified.}
 #' \item{bags}{TRUE or FALSE, as specified.}
+#' \item{ellipses}{TRUE or FALSE, as specified.}
 #' \item{new}{TRUE or FALSE, as specified.}
 #'
 #' @export
-#' @usage legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE,
+#' @usage legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE, ellipses = FALSE,
 #' new = FALSE)
 #'
 #' @examples
 #' biplot (iris[,1:4], Title="Test biplot") |> PCA(group.aes = iris[,5]) |>
 #'     legend.type(samples=TRUE) |> plot()
-legend.type <- function (bp, samples = FALSE, means = FALSE, bags = FALSE,ellipses=FALSE, new=FALSE, ...)
+legend.type <- function (bp, samples = FALSE, means = FALSE, bags = FALSE, ellipses=FALSE, new=FALSE, ...)
 {
   bp$legend <- list(samples=samples, means=means, bags=bags,ellipses = ellipses, new=new, arglist=list(...))
   bp
