@@ -31,7 +31,7 @@ devtools::install_github("MuViSU/biplotEZ")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+This is a basic example which shows you how to construct a PCA biplot:
 
 ``` r
 library(biplotEZ)
@@ -40,13 +40,6 @@ library(biplotEZ)
 #> The following object is masked from 'package:stats':
 #> 
 #>     biplot
-## basic example code
-```
-
-This is a basic example which shows you how to construct a PCA biplot:
-
-``` r
-library(biplotEZ)
 biplot (iris[,1:4], Title="Test PCA biplot") |> PCA() |> plot()
 ```
 

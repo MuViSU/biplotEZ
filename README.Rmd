@@ -43,13 +43,6 @@ devtools::install_github("MuViSU/biplotEZ")
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
-library(biplotEZ)
-## basic example code
-```
-
 This is a basic example which shows you how to construct a PCA biplot:
   
 ``` {r PCA_example}
