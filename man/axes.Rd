@@ -12,7 +12,7 @@ lwd = 1, lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75,
   predict.lty = lty, ax.names = X.names, orthogx = 0, orthogy = 0)
 }
 \arguments{
-\item{bp}{Object of class biplot obtained from preceding function \code{biplot()}.}
+\item{bp}{An object of class \code{biplot}.}
 
 \item{X.names}{Column names of \code{bp}.}
 

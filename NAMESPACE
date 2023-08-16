@@ -3,6 +3,7 @@
 S3method(CVA,biplot)
 S3method(PCA,biplot)
 S3method(plot,biplot)
+S3method(print,biplot)
 export(CVA)
 export(PCA)
 export(alpha.bags)

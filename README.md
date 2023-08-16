@@ -31,7 +31,7 @@ devtools::install_github("MuViSU/biplotEZ")
 
 ## Example
 
-This is a basic example which shows you how to construct a PCA biplot:
+This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(biplotEZ)
@@ -40,10 +40,17 @@ library(biplotEZ)
 #> The following object is masked from 'package:stats':
 #> 
 #>     biplot
+## basic example code
+```
+
+This is a basic example which shows you how to construct a PCA biplot:
+
+``` r
+library(biplotEZ)
 biplot (iris[,1:4], Title="Test PCA biplot") |> PCA() |> plot()
 ```
 
-<img src="man/figures/README-PCAexample-1.png" width="100%" />
+<img src="man/figures/README-PCA_example-1.png" width="100%" />
 
 While the PCA biplot provides a visual representation of the overall
 data set, optimally representing the variance in 1, 2 or 3 dimensions,
@@ -54,30 +61,29 @@ This is a basic example which shows you how to constrct a CVA biplot:
 biplot (iris[,1:4], group.aes=iris[,5], Title="Test CVA biplot") |> CVA() |> plot()
 ```
 
-<img src="man/figures/README-CVAexample-1.png" width="100%" />
+<img src="man/figures/README-CVA_example-1.png" width="100%" />
 
-An over-the-top example of chaning all the formatting and adding all the
-bells and whistles:
+An over-the-top example of changing all the formatting and adding all
+the bells and whistles:
 
 ``` r
 biplot (iris[,1:4], group.aes=iris[,5]) |> PCA() |> 
   samples(col="gold", pch=15) |>
-  axes(which=2:3, col="cyan", label.cex=1.2, tick.col="blue", tick.label=FALSE) |>
-  alpha.bags (alpha=c(0.5,0.75,0.95), which=1, col=rainbow(3), lty=3) |>
-  concentration.ellipse(alpha=c(0.9,0.9), which=2:3, col=c("green","olivedrab"), lwd=3) |>
-  legend.type(bags = TRUE) |>
+  axes(which=2:3, col="cyan", label.cex=1.2, tick.col="blue", tick.label.col="purple") |>
+  alpha.bags (alpha=c(0.5,0.75,0.95), which=3, col="red", lty=1:3, lwd=3) |>
+  concentration.ellipse(alpha=0.9, which=1:2, col=c("green","olivedrab")) |>
+  legend.type(bags = TRUE, ellipses=TRUE) |>
   plot()
-#> Computing 0.5 -bag for setosa 
-#> Computing 0.75 -bag for setosa 
-#> Computing 0.95 -bag for setosa 
-#> [1] 1 1 1 2 2 2
-#> [1] 1 1 1 2 2 2
-#> Computing 2.14596602628935 -ellipse for versicolor 
-#> Computing 2.14596602628935 -ellipse for virginica 
-#> Computing 2.14596602628935 -ellipse for versicolor 
-#> Computing 2.14596602628935 -ellipse for virginica
+#> Computing 0.5 -bag for virginica 
+#> Computing 0.75 -bag for virginica 
+#> Computing 0.95 -bag for virginica 
+#> Computing 2.15 -ellipse for setosa 
+#> Computing 2.15 -ellipse for versicolor
 ```
 
-<img src="man/figures/README-aes_example-1.png" width="100%" /> \## Bug
-Reports and Support If you encounter any issues or have questions,
-please open an issue on the GitHub repository.
+<img src="man/figures/README-aes_example-1.png" width="100%" />
+
+## Report Bugs and Support
+
+If you encounter any issues or have questions, please open an issue on
+the GitHub repository.

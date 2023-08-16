@@ -8,7 +8,7 @@ alpha.bags(bp, alpha=0.95, which = NULL, col = ez.col, lty = 1,
 lwd = 1, max = 2500)
 }
 \arguments{
-\item{bp}{An object of class biplot.}
+\item{bp}{An object of class \code{biplot}.}
 
 \item{alpha}{Value between 0 and 1 to determine coverage of bag (\eqn{\alpha}), with default \code{0.95}.}
 

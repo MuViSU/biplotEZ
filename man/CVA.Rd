@@ -8,7 +8,7 @@ CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 group.aes = bp$group.aes,weightedCVA = "weighted")
 }
 \arguments{
-\item{bp}{Object of class biplot obtained from preceding function \code{biplot()}.}
+\item{bp}{Object of class biplotAn object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
 \item{dim.biplot}{Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
 
@@ -37,11 +37,11 @@ Object of class CVA with the following elements:
 \item{Title}{Title of the biplot to be rendered, as specified.}
 \item{Z}{Matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 \item{Xhat}{Predictions of the samples.}
-\item{ax.one.unit}{Updated eigenvectors.}
+\item{ax.one.unit}{One unit in the positive direction of each biplot axis.}
 }
 \description{
 This function produces a list of elements to be used for CVA biplot construction.
 }
 \examples{
-biplot(iris[,1:4]) |> CVA()
+biplot(iris[,1:4],iris[,5]) |> CVA()
 }

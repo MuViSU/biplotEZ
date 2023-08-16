@@ -14,7 +14,7 @@
 )
 }
 \arguments{
-\item{bp}{Object of class biplot obtained from preceding function \code{biplot()}.}
+\item{bp}{An object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
 \item{dim.biplot}{Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
 
@@ -29,7 +29,7 @@ variables are optimally approximated by the cosine of the angles between
 axes. Default is \code{FALSE}.}
 }
 \value{
-an object of class ??
+an object of class PCA
 }
 \description{
 Performs calculations for a PCA biplot

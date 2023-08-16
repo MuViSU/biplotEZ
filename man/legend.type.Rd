@@ -4,7 +4,7 @@
 \alias{legend.type}
 \title{Legend type}
 \usage{
-legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE,
+legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE, ellipses = FALSE,
 new = FALSE)
 }
 \arguments{
@@ -25,6 +25,7 @@ A list with the following components is available:
 \item{samples}{TRUE or FALSE, as specified.}
 \item{means}{TRUE or FALSE, as specified.}
 \item{bags}{TRUE or FALSE, as specified.}
+\item{ellipses}{TRUE or FALSE, as specified.}
 \item{new}{TRUE or FALSE, as specified.}
 }
 \description{

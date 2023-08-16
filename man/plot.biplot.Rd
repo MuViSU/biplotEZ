@@ -7,7 +7,7 @@
 \method{plot}{biplot}(x, exp.factor = 1.2, ...)
 }
 \arguments{
-\item{x}{an object of class bp}
+\item{x}{An object of class \code{biplot}.}
 
 \item{exp.factor}{factor to expand plotting area beyond samples}
 

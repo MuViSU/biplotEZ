@@ -104,7 +104,7 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
 #' @description
 #' This function produces a list of elements to be used for PCA biplot construction.
 #'
-#' @param bp Object of class biplot obtained from preceding function \code{biplot()}.
+#' @param bp An object of class \code{biplot} obtained from preceding function \code{biplot()}.
 #' @param dim.biplot Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.
 #' @param e.vects Which eigenvectors (principal components) to extract, with default \code{1:dim.biplot}.
 #' @param group.aes Optional argument. Vector of the same length as the number of rows in the data matrix
@@ -157,7 +157,7 @@ PCA <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=
 #'
 #' @inheritParams PCA
 #'
-#' @return an object of class ??
+#' @return an object of class PCA
 #' @export
 #'
 #' @examples
@@ -220,7 +220,7 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' @description
 #' This function produces a list of elements to be used for CVA biplot construction.
 #'
-#' @param bp Object of class biplot obtained from preceding function \code{biplot()}.
+#' @param bp Object of class biplotAn object of class \code{biplot} obtained from preceding function \code{biplot()}.
 #' @param dim.biplot Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.
 #' @param e.vects Which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.
 #' @param group.aes Vector of the same length as the number of rows in the data matrix
@@ -266,7 +266,7 @@ CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.aes = b
 #'
 #' @inheritParams CVA
 #'
-#' @return an object of class ??
+#' @return an object of class CVA
 #' @export
 #'
 #' @examples
@@ -354,7 +354,7 @@ indmat  <- function (groep.vec)
 #' @description
 #' This function allows formatting changes to samples.
 #'
-#' @param bp Object of class biplot obtained from preceding function \code{biplot()}.
+#' @param bp An object of class \code{biplot}.
 #' @param col Sample colour, with default \code{blue}.
 #' @param pch Sample plotting character, with default \code{+}.
 #' @param cex Sample character expansion, with default \code{1}.
@@ -416,7 +416,7 @@ samples <- function (bp,  col = ez.col,
 #' This function allows formatting changes to axes.
 #'
 #'
-#' @param bp Object of class biplot obtained from preceding function \code{biplot()}.
+#' @param bp An object of class \code{biplot}.
 #' @param X.names Column names of \code{bp}.
 #' @param which  Vector of columns to be displayed in the biplot, with default \code{1:bp$p}.
 #' @param col Axis colour, with default \code{grey(0.7)}.
@@ -603,7 +603,7 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
 #' This function produces \eqn{\alpha}-bags, which is a useful graphical summary of the
 #' scatter plot. The alpha-bag refers to a contour which contains \eqn{\alpha}% of the observations.
 #'
-#' @param bp An object of class biplot.
+#' @param bp An object of class \code{biplot}.
 #' @param alpha Value between 0 and 1 to determine coverage of bag (\eqn{\alpha}), with default \code{0.95}.
 #' @param which The selection of groups or classes to be fitted with \eqn{\alpha}-bags.
 #' @param col Vector of colours for the \eqn{\alpha}-bags. Multiple \eqn{\alpha} bags for one group will be displayed in the same colour.
@@ -1502,8 +1502,8 @@ legend.type <- function (bp, samples = FALSE, means = FALSE, bags = FALSE, ellip
 
 #' Constructs the biplot legend
 #'
-#' @param bp an object of class biplot
-#' @param ... more arguments to be sent to `legend`
+#' @param bp An object of class \code{biplot}.
+#' @param ... more arguments to be sent to `legend`.
 #'
 #' @noRd
 biplot.legend <- function(bp, ...)
@@ -1539,9 +1539,29 @@ biplot.legend <- function(bp, ...)
 }
 
 # ----------------------------------------------------------------------------------------------
+#' Generic print function of objects of class biplot
+#'
+#' @param x An object of class \code{biplot}.
+#' @param ... additional arguments
+#'
+#' @export
+#' @examples
+#' out <- biplot (iris[,1:4]) |> PCA() |> plot()
+#' out
+
+print.biplot <- function (x, ...)
+{
+  cat ("Object of class biplot, based on", x$n, "samples and", ncol(x$raw.X), "variables.\n")
+  if (!is.null(x$na.action))
+    cat ("The following", length(x$na.action), "sample-rows where removed due to missing values\n", x$na.action, "\n")
+  if (x$g>1)
+    cat (x$g, "groups:", x$g.names, "\n")
+}
+
+# ----------------------------------------------------------------------------------------------
 #' Generic Plotting function of objects of class biplot
 #'
-#' @param x an object of class bp
+#' @param x An object of class \code{biplot}.
 #' @param exp.factor factor to expand plotting area beyond samples
 #' @param ... additional arguments
 #'

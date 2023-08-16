@@ -8,7 +8,7 @@ PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 group.aes = NULL, correlation.biplot = FALSE)
 }
 \arguments{
-\item{bp}{Object of class biplot obtained from preceding function \code{biplot()}.}
+\item{bp}{An object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
 \item{dim.biplot}{Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
 
@@ -41,7 +41,7 @@ Object of class PCA with the following elements:
 \item{Z}{Matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 \item{Vr}{Matrix consisting of the eigenvectors as columns.}
 \item{Xhat}{Predictions of the samples.}
-\item{ax.one.unit}{Updated eigenvectors determined by specification of \code{correlation.biplot}.}
+\item{ax.one.unit}{One unit in the positive direction of each biplot axis.}
 }
 \description{
 This function produces a list of elements to be used for PCA biplot construction.
