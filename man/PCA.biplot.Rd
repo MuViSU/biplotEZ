@@ -14,22 +14,19 @@
 )
 }
 \arguments{
-\item{bp}{object of class PCA}
+\item{bp}{Object of class biplot obtained from preceding function \code{biplot()}.}
 
-\item{dim.biplot}{dimension of the biplot. Only values 1, 2 and 3 are accepted, with default 2}
+\item{dim.biplot}{Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
 
-\item{e.vects}{which eigevectors (principal components) to extract, defaults to \code{1:dim.biplot}}
+\item{e.vects}{Which eigenvectors (principal components) to extract, with default \code{1:dim.biplot}.}
 
-\item{group.aes}{optional vector of the same length as the number of rows in the data matrix
-for differentiated aesthetics for samples}
+\item{group.aes}{Optional argument. Vector of the same length as the number of rows in the data matrix
+for differentiated aesthetics for samples.}
 
-\item{correlation.biplot}{defaults to FALSE. If FALSE, the distances between sample points are
-optimally approximated in the biplot. If TRUE, the correlations between
+\item{correlation.biplot}{If \code{FALSE}, the distances between sample points are
+optimally approximated in the biplot. If \code{TRUE}, the correlations between
 variables are optimally approximated by the cosine of the angles between
-axes. See Gabriel (1971) The biplot graphic display of matrices with application
-to principal component analysis. Biometrika, 58(3), pp.453-467.}
-
-\item{...}{additional arguments}
+axes. Default is \code{FALSE}.}
 }
 \value{
 an object of class ??

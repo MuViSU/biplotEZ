@@ -2,41 +2,53 @@
 % Please edit documentation in R/funcs.R
 \name{PCA}
 \alias{PCA}
-\title{PCA method}
+\title{Principal Component Analysis (PCA) method}
 \usage{
-PCA(
-  bp,
-  dim.biplot = c(2, 1, 3),
-  e.vects = 1:ncol(bp$X),
-  group.aes = NULL,
-  correlation.biplot = FALSE,
-  ...
-)
+PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
+group.aes = NULL, correlation.biplot = FALSE)
 }
 \arguments{
-\item{bp}{object of class PCA}
+\item{bp}{Object of class biplot obtained from preceding function \code{biplot()}.}
 
-\item{dim.biplot}{dimension of the biplot. Only values 1, 2 and 3 are accepted, with default 2}
+\item{dim.biplot}{Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
 
-\item{e.vects}{which eigevectors (principal components) to extract, defaults to \code{1:dim.biplot}}
+\item{e.vects}{Which eigenvectors (principal components) to extract, with default \code{1:dim.biplot}.}
 
-\item{group.aes}{optional vector of the same length as the number of rows in the data matrix
-for differentiated aesthetics for samples}
+\item{group.aes}{Optional argument. Vector of the same length as the number of rows in the data matrix
+for differentiated aesthetics for samples.}
 
-\item{correlation.biplot}{defaults to FALSE. If FALSE, the distances between sample points are
-optimally approximated in the biplot. If TRUE, the correlations between
+\item{correlation.biplot}{If \code{FALSE}, the distances between sample points are
+optimally approximated in the biplot. If \code{TRUE}, the correlations between
 variables are optimally approximated by the cosine of the angles between
-axes. See Gabriel (1971) The biplot graphic display of matrices with application
-to principal component analysis. Biometrika, 58(3), pp.453-467.}
-
-\item{...}{additional arguments}
+axes. Default is \code{FALSE}.}
 }
 \value{
-object of class PCA
+Object of class PCA with the following elements:
+\item{X}{Matrix of the centered and scaled numeric variables.}
+\item{Xcat}{Matrix of the categorical variables.}
+\item{raw.X}{Original data.}
+\item{na.action}{Vector of observations that have been removed.}
+\item{center}{TRUE or FALSE, as specified.}
+\item{scaled}{TRUE or FALSE, as specified.}
+\item{means}{Mean of each numerical variable.}
+\item{sd}{Standard deviation of each numerical variable.}
+\item{n}{Number of observations.}
+\item{p}{Number of variables.}
+\item{group.aes}{Vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples.}
+\item{g.names}{Descriptive name to be used for group labels.}
+\item{g}{Number of groups.}
+\item{Title}{Title of the biplot to be rendered, as specified.}
+\item{Z}{Matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+\item{Vr}{Matrix consisting of the eigenvectors as columns.}
+\item{Xhat}{Predictions of the samples.}
+\item{ax.one.unit}{Updated eigenvectors determined by specification of \code{correlation.biplot}.}
 }
 \description{
-PCA method
+This function produces a list of elements to be used for PCA biplot construction.
 }
 \examples{
 biplot(iris[,1:4]) |> PCA()
+}
+\references{
+Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. \if{html}{\out{<em>}}Biometrika.\if{html}{\out{<em>}} 58(3):453–467.
 }

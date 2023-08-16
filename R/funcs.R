@@ -288,6 +288,8 @@ CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.
   p <- bp$p
   G <- indmat(group.aes)
   J <- ncol(G)
+  K <- min(p, J-1)
+  if (K == 1) stop ("Only 2D biplots currently implemented. Maximum dimension of the canonical space is min(number of variables, number of groups-1)")
 
   N <- t(G) %*% G
   X_bar <- solve(N) %*% t(G) %*% X
@@ -327,7 +329,7 @@ ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple"
 
 # ----------------------------------------------------------------------------------------------
 
-#' Indmat
+#' indmat
 #'
 #' @param groep.vec Grouping
 #'

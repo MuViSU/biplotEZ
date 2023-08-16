@@ -2,36 +2,45 @@
 % Please edit documentation in R/funcs.R
 \name{biplot}
 \alias{biplot}
-\title{Create a new biplot}
+\title{First step to create a new biplot with \pkg{biplotEZ}}
 \usage{
-biplot(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title = NULL)
+biplot(data, group.aes = NULL, center = TRUE, scaled = FALSE,
+Title = NULL)
 }
 \arguments{
-\item{data}{A dataframe or matrix containing all variables the user wants to analyse}
+\item{data}{Required argument. A dataframe or matrix containing all variables the user wants to analyse.}
 
-\item{group.aes}{Variable from the data to be used as a grouping variable}
+\item{group.aes}{Optional argument. Variable from the data to be used as a grouping variable.}
 
-\item{center}{TRUE or FALSE}
+\item{center}{Logical argument indicating whether {data} should be column centered, with default \code{TRUE}.}
 
-\item{scaled}{TRUE or FALSE}
+\item{scaled}{Logical argument indicating whether {data} should be standardized to unit column variances, with default \code{FALSE}.}
 
-\item{Title}{Title}
+\item{Title}{Optional argument. Title of the biplot to be rendered, enter text in "  ".}
 }
 \value{
-a list with the following components
-\itemize{
-\item{X}{Matrix of the centered and scaled numeric variables}
-\item{raw.X}{Original data}
-\item{center}{TRUE or FALSE, should the numeric data be centred?}
-\item{scaled}{TRUE or FALSE, should the numeric data be scaled?}
-\item{means}{Vector of means for each numeric variable}
-\item{sd}{Vector of standard deviations for each numeric variable}
-\item{group.aes}{Vector of category levels for the grouping variable. This is to be used for color, pch and cex specifications}
-}
+A list with the following components is available:
+\item{X}{Matrix of the centered and scaled numeric variables.}
+\item{raw.X}{Original data.}
+\item{center}{TRUE or FALSE, as specified.}
+\item{scaled}{TRUE or FALSE, as specified.}
+\item{means}{Vector of means for each numeric variable.}
+\item{sd}{Vector of standard deviations for each numeric variable.}
+\item{group.aes}{Vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.}
 }
 \description{
-Create a new biplot
+This function produces a list of elements to be used when producing a biplot,
+which provides a useful data analysis tool and allows the visual appraisal
+of the structure of large data matrices. Biplots are the
+multivariate analogue of scatter plots. They approximate the multivariate
+distribution of a sample in a few dimensions and they superimpose on this
+display representations of the variables on which the samples are measured.
 }
 \examples{
 biplot(data = iris)
+}
+\references{
+Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. \if{html}{\out{<em>}}Biometrika.\if{html}{\out{<em>}} 58(3):453–467.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
+Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \if{html}{\out{<em>}}Understanding Biplots.\if{html}{\out{<em>}} Chichester, England: John Wiley & Sons Ltd.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
+Gower, J.C. & Hand, D.J. 1996. \if{html}{\out{<em>}}Biplots.\if{html}{\out{<em>}} London: Chapman & Hall.
 }

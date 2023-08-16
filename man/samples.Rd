@@ -4,53 +4,42 @@
 \alias{samples}
 \title{Aesthetics for biplot samples}
 \usage{
-samples(
-  bp,
-  col = ez.col,
-  pch = 3,
-  cex = 1,
-  label = F,
-  label.cex = 0.75,
-  label.side = "bottom",
-  connected = F,
-  alpha = 1
-)
+samples (bp,  col = ez.col, pch = 3, cex = 1, label = FALSE,
+label.cex = 0.75, label.side = "bottom", connected = FALSE, alpha = 1)
 }
 \arguments{
-\item{bp}{biplot object}
+\item{bp}{Object of class biplot obtained from preceding function \code{biplot()}.}
 
-\item{col}{sample colour}
+\item{col}{Sample colour, with default \code{blue}.}
 
-\item{pch}{sample plotting character}
+\item{pch}{Sample plotting character, with default \code{+}.}
 
-\item{cex}{sample character expansion}
+\item{cex}{Sample character expansion, with default \code{1}.}
 
-\item{label}{logical, whether samples should be labelled or not}
+\item{label}{Logical argument, whether samples should be labelled or not, with default \code{FALSE}.}
 
-\item{label.cex}{label text expansion}
+\item{label.cex}{Label text expansion, with default \code{0.75}.}
 
-\item{label.side}{side of the plotting character where label appears}
+\item{label.side}{Side of the plotting character where label appears, with default \code{bottom}.}
 
-\item{connected}{logical, whether samples are connected in order of rows of data matrix}
+\item{connected}{Logical argument, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.}
 
-\item{alpha}{opacity}
+\item{alpha}{Opacity of sample plotting character, default is \code{1}.}
 }
 \value{
-A list with the following components
-{
-\item{col}{Colour of the sample}
-\item{pch}{Plotting character of the sample}
-\item{cex}{Expansion of the plotting character}
-\item{label}{Logical parameter whether labels appear}
-\item{label.cex}{}
-\item{label.side}{}
-\item{connected}{}
-\item{alpha}{}
-\item{g}{number of groups}
-}
+A list with the following components is available:
+\item{col}{Colour of the samples.}
+\item{pch}{Plotting character of the samples.}
+\item{cex}{Expansion of the plotting character of the samples.}
+\item{label}{TRUE or FALSE, as specified.}
+\item{label.cex}{Expansion of the label.}
+\item{label.side}{Side at which to plot the label of samples.}
+\item{connected}{TRUE or FALSE, as specified.}
+\item{alpha}{Opacity of the samples.}
+\item{g}{Number of groups.}
 }
 \description{
-Formatting of samples in biplot
+This function allows formatting changes to samples.
 }
 \examples{
 biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> plot()

@@ -4,39 +4,41 @@
 \alias{alpha.bags}
 \title{Create alpha bags}
 \usage{
-alpha.bags(
-  bp,
-  alpha = 0.95,
-  which = NULL,
-  col = ez.col,
-  lty = 1,
-  lwd = 1,
-  max = 2500
-)
+alpha.bags(bp, alpha=0.95, which = NULL, col = ez.col, lty = 1,
+lwd = 1, max = 2500)
 }
 \arguments{
-\item{bp}{object of class biplot}
+\item{bp}{An object of class biplot.}
 
-\item{alpha}{value between 0 and 1 to determine coverage of bag}
+\item{alpha}{Value between 0 and 1 to determine coverage of bag (\eqn{\alpha}), with default \code{0.95}.}
 
-\item{which}{which groups or classes to be fitted with alpha bags}
+\item{which}{The selection of groups or classes to be fitted with \eqn{\alpha}-bags.}
 
-\item{col}{vector of colours for the alpha bags}
+\item{col}{Vector of colours for the \eqn{\alpha}-bags. Multiple \eqn{\alpha} bags for one group will be displayed in the same colour.}
 
-\item{lty}{vector of line types for the alpha bags}
+\item{lty}{Vector of line types for the \eqn{\alpha}-bags. The same line type will be used per value of \eqn{\alpha}.}
 
-\item{lwd}{vector of line widths for the alpha bags}
+\item{lwd}{Vector of line widths for the \eqn{\alpha}-bags. The same line width will be used per value of \eqn{\alpha}.}
 
-\item{max}{maximum number of samples to include in alpha-bag calculations. Defaults to 2500, if
-more samples are in the group, a random sample of size max is taken for the computations}
+\item{max}{Maximum number of samples to include in \eqn{\alpha}-bag calculations, with default 2500. If
+more samples are in the group, a random sample of size max is taken for the computations.}
 }
 \value{
-an object of class biplot
+A list with the following components is available:
+\item{alpha.bags}{List of coordinates for the \eqn{\alpha}-bags for each group.}
+\item{col}{Vector of colours for the \eqn{\alpha}-bags.}
+\item{lty}{Vector of line types for the \eqn{\alpha}-bags.}
+\item{lwd}{Vector of line widths for the \eqn{\alpha}-bags.}
 }
 \description{
-Create alpha bags
+This function produces \eqn{\alpha}-bags, which is a useful graphical summary of the
+scatter plot. The alpha-bag refers to a contour which contains \eqn{\alpha}\% of the observations.
 }
 \examples{
 biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> alpha.bags(alpha=0.95) |> plot()
+biplot (iris[,1:4],group.aes=iris[,5]) |> PCA() |> alpha.bags(alpha=0.95) |> plot()
 
+}
+\references{
+Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \if{html}{\out{<em>}}Understanding Biplots.\if{html}{\out{<em>}} Chichester, England: John Wiley & Sons Ltd.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
 }

@@ -4,92 +4,95 @@
 \alias{axes}
 \title{Aesthetics for biplot axes}
 \usage{
-axes(
-  bp,
-  X.names = colnames(bp$X),
-  which = 1:bp$p,
-  col = grey(0.7),
-  lwd = 1,
-  lty = 1,
-  label.dir = "Orthog",
-  label.col = col,
-  label.cex = 0.75,
-  label.dist = 0,
-  ticks = 5,
-  tick.col = col,
-  tick.size = 1,
-  tick.label = T,
-  tick.label.col = tick.col,
-  tick.label.cex = 0.6,
-  tick.label.side = "left",
-  tick.label.offset = 0.5,
-  tick.label.pos = 1,
-  predict.col = col,
-  predict.lwd = lwd,
-  predict.lty = lty,
-  ax.names = X.names,
-  orthogx = 0,
-  orthogy = 0
-)
+axes(bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7),
+lwd = 1, lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75,
+ label.dist = 0, ticks = 5, tick.col = col, tick.size = 1, tick.label = TRUE,
+ tick.label.col = tick.col, tick.label.cex = 0.6, tick.label.side = "left",
+ tick.label.offset = 0.5, tick.label.pos = 1, predict.col = col, predict.lwd = lwd,
+  predict.lty = lty, ax.names = X.names, orthogx = 0, orthogy = 0)
 }
 \arguments{
-\item{bp}{object of class biplot}
+\item{bp}{Object of class biplot obtained from preceding function \code{biplot()}.}
 
-\item{X.names}{data column names for which axes should be constructed}
+\item{X.names}{Column names of \code{bp}.}
 
-\item{which}{column numbers for which axes should be constructed}
+\item{which}{Vector of columns to be displayed in the biplot, with default \code{1:bp$p}.}
 
-\item{col}{axis colours}
+\item{col}{Axis colour, with default \code{grey(0.7)}.}
 
-\item{lwd}{axis line widths}
+\item{lwd}{Axis line width, with default \code{1}.}
 
-\item{lty}{axis line types}
+\item{lty}{Axis line type, with default \code{1}.}
 
-\item{label.dir}{direction of the axis label, one of "Orthog", "Hor" or "Paral"}
+\item{label.dir}{Direction of axis label, with default \code{Orthog}.}
 
-\item{label.col}{colour of the axis label}
+\item{label.col}{Axis label colour, with default, \code{col}.}
 
-\item{label.cex}{character expansion of the axis label}
+\item{label.cex}{Aixs label expansion, with default \code{0.75}.}
 
-\item{label.dist}{distance of the axis label from the plot}
+\item{label.dist}{Axis label distance from axis, with default \code{0}.}
 
-\item{ticks}{indicator of the number of tick marks on each axis}
+\item{ticks}{Number of tick marks per axis, with default \code{5}.}
 
-\item{tick.col}{colour of tickmarks}
+\item{tick.col}{Tick mark colour, with default \code{col}.}
 
-\item{tick.size}{size of tickmarks}
+\item{tick.size}{Tick mark size, with default \code{1}.}
 
-\item{tick.label}{logical whether tick marks should be labelled}
+\item{tick.label}{Logical argument, whether axes should be labelled or not, with default \code{TRUE}.}
 
-\item{tick.label.col}{colour of tick mark labels}
+\item{tick.label.col}{Tick mark label colour, with default \code{tick.col}.}
 
-\item{tick.label.cex}{character expansion of tick mark labels}
+\item{tick.label.cex}{Tick mark label expansion, with default \code{0.6}.}
 
-\item{tick.label.side}{on which side of tick marks should label appear}
+\item{tick.label.side}{Side of the tick mark label, with default \code{left}.}
 
-\item{tick.label.offset}{offset for position of tick mark labels}
+\item{tick.label.offset}{Tick mark label offset, with default \code{0.5}.}
 
-\item{tick.label.pos}{pos argument for \code{text} function for tick mark labels}
+\item{tick.label.pos}{Side of the tick mark label, with default \code{below}.}
 
-\item{predict.col}{colour of lines showing orthogonal projection onto axes}
+\item{predict.col}{Predicted samples colour, with default \code{col}.}
 
-\item{predict.lwd}{line width of lines showing orthogonal projection onto axes}
+\item{predict.lwd}{Predicted samples line width, with default \code{lwd}.}
 
-\item{predict.lty}{line type of lines showing orthogonal projection onto axes}
+\item{predict.lty}{Predicted samples line type, with default \code{lty}.}
 
-\item{ax.names}{user specified alternative names for variables}
+\item{ax.names}{Vector of size \code{p} containing user defined names for the variables.}
 
-\item{orthogx}{horisontal translation}
+\item{orthogx}{,the horizontal translation, with default \code{0}.}
 
-\item{orthogy}{vertical translation}
+\item{orthogy}{,the vertical translation with default \code{0}.}
 }
 \value{
-object of class biplot
+A list with the following components is available:
+\item{which}{Vector of the columns displayed as axes.}
+\item{col}{Vector of axis colours.}
+\item{lwd}{Vector of axis line widths.}
+\item{lty}{Vector of axis line types.}
+\item{label.dir}{Direction of the axis labels.}
+\item{label.col}{Vector of axis label colours.}
+\item{label.cex}{Vector of axis labels expansions.}
+\item{label.dist}{Vector of axis label distances from axes.}
+\item{ticks}{Vector representing the number of tick marks per axis.}
+\item{tick.col}{Vector of tick mark colours.}
+\item{tick.size}{Vector of tick mark sizes.}
+\item{tick.label}{Vector of logical values indicating whether axes are labelled.}
+\item{tick.label.col}{Vector of tick mark label colours.}
+\item{tick.label.cex}{Vector of tick mark label expansions.}
+\item{tick.label.side}{Vector of the side of tick mark labels.}
+\item{tick.label.offset}{Vector of tick mark label offsets.}
+\item{tick.label.pos}{Vector of the side of tick mark labels.}
+\item{predict.col}{Vector of colours for the predicted samples.}
+\item{predict.lty}{Vector of line types for the predicted samples.}
+\item{predict.lwd}{Vector of line widths for the predicted samples.}
+\item{names}{Vector of variable names defined by the user.}
+\item{orthogx}{Vector of the horisontal translations for each axis.}
+\item{orthogy}{Vector of the vertical translations for each axis.}
 }
 \description{
-Aesthetics for biplot axes
+This function allows formatting changes to axes.
 }
 \examples{
 biplot(iris[,1:4]) |> PCA() |> axes(col="purple") |> plot()
+biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> axes() |> plot()
 
 }

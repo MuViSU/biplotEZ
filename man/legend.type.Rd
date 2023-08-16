@@ -2,28 +2,33 @@
 % Please edit documentation in R/funcs.R
 \name{legend.type}
 \alias{legend.type}
-\title{Determines which legends to make}
+\title{Legend type}
 \usage{
-legend.type(bp, samples = F, means = F, bags = F, new = FALSE, ...)
+legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE,
+new = FALSE)
 }
 \arguments{
-\item{bp}{object of class biplot}
+\item{bp}{An object of class \code{biplot}.}
 
-\item{samples}{logical, whether legend should be printed for samples}
+\item{samples}{Logical argument indicating whether legend should be printed for samples, with default \code{FALSE}.}
 
-\item{means}{logical, whether legend should be printed for means}
+\item{means}{Logical argument indicating whether legend should be printed for means, with default \code{FLASE}.}
 
-\item{bags}{logical, whether legend should be printed for bags}
+\item{bags}{Logical argument indicating whether legend should be printed for bags, with default \code{FALSE}.}
 
-\item{new}{logical, whether the legend should appear on a new page}
+\item{new}{Logical argument indicating whether the legend should appear in a new window, with default \code{FALSE}.}
 
-\item{...}{more arguments to be sent to \code{legend} function}
+\item{...}{more arguments to be sent to \code{legend()} function}
 }
 \value{
-an object of class biplot
+A list with the following components is available:
+\item{samples}{TRUE or FALSE, as specified.}
+\item{means}{TRUE or FALSE, as specified.}
+\item{bags}{TRUE or FALSE, as specified.}
+\item{new}{TRUE or FALSE, as specified.}
 }
 \description{
-Determines which legends to make
+This function enables the user to format the legend and make a required selection to display.
 }
 \examples{
 biplot (iris[,1:4], Title="Test biplot") |> PCA(group.aes = iris[,5]) |>

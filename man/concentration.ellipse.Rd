@@ -2,45 +2,46 @@
 % Please edit documentation in R/funcs.R
 \name{concentration.ellipse}
 \alias{concentration.ellipse}
-\title{Concentration ellipses}
+\title{Concentration ellipses (\eqn{\kappa}-ellipses)}
 \usage{
-concentration.ellipse(
-  bp,
-  df = 2,
-  kappa = NULL,
-  which = NULL,
-  alpha = 0.95,
-  col = ez.col,
-  lty = 1,
-  lwd = 1,
-  alpha.transparency = 0.5
-)
+concentration.ellipse(bp, df=2, kappa = NULL, which = NULL,
+alpha = 0.95, col = ez.col, lty = 1, lwd = 1, alpha.transparency = 0.5)
 }
 \arguments{
-\item{bp}{object of class biplot}
+\item{bp}{An object of class \code{biplot}.}
 
-\item{df}{degrees of freedom}
+\item{df}{Degrees of freedom, with default \code{2}.}
 
-\item{kappa}{value to construct k-ellipse}
+\item{kappa}{Value to construct \eqn{\kappa}-ellipse (the value of \eqn{\kappa}).}
 
-\item{which}{which group to select for ellipse construction}
+\item{which}{The selection of the group for ellipse construction.}
 
-\item{alpha}{size of alpha bag}
+\item{alpha}{Size of \eqn{\alpha}-bag, with default \code{0.95}.}
 
-\item{col}{colour of ellipse}
+\item{col}{Colour of ellipse. Multiple \eqn{\kappa}-ellipse for one group will be displayed in the same colour.}
 
-\item{lty}{line type of ellipse}
+\item{lty}{Line type of ellipse. The same line type will be used per value of \eqn{\kappa}.}
 
-\item{lwd}{line width of ellipse}
+\item{lwd}{Line width of ellipse. The same line width will be used per value of \eqn{\kappa}.}
 
-\item{alpha.transparency}{opacity}
+\item{alpha.transparency}{Level of opacity, with default \code{0.5}.}
 }
 \value{
-an object of class biplot
+A list with the following components is available:
+\item{conc.ellipses}{List of coordinates for the \eqn{\kappa}-ellipses for each group.}
+\item{col}{Vector of colours for the \eqn{\kappa}-ellipses.}
+\item{lty}{Vector of line types for the \eqn{\kappa}-ellipses.}
+\item{lwd}{Vector of line widths for the \eqn{\kappa}-ellipses.}
+\item{alpha}{Vector of \eqn{\alpha} values.}
 }
 \description{
-Concentration ellipses
+This function produces \eqn{\kappa}-ellipses, which is a useful geometrical description of the
+data points about the sample mean.
 }
 \examples{
 biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> concentration.ellipse(kappa=2) |> plot()
+
+}
+\references{
+Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \if{html}{\out{<em>}}Understanding Biplots.\if{html}{\out{<em>}} Chichester, England: John Wiley & Sons Ltd.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
 }
