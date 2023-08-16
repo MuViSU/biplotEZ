@@ -61,30 +61,30 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
 
   # scaling of numeric data
   if(is.null(X))
-    {  means <- NULL
-       sd <- NULL
-    }
+  {  means <- NULL
+  sd <- NULL
+  }
   else
-    {
-      means <- apply(X, 2, mean)
-      sd <- apply(X, 2, stats::sd)
-      if (!center) {  X <- X
-                      means <- rep(0, ncol(X))
-                      sd <- rep(1, ncol(X))
-      }
-      else if (scaled) { X <- scale(X) }
-           else { X <- scale(X, scale = FALSE)
-                  sd <- rep(1, ncol(X))
-                }
-      if (is.null(rownames(X))) rownames(X) <- paste(1:nrow(X))
-      if (is.null(colnames(X))) colnames(X) <- paste("V", 1:ncol(X), sep = "")
+  {
+    means <- apply(X, 2, mean)
+    sd <- apply(X, 2, stats::sd)
+    if (!center) {  X <- X
+    means <- rep(0, ncol(X))
+    sd <- rep(1, ncol(X))
+    }
+    else if (scaled) { X <- scale(X) }
+    else { X <- scale(X, scale = FALSE)
+    sd <- rep(1, ncol(X))
+    }
+    if (is.null(rownames(X))) rownames(X) <- paste(1:nrow(X))
+    if (is.null(colnames(X))) colnames(X) <- paste("V", 1:ncol(X), sep = "")
   }
 
   if(!is.null(Xcat))
-    {
-      if (is.null(rownames(Xcat))) rownames(Xcat) <- paste(1:nrow(Xcat))
-      if (is.null(colnames(Xcat))) colnames(Xcat) <- paste("F", 1:ncol(Xcat), sep = "")
-    }
+  {
+    if (is.null(rownames(Xcat))) rownames(Xcat) <- paste(1:nrow(Xcat))
+    if (is.null(colnames(Xcat))) colnames(Xcat) <- paste("F", 1:ncol(Xcat), sep = "")
+  }
 
   if(is.null(group.aes)) group.aes <- factor(rep(1,nrow(data)))
   else group.aes <- factor(group.aes)
@@ -484,11 +484,11 @@ samples <- function (bp,  col = ez.col,
 #' biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> axes() |> plot()
 #'
 axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), lwd = 1, lty = 1,
-                label.dir = "Orthog", label.col = col, label.cex = 0.75, label.dist = 0, ticks = 5,
-                tick.col = col, tick.size = 1, tick.label = TRUE, tick.label.col = tick.col, tick.label.cex = 0.6,
-                tick.label.side = "left", tick.label.offset = 0.5, tick.label.pos = 1,
-                predict.col = col, predict.lwd = lwd, predict.lty = lty, ax.names = X.names,
-                orthogx = 0, orthogy = 0)
+                  label.dir = "Orthog", label.col = col, label.cex = 0.75, label.dist = 0, ticks = 5,
+                  tick.col = col, tick.size = 1, tick.label = TRUE, tick.label.col = tick.col, tick.label.cex = 0.6,
+                  tick.label.side = "left", tick.label.offset = 0.5, tick.label.pos = 1,
+                  predict.col = col, predict.lwd = lwd, predict.lty = lty, ax.names = X.names,
+                  orthogx = 0, orthogy = 0)
 {
   if (!all(is.numeric(which))) which <- match(which, X.names, nomatch = 0)
   p <- bp$p
@@ -541,11 +541,11 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
   while (length(orthogy) < p) orthogy <- c(orthogy, orthogy)
   orthogy <- as.vector(orthogy[1:p])
   bp$axes = list(which = which, col = col, lwd = lwd, lty = lty, label.dir = label.dir, label.col = label.col, label.cex = label.cex,
-             label.dist = label.dist, ticks = ticks, tick.col = tick.col, tick.size = tick.size, tick.label = tick.label,
-             tick.label.col = tick.label.col, tick.label.cex = tick.label.cex, tick.label.side = tick.label.side,
-             tick.label.offset = tick.label.offset, tick.label.pos = tick.label.pos,
-             predict.col = predict.col, predict.lty = predict.lty, predict.lwd = predict.lwd,
-             names = ax.names, orthogx = orthogx, orthogy = orthogy)
+                 label.dist = label.dist, ticks = ticks, tick.col = tick.col, tick.size = tick.size, tick.label = tick.label,
+                 tick.label.col = tick.label.col, tick.label.cex = tick.label.cex, tick.label.side = tick.label.side,
+                 tick.label.offset = tick.label.offset, tick.label.pos = tick.label.pos,
+                 predict.col = predict.col, predict.lty = predict.lty, predict.lwd = predict.lwd,
+                 names = ax.names, orthogx = orthogx, orthogy = orthogy)
   bp
 }
 
@@ -565,7 +565,7 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
 control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
 {
   if (!all(is.numeric(which)))
-  which <- match(which, g.names, nomatch = 0)
+    which <- match(which, g.names, nomatch = 0)
   which <- which[which <= g]
   which <- which[which > 0]
   rep.num <- length(which)
@@ -635,7 +635,7 @@ alpha.bags <- function(bp, alpha=0.95, which = NULL, col = ez.col, lty = 1, lwd 
   g.names <- bp$g.names
   if (is.null(which)) which <- 1:g
   control.output <- control.alpha.bags (g=g, g.names=g.names, alpha=alpha, which=which,
-                            col=col, lty=lty, lwd=lwd, max=max)
+                                        col=col, lty=lty, lwd=lwd, max=max)
 
   all.alpha.bags <- list()
   for(a in 1:length(control.output$which))
@@ -650,11 +650,11 @@ alpha.bags <- function(bp, alpha=0.95, which = NULL, col = ez.col, lty = 1, lwd 
   if (is.null(bp$alpha.bags))  bp$alpha.bags <- all.alpha.bags
   else bp$alpha.bags <- append(bp$alpha.bags, all.alpha.bags)
   if (is.null(bp$alpha.bag.aes))  bp$alpha.bag.aes <- list(col=control.output$col,
-                                                                 lty=control.output$lty,
-                                                                 lwd=control.output$lwd)
+                                                           lty=control.output$lty,
+                                                           lwd=control.output$lwd)
   else { bp$alpha.bag.aes$col <- c(bp$alpha.bag.aes$col, control.output$col)
-         bp$alpha.bag.aes$lty <- c(bp$alpha.bag.aes$lty, control.output$lty)
-         bp$alpha.bag.aes$lwd <- c(bp$alpha.bag.aes$lwd, control.output$lwd)
+  bp$alpha.bag.aes$lty <- c(bp$alpha.bag.aes$lty, control.output$lty)
+  bp$alpha.bag.aes$lwd <- c(bp$alpha.bag.aes$lwd, control.output$lwd)
   }
   bp
 }
@@ -1435,9 +1435,9 @@ concentration.ellipse <- function(bp, df=2, kappa = NULL, which = NULL, alpha = 
                                                                  lwd=control.output$lwd,
                                                                  alpha=control.output$alpha.transparency)
   else { bp$conc.ellipse.aes$col <- c(bp$conc.ellipse.aes$col, control.output$col)
-         bp$conc.ellipse.aes$lty <- c(bp$conc.ellipse.aes$lty, control.output$lty)
-         bp$conc.ellipse.aes$lwd <- c(bp$conc.ellipse.aes$lwd, control.output$lwd)
-         bp$conc.ellipse.aes$alpha <- c(bp$conc.ellipse.aes$alpha, control.output$alpha.transparency)
+  bp$conc.ellipse.aes$lty <- c(bp$conc.ellipse.aes$lty, control.output$lty)
+  bp$conc.ellipse.aes$lwd <- c(bp$conc.ellipse.aes$lwd, control.output$lwd)
+  bp$conc.ellipse.aes$alpha <- c(bp$conc.ellipse.aes$alpha, control.output$alpha.transparency)
   }
   bp
 }
@@ -1492,9 +1492,9 @@ calc.concentration.ellipse <- function (X, kappa=2, covmat = NULL)
 #' @examples
 #' biplot (iris[,1:4], Title="Test biplot") |> PCA(group.aes = iris[,5]) |>
 #'     legend.type(samples=TRUE) |> plot()
-legend.type <- function (bp, samples = FALSE, means = FALSE, bags = FALSE, new=FALSE, ...)
+legend.type <- function (bp, samples = FALSE, means = FALSE, bags = FALSE,ellipses=FALSE, new=FALSE, ...)
 {
-  bp$legend <- list(samples=samples, means=means, bags=bags, new=new, arglist=list(...))
+  bp$legend <- list(samples=samples, means=means, bags=bags,ellipses = ellipses, new=new, arglist=list(...))
   bp
 }
 
@@ -1506,9 +1506,9 @@ legend.type <- function (bp, samples = FALSE, means = FALSE, bags = FALSE, new=F
 #' @noRd
 biplot.legend <- function(bp, ...)
 {
-  legend.type <- c(bp$legend$samples, bp$legend$means, bp$legend$bags)
+  legend.type <- c(bp$legend$samples, bp$legend$means, bp$legend$bags, bp$legend$ellipses)
 
-  if (all(legend.type == FALSE)) return(cat("Change at least one of samples, means or bags to TRUE to obtain a legend\n"))
+  if (all(legend.type == FALSE)) return(cat("Change at least one of samples, means, bags or ellipses to TRUE to obtain a legend\n"))
 
   if(bp$legend$new)
   {
@@ -1521,12 +1521,18 @@ biplot.legend <- function(bp, ...)
   if(bp$legend$bags & !is.null(bp$alpha.bags))
   { #formatting of legend names
     graphics::legend("topleft",col=bp$alpha.bag.aes$col,lty=bp$alpha.bag.aes$lty,lwd=bp$alpha.bag.aes$lwd,
-           legend=names(bp$alpha.bags), ...)
+                     legend=names(bp$alpha.bags), ...)
   }
 
   if(bp$legend$means) graphics::legend("bottomright",col=bp$means$col,pch=bp$means$pch,legend=bp$classes, ...)
 
   if(bp$legend$samples) graphics::legend("topright",col=bp$samples$col,pch=bp$samples$pch,legend=bp$g.names, ...)
+
+  if(bp$legend$ellipses & !is.null(bp$conc.ellipses))
+  { #formatting of legend names
+    graphics::legend("bottomleft",col=bp$conc.ellipse.aes$col,lty=bp$conc.ellipse.aes$lty,lwd=bp$conc.ellipse.aes$lwd,
+                     legend=names(bp$conc.ellipses), ...)
+  }
 
 }
 
@@ -1542,8 +1548,8 @@ biplot.legend <- function(bp, ...)
 #' biplot (iris[,1:4]) |> PCA() |> plot()
 plot.biplot <- function(x, exp.factor=1.2, ...)
 {
-.samples.plot <- function(Z, group.aes, sample.aes)
-{
+  .samples.plot <- function(Z, group.aes, sample.aes)
+  {
     x.vals <- Z[, 1]
     y.vals <- Z[, 2]
     invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
@@ -1551,198 +1557,198 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
     groups <- levels(group.aes)
     group.aes <- group.aes[invals]
     for (j in 1:length(groups))
-      {   Z.class <- Z[group.aes==groups[j], , drop = FALSE]
-          text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
-          if (sample.aes$label[j]) graphics::text(Z.class[, 1], Z.class[, 2], labels = dimnames(Z.class)[[1]],
-                                          cex = sample.aes$label.cex[j], col = sample.aes$col[j], pos = text.pos)
-          graphics::points(x = Z.class[, 1], y = Z.class[, 2], pch = sample.aes$pch[j], col = sample.aes$col[j],
-                  cex = sample.aes$cex[j])
-      }
-}
-.calibrate.axis <- function (j, Xhat, means, sd, axes.rows, ax.which, ax.tickvec,
-                            ax.orthogxvec, ax.orthogyvec)
-{
-
-  ax.num <- ax.which[j]
-  tick <- ax.tickvec[j]
-  ax.direction <- axes.rows[ax.num,]
-  r <- ncol(axes.rows)
-  ax.orthog <- rbind(ax.orthogxvec, ax.orthogyvec)
-  if (nrow(ax.orthog) < r)    ax.orthog <- rbind(ax.orthog, 0)
-  if (nrow(axes.rows) > 1)    phi.vec <- diag(1 / diag(axes.rows %*% t(axes.rows))) %*% axes.rows %*% ax.orthog[, ax.num]
-  else  phi.vec <- (1 / (axes.rows %*% t(axes.rows))) %*% axes.rows %*% ax.orthog[, ax.num]
-
-  std.ax.tick.label <- pretty(range(Xhat[, ax.num]), n = tick)
-  std.range <- range(std.ax.tick.label)
-  std.ax.tick.label.min <-  std.ax.tick.label - (std.range[2] - std.range[1])
-  std.ax.tick.label.max <-  std.ax.tick.label + (std.range[2] - std.range[1])
-  std.ax.tick.label <-  c(std.ax.tick.label,  std.ax.tick.label.min, std.ax.tick.label.max)
-  interval <- (std.ax.tick.label - means[ax.num]) / sd[ax.num]
-  axis.vals <- sort(unique(interval))
-
-  number.points <- length(axis.vals)
-  axis.points <- matrix(0, nrow = number.points, ncol = r)
-  for (i in 1:r)
-    axis.points[, i] <-  ax.orthog[i, ax.num] + (axis.vals - phi.vec[ax.num]) * ax.direction[i]
-  axis.points <- cbind(axis.points, axis.vals * sd[ax.num] + means[ax.num])
-
-  #slope = delta y / delta x of two datapoints
-  slope <- (axis.points[1, 2] - axis.points[2, 2]) / (axis.points[1, 1] - axis.points[2, 1])
-  #if slope is infinite then all x-values are same
-  v <- NULL
-  if (is.na(slope)) {
-    v <- axis.points[1, 1]
-    slope = NULL
+    {   Z.class <- Z[group.aes==groups[j], , drop = FALSE]
+    text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
+    if (sample.aes$label[j]) graphics::text(Z.class[, 1], Z.class[, 2], labels = dimnames(Z.class)[[1]],
+                                            cex = sample.aes$label.cex[j], col = sample.aes$col[j], pos = text.pos)
+    graphics::points(x = Z.class[, 1], y = Z.class[, 2], pch = sample.aes$pch[j], col = sample.aes$col[j],
+                     cex = sample.aes$cex[j])
+    }
   }
-  else if (abs(slope) == Inf) {
-         v <- axis.points[1, 1]
-         slope = NULL
+  .calibrate.axis <- function (j, Xhat, means, sd, axes.rows, ax.which, ax.tickvec,
+                               ax.orthogxvec, ax.orthogyvec)
+  {
+
+    ax.num <- ax.which[j]
+    tick <- ax.tickvec[j]
+    ax.direction <- axes.rows[ax.num,]
+    r <- ncol(axes.rows)
+    ax.orthog <- rbind(ax.orthogxvec, ax.orthogyvec)
+    if (nrow(ax.orthog) < r)    ax.orthog <- rbind(ax.orthog, 0)
+    if (nrow(axes.rows) > 1)    phi.vec <- diag(1 / diag(axes.rows %*% t(axes.rows))) %*% axes.rows %*% ax.orthog[, ax.num]
+    else  phi.vec <- (1 / (axes.rows %*% t(axes.rows))) %*% axes.rows %*% ax.orthog[, ax.num]
+
+    std.ax.tick.label <- pretty(range(Xhat[, ax.num]), n = tick)
+    std.range <- range(std.ax.tick.label)
+    std.ax.tick.label.min <-  std.ax.tick.label - (std.range[2] - std.range[1])
+    std.ax.tick.label.max <-  std.ax.tick.label + (std.range[2] - std.range[1])
+    std.ax.tick.label <-  c(std.ax.tick.label,  std.ax.tick.label.min, std.ax.tick.label.max)
+    interval <- (std.ax.tick.label - means[ax.num]) / sd[ax.num]
+    axis.vals <- sort(unique(interval))
+
+    number.points <- length(axis.vals)
+    axis.points <- matrix(0, nrow = number.points, ncol = r)
+    for (i in 1:r)
+      axis.points[, i] <-  ax.orthog[i, ax.num] + (axis.vals - phi.vec[ax.num]) * ax.direction[i]
+    axis.points <- cbind(axis.points, axis.vals * sd[ax.num] + means[ax.num])
+
+    #slope = delta y / delta x of two datapoints
+    slope <- (axis.points[1, 2] - axis.points[2, 2]) / (axis.points[1, 1] - axis.points[2, 1])
+    #if slope is infinite then all x-values are same
+    v <- NULL
+    if (is.na(slope)) {
+      v <- axis.points[1, 1]
+      slope = NULL
+    }
+    else if (abs(slope) == Inf) {
+      v <- axis.points[1, 1]
+      slope = NULL
+    }
+
+    #y=mx+c... c=y-mx
+    intercept <- axis.points[1, 2] - slope * axis.points[1, 1]
+
+    details <- list(a = intercept, b = slope, v = v)
+    retvals <- list(coords = axis.points, a = intercept, b = slope, v = v)
+    return(retvals)
+  }
+  .marker.label.cm <- function(x, y, grad, marker.val, expand = 1, col, label.on.off, side, pos, offset, label.col, cex)
+  {
+    uin <- graphics::par("pin")/c(usr[2] - usr[1], usr[4] - usr[3])
+    mm <- 1/(uin[1] * 25.4)
+    d <- expand * mm
+    if (grad == "v")
+    {  graphics::lines(rep(x, 2), c(y - d, y + d), col = col)
+      if (label.on.off == 1) graphics::text(x, y - d, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+    }
+    if (grad == "h")
+    {  graphics::lines(c(x - d, x + d), rep(y, 2), col = col)
+      if (label.on.off == 1) if (side == "right") graphics::text(x + d, y, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+      else graphics::text(x - d, y, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+    }
+    if (is.numeric(grad))
+    {  b <- d * sqrt(1/(1 + grad * grad))
+    a <- b * grad
+    graphics::lines(c(x - b, x + b), c(y - a, y + a), col = col)
+    if (label.on.off == 1) if (side == "right") graphics::text(x + b, y + a, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+    else graphics::text(x - b, y - a, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+    }
+  }
+  .marker.func <- function(vec, coef, col, tick.size, side, pos, offset, label.col, cex)
+  {
+    x <- vec[1]
+    y <- vec[2]
+    marker.val <- vec[3]
+    label.on.off <- vec[4]
+    if (is.na(coef[2]))
+      .marker.label.cm(x, y, grad = "h", marker.val, expand = tick.size, col = col, label.on.off = label.on.off, side = side, pos = pos, offset = offset, label.col = label.col, cex = cex)
+    else if (coef[2] == 0)
+      .marker.label.cm(x, y, grad = "v", marker.val, expand = tick.size, col = col, label.on.off = label.on.off, side = side, pos = pos, offset = offset, label.col = label.col, cex = cex)
+    else
+      .marker.label.cm(x, y, grad = -1/coef[2], marker.val, expand = tick.size, col = col, label.on.off = label.on.off, side = side, pos = pos, offset = offset, label.col = label.col, cex = cex)
   }
 
-  #y=mx+c... c=y-mx
-  intercept <- axis.points[1, 2] - slope * axis.points[1, 1]
+  .lin.axes.plot <- function(z.axes, ax.aes, predict.mat)
+  {
+    for (i in 1:length(ax.aes$which))
+    {  ax.num <- ax.aes$which[i]
+    this.axis<-z.axes[[i]]
+    marker.mat <- this.axis$coords
+    marker.mat <- marker.mat[rev(order(marker.mat[, 3])), ]
+    x.vals <- marker.mat[, 1]
+    y.vals <- marker.mat[, 2]
 
-  details <- list(a = intercept, b = slope, v = v)
-  retvals <- list(coords = axis.points, a = intercept, b = slope, v = v)
-  return(retvals)
-}
-.marker.label.cm <- function(x, y, grad, marker.val, expand = 1, col, label.on.off, side, pos, offset, label.col, cex)
-{
-  uin <- graphics::par("pin")/c(usr[2] - usr[1], usr[4] - usr[3])
-  mm <- 1/(uin[1] * 25.4)
-  d <- expand * mm
-  if (grad == "v")
-  {  graphics::lines(rep(x, 2), c(y - d, y + d), col = col)
-    if (label.on.off == 1) graphics::text(x, y - d, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+    lin.coef<-c(a=this.axis$a,b=this.axis$b)
+    if (is.null(this.axis$b))
+      graphics::abline(v = this.axis$v, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
+    else
+      graphics::abline(coef=lin.coef, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
+
+    if (ax.aes$label.dir == "Hor") {  graphics::par(las = 1)
+      adjust <- c(0.5, 1, 0.5, 0)       }
+    if (ax.aes$label.dir == "Orthog") { graphics::par(las = 2)
+      adjust <- c(1, 1, 0, 0)         }
+    if (ax.aes$label.dir == "Paral") {  graphics::par(las = 0)
+      adjust <- c(0.5, 0.5, 0.5, 0.5) }
+
+    h <- nrow(marker.mat)
+    if (is.null(this.axis$b))
+    { if (y.vals[1] < y.vals[h])
+      graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+      else
+        graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+    }
+    else
+    { y1.ster <- lin.coef[2] * usr[1] + lin.coef[1]
+    y2.ster <- lin.coef[2] * usr[2] + lin.coef[1]
+    x1.ster <- (usr[3] - lin.coef[1])/lin.coef[2]
+    x2.ster <- (usr[4] - lin.coef[1])/lin.coef[2]
+    if (lin.coef[2] == 0)
+    { if (x.vals[1] < x.vals[h])
+      graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+      else
+        graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+    }
+    if (lin.coef[2] > 0)
+    {  if (x.vals[1] < x.vals[h])
+      if (y1.ster <= usr[4] & y1.ster >= usr[3])
+        graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+      else
+        graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+      else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+        graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+      else
+        graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+    }
+    if (lin.coef[2] < 0)
+    {  if (x.vals[1] < x.vals[h])
+      if (y1.ster <= usr[4] & y1.ster >= usr[3])
+        graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+      else
+        graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+      else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+        graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+      else
+        graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+    }
+    }
+
+    invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
+    std.markers <- marker.mat[invals, 3]
+    if (is.numeric(std.markers)) std.markers <- zapsmall(std.markers)
+    x.vals <- x.vals[invals]
+    y.vals <- y.vals[invals]
+    if (ax.aes$tick.label[i]) label.on.off <- rep(1, sum(invals))  else label.on.off <- rep(0, sum(invals))
+    # if (!ax.aes$tick.label[i]) label.on.off[c(1, length(label.on.off))] <- 1
+    if(sum(invals)>0) apply(data.frame(x.vals, y.vals, std.markers, label.on.off), 1, .marker.func,
+                            coef = lin.coef, col = ax.aes$tick.col[i], tick.size = ax.aes$tick.size[i],
+                            side = ax.aes$tick.label.side[i], pos = ax.aes$tick.label.pos[i],
+                            offset = ax.aes$tick.label.offset[i], label.col = ax.aes$tick.label.col[i],
+                            cex = ax.aes$tick.label.cex[i])
+    #  if (!is.null(predict.mat)) apply(cbind(predict.mat, y.vals[1]), 1, .predict.func, coef = lin.coef, col = ax.aes$predict.col[i], lty = ax.aes$predict.lty[i], lwd = ax.aes$predict.lwd[i])
+    }
   }
-  if (grad == "h")
-  {  graphics::lines(c(x - d, x + d), rep(y, 2), col = col)
-    if (label.on.off == 1) if (side == "right") graphics::text(x + d, y, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
-    else graphics::text(x - d, y, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+
+
+  .bags.plot <- function(z.bags, bag.aes)
+  {
+    for (i in 1:length(z.bags))
+      graphics::polygon (z.bags[[i]], border=bag.aes$col[i], lty=bag.aes$lty[i], lwd=bag.aes$lwd[i])
   }
-  if (is.numeric(grad))
-  {  b <- d * sqrt(1/(1 + grad * grad))
-     a <- b * grad
-     graphics::lines(c(x - b, x + b), c(y - a, y + a), col = col)
-     if (label.on.off == 1) if (side == "right") graphics::text(x + b, y + a, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
-     else graphics::text(x - b, y - a, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+
+  .conc.ellipse.plot <- function(z.ellipse, ellipse.aes)
+  {
+    for (i in 1:length(z.ellipse))
+      graphics::polygon(z.ellipse[[i]], border=ellipse.aes$col[i], lty=ellipse.aes$lty[i], lwd = ellipse.aes$lwd[i])
   }
-}
-.marker.func <- function(vec, coef, col, tick.size, side, pos, offset, label.col, cex)
-{
-  x <- vec[1]
-  y <- vec[2]
-  marker.val <- vec[3]
-  label.on.off <- vec[4]
-  if (is.na(coef[2]))
-    .marker.label.cm(x, y, grad = "h", marker.val, expand = tick.size, col = col, label.on.off = label.on.off, side = side, pos = pos, offset = offset, label.col = label.col, cex = cex)
-  else if (coef[2] == 0)
-    .marker.label.cm(x, y, grad = "v", marker.val, expand = tick.size, col = col, label.on.off = label.on.off, side = side, pos = pos, offset = offset, label.col = label.col, cex = cex)
-  else
-    .marker.label.cm(x, y, grad = -1/coef[2], marker.val, expand = tick.size, col = col, label.on.off = label.on.off, side = side, pos = pos, offset = offset, label.col = label.col, cex = cex)
-}
 
-.lin.axes.plot <- function(z.axes, ax.aes, predict.mat)
-{
-  for (i in 1:length(ax.aes$which))
-  {  ax.num <- ax.aes$which[i]
-     this.axis<-z.axes[[i]]
-     marker.mat <- this.axis$coords
-     marker.mat <- marker.mat[rev(order(marker.mat[, 3])), ]
-     x.vals <- marker.mat[, 1]
-     y.vals <- marker.mat[, 2]
-
-     lin.coef<-c(a=this.axis$a,b=this.axis$b)
-     if (is.null(this.axis$b))
-       graphics::abline(v = this.axis$v, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
-     else
-       graphics::abline(coef=lin.coef, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
-
-     if (ax.aes$label.dir == "Hor") {  graphics::par(las = 1)
-                                     adjust <- c(0.5, 1, 0.5, 0)       }
-     if (ax.aes$label.dir == "Orthog") { graphics::par(las = 2)
-                                       adjust <- c(1, 1, 0, 0)         }
-     if (ax.aes$label.dir == "Paral") {  graphics::par(las = 0)
-                                       adjust <- c(0.5, 0.5, 0.5, 0.5) }
-
-     h <- nrow(marker.mat)
-     if (is.null(this.axis$b))
-       { if (y.vals[1] < y.vals[h])
-           graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-         else
-           graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-       }
-     else
-       { y1.ster <- lin.coef[2] * usr[1] + lin.coef[1]
-         y2.ster <- lin.coef[2] * usr[2] + lin.coef[1]
-         x1.ster <- (usr[3] - lin.coef[1])/lin.coef[2]
-         x2.ster <- (usr[4] - lin.coef[1])/lin.coef[2]
-         if (lin.coef[2] == 0)
-           { if (x.vals[1] < x.vals[h])
-               graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-             else
-               graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-           }
-         if (lin.coef[2] > 0)
-           {  if (x.vals[1] < x.vals[h])
-                if (y1.ster <= usr[4] & y1.ster >= usr[3])
-                  graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-                else
-                  graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-              else if (y2.ster <= usr[4] & y2.ster >= usr[3])
-                  graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-                   else
-                     graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-           }
-        if (lin.coef[2] < 0)
-          {  if (x.vals[1] < x.vals[h])
-               if (y1.ster <= usr[4] & y1.ster >= usr[3])
-                 graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-               else
-                 graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-             else if (y2.ster <= usr[4] & y2.ster >= usr[3])
-                    graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-                  else
-                    graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-          }
-      }
-
-  invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
-  std.markers <- marker.mat[invals, 3]
-  if (is.numeric(std.markers)) std.markers <- zapsmall(std.markers)
-  x.vals <- x.vals[invals]
-  y.vals <- y.vals[invals]
-  if (ax.aes$tick.label[i]) label.on.off <- rep(1, sum(invals))  else label.on.off <- rep(0, sum(invals))
-  # if (!ax.aes$tick.label[i]) label.on.off[c(1, length(label.on.off))] <- 1
-  if(sum(invals)>0) apply(data.frame(x.vals, y.vals, std.markers, label.on.off), 1, .marker.func,
-                          coef = lin.coef, col = ax.aes$tick.col[i], tick.size = ax.aes$tick.size[i],
-                          side = ax.aes$tick.label.side[i], pos = ax.aes$tick.label.pos[i],
-                          offset = ax.aes$tick.label.offset[i], label.col = ax.aes$tick.label.col[i],
-                          cex = ax.aes$tick.label.cex[i])
-#  if (!is.null(predict.mat)) apply(cbind(predict.mat, y.vals[1]), 1, .predict.func, coef = lin.coef, col = ax.aes$predict.col[i], lty = ax.aes$predict.lty[i], lwd = ax.aes$predict.lwd[i])
-  }
-}
-
-
-.bags.plot <- function(z.bags, bag.aes)
-{
-  for (i in 1:length(z.bags))
-    graphics::polygon (z.bags[[i]], border=bag.aes$col[i], lty=bag.aes$lty[i], lwd=bag.aes$lwd[i])
-}
-
-.conc.ellipse.plot <- function(z.ellipse, ellipse.aes)
-{
-  for (i in 1:length(z.ellipse))
-    graphics::polygon(z.ellipse[[i]], border=ellipse.aes$col[i], lty=ellipse.aes$lty[i], lwd = ellipse.aes$lwd[i])
-}
-
-Z <- x$Z
+  Z <- x$Z
 
   old.par <- graphics::par(pty = "s", ...)
   on.exit(graphics::par(old.par))
 
   plot(Z[, 1] * exp.factor, Z[, 2] * exp.factor, xlim = range(Z[, 1] * exp.factor), ylim = range(Z[, 2] * exp.factor),
-          xaxt = "n", yaxt = "n", xlab = "", ylab = "", type = "n", xaxs = "i", yaxs = "i", asp = 1)
+       xaxt = "n", yaxt = "n", xlab = "", ylab = "", type = "n", xaxs = "i", yaxs = "i", asp = 1)
   usr <- graphics::par("usr")
 
   if (is.null(x$axes)) x <- axes(x)
