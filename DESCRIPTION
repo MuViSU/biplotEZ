@@ -1,5 +1,5 @@
 Package: biplotEZ
-Title: Providing users with EZ-to-Use Biplots
+Title: Providing Users with EZ-to-Use Biplots
 Version: 0.0.1.0000
 Authors@R: 
     person("MuViSU", , , "muvisu@sun.ac.za", role = c("aut", "cre"))
