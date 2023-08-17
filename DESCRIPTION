@@ -1,10 +1,14 @@
 Package: biplotEZ
-Title: What the Package Does (One Line, Title Case)
+Title: Providing users with EZ-to-Use Biplots
 Version: 0.0.1.0000
 Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+    person("MuViSU", , , "muvisu@sun.ac.za", role = c("aut", "cre"))
+Description: The goal of biplotEZ is to provide users an EZ-to-use platform for
+             visually representing their data with biplots. Currently, this package
+             includes principal component analysis (PCA) and canonical variate
+             analysis (CVA) biplots. This is accompanied by various formatting
+             options for the samples and axes. Alpha-bags and concentration ellipses
+             are included for visual enhancements and interpretation.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)

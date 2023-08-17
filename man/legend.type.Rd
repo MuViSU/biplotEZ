@@ -16,9 +16,11 @@ new = FALSE)
 
 \item{bags}{Logical argument indicating whether legend should be printed for bags, with default \code{FALSE}.}
 
+\item{ellipses}{Logical argument indicating whether legend should be printed for concentration ellipses, with default \code{FALSE}.}
+
 \item{new}{Logical argument indicating whether the legend should appear in a new window, with default \code{FALSE}.}
 
-\item{...}{more arguments to be sent to \code{legend()} function}
+\item{...}{addition arguments to be sent to \code{legend()}.}
 }
 \value{
 A list with the following components is available:

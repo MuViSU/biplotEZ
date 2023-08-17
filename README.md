@@ -19,14 +19,14 @@ You can install the development version of biplotEZ like this:
 
 ``` r
 library(githubinstall)
-githubinstall("biplotEZ")
+githubinstall("biplotEZ_beta")
 ```
 
 or alternatively
 
 ``` r
 library(devtools)
-devtools::install_github("MuViSU/biplotEZ")
+devtools::install_github("MuViSU/biplotEZ_beta")
 ```
 
 ## Example

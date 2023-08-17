@@ -1477,8 +1477,9 @@ calc.concentration.ellipse <- function (X, kappa=2, covmat = NULL)
 #' @param samples Logical argument indicating whether legend should be printed for samples, with default \code{FALSE}.
 #' @param means Logical argument indicating whether legend should be printed for means, with default \code{FLASE}.
 #' @param bags Logical argument indicating whether legend should be printed for bags, with default \code{FALSE}.
+#' @param ellipses Logical argument indicating whether legend should be printed for concentration ellipses, with default \code{FALSE}.
 #' @param new Logical argument indicating whether the legend should appear in a new window, with default \code{FALSE}.
-#' @param ... more arguments to be sent to \code{legend()} function
+#' @param ... addition arguments to be sent to \code{legend()}.
 #'
 #' @return A list with the following components is available:
 #' \item{samples}{TRUE or FALSE, as specified.}
