@@ -27,6 +27,8 @@ for differentiated aesthetics for samples.}
 optimally approximated in the biplot. If \code{TRUE}, the correlations between
 variables are optimally approximated by the cosine of the angles between
 axes. Default is \code{FALSE}.}
+
+\item{...}{additional arguments}
 }
 \value{
 an object of class PCA

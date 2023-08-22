@@ -5,7 +5,7 @@
 \title{Principal Component Analysis (PCA) method}
 \usage{
 PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-group.aes = NULL, correlation.biplot = FALSE)
+group.aes = NULL, correlation.biplot = FALSE, ...)
 }
 \arguments{
 \item{bp}{An object of class \code{biplot} obtained from preceding function \code{biplot()}.}
@@ -21,6 +21,8 @@ for differentiated aesthetics for samples.}
 optimally approximated in the biplot. If \code{TRUE}, the correlations between
 variables are optimally approximated by the cosine of the angles between
 axes. Default is \code{FALSE}.}
+
+\item{...}{additional arguments}
 }
 \value{
 Object of class PCA with the following elements:
@@ -50,5 +52,5 @@ This function produces a list of elements to be used for PCA biplot construction
 biplot(iris[,1:4]) |> PCA()
 }
 \references{
-Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. \if{html}{\out{<em>}}Biometrika.\if{html}{\out{<em>}} 58(3):453–467.
+Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.
 }

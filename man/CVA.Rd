@@ -5,10 +5,10 @@
 \title{Canonical Variate Analysis (CVA) method}
 \usage{
 CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-group.aes = bp$group.aes,weightedCVA = "weighted")
+group.aes = bp$group.aes,weightedCVA = "weighted", ...)
 }
 \arguments{
-\item{bp}{Object of class biplotAn object of class \code{biplot} obtained from preceding function \code{biplot()}.}
+\item{bp}{Object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
 \item{dim.biplot}{Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
 
@@ -18,6 +18,8 @@ group.aes = bp$group.aes,weightedCVA = "weighted")
 for differentiated aesthetics for samples.}
 
 \item{weightedCVA}{The default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".}
+
+\item{...}{additional arguments}
 }
 \value{
 Object of class CVA with the following elements:

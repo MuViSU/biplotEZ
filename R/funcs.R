@@ -28,12 +28,13 @@
 #' \item{group.aes}{Vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.}
 #'
 #' @references
-#' Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. <em>Biometrika.<em> 58(3):453–467.<br><br>
-#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. <em>Understanding Biplots.<em> Chichester, England: John Wiley & Sons Ltd.<br><br>
-#' Gower, J.C. & Hand, D.J. 1996. <em>Biplots.<em> London: Chapman & Hall.
+#' Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.<br><br>
+#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
+#' Gower, J.C. & Hand, D.J. 1996. \emph{Biplots.} London: Chapman & Hall.
 #'
 #' @usage biplot(data, group.aes = NULL, center = TRUE, scaled = FALSE,
 #' Title = NULL)
+#' @aliases biplot
 #'
 #' @export
 #'
@@ -113,6 +114,7 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
 #'                           optimally approximated in the biplot. If \code{TRUE}, the correlations between
 #'                           variables are optimally approximated by the cosine of the angles between
 #'                           axes. Default is \code{FALSE}.
+#' @param ... additional arguments
 #'
 #'
 #' @return  Object of class PCA with the following elements:
@@ -136,12 +138,13 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
 #' \item{ax.one.unit}{One unit in the positive direction of each biplot axis.}
 #'
 #' @usage PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-#' group.aes = NULL, correlation.biplot = FALSE)
+#' group.aes = NULL, correlation.biplot = FALSE, ...)
+#' @aliases PCA
 #'
 #' @export
 #'
 #'@references
-#' Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. <em>Biometrika.<em> 58(3):453–467.
+#' Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.
 #'
 #' @examples
 #' biplot(iris[,1:4]) |> PCA()
@@ -212,7 +215,6 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
   class(bp)<-append(class(bp),"PCA")
   bp
 }
-# ---------------------------------------------------------------------------------------------
 
 # -------------------------------------------------------------------------------------------
 #' Canonical Variate Analysis (CVA) method
@@ -220,12 +222,13 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' @description
 #' This function produces a list of elements to be used for CVA biplot construction.
 #'
-#' @param bp Object of class biplotAn object of class \code{biplot} obtained from preceding function \code{biplot()}.
+#' @param bp Object of class \code{biplot} obtained from preceding function \code{biplot()}.
 #' @param dim.biplot Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.
 #' @param e.vects Which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.
 #' @param group.aes Vector of the same length as the number of rows in the data matrix
 #'                  for differentiated aesthetics for samples.
 #' @param weightedCVA The default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".
+#' @param ... additional arguments
 #'
 #'
 #' @return  Object of class CVA with the following elements:
@@ -248,7 +251,8 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' \item{ax.one.unit}{One unit in the positive direction of each biplot axis.}
 #'
 #' @usage CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-#' group.aes = bp$group.aes,weightedCVA = "weighted")
+#' group.aes = bp$group.aes,weightedCVA = "weighted", ...)
+#' @aliases CVA
 #'
 #' @export
 #'
@@ -336,8 +340,6 @@ ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple"
 #' @return Returns an indicator matrix.
 #' \code{Y}, indicator matrix per categorical variable
 #'
-#' @export
-#'
 #' @noRd
 indmat  <- function (groep.vec)
 {
@@ -378,6 +380,7 @@ indmat  <- function (groep.vec)
 #' @usage
 #' samples (bp,  col = ez.col, pch = 3, cex = 1, label = FALSE,
 #' label.cex = 0.75, label.side = "bottom", connected = FALSE, alpha = 1)
+#' @aliases samples
 #'
 #' @export
 #'
@@ -474,6 +477,7 @@ samples <- function (bp,  col = ez.col,
 #'  tick.label.col = tick.col, tick.label.cex = 0.6, tick.label.side = "left",
 #'  tick.label.offset = 0.5, tick.label.pos = 1, predict.col = col, predict.lwd = lwd,
 #'   predict.lty = lty, ax.names = X.names, orthogx = 0, orthogy = 0)
+#' @aliases axes
 #'
 #' @export
 #'
@@ -619,11 +623,12 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
 #' \item{lwd}{Vector of line widths for the \eqn{\alpha}-bags.}
 #'
 #' @references
-#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. <em>Understanding Biplots.<em> Chichester, England: John Wiley & Sons Ltd.<br><br>
+#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
 #'
 #' @export
 #' @usage alpha.bags(bp, alpha=0.95, which = NULL, col = ez.col, lty = 1,
 #' lwd = 1, max = 2500)
+#' @aliases alpha.bags
 #'
 #' @examples
 #' biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> alpha.bags(alpha=0.95) |> plot()
@@ -1398,10 +1403,11 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' \item{alpha}{Vector of \eqn{\alpha} values.}
 #'
 #' @references
-#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. <em>Understanding Biplots.<em> Chichester, England: John Wiley & Sons Ltd.<br><br>
+#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
 #' @export
 #' @usage concentration.ellipse(bp, df=2, kappa = NULL, which = NULL,
 #' alpha = 0.95, col = ez.col, lty = 1, lwd = 1, alpha.transparency = 0.5)
+#' @aliases concentration.ellipse
 #'
 #' @examples
 #' biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> concentration.ellipse(kappa=2) |> plot()
@@ -1473,6 +1479,10 @@ calc.concentration.ellipse <- function (X, kappa=2, covmat = NULL)
 #' @description
 #' This function enables the user to format the legend and make a required selection to display.
 #'
+#' @usage legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE, ellipses = FALSE,
+#' new = FALSE, ...)
+#' @aliases legend.type
+#'
 #' @param bp An object of class \code{biplot}.
 #' @param samples Logical argument indicating whether legend should be printed for samples, with default \code{FALSE}.
 #' @param means Logical argument indicating whether legend should be printed for means, with default \code{FLASE}.
@@ -1489,9 +1499,6 @@ calc.concentration.ellipse <- function (X, kappa=2, covmat = NULL)
 #' \item{new}{TRUE or FALSE, as specified.}
 #'
 #' @export
-#' @usage legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE, ellipses = FALSE,
-#' new = FALSE)
-#'
 #' @examples
 #' biplot (iris[,1:4], Title="Test biplot") |> PCA(group.aes = iris[,5]) |>
 #'     legend.type(samples=TRUE) |> plot()
@@ -1703,37 +1710,37 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
     }
     else
     { y1.ster <- lin.coef[2] * usr[1] + lin.coef[1]
-    y2.ster <- lin.coef[2] * usr[2] + lin.coef[1]
-    x1.ster <- (usr[3] - lin.coef[1])/lin.coef[2]
-    x2.ster <- (usr[4] - lin.coef[1])/lin.coef[2]
-    if (lin.coef[2] == 0)
-    { if (x.vals[1] < x.vals[h])
-      graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-      else
-        graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-    }
-    if (lin.coef[2] > 0)
-    {  if (x.vals[1] < x.vals[h])
-      if (y1.ster <= usr[4] & y1.ster >= usr[3])
-        graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-      else
-        graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-      else if (y2.ster <= usr[4] & y2.ster >= usr[3])
-        graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-      else
-        graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-    }
-    if (lin.coef[2] < 0)
-    {  if (x.vals[1] < x.vals[h])
-      if (y1.ster <= usr[4] & y1.ster >= usr[3])
-        graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-      else
-        graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-      else if (y2.ster <= usr[4] & y2.ster >= usr[3])
-        graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-      else
-        graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-    }
+      y2.ster <- lin.coef[2] * usr[2] + lin.coef[1]
+      x1.ster <- (usr[3] - lin.coef[1])/lin.coef[2]
+      x2.ster <- (usr[4] - lin.coef[1])/lin.coef[2]
+      if (lin.coef[2] == 0)
+      { if (x.vals[1] < x.vals[h])
+        graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+        else
+          graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+      }
+      if (lin.coef[2] > 0)
+      {  if (x.vals[1] < x.vals[h])
+        if (y1.ster <= usr[4] & y1.ster >= usr[3])
+          graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+        else
+          graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+        else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+          graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+        else
+          graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+      }
+      if (lin.coef[2] < 0)
+      {  if (x.vals[1] < x.vals[h])
+        if (y1.ster <= usr[4] & y1.ster >= usr[3])
+          graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+        else
+          graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+        else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+          graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+        else
+          graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+      }
     }
 
     invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
@@ -1765,7 +1772,8 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
       graphics::polygon(z.ellipse[[i]], border=ellipse.aes$col[i], lty=ellipse.aes$lty[i], lwd = ellipse.aes$lwd[i])
   }
 
-  Z <- x$Z
+  if (is.null(x$Z)) stop ("Add a biplot method before generating a plot")
+  else Z <- x$Z
 
   old.par <- graphics::par(pty = "s", ...)
   on.exit(graphics::par(old.par))

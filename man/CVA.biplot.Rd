@@ -14,7 +14,7 @@
 )
 }
 \arguments{
-\item{bp}{Object of class biplotAn object of class \code{biplot} obtained from preceding function \code{biplot()}.}
+\item{bp}{Object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
 \item{dim.biplot}{Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
 
@@ -24,6 +24,8 @@
 for differentiated aesthetics for samples.}
 
 \item{weightedCVA}{The default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".}
+
+\item{...}{additional arguments}
 }
 \value{
 an object of class CVA

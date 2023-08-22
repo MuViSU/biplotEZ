@@ -18,13 +18,6 @@ are included for visual enhancements and interpretation.
 You can install the development version of biplotEZ like this:
 
 ``` r
-library(githubinstall)
-githubinstall("biplotEZ_beta")
-```
-
-or alternatively
-
-``` r
 library(devtools)
 devtools::install_github("MuViSU/biplotEZ_beta")
 ```

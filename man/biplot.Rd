@@ -40,7 +40,7 @@ display representations of the variables on which the samples are measured.
 biplot(data = iris)
 }
 \references{
-Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. \if{html}{\out{<em>}}Biometrika.\if{html}{\out{<em>}} 58(3):453–467.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
-Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \if{html}{\out{<em>}}Understanding Biplots.\if{html}{\out{<em>}} Chichester, England: John Wiley & Sons Ltd.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
-Gower, J.C. & Hand, D.J. 1996. \if{html}{\out{<em>}}Biplots.\if{html}{\out{<em>}} London: Chapman & Hall.
+Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
+Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
+Gower, J.C. & Hand, D.J. 1996. \emph{Biplots.} London: Chapman & Hall.
 }

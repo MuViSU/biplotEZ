@@ -5,7 +5,7 @@
 \title{Legend type}
 \usage{
 legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE, ellipses = FALSE,
-new = FALSE)
+new = FALSE, ...)
 }
 \arguments{
 \item{bp}{An object of class \code{biplot}.}

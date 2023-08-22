@@ -1,6 +1,6 @@
 Package: biplotEZ
-Title: Providing users with EZ-to-Use Biplots
-Version: 0.0.1.0000
+Title: Providing Users with EZ-to-Use Biplots
+Version: 1.0.0.0000
 Authors@R: 
     person("MuViSU", , , "muvisu@sun.ac.za", role = c("aut", "cre"))
 Description: The goal of biplotEZ is to provide users an EZ-to-use platform for
