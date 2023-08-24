@@ -34,8 +34,8 @@ A list with the following components is available:
 \item{label}{TRUE or FALSE, as specified.}
 \item{label.cex}{Expansion of the label.}
 \item{label.side}{Side at which to plot the label of samples.}
-\item{connected}{TRUE or FALSE, as specified.}
-\item{alpha}{Opacity of the samples.}
+\item{connected}{TRUE or FALSE, as specified. (not in current version)}
+\item{alpha}{Opacity of the samples. (not in current version)}
 \item{g}{Number of groups.}
 }
 \description{

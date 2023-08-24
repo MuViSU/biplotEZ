@@ -373,8 +373,8 @@ indmat  <- function (groep.vec)
 #' \item{label}{TRUE or FALSE, as specified.}
 #' \item{label.cex}{Expansion of the label.}
 #' \item{label.side}{Side at which to plot the label of samples.}
-#' \item{connected}{TRUE or FALSE, as specified.}
-#' \item{alpha}{Opacity of the samples.}
+#' \item{connected}{TRUE or FALSE, as specified. (not in current version)}
+#' \item{alpha}{Opacity of the samples. (not in current version)}
 #' \item{g}{Number of groups.}
 #'
 #' @usage
@@ -420,7 +420,7 @@ samples <- function (bp,  col = ez.col,
 #'
 #'
 #' @param bp An object of class \code{biplot}.
-#' @param X.names Column names of \code{bp}.
+#' @param X.names Refers to the column names of \code{bp} to specify which axes to label.
 #' @param which  Vector of columns to be displayed in the biplot, with default \code{1:bp$p}.
 #' @param col Axis colour, with default \code{grey(0.7)}.
 #' @param lwd Axis line width, with default \code{1}.

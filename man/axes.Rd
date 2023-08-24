@@ -14,7 +14,7 @@ lwd = 1, lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75,
 \arguments{
 \item{bp}{An object of class \code{biplot}.}
 
-\item{X.names}{Column names of \code{bp}.}
+\item{X.names}{Refers to the column names of \code{bp} to specify which axes to label.}
 
 \item{which}{Vector of columns to be displayed in the biplot, with default \code{1:bp$p}.}
 
