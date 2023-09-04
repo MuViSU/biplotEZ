@@ -8,35 +8,35 @@ samples (bp,  col = ez.col, pch = 3, cex = 1, label = FALSE,
 label.cex = 0.75, label.side = "bottom", connected = FALSE, alpha = 1)
 }
 \arguments{
-\item{bp}{An object of class \code{biplot}.}
+\item{bp}{an object of class \code{biplot}.}
 
-\item{col}{Sample colour, with default \code{blue}.}
+\item{col}{sample colour, with default \code{blue}.}
 
-\item{pch}{Sample plotting character, with default \code{+}.}
+\item{pch}{sample plotting character, with default \code{+}.}
 
-\item{cex}{Sample character expansion, with default \code{1}.}
+\item{cex}{sample character expansion, with default \code{1}.}
 
-\item{label}{Logical argument, whether samples should be labelled or not, with default \code{FALSE}.}
+\item{label}{logical, whether samples should be labelled or not, with default \code{FALSE}.}
 
-\item{label.cex}{Label text expansion, with default \code{0.75}.}
+\item{label.cex}{label text expansion, with default \code{0.75}.}
 
-\item{label.side}{Side of the plotting character where label appears, with default \code{bottom}.}
+\item{label.side}{side of the plotting character where label appears, with default \code{bottom}.}
 
-\item{connected}{Logical argument, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.}
+\item{connected}{logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.}
 
-\item{alpha}{Opacity of sample plotting character, default is \code{1}.}
+\item{alpha}{opacity of sample plotting character, default is \code{1}.}
 }
 \value{
 A list with the following components is available:
-\item{col}{Colour of the samples.}
-\item{pch}{Plotting character of the samples.}
-\item{cex}{Expansion of the plotting character of the samples.}
-\item{label}{TRUE or FALSE, as specified.}
-\item{label.cex}{Expansion of the label.}
-\item{label.side}{Side at which to plot the label of samples.}
-\item{connected}{TRUE or FALSE, as specified. (not in current version)}
-\item{alpha}{Opacity of the samples. (not in current version)}
-\item{g}{Number of groups.}
+\item{col}{colour of the samples.}
+\item{pch}{plotting character of the samples.}
+\item{cex}{expansion of the plotting character of the samples.}
+\item{label}{TRUE or FALSE, whether samples should be labelled.}
+\item{label.cex}{expansion of the label.}
+\item{label.side}{side at which to plot the label of samples.}
+\item{connected}{TRUE or FALSE, whether samples should be connected in row order of X. (not in current version)}
+\item{alpha}{opacity of the samples. (not in current version)}
+\item{g}{number of groups.}
 }
 \description{
 This function allows formatting changes to samples.

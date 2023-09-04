@@ -9,9 +9,12 @@
 \arguments{
 \item{x}{An object of class \code{biplot}.}
 
-\item{exp.factor}{factor to expand plotting area beyond samples}
+\item{exp.factor}{factor to expand plotting area beyond samples.}
 
-\item{...}{additional arguments}
+\item{...}{additional arguments.}
+}
+\value{
+An object of class \code{biplot}.
 }
 \description{
 Generic Plotting function of objects of class biplot

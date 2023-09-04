@@ -14,16 +14,16 @@
 )
 }
 \arguments{
-\item{bp}{An object of class \code{biplot} obtained from preceding function \code{biplot()}.}
+\item{bp}{an object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
-\item{dim.biplot}{Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
+\item{dim.biplot}{dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
 
-\item{e.vects}{Which eigenvectors (principal components) to extract, with default \code{1:dim.biplot}.}
+\item{e.vects}{which eigenvectors (principal components) to extract, with default \code{1:dim.biplot}.}
 
-\item{group.aes}{Optional argument. Vector of the same length as the number of rows in the data matrix
+\item{group.aes}{vector of the same length as the number of rows in the data matrix
 for differentiated aesthetics for samples.}
 
-\item{correlation.biplot}{If \code{FALSE}, the distances between sample points are
+\item{correlation.biplot}{logical, if \code{FALSE}, the distances between sample points are
 optimally approximated in the biplot. If \code{TRUE}, the correlations between
 variables are optimally approximated by the cosine of the angles between
 axes. Default is \code{FALSE}.}
@@ -31,10 +31,10 @@ axes. Default is \code{FALSE}.}
 \item{...}{additional arguments}
 }
 \value{
-an object of class PCA
+an object of class PCA, inherits from class biplot.
 }
 \description{
-Performs calculations for a PCA biplot
+Performs calculations for a PCA biplot.
 }
 \examples{
 biplot(iris[,1:4]) |> PCA()

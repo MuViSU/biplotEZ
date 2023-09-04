@@ -5,34 +5,36 @@
 \title{Concentration ellipses (\eqn{\kappa}-ellipses)}
 \usage{
 concentration.ellipse(bp, df=2, kappa = NULL, which = NULL,
-alpha = 0.95, col = ez.col, lty = 1, lwd = 1, alpha.transparency = 0.5)
+alpha = 0.95, col = ez.col, lty = 1, lwd = 1, alpha.transparency = 0.5, trace = TRUE)
 }
 \arguments{
-\item{bp}{An object of class \code{biplot}.}
+\item{bp}{an object of class \code{biplot}.}
 
-\item{df}{Degrees of freedom, with default \code{2}.}
+\item{df}{degrees of freedom, with default \code{2}.}
 
-\item{kappa}{Value to construct \eqn{\kappa}-ellipse (the value of \eqn{\kappa}).}
+\item{kappa}{value to construct \eqn{\kappa}-ellipse (the value of \eqn{\kappa}).}
 
-\item{which}{The selection of the group for ellipse construction.}
+\item{which}{the selection of the group for ellipse construction.}
 
-\item{alpha}{Size of \eqn{\alpha}-bag, with default \code{0.95}.}
+\item{alpha}{size of \eqn{\alpha}-bag, with default \code{0.95}.}
 
-\item{col}{Colour of ellipse. Multiple \eqn{\kappa}-ellipse for one group will be displayed in the same colour.}
+\item{col}{colour of ellipse. Multiple \eqn{\kappa}-ellipse for one group will be displayed in the same colour.}
 
-\item{lty}{Line type of ellipse. The same line type will be used per value of \eqn{\kappa}.}
+\item{lty}{line type of ellipse. The same line type will be used per value of \eqn{\kappa}.}
 
-\item{lwd}{Line width of ellipse. The same line width will be used per value of \eqn{\kappa}.}
+\item{lwd}{line width of ellipse. The same line width will be used per value of \eqn{\kappa}.}
 
-\item{alpha.transparency}{Level of opacity, with default \code{0.5}.}
+\item{alpha.transparency}{level of opacity, with default \code{0.5}.}
+
+\item{trace}{logical, indicating progress of computation.}
 }
 \value{
 A list with the following components is available:
-\item{conc.ellipses}{List of coordinates for the \eqn{\kappa}-ellipses for each group.}
-\item{col}{Vector of colours for the \eqn{\kappa}-ellipses.}
-\item{lty}{Vector of line types for the \eqn{\kappa}-ellipses.}
-\item{lwd}{Vector of line widths for the \eqn{\kappa}-ellipses.}
-\item{alpha}{Vector of \eqn{\alpha} values.}
+\item{conc.ellipses}{list of coordinates for the \eqn{\kappa}-ellipses for each group.}
+\item{col}{vector of colours for the \eqn{\kappa}-ellipses.}
+\item{lty}{vector of line types for the \eqn{\kappa}-ellipses.}
+\item{lwd}{vector of line widths for the \eqn{\kappa}-ellipses.}
+\item{alpha}{vector of \eqn{\alpha} values.}
 }
 \description{
 This function produces \eqn{\kappa}-ellipses, which is a useful geometrical description of the
@@ -43,5 +45,5 @@ biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> concentration.ellipse(kappa=2)
 
 }
 \references{
-Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
+Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
 }

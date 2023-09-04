@@ -8,25 +8,26 @@ biplot(data, group.aes = NULL, center = TRUE, scaled = FALSE,
 Title = NULL)
 }
 \arguments{
-\item{data}{Required argument. A dataframe or matrix containing all variables the user wants to analyse.}
+\item{data}{a dataframe or matrix containing all variables the user wants to analyse.}
 
-\item{group.aes}{Optional argument. Variable from the data to be used as a grouping variable.}
+\item{group.aes}{variable from the data to be used as a grouping variable.}
 
-\item{center}{Logical argument indicating whether {data} should be column centered, with default \code{TRUE}.}
+\item{center}{logical, indicating whether {data} should be column centered, with default \code{TRUE}.}
 
-\item{scaled}{Logical argument indicating whether {data} should be standardized to unit column variances, with default \code{FALSE}.}
+\item{scaled}{logical, indicating whether {data} should be standardized to unit column variances, with default \code{FALSE}.}
 
-\item{Title}{Optional argument. Title of the biplot to be rendered, enter text in "  ".}
+\item{Title}{title of the biplot to be rendered, enter text in "  ".}
 }
 \value{
 A list with the following components is available:
-\item{X}{Matrix of the centered and scaled numeric variables.}
-\item{raw.X}{Original data.}
-\item{center}{TRUE or FALSE, as specified.}
-\item{scaled}{TRUE or FALSE, as specified.}
-\item{means}{Vector of means for each numeric variable.}
-\item{sd}{Vector of standard deviations for each numeric variable.}
-\item{group.aes}{Vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.}
+\item{X}{matrix of the centered and scaled numeric variables.}
+\item{raw.X}{original data.}
+\item{center}{TRUE or FALSE, whether X is centered.}
+\item{scaled}{TRUE or FALSE, wether X is scaled.}
+\item{means}{vector of means for each numeric variable.}
+\item{sd}{vector of standard deviations for each numeric variable.}
+\item{group.aes}{vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.}
+\item{Title}{title of the biplot to be rendered}
 }
 \description{
 This function produces a list of elements to be used when producing a biplot,
@@ -40,7 +41,7 @@ display representations of the variables on which the samples are measured.
 biplot(data = iris)
 }
 \references{
-Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
-Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
-Gower, J.C. & Hand, D.J. 1996. \emph{Biplots.} London: Chapman & Hall.
+Gabriel, K.R. (1971) The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
+Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
+Gower, J.C. & Hand, D.J.(1996, ISBN: 0-412-71630-5) \emph{Biplots.} London: Chapman & Hall.
 }

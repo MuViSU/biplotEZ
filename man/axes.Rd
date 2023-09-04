@@ -12,81 +12,81 @@ lwd = 1, lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75,
   predict.lty = lty, ax.names = X.names, orthogx = 0, orthogy = 0)
 }
 \arguments{
-\item{bp}{An object of class \code{biplot}.}
+\item{bp}{an object of class \code{biplot}.}
 
-\item{X.names}{Refers to the column names of \code{bp} to specify which axes to label.}
+\item{X.names}{refers to the column names of \code{bp} to specify which axes to label.}
 
-\item{which}{Vector of columns to be displayed in the biplot, with default \code{1:bp$p}.}
+\item{which}{vector of columns to be displayed in the biplot, with default \code{1:bp$p}.}
 
-\item{col}{Axis colour, with default \code{grey(0.7)}.}
+\item{col}{axis colour, with default \code{grey(0.7)}.}
 
-\item{lwd}{Axis line width, with default \code{1}.}
+\item{lwd}{axis line width, with default \code{1}.}
 
-\item{lty}{Axis line type, with default \code{1}.}
+\item{lty}{axis line type, with default \code{1}.}
 
-\item{label.dir}{Direction of axis label, with default \code{Orthog}.}
+\item{label.dir}{direction of axis label, with default \code{Orthog}.}
 
-\item{label.col}{Axis label colour, with default, \code{col}.}
+\item{label.col}{axis label colour, with default, \code{col}.}
 
-\item{label.cex}{Aixs label expansion, with default \code{0.75}.}
+\item{label.cex}{axis label expansion, with default \code{0.75}.}
 
-\item{label.dist}{Axis label distance from axis, with default \code{0}.}
+\item{label.dist}{axis label distance from axis, with default \code{0}.}
 
-\item{ticks}{Number of tick marks per axis, with default \code{5}.}
+\item{ticks}{number of tick marks per axis, with default \code{5}.}
 
-\item{tick.col}{Tick mark colour, with default \code{col}.}
+\item{tick.col}{tick mark colour, with default \code{col}.}
 
-\item{tick.size}{Tick mark size, with default \code{1}.}
+\item{tick.size}{tick mark size, with default \code{1}.}
 
-\item{tick.label}{Logical argument, whether axes should be labelled or not, with default \code{TRUE}.}
+\item{tick.label}{logical, whether axes should be labelled or not, with default \code{TRUE}.}
 
-\item{tick.label.col}{Tick mark label colour, with default \code{tick.col}.}
+\item{tick.label.col}{tick mark label colour, with default \code{tick.col}.}
 
-\item{tick.label.cex}{Tick mark label expansion, with default \code{0.6}.}
+\item{tick.label.cex}{tick mark label expansion, with default \code{0.6}.}
 
-\item{tick.label.side}{Side of the tick mark label, with default \code{left}.}
+\item{tick.label.side}{side of the tick mark label, with default \code{left}.}
 
-\item{tick.label.offset}{Tick mark label offset, with default \code{0.5}.}
+\item{tick.label.offset}{tick mark label offset, with default \code{0.5}.}
 
-\item{tick.label.pos}{Side of the tick mark label, with default \code{below}.}
+\item{tick.label.pos}{side of the tick mark label, with default \code{below}.}
 
-\item{predict.col}{Predicted samples colour, with default \code{col}.}
+\item{predict.col}{predicted samples colour, with default \code{col}.}
 
-\item{predict.lwd}{Predicted samples line width, with default \code{lwd}.}
+\item{predict.lwd}{predicted samples line width, with default \code{lwd}.}
 
-\item{predict.lty}{Predicted samples line type, with default \code{lty}.}
+\item{predict.lty}{predicted samples line type, with default \code{lty}.}
 
-\item{ax.names}{Vector of size \code{p} containing user defined names for the variables.}
+\item{ax.names}{vector of size \code{p} containing user defined names for the variables.}
 
-\item{orthogx}{,the horizontal translation, with default \code{0}.}
+\item{orthogx}{the horizontal translation, with default \code{0}.}
 
-\item{orthogy}{,the vertical translation with default \code{0}.}
+\item{orthogy}{the vertical translation with default \code{0}.}
 }
 \value{
 A list with the following components is available:
-\item{which}{Vector of the columns displayed as axes.}
-\item{col}{Vector of axis colours.}
-\item{lwd}{Vector of axis line widths.}
-\item{lty}{Vector of axis line types.}
-\item{label.dir}{Direction of the axis labels.}
-\item{label.col}{Vector of axis label colours.}
-\item{label.cex}{Vector of axis labels expansions.}
-\item{label.dist}{Vector of axis label distances from axes.}
-\item{ticks}{Vector representing the number of tick marks per axis.}
-\item{tick.col}{Vector of tick mark colours.}
-\item{tick.size}{Vector of tick mark sizes.}
-\item{tick.label}{Vector of logical values indicating whether axes are labelled.}
-\item{tick.label.col}{Vector of tick mark label colours.}
-\item{tick.label.cex}{Vector of tick mark label expansions.}
-\item{tick.label.side}{Vector of the side of tick mark labels.}
-\item{tick.label.offset}{Vector of tick mark label offsets.}
-\item{tick.label.pos}{Vector of the side of tick mark labels.}
-\item{predict.col}{Vector of colours for the predicted samples.}
-\item{predict.lty}{Vector of line types for the predicted samples.}
-\item{predict.lwd}{Vector of line widths for the predicted samples.}
-\item{names}{Vector of variable names defined by the user.}
-\item{orthogx}{Vector of the horisontal translations for each axis.}
-\item{orthogy}{Vector of the vertical translations for each axis.}
+\item{which}{vector of the columns displayed as axes.}
+\item{col}{vector of axis colours.}
+\item{lwd}{vector of axis line widths.}
+\item{lty}{vector of axis line types.}
+\item{label.dir}{direction of the axis labels.}
+\item{label.col}{vector of axis label colours.}
+\item{label.cex}{vector of axis labels expansions.}
+\item{label.dist}{vector of axis label distances from axes.}
+\item{ticks}{vector representing the number of tick marks per axis.}
+\item{tick.col}{vector of tick mark colours.}
+\item{tick.size}{vector of tick mark sizes.}
+\item{tick.label}{vector of logical values indicating whether axes are labelled.}
+\item{tick.label.col}{vector of tick mark label colours.}
+\item{tick.label.cex}{vector of tick mark label expansions.}
+\item{tick.label.side}{vector of the side of tick mark labels.}
+\item{tick.label.offset}{vector of tick mark label offsets.}
+\item{tick.label.pos}{vector of the side of tick mark labels.}
+\item{predict.col}{vector of colours for the predicted samples.}
+\item{predict.lty}{vector of line types for the predicted samples.}
+\item{predict.lwd}{vector of line widths for the predicted samples.}
+\item{names}{vector of variable names defined by the user.}
+\item{orthogx}{vector of the horisontal translations for each axis.}
+\item{orthogy}{vector of the vertical translations for each axis.}
 }
 \description{
 This function allows formatting changes to axes.

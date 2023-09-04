@@ -12,25 +12,26 @@
 #' distribution of a sample in a few dimensions and they superimpose on this
 #' display representations of the variables on which the samples are measured.
 #'
-#' @param data Required argument. A dataframe or matrix containing all variables the user wants to analyse.
-#' @param group.aes Optional argument. Variable from the data to be used as a grouping variable.
-#' @param center Logical argument indicating whether {data} should be column centered, with default \code{TRUE}.
-#' @param scaled Logical argument indicating whether {data} should be standardized to unit column variances, with default \code{FALSE}.
-#' @param Title Optional argument. Title of the biplot to be rendered, enter text in "  ".
+#' @param data a dataframe or matrix containing all variables the user wants to analyse.
+#' @param group.aes variable from the data to be used as a grouping variable.
+#' @param center logical, indicating whether {data} should be column centered, with default \code{TRUE}.
+#' @param scaled logical, indicating whether {data} should be standardized to unit column variances, with default \code{FALSE}.
+#' @param Title title of the biplot to be rendered, enter text in "  ".
 #'
 #' @return A list with the following components is available:
-#' \item{X}{Matrix of the centered and scaled numeric variables.}
-#' \item{raw.X}{Original data.}
-#' \item{center}{TRUE or FALSE, as specified.}
-#' \item{scaled}{TRUE or FALSE, as specified.}
-#' \item{means}{Vector of means for each numeric variable.}
-#' \item{sd}{Vector of standard deviations for each numeric variable.}
-#' \item{group.aes}{Vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.}
+#' \item{X}{matrix of the centered and scaled numeric variables.}
+#' \item{raw.X}{original data.}
+#' \item{center}{TRUE or FALSE, whether X is centered.}
+#' \item{scaled}{TRUE or FALSE, wether X is scaled.}
+#' \item{means}{vector of means for each numeric variable.}
+#' \item{sd}{vector of standard deviations for each numeric variable.}
+#' \item{group.aes}{vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.}
+#' \item{Title}{title of the biplot to be rendered}
 #'
 #' @references
-#' Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.<br><br>
-#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
-#' Gower, J.C. & Hand, D.J. 1996. \emph{Biplots.} London: Chapman & Hall.
+#' Gabriel, K.R. (1971) The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.<br><br>
+#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
+#' Gower, J.C. & Hand, D.J.(1996, ISBN: 0-412-71630-5) \emph{Biplots.} London: Chapman & Hall.
 #'
 #' @usage biplot(data, group.aes = NULL, center = TRUE, scaled = FALSE,
 #' Title = NULL)
@@ -105,12 +106,12 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
 #' @description
 #' This function produces a list of elements to be used for PCA biplot construction.
 #'
-#' @param bp An object of class \code{biplot} obtained from preceding function \code{biplot()}.
-#' @param dim.biplot Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.
-#' @param e.vects Which eigenvectors (principal components) to extract, with default \code{1:dim.biplot}.
-#' @param group.aes Optional argument. Vector of the same length as the number of rows in the data matrix
+#' @param bp an object of class \code{biplot} obtained from preceding function \code{biplot()}.
+#' @param dim.biplot dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.
+#' @param e.vects which eigenvectors (principal components) to extract, with default \code{1:dim.biplot}.
+#' @param group.aes vector of the same length as the number of rows in the data matrix
 #'                  for differentiated aesthetics for samples.
-#' @param correlation.biplot If \code{FALSE}, the distances between sample points are
+#' @param correlation.biplot logical, if \code{FALSE}, the distances between sample points are
 #'                           optimally approximated in the biplot. If \code{TRUE}, the correlations between
 #'                           variables are optimally approximated by the cosine of the angles between
 #'                           axes. Default is \code{FALSE}.
@@ -118,24 +119,24 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
 #'
 #'
 #' @return  Object of class PCA with the following elements:
-#' \item{X}{Matrix of the centered and scaled numeric variables.}
-#' \item{Xcat}{Matrix of the categorical variables.}
-#' \item{raw.X}{Original data.}
-#' \item{na.action}{Vector of observations that have been removed.}
-#' \item{center}{TRUE or FALSE, as specified.}
-#' \item{scaled}{TRUE or FALSE, as specified.}
-#' \item{means}{Mean of each numerical variable.}
-#' \item{sd}{Standard deviation of each numerical variable.}
-#' \item{n}{Number of observations.}
-#' \item{p}{Number of variables.}
-#' \item{group.aes}{Vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples.}
-#' \item{g.names}{Descriptive name to be used for group labels.}
-#' \item{g}{Number of groups.}
-#' \item{Title}{Title of the biplot to be rendered, as specified.}
-#' \item{Z}{Matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
-#' \item{Vr}{Matrix consisting of the eigenvectors as columns.}
-#' \item{Xhat}{Predictions of the samples.}
-#' \item{ax.one.unit}{One unit in the positive direction of each biplot axis.}
+#' \item{X}{matrix of the centered and scaled numeric variables.}
+#' \item{Xcat}{matrix of the categorical variables.}
+#' \item{raw.X}{original data.}
+#' \item{na.action}{vector of observations that have been removed.}
+#' \item{center}{TRUE or FALSE, whether X is centred.}
+#' \item{scaled}{TRUE or FALSE, whether X is scaled.}
+#' \item{means}{mean of each numerical variable.}
+#' \item{sd}{standard deviation of each numerical variable.}
+#' \item{n}{number of observations.}
+#' \item{p}{number of variables.}
+#' \item{group.aes}{vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples.}
+#' \item{g.names}{descriptive name to be used for group labels.}
+#' \item{g}{number of groups.}
+#' \item{Title}{title of the biplot to be rendered}
+#' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+#' \item{Vr}{matrix consisting of the eigenvectors as columns.}
+#' \item{Xhat}{predictions of the samples.}
+#' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
 #'
 #' @usage PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 #' group.aes = NULL, correlation.biplot = FALSE, ...)
@@ -144,7 +145,7 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
 #' @export
 #'
 #'@references
-#' Gabriel, K.R. 1971. The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.
+#' Gabriel, K.R. (1971) The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.
 #'
 #' @examples
 #' biplot(iris[,1:4]) |> PCA()
@@ -156,11 +157,11 @@ PCA <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=
 
 #' PCA biplot
 #'
-#' @description Performs calculations for a PCA biplot
+#' @description Performs calculations for a PCA biplot.
 #'
 #' @inheritParams PCA
 #'
-#' @return an object of class PCA
+#' @return an object of class PCA, inherits from class biplot.
 #' @export
 #'
 #' @examples
@@ -222,33 +223,33 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' @description
 #' This function produces a list of elements to be used for CVA biplot construction.
 #'
-#' @param bp Object of class \code{biplot} obtained from preceding function \code{biplot()}.
-#' @param dim.biplot Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.
-#' @param e.vects Which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.
-#' @param group.aes Vector of the same length as the number of rows in the data matrix
+#' @param bp object of class \code{biplot} obtained from preceding function \code{biplot()}.
+#' @param dim.biplot dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.
+#' @param e.vects which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.
+#' @param group.aes vector of the same length as the number of rows in the data matrix
 #'                  for differentiated aesthetics for samples.
-#' @param weightedCVA The default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".
+#' @param weightedCVA the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".
 #' @param ... additional arguments
 #'
 #'
 #' @return  Object of class CVA with the following elements:
-#' \item{X}{Matrix of the centered and scaled numeric variables.}
-#' \item{Xcat}{Matrix of the categorical variables.}
-#' \item{raw.X}{Original data.}
-#' \item{na.action}{Vector of observations that have been removed.}
-#' \item{center}{TRUE or FALSE, as specified.}
-#' \item{scaled}{TRUE or FALSE, as specified.}
-#' \item{means}{Mean of each numerical variable.}
-#' \item{sd}{Standard deviation of each numerical variable.}
-#' \item{n}{Number of observations.}
-#' \item{p}{Number of variables.}
-#' \item{group.aes}{Vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples. }
-#' \item{g.names}{Descriptive name to be used for group labels.}
-#' \item{g}{Number of groups.}
-#' \item{Title}{Title of the biplot to be rendered, as specified.}
-#' \item{Z}{Matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
-#' \item{Xhat}{Predictions of the samples.}
-#' \item{ax.one.unit}{One unit in the positive direction of each biplot axis.}
+#' \item{X}{matrix of the centered and scaled numeric variables.}
+#' \item{Xcat}{matrix of the categorical variables.}
+#' \item{raw.X}{original data.}
+#' \item{na.action}{vector of observations that have been removed.}
+#' \item{center}{TRUE or FALSE, whether X is centred.}
+#' \item{scaled}{TRUE or FALSE, whether X is scaled.}
+#' \item{means}{mean of each numerical variable.}
+#' \item{sd}{standard deviation of each numerical variable.}
+#' \item{n}{number of observations.}
+#' \item{p}{number of variables.}
+#' \item{group.aes}{vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples. }
+#' \item{g.names}{descriptive name to be used for group labels.}
+#' \item{g}{number of groups.}
+#' \item{Title}{title of the biplot to be rendered.}
+#' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+#' \item{Xhat}{predictions of the samples.}
+#' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
 #'
 #' @usage CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 #' group.aes = bp$group.aes,weightedCVA = "weighted", ...)
@@ -266,11 +267,11 @@ CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.aes = b
 
 #' CVA biplot
 #'
-#' @description Performs calculations for a CVA biplot
+#' @description Performs calculations for a CVA biplot.
 #'
 #' @inheritParams CVA
 #'
-#' @return an object of class CVA
+#' @return an object of class CVA, inherits from class biplot.
 #' @export
 #'
 #' @examples
@@ -335,10 +336,9 @@ ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple"
 
 #' indmat
 #'
-#' @param groep.vec Grouping
+#' @param groep.vec vector of grouping labels
 #'
-#' @return Returns an indicator matrix.
-#' \code{Y}, indicator matrix per categorical variable
+#' @return an indicator matrix.
 #'
 #' @noRd
 indmat  <- function (groep.vec)
@@ -356,26 +356,26 @@ indmat  <- function (groep.vec)
 #' @description
 #' This function allows formatting changes to samples.
 #'
-#' @param bp An object of class \code{biplot}.
-#' @param col Sample colour, with default \code{blue}.
-#' @param pch Sample plotting character, with default \code{+}.
-#' @param cex Sample character expansion, with default \code{1}.
-#' @param label Logical argument, whether samples should be labelled or not, with default \code{FALSE}.
-#' @param label.cex Label text expansion, with default \code{0.75}.
-#' @param label.side Side of the plotting character where label appears, with default \code{bottom}.
-#' @param connected Logical argument, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.
-#' @param alpha Opacity of sample plotting character, default is \code{1}.
+#' @param bp an object of class \code{biplot}.
+#' @param col sample colour, with default \code{blue}.
+#' @param pch sample plotting character, with default \code{+}.
+#' @param cex sample character expansion, with default \code{1}.
+#' @param label logical, whether samples should be labelled or not, with default \code{FALSE}.
+#' @param label.cex label text expansion, with default \code{0.75}.
+#' @param label.side side of the plotting character where label appears, with default \code{bottom}.
+#' @param connected logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.
+#' @param alpha opacity of sample plotting character, default is \code{1}.
 #'
 #' @return A list with the following components is available:
-#' \item{col}{Colour of the samples.}
-#' \item{pch}{Plotting character of the samples.}
-#' \item{cex}{Expansion of the plotting character of the samples.}
-#' \item{label}{TRUE or FALSE, as specified.}
-#' \item{label.cex}{Expansion of the label.}
-#' \item{label.side}{Side at which to plot the label of samples.}
-#' \item{connected}{TRUE or FALSE, as specified. (not in current version)}
-#' \item{alpha}{Opacity of the samples. (not in current version)}
-#' \item{g}{Number of groups.}
+#' \item{col}{colour of the samples.}
+#' \item{pch}{plotting character of the samples.}
+#' \item{cex}{expansion of the plotting character of the samples.}
+#' \item{label}{TRUE or FALSE, whether samples should be labelled.}
+#' \item{label.cex}{expansion of the label.}
+#' \item{label.side}{side at which to plot the label of samples.}
+#' \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X. (not in current version)}
+#' \item{alpha}{opacity of the samples. (not in current version)}
+#' \item{g}{number of groups.}
 #'
 #' @usage
 #' samples (bp,  col = ez.col, pch = 3, cex = 1, label = FALSE,
@@ -389,8 +389,6 @@ samples <- function (bp,  col = ez.col,
                      pch = 3, cex = 1, label = FALSE, label.cex = 0.75, label.side = "bottom",
                      connected=FALSE, alpha = 1)
 {
-  ##g available in bp
-  #to test now without bp$g.names
   g <- bp$g
   while (length(col) < g) col <- c(col, col)
   col <- as.vector(col[1:g])
@@ -419,56 +417,56 @@ samples <- function (bp,  col = ez.col,
 #' This function allows formatting changes to axes.
 #'
 #'
-#' @param bp An object of class \code{biplot}.
-#' @param X.names Refers to the column names of \code{bp} to specify which axes to label.
-#' @param which  Vector of columns to be displayed in the biplot, with default \code{1:bp$p}.
-#' @param col Axis colour, with default \code{grey(0.7)}.
-#' @param lwd Axis line width, with default \code{1}.
-#' @param lty Axis line type, with default \code{1}.
-#' @param label.dir Direction of axis label, with default \code{Orthog}.
-#' @param label.col Axis label colour, with default, \code{col}.
-#' @param label.cex Aixs label expansion, with default \code{0.75}.
-#' @param label.dist Axis label distance from axis, with default \code{0}.
-#' @param ticks Number of tick marks per axis, with default \code{5}.
-#' @param tick.col Tick mark colour, with default \code{col}.
-#' @param tick.size Tick mark size, with default \code{1}.
-#' @param tick.label Logical argument, whether axes should be labelled or not, with default \code{TRUE}.
-#' @param tick.label.col Tick mark label colour, with default \code{tick.col}.
-#' @param tick.label.cex Tick mark label expansion, with default \code{0.6}.
-#' @param tick.label.side Side of the tick mark label, with default \code{left}.
-#' @param tick.label.offset Tick mark label offset, with default \code{0.5}.
-#' @param tick.label.pos Side of the tick mark label, with default \code{below}.
-#' @param predict.col Predicted samples colour, with default \code{col}.
-#' @param predict.lwd Predicted samples line width, with default \code{lwd}.
-#' @param predict.lty Predicted samples line type, with default \code{lty}.
-#' @param ax.names Vector of size \code{p} containing user defined names for the variables.
-#' @param orthogx ,the horizontal translation, with default \code{0}.
-#' @param orthogy ,the vertical translation with default \code{0}.
+#' @param bp an object of class \code{biplot}.
+#' @param X.names refers to the column names of \code{bp} to specify which axes to label.
+#' @param which  vector of columns to be displayed in the biplot, with default \code{1:bp$p}.
+#' @param col axis colour, with default \code{grey(0.7)}.
+#' @param lwd axis line width, with default \code{1}.
+#' @param lty axis line type, with default \code{1}.
+#' @param label.dir direction of axis label, with default \code{Orthog}.
+#' @param label.col axis label colour, with default, \code{col}.
+#' @param label.cex axis label expansion, with default \code{0.75}.
+#' @param label.dist axis label distance from axis, with default \code{0}.
+#' @param ticks number of tick marks per axis, with default \code{5}.
+#' @param tick.col tick mark colour, with default \code{col}.
+#' @param tick.size tick mark size, with default \code{1}.
+#' @param tick.label logical, whether axes should be labelled or not, with default \code{TRUE}.
+#' @param tick.label.col tick mark label colour, with default \code{tick.col}.
+#' @param tick.label.cex tick mark label expansion, with default \code{0.6}.
+#' @param tick.label.side side of the tick mark label, with default \code{left}.
+#' @param tick.label.offset tick mark label offset, with default \code{0.5}.
+#' @param tick.label.pos side of the tick mark label, with default \code{below}.
+#' @param predict.col predicted samples colour, with default \code{col}.
+#' @param predict.lwd predicted samples line width, with default \code{lwd}.
+#' @param predict.lty predicted samples line type, with default \code{lty}.
+#' @param ax.names vector of size \code{p} containing user defined names for the variables.
+#' @param orthogx the horizontal translation, with default \code{0}.
+#' @param orthogy the vertical translation with default \code{0}.
 #'
 #' @return A list with the following components is available:
-#' \item{which}{Vector of the columns displayed as axes.}
-#' \item{col}{Vector of axis colours.}
-#' \item{lwd}{Vector of axis line widths.}
-#' \item{lty}{Vector of axis line types.}
-#' \item{label.dir}{Direction of the axis labels.}
-#' \item{label.col}{Vector of axis label colours.}
-#' \item{label.cex}{Vector of axis labels expansions.}
-#' \item{label.dist}{Vector of axis label distances from axes.}
-#' \item{ticks}{Vector representing the number of tick marks per axis.}
-#' \item{tick.col}{Vector of tick mark colours.}
-#' \item{tick.size}{Vector of tick mark sizes.}
-#' \item{tick.label}{Vector of logical values indicating whether axes are labelled.}
-#' \item{tick.label.col}{Vector of tick mark label colours.}
-#' \item{tick.label.cex}{Vector of tick mark label expansions.}
-#' \item{tick.label.side}{Vector of the side of tick mark labels.}
-#' \item{tick.label.offset}{Vector of tick mark label offsets.}
-#' \item{tick.label.pos}{Vector of the side of tick mark labels.}
-#' \item{predict.col}{Vector of colours for the predicted samples.}
-#' \item{predict.lty}{Vector of line types for the predicted samples.}
-#' \item{predict.lwd}{Vector of line widths for the predicted samples.}
-#' \item{names}{Vector of variable names defined by the user.}
-#' \item{orthogx}{Vector of the horisontal translations for each axis.}
-#' \item{orthogy}{Vector of the vertical translations for each axis.}
+#' \item{which}{vector of the columns displayed as axes.}
+#' \item{col}{vector of axis colours.}
+#' \item{lwd}{vector of axis line widths.}
+#' \item{lty}{vector of axis line types.}
+#' \item{label.dir}{direction of the axis labels.}
+#' \item{label.col}{vector of axis label colours.}
+#' \item{label.cex}{vector of axis labels expansions.}
+#' \item{label.dist}{vector of axis label distances from axes.}
+#' \item{ticks}{vector representing the number of tick marks per axis.}
+#' \item{tick.col}{vector of tick mark colours.}
+#' \item{tick.size}{vector of tick mark sizes.}
+#' \item{tick.label}{vector of logical values indicating whether axes are labelled.}
+#' \item{tick.label.col}{vector of tick mark label colours.}
+#' \item{tick.label.cex}{vector of tick mark label expansions.}
+#' \item{tick.label.side}{vector of the side of tick mark labels.}
+#' \item{tick.label.offset}{vector of tick mark label offsets.}
+#' \item{tick.label.pos}{vector of the side of tick mark labels.}
+#' \item{predict.col}{vector of colours for the predicted samples.}
+#' \item{predict.lty}{vector of line types for the predicted samples.}
+#' \item{predict.lwd}{vector of line widths for the predicted samples.}
+#' \item{names}{vector of variable names defined by the user.}
+#' \item{orthogx}{vector of the horisontal translations for each axis.}
+#' \item{orthogy}{vector of the vertical translations for each axis.}
 #'
 #' @usage
 #' axes(bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7),
@@ -555,14 +553,14 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
 
 #' alpha-bag formatting
 #'
-#' @param g number of groups
-#' @param g.names names of groups
-#' @param alpha size of alpha bag
-#' @param which which group to select
-#' @param col colour of bags
-#' @param lty line type of bags
-#' @param lwd line width of bags
-#' @param max maximum number of samples to be included in a bag
+#' @param g number of groups.
+#' @param g.names names of groups.
+#' @param alpha size of alpha bag.
+#' @param which which group to select.
+#' @param col colour of bags.
+#' @param lty line type of bags.
+#' @param lwd line width of bags.
+#' @param max maximum number of samples to be included in a bag.
 #'
 #' @noRd
 #'
@@ -607,34 +605,35 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
 #' This function produces \eqn{\alpha}-bags, which is a useful graphical summary of the
 #' scatter plot. The alpha-bag refers to a contour which contains \eqn{\alpha}% of the observations.
 #'
-#' @param bp An object of class \code{biplot}.
-#' @param alpha Value between 0 and 1 to determine coverage of bag (\eqn{\alpha}), with default \code{0.95}.
-#' @param which The selection of groups or classes to be fitted with \eqn{\alpha}-bags.
-#' @param col Vector of colours for the \eqn{\alpha}-bags. Multiple \eqn{\alpha} bags for one group will be displayed in the same colour.
-#' @param lty Vector of line types for the \eqn{\alpha}-bags. The same line type will be used per value of \eqn{\alpha}.
-#' @param lwd Vector of line widths for the \eqn{\alpha}-bags. The same line width will be used per value of \eqn{\alpha}.
-#' @param max Maximum number of samples to include in \eqn{\alpha}-bag calculations, with default 2500. If
+#' @param bp an object of class \code{biplot}.
+#' @param alpha value between 0 and 1 to determine coverage of bag (\eqn{\alpha}), with default \code{0.95}.
+#' @param which the selection of groups or classes to be fitted with \eqn{\alpha}-bags.
+#' @param col vector of colours for the \eqn{\alpha}-bags. Multiple \eqn{\alpha} bags for one group will be displayed in the same colour.
+#' @param lty vector of line types for the \eqn{\alpha}-bags. The same line type will be used per value of \eqn{\alpha}.
+#' @param lwd vector of line widths for the \eqn{\alpha}-bags. The same line width will be used per value of \eqn{\alpha}.
+#' @param max maximum number of samples to include in \eqn{\alpha}-bag calculations, with default 2500. If
 #'              more samples are in the group, a random sample of size max is taken for the computations.
+#' @param trace logical, indicating progress of computation.
 #'
 #' @return  A list with the following components is available:
-#' \item{alpha.bags}{List of coordinates for the \eqn{\alpha}-bags for each group.}
-#' \item{col}{Vector of colours for the \eqn{\alpha}-bags.}
-#' \item{lty}{Vector of line types for the \eqn{\alpha}-bags.}
-#' \item{lwd}{Vector of line widths for the \eqn{\alpha}-bags.}
+#' \item{alpha.bags}{list of coordinates for the \eqn{\alpha}-bags for each group.}
+#' \item{col}{vector of colours for the \eqn{\alpha}-bags.}
+#' \item{lty}{vector of line types for the \eqn{\alpha}-bags.}
+#' \item{lwd}{vector of line widths for the \eqn{\alpha}-bags.}
 #'
 #' @references
-#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
+#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
 #'
 #' @export
-#' @usage alpha.bags(bp, alpha=0.95, which = NULL, col = ez.col, lty = 1,
-#' lwd = 1, max = 2500)
+#' @usage alpha.bags(bp, alpha = 0.95, which = NULL, col = ez.col, lty = 1,
+#' lwd = 1, max = 2500, trace = TRUE)
 #' @aliases alpha.bags
 #'
 #' @examples
 #' biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> alpha.bags(alpha=0.95) |> plot()
 #' biplot (iris[,1:4],group.aes=iris[,5]) |> PCA() |> alpha.bags(alpha=0.95) |> plot()
 #'
-alpha.bags <- function(bp, alpha=0.95, which = NULL, col = ez.col, lty = 1, lwd = 1, max = 2500)
+alpha.bags <- function(bp, alpha=0.95, which = NULL, col = ez.col, lty = 1, lwd = 1, max = 2500, trace = TRUE)
 {
   g <- bp$g
   g.names <- bp$g.names
@@ -645,7 +644,7 @@ alpha.bags <- function(bp, alpha=0.95, which = NULL, col = ez.col, lty = 1, lwd 
   all.alpha.bags <- list()
   for(a in 1:length(control.output$which))
   {
-    cat (paste("Computing", control.output$alpha[a], "-bag for",g.names[control.output$which[a]], "\n"))
+    if (trace) cat (paste("Computing", control.output$alpha[a], "-bag for",g.names[control.output$which[a]], "\n"))
     Zgroup <- bp$Z[bp$group.aes==g.names[control.output$which[a]],]
     calc <- calc.alpha.bags(Zgroup, aa=control.output$alpha[a], approx.limit=control.output$max)$xy[,1:2]
     all.alpha.bags[[a]] <- calc
@@ -872,7 +871,6 @@ calc.alpha.bags <- function (x, y, aa=0.95, na.rm = TRUE, approx.limit = 2500, p
     if (all(result == "higher")) {
       result <- ifelse(((z[, 2] - zy.on.pg)/max(z[, 2] - zy.on.pg) - 1e-10) < 0, "lower", "higher")
     }
-    print(result)
     return(result)
   }
   find.polygon.center <- function(xy) {
@@ -894,20 +892,20 @@ calc.alpha.bags <- function (x, y, aa=0.95, na.rm = TRUE, approx.limit = 2500, p
   if (any(is.na(xydata))) {
     if (na.rm) {
       xydata <- xydata[!apply(is.na(xydata), 1, any), , drop = FALSE]
-      print("Warning: NA elements have been removed!!")
+      warning("NA elements have been removed!!")
     }
     else {
       xy.medians <- apply(xydata, 2, function(x) stats::median(x, na.rm = TRUE))
       for (j in 1:ncol(xydata)) xydata[is.na(xydata[, j]), j] <- xy.medians[j]
-      print("Warning: NA elements have been exchanged by median values!!")
+      warning("NA elements have been exchanged by median values!!")
     }
   }
   if (length(xydata) < 4) {
-    print("not enough data points")
+    stop("not enough data points")
     return()
   }
   if ((length(xydata)%%2) == 1) {
-    print("number of values isn't even")
+    stop("number of values isn't even")
     return()
   }
   if (!is.matrix(xydata))
@@ -1335,16 +1333,16 @@ calc.alpha.bags <- function (x, y, aa=0.95, na.rm = TRUE, approx.limit = 2500, p
 
 #' Aesthetics for kappa ellipses
 #'
-#' @param g number of groups
-#' @param ellipse.names ellipse names, typically group names
-#' @param df degrees of freedom
-#' @param kappa value to construct k-ellipse
-#' @param which which group to select for ellipse construction
-#' @param alpha size of alpha bag
-#' @param col colour of ellipse
-#' @param lty line type of ellipse
-#' @param lwd line width of ellipse
-#' @param alpha.transparency opacity
+#' @param g number of groups.
+#' @param ellipse.names ellipse names, typically group names.
+#' @param df degrees of freedom.
+#' @param kappa value to construct k-ellipse.
+#' @param which which group to select for ellipse construction.
+#' @param alpha size of alpha bag.
+#' @param col colour of ellipse.
+#' @param lty line type of ellipse.
+#' @param lwd line width of ellipse.
+#' @param alpha.transparency opacity.
 #'
 #' @noRd
 #'
@@ -1385,35 +1383,36 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' This function produces \eqn{\kappa}-ellipses, which is a useful geometrical description of the
 #' data points about the sample mean.
 #'
-#' @param bp An object of class \code{biplot}.
-#' @param df Degrees of freedom, with default \code{2}.
-#' @param kappa Value to construct \eqn{\kappa}-ellipse (the value of \eqn{\kappa}).
-#' @param which The selection of the group for ellipse construction.
-#' @param alpha Size of \eqn{\alpha}-bag, with default \code{0.95}.
-#' @param col Colour of ellipse. Multiple \eqn{\kappa}-ellipse for one group will be displayed in the same colour.
-#' @param lty Line type of ellipse. The same line type will be used per value of \eqn{\kappa}.
-#' @param lwd Line width of ellipse. The same line width will be used per value of \eqn{\kappa}.
-#' @param alpha.transparency Level of opacity, with default \code{0.5}.
+#' @param bp an object of class \code{biplot}.
+#' @param df degrees of freedom, with default \code{2}.
+#' @param kappa value to construct \eqn{\kappa}-ellipse (the value of \eqn{\kappa}).
+#' @param which the selection of the group for ellipse construction.
+#' @param alpha size of \eqn{\alpha}-bag, with default \code{0.95}.
+#' @param col colour of ellipse. Multiple \eqn{\kappa}-ellipse for one group will be displayed in the same colour.
+#' @param lty line type of ellipse. The same line type will be used per value of \eqn{\kappa}.
+#' @param lwd line width of ellipse. The same line width will be used per value of \eqn{\kappa}.
+#' @param alpha.transparency level of opacity, with default \code{0.5}.
+#' @param trace logical, indicating progress of computation.
 #'
 #' @return A list with the following components is available:
-#' \item{conc.ellipses}{List of coordinates for the \eqn{\kappa}-ellipses for each group.}
-#' \item{col}{Vector of colours for the \eqn{\kappa}-ellipses.}
-#' \item{lty}{Vector of line types for the \eqn{\kappa}-ellipses.}
-#' \item{lwd}{Vector of line widths for the \eqn{\kappa}-ellipses.}
-#' \item{alpha}{Vector of \eqn{\alpha} values.}
+#' \item{conc.ellipses}{list of coordinates for the \eqn{\kappa}-ellipses for each group.}
+#' \item{col}{vector of colours for the \eqn{\kappa}-ellipses.}
+#' \item{lty}{vector of line types for the \eqn{\kappa}-ellipses.}
+#' \item{lwd}{vector of line widths for the \eqn{\kappa}-ellipses.}
+#' \item{alpha}{vector of \eqn{\alpha} values.}
 #'
 #' @references
-#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
+#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
 #' @export
 #' @usage concentration.ellipse(bp, df=2, kappa = NULL, which = NULL,
-#' alpha = 0.95, col = ez.col, lty = 1, lwd = 1, alpha.transparency = 0.5)
+#' alpha = 0.95, col = ez.col, lty = 1, lwd = 1, alpha.transparency = 0.5, trace = TRUE)
 #' @aliases concentration.ellipse
 #'
 #' @examples
 #' biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> concentration.ellipse(kappa=2) |> plot()
 #'
 concentration.ellipse <- function(bp, df=2, kappa = NULL, which = NULL, alpha = 0.95,
-                                  col = ez.col, lty = 1, lwd = 1, alpha.transparency = 0.5)
+                                  col = ez.col, lty = 1, lwd = 1, alpha.transparency = 0.5, trace = TRUE)
 {
 
   g <- bp$g
@@ -1428,7 +1427,7 @@ concentration.ellipse <- function(bp, df=2, kappa = NULL, which = NULL, alpha = 
   all.ellipses <- list()
   for(a in 1:length(control.output$which))
   {
-    cat (paste("Computing", round(control.output$kappa[a],2), "-ellipse for",g.names[control.output$which[a]], "\n"))
+    if (trace) cat (paste("Computing", round(control.output$kappa[a],2), "-ellipse for",g.names[control.output$which[a]], "\n"))
     Zgroup <- bp$Z[bp$group.aes==g.names[control.output$which[a]],]
     calc <- calc.concentration.ellipse(Zgroup, kappa=control.output$kappa[a])
     all.ellipses[[a]] <- calc
@@ -1451,11 +1450,11 @@ concentration.ellipse <- function(bp, df=2, kappa = NULL, which = NULL, alpha = 
 
 #' Calculate concentration ellipses
 #'
-#' @param X matrix of coordinates
-#' @param kappa quantile of the chi-squared distribution determining the size of the ellipse
-#' @param covmat a covariance matrix to use in place of computing a covariance matrix from X
+#' @param X matrix of coordinates.
+#' @param kappa quantile of the chi-squared distribution determining the size of the ellipse.
+#' @param covmat a covariance matrix to use in place of computing a covariance matrix from X.
 #'
-#' @return matrix of coordinates
+#' @return matrix of coordinates.
 #'
 #' @noRd
 calc.concentration.ellipse <- function (X, kappa=2, covmat = NULL)
@@ -1483,20 +1482,20 @@ calc.concentration.ellipse <- function (X, kappa=2, covmat = NULL)
 #' new = FALSE, ...)
 #' @aliases legend.type
 #'
-#' @param bp An object of class \code{biplot}.
-#' @param samples Logical argument indicating whether legend should be printed for samples, with default \code{FALSE}.
-#' @param means Logical argument indicating whether legend should be printed for means, with default \code{FLASE}.
-#' @param bags Logical argument indicating whether legend should be printed for bags, with default \code{FALSE}.
-#' @param ellipses Logical argument indicating whether legend should be printed for concentration ellipses, with default \code{FALSE}.
-#' @param new Logical argument indicating whether the legend should appear in a new window, with default \code{FALSE}.
-#' @param ... addition arguments to be sent to \code{legend()}.
+#' @param bp an object of class \code{biplot}.
+#' @param samples logical, indicating whether legend should be printed for samples, with default \code{FALSE}.
+#' @param means logical, indicating whether legend should be printed for means, with default \code{FLASE}.
+#' @param bags logical, indicating whether legend should be printed for bags, with default \code{FALSE}.
+#' @param ellipses logical, indicating whether legend should be printed for concentration ellipses, with default \code{FALSE}.
+#' @param new logical, indicating whether the legend should appear in a new window, with default \code{FALSE}.
+#' @param ... additional arguments to be sent to \code{legend()}.
 #'
 #' @return A list with the following components is available:
-#' \item{samples}{TRUE or FALSE, as specified.}
-#' \item{means}{TRUE or FALSE, as specified.}
-#' \item{bags}{TRUE or FALSE, as specified.}
-#' \item{ellipses}{TRUE or FALSE, as specified.}
-#' \item{new}{TRUE or FALSE, as specified.}
+#' \item{samples}{TRUE or FALSE, whether legend for samples are provided.}
+#' \item{means}{TRUE or FALSE, whether legend for class means are provided.}
+#' \item{bags}{TRUE or FALSE, whether legend for alpha-bags are provided.}
+#' \item{ellipses}{TRUE or FALSE, whether legend for kappa-ellipses are provided.}
+#' \item{new}{TRUE or FALSE, whether legend appears on new plot.}
 #'
 #' @export
 #' @examples
@@ -1510,7 +1509,7 @@ legend.type <- function (bp, samples = FALSE, means = FALSE, bags = FALSE, ellip
 
 #' Constructs the biplot legend
 #'
-#' @param bp An object of class \code{biplot}.
+#' @param bp an object of class \code{biplot}.
 #' @param ... more arguments to be sent to `legend`.
 #'
 #' @noRd
@@ -1518,7 +1517,7 @@ biplot.legend <- function(bp, ...)
 {
   legend.type <- c(bp$legend$samples, bp$legend$means, bp$legend$bags, bp$legend$ellipses)
 
-  if (all(legend.type == FALSE)) return(cat("Change at least one of samples, means, bags or ellipses to TRUE to obtain a legend\n"))
+  if (all(legend.type == FALSE)) stop("Change at least one of samples, means, bags or ellipses to TRUE to obtain a legend")
 
   if(bp$legend$new)
   {
@@ -1549,8 +1548,10 @@ biplot.legend <- function(bp, ...)
 # ----------------------------------------------------------------------------------------------
 #' Generic print function of objects of class biplot
 #'
-#' @param x An object of class \code{biplot}.
-#' @param ... additional arguments
+#' @param x an object of class \code{biplot}.
+#' @param ... additional arguments.
+#'
+#' @return no return value, called for side effects.
 #'
 #' @export
 #' @examples
@@ -1570,8 +1571,10 @@ print.biplot <- function (x, ...)
 #' Generic Plotting function of objects of class biplot
 #'
 #' @param x An object of class \code{biplot}.
-#' @param exp.factor factor to expand plotting area beyond samples
-#' @param ... additional arguments
+#' @param exp.factor factor to expand plotting area beyond samples.
+#' @param ... additional arguments.
+#'
+#' @return An object of class \code{biplot}.
 #'
 #' @export
 #' @examples
@@ -1776,7 +1779,7 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
   else Z <- x$Z
 
   old.par <- graphics::par(pty = "s", ...)
-  on.exit(graphics::par(old.par))
+  withr::defer(graphics::par(old.par))
 
   plot(Z[, 1] * exp.factor, Z[, 2] * exp.factor, xlim = range(Z[, 1] * exp.factor), ylim = range(Z[, 2] * exp.factor),
        xaxt = "n", yaxt = "n", xlab = "", ylab = "", type = "n", xaxs = "i", yaxs = "i", asp = 1)

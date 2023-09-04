@@ -8,27 +8,27 @@ legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE, ellipses = FALSE,
 new = FALSE, ...)
 }
 \arguments{
-\item{bp}{An object of class \code{biplot}.}
+\item{bp}{an object of class \code{biplot}.}
 
-\item{samples}{Logical argument indicating whether legend should be printed for samples, with default \code{FALSE}.}
+\item{samples}{logical, indicating whether legend should be printed for samples, with default \code{FALSE}.}
 
-\item{means}{Logical argument indicating whether legend should be printed for means, with default \code{FLASE}.}
+\item{means}{logical, indicating whether legend should be printed for means, with default \code{FLASE}.}
 
-\item{bags}{Logical argument indicating whether legend should be printed for bags, with default \code{FALSE}.}
+\item{bags}{logical, indicating whether legend should be printed for bags, with default \code{FALSE}.}
 
-\item{ellipses}{Logical argument indicating whether legend should be printed for concentration ellipses, with default \code{FALSE}.}
+\item{ellipses}{logical, indicating whether legend should be printed for concentration ellipses, with default \code{FALSE}.}
 
-\item{new}{Logical argument indicating whether the legend should appear in a new window, with default \code{FALSE}.}
+\item{new}{logical, indicating whether the legend should appear in a new window, with default \code{FALSE}.}
 
-\item{...}{addition arguments to be sent to \code{legend()}.}
+\item{...}{additional arguments to be sent to \code{legend()}.}
 }
 \value{
 A list with the following components is available:
-\item{samples}{TRUE or FALSE, as specified.}
-\item{means}{TRUE or FALSE, as specified.}
-\item{bags}{TRUE or FALSE, as specified.}
-\item{ellipses}{TRUE or FALSE, as specified.}
-\item{new}{TRUE or FALSE, as specified.}
+\item{samples}{TRUE or FALSE, whether legend for samples are provided.}
+\item{means}{TRUE or FALSE, whether legend for class means are provided.}
+\item{bags}{TRUE or FALSE, whether legend for alpha-bags are provided.}
+\item{ellipses}{TRUE or FALSE, whether legend for kappa-ellipses are provided.}
+\item{new}{TRUE or FALSE, whether legend appears on new plot.}
 }
 \description{
 This function enables the user to format the legend and make a required selection to display.

@@ -8,38 +8,38 @@ CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 group.aes = bp$group.aes,weightedCVA = "weighted", ...)
 }
 \arguments{
-\item{bp}{Object of class \code{biplot} obtained from preceding function \code{biplot()}.}
+\item{bp}{object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
-\item{dim.biplot}{Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
+\item{dim.biplot}{dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
 
-\item{e.vects}{Which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.}
+\item{e.vects}{which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.}
 
-\item{group.aes}{Vector of the same length as the number of rows in the data matrix
+\item{group.aes}{vector of the same length as the number of rows in the data matrix
 for differentiated aesthetics for samples.}
 
-\item{weightedCVA}{The default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".}
+\item{weightedCVA}{the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".}
 
 \item{...}{additional arguments}
 }
 \value{
 Object of class CVA with the following elements:
-\item{X}{Matrix of the centered and scaled numeric variables.}
-\item{Xcat}{Matrix of the categorical variables.}
-\item{raw.X}{Original data.}
-\item{na.action}{Vector of observations that have been removed.}
-\item{center}{TRUE or FALSE, as specified.}
-\item{scaled}{TRUE or FALSE, as specified.}
-\item{means}{Mean of each numerical variable.}
-\item{sd}{Standard deviation of each numerical variable.}
-\item{n}{Number of observations.}
-\item{p}{Number of variables.}
-\item{group.aes}{Vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples. }
-\item{g.names}{Descriptive name to be used for group labels.}
-\item{g}{Number of groups.}
-\item{Title}{Title of the biplot to be rendered, as specified.}
-\item{Z}{Matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
-\item{Xhat}{Predictions of the samples.}
-\item{ax.one.unit}{One unit in the positive direction of each biplot axis.}
+\item{X}{matrix of the centered and scaled numeric variables.}
+\item{Xcat}{matrix of the categorical variables.}
+\item{raw.X}{original data.}
+\item{na.action}{vector of observations that have been removed.}
+\item{center}{TRUE or FALSE, whether X is centred.}
+\item{scaled}{TRUE or FALSE, whether X is scaled.}
+\item{means}{mean of each numerical variable.}
+\item{sd}{standard deviation of each numerical variable.}
+\item{n}{number of observations.}
+\item{p}{number of variables.}
+\item{group.aes}{vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples. }
+\item{g.names}{descriptive name to be used for group labels.}
+\item{g}{number of groups.}
+\item{Title}{title of the biplot to be rendered.}
+\item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+\item{Xhat}{predictions of the samples.}
+\item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
 }
 \description{
 This function produces a list of elements to be used for CVA biplot construction.

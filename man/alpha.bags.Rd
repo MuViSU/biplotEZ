@@ -4,31 +4,33 @@
 \alias{alpha.bags}
 \title{Create alpha bags}
 \usage{
-alpha.bags(bp, alpha=0.95, which = NULL, col = ez.col, lty = 1,
-lwd = 1, max = 2500)
+alpha.bags(bp, alpha = 0.95, which = NULL, col = ez.col, lty = 1,
+lwd = 1, max = 2500, trace = TRUE)
 }
 \arguments{
-\item{bp}{An object of class \code{biplot}.}
+\item{bp}{an object of class \code{biplot}.}
 
-\item{alpha}{Value between 0 and 1 to determine coverage of bag (\eqn{\alpha}), with default \code{0.95}.}
+\item{alpha}{value between 0 and 1 to determine coverage of bag (\eqn{\alpha}), with default \code{0.95}.}
 
-\item{which}{The selection of groups or classes to be fitted with \eqn{\alpha}-bags.}
+\item{which}{the selection of groups or classes to be fitted with \eqn{\alpha}-bags.}
 
-\item{col}{Vector of colours for the \eqn{\alpha}-bags. Multiple \eqn{\alpha} bags for one group will be displayed in the same colour.}
+\item{col}{vector of colours for the \eqn{\alpha}-bags. Multiple \eqn{\alpha} bags for one group will be displayed in the same colour.}
 
-\item{lty}{Vector of line types for the \eqn{\alpha}-bags. The same line type will be used per value of \eqn{\alpha}.}
+\item{lty}{vector of line types for the \eqn{\alpha}-bags. The same line type will be used per value of \eqn{\alpha}.}
 
-\item{lwd}{Vector of line widths for the \eqn{\alpha}-bags. The same line width will be used per value of \eqn{\alpha}.}
+\item{lwd}{vector of line widths for the \eqn{\alpha}-bags. The same line width will be used per value of \eqn{\alpha}.}
 
-\item{max}{Maximum number of samples to include in \eqn{\alpha}-bag calculations, with default 2500. If
+\item{max}{maximum number of samples to include in \eqn{\alpha}-bag calculations, with default 2500. If
 more samples are in the group, a random sample of size max is taken for the computations.}
+
+\item{trace}{logical, indicating progress of computation.}
 }
 \value{
 A list with the following components is available:
-\item{alpha.bags}{List of coordinates for the \eqn{\alpha}-bags for each group.}
-\item{col}{Vector of colours for the \eqn{\alpha}-bags.}
-\item{lty}{Vector of line types for the \eqn{\alpha}-bags.}
-\item{lwd}{Vector of line widths for the \eqn{\alpha}-bags.}
+\item{alpha.bags}{list of coordinates for the \eqn{\alpha}-bags for each group.}
+\item{col}{vector of colours for the \eqn{\alpha}-bags.}
+\item{lty}{vector of line types for the \eqn{\alpha}-bags.}
+\item{lwd}{vector of line widths for the \eqn{\alpha}-bags.}
 }
 \description{
 This function produces \eqn{\alpha}-bags, which is a useful graphical summary of the
@@ -40,5 +42,5 @@ biplot (iris[,1:4],group.aes=iris[,5]) |> PCA() |> alpha.bags(alpha=0.95) |> plo
 
 }
 \references{
-Gower, J., Gardner-Lubbe, S. & Le Roux, N. 2011. \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
+Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
 }

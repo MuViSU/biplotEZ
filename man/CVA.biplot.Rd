@@ -14,24 +14,24 @@
 )
 }
 \arguments{
-\item{bp}{Object of class \code{biplot} obtained from preceding function \code{biplot()}.}
+\item{bp}{object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
-\item{dim.biplot}{Dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
+\item{dim.biplot}{dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
 
-\item{e.vects}{Which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.}
+\item{e.vects}{which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.}
 
-\item{group.aes}{Vector of the same length as the number of rows in the data matrix
+\item{group.aes}{vector of the same length as the number of rows in the data matrix
 for differentiated aesthetics for samples.}
 
-\item{weightedCVA}{The default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".}
+\item{weightedCVA}{the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".}
 
 \item{...}{additional arguments}
 }
 \value{
-an object of class CVA
+an object of class CVA, inherits from class biplot.
 }
 \description{
-Performs calculations for a CVA biplot
+Performs calculations for a CVA biplot.
 }
 \examples{
 biplot(iris[,1:4],iris[,5]) |> CVA()

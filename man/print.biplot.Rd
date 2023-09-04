@@ -7,9 +7,12 @@
 \method{print}{biplot}(x, ...)
 }
 \arguments{
-\item{x}{An object of class \code{biplot}.}
+\item{x}{an object of class \code{biplot}.}
 
-\item{...}{additional arguments}
+\item{...}{additional arguments.}
+}
+\value{
+no return value, called for side effects.
 }
 \description{
 Generic print function of objects of class biplot
