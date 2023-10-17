@@ -31,7 +31,7 @@ You can install the development version of biplotEZ like this:
   
 ``` r
 library(devtools)
-devtools::install_github("MuViSU/biplotEZ_beta")
+devtools::install_github("MuViSU/biplotEZ")
 ```
 
 ## Example
