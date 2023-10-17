@@ -4,11 +4,13 @@
 \alias{samples}
 \title{Aesthetics for biplot samples}
 \usage{
-samples (bp,  col = ez.col, pch = 3, cex = 1, label = FALSE,
+samples (bp,  which = 1:bp$g, col = ez.col, pch = 3, cex = 1, label = FALSE,
 label.cex = 0.75, label.side = "bottom", connected = FALSE, alpha = 1)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot}.}
+
+\item{which}{vector of which groups of samples to display, with default \code{bp$g}.}
 
 \item{col}{sample colour, with default \code{blue}.}
 

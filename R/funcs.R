@@ -43,60 +43,121 @@
 #' biplot(data = iris)
 biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title = NULL)
 {
-  dim.mat<-dim(data)
-  if(is.null(dim.mat)) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
-  if(ncol(data)<2) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
+  # make provision for an object of class prcomp or princomp
+  if ((class(data) == "prcomp") | (class(data) == "princomp"))
+    {
+      if (class(data) == "princomp")
+      {
+        data$rotation <- unclass(data$loadings)
+        data$x <- data$scores
+      }
+      if (is.null(data$x)) stop ("You need to specify retx=TRUE.")
+      if (ncol(data$rotation)<2) stop ("rank needs to be at least 2")
+      X <- data$x %*% t(data$rotation)
+      n <- nrow(X)
+      p <- ncol(X)
+      if (!data$scale[1]) {
+                          scaled <- FALSE
+                          sd <- rep(1, p)
+      }
+      else { X <- scale(X, center=F, scale=1/data$scale)
+             scaled <- TRUE
+             sd <- data$scale
+      }
+      if (!data$center[1]) {
+                           center <- FALSE
+                           means <- rep(0, p)
+      }
+      else { X <- scale(X, center=-1*data$center, scale=F)
+             center <- TRUE
+             means <- data$center
+      }
+      na.vec.df <- NULL
 
-  # check for missing values
-  na.vec.df <- stats::na.action(stats::na.omit(data))
-  if (length(na.vec.df) == nrow(data)) stop("No observations left after deleting missing observations")
-  else if (!is.null(na.vec.df))  warning(paste(length(na.vec.df), "rows deleted due to missing values"))
-  data<-data[stats::complete.cases(data),]
-  if (!is.null(group.aes) & length(na.vec.df) > 0) group.aes <- group.aes[na.vec.df]
+      if(is.null(group.aes)) group.aes <- factor(rep(1,n))
+      else group.aes <- factor(group.aes)
+      g.names <-levels(group.aes)
+      g <- length(g.names)
 
-  # Separating numeric and categorical data
-  type.vec <- unlist(lapply(data, is.numeric), use.names = FALSE)
-  if (sum(type.vec)>0) X <- as.matrix(data[, type.vec, drop=FALSE])
-  else X <- NULL
-  if (sum(type.vec)<length(type.vec)) Xcat <- as.data.frame(data[, !type.vec, drop=FALSE])
-  else Xcat <- NULL
+      Vr <- data$rotation[,1:2]
+      ax.one.unit <- 1/(diag(Vr %*% t(Vr))) * Vr
+      Z <- data$x[,1:2]
+      Xhat <- Z %*% t(Vr)
+      if (scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/sd)
+      if (center) Xhat <- scale(Xhat, center=-1*means, scale=FALSE)
 
-  # scaling of numeric data
-  if(is.null(X))
-  {  means <- NULL
-  sd <- NULL
+      object <- list(X = X, Xcat = NULL, raw.X = data, na.action=na.vec.df, center=center, scaled=scaled,
+                   means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes, g.names = g.names,g = g,
+                   Title = Title, Z=Z, Vr=Vr, ax.one.unit=ax.one.unit, Xhat=Xhat)
+      class(object) <- "biplot"
+      class(object)<-append(class(object),"PCA")
   }
   else
-  {
-    means <- apply(X, 2, mean)
-    sd <- apply(X, 2, stats::sd)
-    if (!center) {  X <- X
-    means <- rep(0, ncol(X))
-    sd <- rep(1, ncol(X))
+    {
+      dim.mat<-dim(data)
+      if(is.null(dim.mat)) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
+      if(ncol(data)<2) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
+
+      # check for missing values
+      na.vec.df <- stats::na.action(stats::na.omit(data))
+      if (length(na.vec.df) == nrow(data)) stop("No observations left after deleting missing observations")
+      else if (!is.null(na.vec.df))  warning(paste(length(na.vec.df), "rows deleted due to missing values"))
+      data<-data[stats::complete.cases(data),]
+      if (!is.null(group.aes) & length(na.vec.df) > 0) group.aes <- group.aes[-na.vec.df]
+
+      # Separating numeric and categorical data
+      if (is.matrix(data))
+      {
+        X <- data
+        Xcat <- NULL
+      }
+      else
+      {
+        type.vec <- unlist(lapply(data, is.numeric), use.names = FALSE)
+        if (sum(type.vec)>0) X <- as.matrix(data[, type.vec, drop=FALSE])
+        else X <- NULL
+        if (sum(type.vec)<length(type.vec)) Xcat <- as.data.frame(data[, !type.vec, drop=FALSE])
+        else Xcat <- NULL
+      }
+
+      # scaling of numeric data
+      if(is.null(X))
+      {  means <- NULL
+         sd <- NULL
+      }
+      else
+      {
+        means <- apply(X, 2, mean)
+        sd <- apply(X, 2, stats::sd)
+        if (!center) {  X <- X
+                        means <- rep(0, ncol(X))
+                        sd <- rep(1, ncol(X))
+                     }
+        else if (scaled) { X <- scale(X) }
+             else { X <- scale(X, scale = FALSE)
+                    sd <- rep(1, ncol(X))
+                  }
+      if (is.null(rownames(X))) rownames(X) <- paste(1:nrow(X))
+      if (is.null(colnames(X))) colnames(X) <- paste("V", 1:ncol(X), sep = "")
+      }
+
+      if(!is.null(Xcat))
+      {
+        if (is.null(rownames(Xcat))) rownames(Xcat) <- paste(1:nrow(Xcat))
+        if (is.null(colnames(Xcat))) colnames(Xcat) <- paste("F", 1:ncol(Xcat), sep = "")
+      }
+
+      if(is.null(group.aes)) group.aes <- factor(rep(1,nrow(data)))
+      else group.aes <- factor(group.aes)
+      g.names <-levels(group.aes)
+      g <- length(g.names)
+
+      object <- list(X = X, Xcat = Xcat, raw.X = data, na.action=na.vec.df, center=center, scaled=scaled,
+                     means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes,g.names = g.names,g = g,
+                     Title = Title)
+      class(object) <- "biplot"
     }
-    else if (scaled) { X <- scale(X) }
-    else { X <- scale(X, scale = FALSE)
-    sd <- rep(1, ncol(X))
-    }
-    if (is.null(rownames(X))) rownames(X) <- paste(1:nrow(X))
-    if (is.null(colnames(X))) colnames(X) <- paste("V", 1:ncol(X), sep = "")
-  }
 
-  if(!is.null(Xcat))
-  {
-    if (is.null(rownames(Xcat))) rownames(Xcat) <- paste(1:nrow(Xcat))
-    if (is.null(colnames(Xcat))) colnames(Xcat) <- paste("F", 1:ncol(Xcat), sep = "")
-  }
-
-  if(is.null(group.aes)) group.aes <- factor(rep(1,nrow(data)))
-  else group.aes <- factor(group.aes)
-  g.names <-levels(group.aes)
-  g <- length(g.names)
-
-  object <- list(X = X, Xcat = Xcat, raw.X = data, na.action=na.vec.df, center=center, scaled=scaled,
-                 means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes,g.names = g.names,g = g,
-                 Title = Title)
-  class(object) <- "biplot"
   object
 }
 
@@ -226,8 +287,8 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' @param bp object of class \code{biplot} obtained from preceding function \code{biplot()}.
 #' @param dim.biplot dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.
 #' @param e.vects which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.
-#' @param group.aes vector of the same length as the number of rows in the data matrix
-#'                  for differentiated aesthetics for samples.
+#' @param classes vector of the same length as the number of rows in the data matrix
+#'                  with the class indicator for the samples.
 #' @param weightedCVA the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".
 #' @param ... additional arguments
 #'
@@ -252,14 +313,14 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
 #'
 #' @usage CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-#' group.aes = bp$group.aes,weightedCVA = "weighted", ...)
+#' classes, weightedCVA = "weighted", ...)
 #' @aliases CVA
 #'
 #' @export
 #'
 #' @examples
 #' biplot(iris[,1:4],iris[,5]) |> CVA()
-CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.aes = bp$group.aes,
+CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes,
                 weightedCVA = "weighted",...)
 {
   UseMethod("CVA")
@@ -275,23 +336,25 @@ CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.aes = b
 #' @export
 #'
 #' @examples
-#' biplot(iris[,1:4],iris[,5]) |> CVA()
+#' biplot(iris[,1:4], classes=iris[,5]) |> CVA()
 #'
-CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.aes = bp$group.aes,
+CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes,
                        weightedCVA = "weighted", ...)
 {
   dim.biplot <- dim.biplot[1]
   if (dim.biplot != 1 & dim.biplot != 2 & dim.biplot != 3) stop("Only 1D, 2D and 3D biplots")
   e.vects <- e.vects[1:dim.biplot]
-  if (!is.null(group.aes)) { bp$group.aes <- factor(group.aes)
-  bp$g.names <- levels(factor(group.aes))
-  bp$g <- length(bp$g.names)
+  if (bp$g == 1)
+  {
+    bp$group.aes <- factor(classes)
+    bp$g.names <- levels(factor(classes))
+    bp$g <- length(bp$g.names)
   }
 
   X <- bp$X
   n <- bp$n
   p <- bp$p
-  G <- indmat(group.aes)
+  G <- indmat(classes)
   J <- ncol(G)
   K <- min(p, J-1)
   if (K == 1) stop ("Only 2D biplots currently implemented. Maximum dimension of the canonical space is min(number of variables, number of groups-1)")
@@ -321,6 +384,7 @@ CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), group.
   bp$Z <- Z
   bp$ax.one.unit <- ax.one.unit
   bp$Xhat <- X %*% M %*% solve(M)
+  bp$M <- M
   if (bp$scaled) Xhat <- scale(bp$Xhat, center=FALSE, scale=1/bp$sd)
   if (bp$center) Xhat <- scale(bp$Xhat, center=-1*bp$means, scale=FALSE)
 
@@ -357,6 +421,7 @@ indmat  <- function (groep.vec)
 #' This function allows formatting changes to samples.
 #'
 #' @param bp an object of class \code{biplot}.
+#' @param which vector of which groups of samples to display, with default \code{bp$g}.
 #' @param col sample colour, with default \code{blue}.
 #' @param pch sample plotting character, with default \code{+}.
 #' @param cex sample character expansion, with default \code{1}.
@@ -378,35 +443,39 @@ indmat  <- function (groep.vec)
 #' \item{g}{number of groups.}
 #'
 #' @usage
-#' samples (bp,  col = ez.col, pch = 3, cex = 1, label = FALSE,
+#' samples (bp,  which = 1:bp$g, col = ez.col, pch = 3, cex = 1, label = FALSE,
 #' label.cex = 0.75, label.side = "bottom", connected = FALSE, alpha = 1)
 #' @aliases samples
 #'
 #' @export
 #'
 #' @examples biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> plot()
-samples <- function (bp,  col = ez.col,
+samples <- function (bp,  which = 1:bp$g, col = ez.col,
                      pch = 3, cex = 1, label = FALSE, label.cex = 0.75, label.side = "bottom",
                      connected=FALSE, alpha = 1)
 {
+  if (!all(is.numeric(which))) which <- match(which, rownames(bp$X), nomatch = 0)
   g <- bp$g
-  while (length(col) < g) col <- c(col, col)
-  col <- as.vector(col[1:g])
-  while (length(pch) < g) pch <- c(pch, pch)
-  pch <- as.vector(pch[1:g])
-  while (length(cex) < g) cex <- c(cex, cex)
-  cex <- as.vector(cex[1:g])
-  while (length(label) < g) label <- c(label, label)
-  label <- as.vector(label[1:g])
-  while (length(label.cex) < g) label.cex <- c(label.cex, label.cex)
-  label.cex <- as.vector(label.cex[1:g])
-  while (length(label.side) < g) label.side <- c(label.side, label.side)
-  label.side <- as.vector(label.side[1:g])
-  while (length(alpha) < g) alpha <- c(alpha, alpha)
+  which <- which[which <= g]
+  which <- which[which > 0]
+  sample.group.num <- length(which)
+  while (length(col) < sample.group.num) col <- c(col, col)
+  col <- as.vector(col[1:sample.group.num])
+  while (length(pch) < sample.group.num) pch <- c(pch, pch)
+  pch <- as.vector(pch[1:sample.group.num])
+  while (length(cex) < sample.group.num) cex <- c(cex, cex)
+  cex <- as.vector(cex[1:sample.group.num])
+  while (length(label) < sample.group.num) label <- c(label, label)
+  label <- as.vector(label[1:sample.group.num])
+  while (length(label.cex) < sample.group.num) label.cex <- c(label.cex, label.cex)
+  label.cex <- as.vector(label.cex[1:sample.group.num])
+  while (length(label.side) < sample.group.num) label.side <- c(label.side, label.side)
+  label.side <- as.vector(label.side[1:sample.group.num])
+  while (length(alpha) < sample.group.num) alpha <- c(alpha, alpha)
   if (length(connected)>1) connected <- connected[1]
-  alpha <- as.vector(alpha[1:g])
+  alpha <- as.vector(alpha[1:sample.group.num])
 
-  bp$samples = list(col = col, pch = pch, cex = cex, label = label, label.cex = label.cex,
+  bp$samples = list(which = which, col = col, pch = pch, cex = cex, label = label, label.cex = label.cex,
                     label.side = label.side, connected=connected, alpha = alpha, g = g)
   bp
 }
@@ -570,8 +639,6 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
     which <- match(which, g.names, nomatch = 0)
   which <- which[which <= g]
   which <- which[which > 0]
-  rep.num <- length(which)
-  rep.alp <- length(alpha)
 
   if (length(alpha)>1)
   {
@@ -586,16 +653,16 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
   if (any(alpha < 0 |
           alpha > 0.99))
     stop(message = "alpha not to be negative or larger than 0.99")
-  alpha.entered <- alpha
+  if (is.null(col)) col <- ez.col[which]
   while (length(col) < bag.num)
     col <- c(col, col)
-  col <- as.vector(rep(col[1:rep.num],rep.alp))
+  col <- col[1:bag.num]
   while (length(lty) < bag.num)
     lty <- c(lty, lty)
-  lty <- as.vector(rep(lty[1:rep.alp],each=rep.num))
+  lty <- lty[1:bag.num]
   while (length(lwd) < bag.num)
     lwd <- c(lwd, lwd)
-  lwd <- as.vector(rep(lwd[1:rep.alp],each=rep.num))
+  lwd <- lwd[1:bag.num]
   list(which = which, alpha = alpha, col = col, lty = lty, lwd = lwd, max = max)
 }
 
@@ -633,7 +700,7 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
 #' biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> alpha.bags(alpha=0.95) |> plot()
 #' biplot (iris[,1:4],group.aes=iris[,5]) |> PCA() |> alpha.bags(alpha=0.95) |> plot()
 #'
-alpha.bags <- function(bp, alpha=0.95, which = NULL, col = ez.col, lty = 1, lwd = 1, max = 2500, trace = TRUE)
+alpha.bags <- function(bp, alpha=0.95, which = NULL, col = bp$sample$col[which], lty = 1, lwd = 1, max = 2500, trace = TRUE)
 {
   g <- bp$g
   g.names <- bp$g.names
@@ -1352,8 +1419,6 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   if (!all(is.numeric(which))) which <- match(which, g.names, nomatch = 0)
   which <- which[which <= g]
   which <- which[which > 0]
-  rep.num <- length(which)
-  rep.kappa <- length(kappa)
 
   if (length(kappa)>1)
   {
@@ -1364,13 +1429,14 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   ellipse.num <- length(which)
   while (length(kappa) < ellipse.num) kappa <- c(kappa, kappa)
   kappa <- as.vector(kappa[1:ellipse.num])
+
+  if (is.null(col)) col <- ez.col[which]
   while (length(col) < ellipse.num) col <- c(col, col)
-  col <- as.vector(rep(col[1:rep.num],rep.kappa))
+  col <- col[1:ellipse.num]
   while (length(lty) < ellipse.num) lty <- c(lty, lty)
-  lty <- as.vector(rep(lty[1:rep.kappa],each=rep.num))
+  lty <- lty[1:ellipse.num]
   while (length(lwd) < ellipse.num) lwd <- c(lwd, lwd)
-  #lwd <- as.vector(lwd[1:ellipse.num])
-  lwd <- as.vector(rep(lwd[1:rep.kappa],each=rep.num))
+  lwd <- as.vector(lwd[1:ellipse.num])
   while (length(alpha.transparency) < ellipse.num) alpha.transparency <- c(alpha.transparency, alpha.transparency)
   alpha.transparency <- as.vector(rep(alpha.transparency[1:rep.kappa],each=rep.num))
 
@@ -1412,7 +1478,7 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> concentration.ellipse(kappa=2) |> plot()
 #'
 concentration.ellipse <- function(bp, df=2, kappa = NULL, which = NULL, alpha = 0.95,
-                                  col = ez.col, lty = 1, lwd = 1, alpha.transparency = 0.5, trace = TRUE)
+                                  col = bp$sample$col[which], lty = 1, lwd = 1, alpha.transparency = 0.5, trace = TRUE)
 {
 
   g <- bp$g
@@ -1558,13 +1624,14 @@ biplot.legend <- function(bp, ...)
 #' out <- biplot (iris[,1:4]) |> PCA() |> plot()
 #' out
 
-print.biplot <- function (x, ...)
+print.biplot <- function (x, plot=TRUE, ...)
 {
   cat ("Object of class biplot, based on", x$n, "samples and", ncol(x$raw.X), "variables.\n")
   if (!is.null(x$na.action))
     cat ("The following", length(x$na.action), "sample-rows where removed due to missing values\n", x$na.action, "\n")
   if (x$g>1)
     cat (x$g, "groups:", x$g.names, "\n")
+  if (plot) plot(x)
 }
 
 # ----------------------------------------------------------------------------------------------
@@ -1589,12 +1656,13 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
     Z <- Z[invals, ]
     groups <- levels(group.aes)
     group.aes <- group.aes[invals]
-    for (j in 1:length(groups))
-    {   Z.class <- Z[group.aes==groups[j], , drop = FALSE]
-    text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
-    if (sample.aes$label[j]) graphics::text(Z.class[, 1], Z.class[, 2], labels = dimnames(Z.class)[[1]],
+    for (j in 1:length(sample.aes$which))
+     {  group.num <- levels(group.aes)[sample.aes$which[j]]
+        Z.class <- Z[group.aes==group.num, , drop = FALSE]
+        text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
+        if (sample.aes$label[j]) graphics::text(Z.class[, 1], Z.class[, 2], labels = dimnames(Z.class)[[1]],
                                             cex = sample.aes$label.cex[j], col = sample.aes$col[j], pos = text.pos)
-    graphics::points(x = Z.class[, 1], y = Z.class[, 2], pch = sample.aes$pch[j], col = sample.aes$col[j],
+        graphics::points(x = Z.class[, 1], y = Z.class[, 2], pch = sample.aes$pch[j], col = sample.aes$col[j],
                      cex = sample.aes$cex[j])
     }
   }
@@ -1629,14 +1697,14 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
     slope <- (axis.points[1, 2] - axis.points[2, 2]) / (axis.points[1, 1] - axis.points[2, 1])
     #if slope is infinite then all x-values are same
     v <- NULL
-    if (is.na(slope)) {
-      v <- axis.points[1, 1]
-      slope = NULL
-    }
-    else if (abs(slope) == Inf) {
-      v <- axis.points[1, 1]
-      slope = NULL
-    }
+    if (is.na(slope))
+      {  v <- axis.points[1, 1]
+         slope = NULL
+      }
+    else if (abs(slope) == Inf)
+           {  v <- axis.points[1, 1]
+              slope = NULL
+           }
 
     #y=mx+c... c=y-mx
     intercept <- axis.points[1, 2] - slope * axis.points[1, 1]
@@ -1652,19 +1720,19 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
     d <- expand * mm
     if (grad == "v")
     {  graphics::lines(rep(x, 2), c(y - d, y + d), col = col)
-      if (label.on.off == 1) graphics::text(x, y - d, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+       if (label.on.off == 1) graphics::text(x, y - d, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
     }
     if (grad == "h")
     {  graphics::lines(c(x - d, x + d), rep(y, 2), col = col)
-      if (label.on.off == 1) if (side == "right") graphics::text(x + d, y, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
-      else graphics::text(x - d, y, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+       if (label.on.off == 1) if (side == "right") graphics::text(x + d, y, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+       else graphics::text(x - d, y, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
     }
     if (is.numeric(grad))
     {  b <- d * sqrt(1/(1 + grad * grad))
-    a <- b * grad
-    graphics::lines(c(x - b, x + b), c(y - a, y + a), col = col)
-    if (label.on.off == 1) if (side == "right") graphics::text(x + b, y + a, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
-    else graphics::text(x - b, y - a, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+       a <- b * grad
+       graphics::lines(c(x - b, x + b), c(y - a, y + a), col = col)
+       if (label.on.off == 1) if (side == "right") graphics::text(x + b, y + a, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
+       else graphics::text(x - b, y - a, label = marker.val, pos = pos, offset = offset, col = label.col, cex = cex)
     }
   }
   .marker.func <- function(vec, coef, col, tick.size, side, pos, offset, label.col, cex)
@@ -1676,84 +1744,84 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
     if (is.na(coef[2]))
       .marker.label.cm(x, y, grad = "h", marker.val, expand = tick.size, col = col, label.on.off = label.on.off, side = side, pos = pos, offset = offset, label.col = label.col, cex = cex)
     else if (coef[2] == 0)
-      .marker.label.cm(x, y, grad = "v", marker.val, expand = tick.size, col = col, label.on.off = label.on.off, side = side, pos = pos, offset = offset, label.col = label.col, cex = cex)
-    else
-      .marker.label.cm(x, y, grad = -1/coef[2], marker.val, expand = tick.size, col = col, label.on.off = label.on.off, side = side, pos = pos, offset = offset, label.col = label.col, cex = cex)
+           .marker.label.cm(x, y, grad = "v", marker.val, expand = tick.size, col = col, label.on.off = label.on.off, side = side, pos = pos, offset = offset, label.col = label.col, cex = cex)
+         else
+           .marker.label.cm(x, y, grad = -1/coef[2], marker.val, expand = tick.size, col = col, label.on.off = label.on.off, side = side, pos = pos, offset = offset, label.col = label.col, cex = cex)
   }
 
   .lin.axes.plot <- function(z.axes, ax.aes, predict.mat)
   {
     for (i in 1:length(ax.aes$which))
     {  ax.num <- ax.aes$which[i]
-    this.axis<-z.axes[[i]]
-    marker.mat <- this.axis$coords
-    marker.mat <- marker.mat[rev(order(marker.mat[, 3])), ]
-    x.vals <- marker.mat[, 1]
-    y.vals <- marker.mat[, 2]
+       this.axis<-z.axes[[i]]
+       marker.mat <- this.axis$coords
+       marker.mat <- marker.mat[rev(order(marker.mat[, 3])), ]
+       x.vals <- marker.mat[, 1]
+       y.vals <- marker.mat[, 2]
 
-    lin.coef<-c(a=this.axis$a,b=this.axis$b)
-    if (is.null(this.axis$b))
-      graphics::abline(v = this.axis$v, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
-    else
-      graphics::abline(coef=lin.coef, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
+       lin.coef<-c(a=this.axis$a,b=this.axis$b)
+       if (is.null(this.axis$b))
+         graphics::abline(v = this.axis$v, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
+       else
+         graphics::abline(coef=lin.coef, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
 
-    if (ax.aes$label.dir == "Hor") {  graphics::par(las = 1)
-      adjust <- c(0.5, 1, 0.5, 0)       }
-    if (ax.aes$label.dir == "Orthog") { graphics::par(las = 2)
-      adjust <- c(1, 1, 0, 0)         }
-    if (ax.aes$label.dir == "Paral") {  graphics::par(las = 0)
-      adjust <- c(0.5, 0.5, 0.5, 0.5) }
+       if (ax.aes$label.dir == "Hor") {  graphics::par(las = 1)
+                                         adjust <- c(0.5, 1, 0.5, 0)       }
+       if (ax.aes$label.dir == "Orthog") { graphics::par(las = 2)
+                                           adjust <- c(1, 1, 0, 0)         }
+       if (ax.aes$label.dir == "Paral") {  graphics::par(las = 0)
+                                           adjust <- c(0.5, 0.5, 0.5, 0.5) }
 
-    h <- nrow(marker.mat)
-    if (is.null(this.axis$b))
-    { if (y.vals[1] < y.vals[h])
-      graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-      else
-        graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-    }
-    else
-    { y1.ster <- lin.coef[2] * usr[1] + lin.coef[1]
-      y2.ster <- lin.coef[2] * usr[2] + lin.coef[1]
-      x1.ster <- (usr[3] - lin.coef[1])/lin.coef[2]
-      x2.ster <- (usr[4] - lin.coef[1])/lin.coef[2]
-      if (lin.coef[2] == 0)
-      { if (x.vals[1] < x.vals[h])
-        graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-        else
-          graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-      }
-      if (lin.coef[2] > 0)
-      {  if (x.vals[1] < x.vals[h])
-        if (y1.ster <= usr[4] & y1.ster >= usr[3])
-          graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-        else
-          graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-        else if (y2.ster <= usr[4] & y2.ster >= usr[3])
-          graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-        else
-          graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-      }
-      if (lin.coef[2] < 0)
-      {  if (x.vals[1] < x.vals[h])
-        if (y1.ster <= usr[4] & y1.ster >= usr[3])
-          graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-        else
-          graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-        else if (y2.ster <= usr[4] & y2.ster >= usr[3])
-          graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-        else
-          graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-      }
-    }
+       h <- nrow(marker.mat)
+       if (is.null(this.axis$b))
+         { if (y.vals[1] < y.vals[h])
+             graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+           else
+             graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+         }
+       else
+         { y1.ster <- lin.coef[2] * usr[1] + lin.coef[1]
+           y2.ster <- lin.coef[2] * usr[2] + lin.coef[1]
+           x1.ster <- (usr[3] - lin.coef[1])/lin.coef[2]
+           x2.ster <- (usr[4] - lin.coef[1])/lin.coef[2]
+           if (lin.coef[2] == 0)
+             { if (x.vals[1] < x.vals[h])
+                 graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+               else
+                 graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+             }
+           if (lin.coef[2] > 0)
+             {  if (x.vals[1] < x.vals[h])
+                  if (y1.ster <= usr[4] & y1.ster >= usr[3])
+                    graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+                  else
+                    graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+                else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+                       graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+                     else
+                       graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+             }
+           if (lin.coef[2] < 0)
+             {  if (x.vals[1] < x.vals[h])
+                   if (y1.ster <= usr[4] & y1.ster >= usr[3])
+                      graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.dist[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+                   else
+                      graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.dist[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+                else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+                       graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.dist[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+                     else
+                       graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.dist[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+             }
+        }
 
-    invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
-    std.markers <- marker.mat[invals, 3]
-    if (is.numeric(std.markers)) std.markers <- zapsmall(std.markers)
-    x.vals <- x.vals[invals]
-    y.vals <- y.vals[invals]
-    if (ax.aes$tick.label[i]) label.on.off <- rep(1, sum(invals))  else label.on.off <- rep(0, sum(invals))
-    # if (!ax.aes$tick.label[i]) label.on.off[c(1, length(label.on.off))] <- 1
-    if(sum(invals)>0) apply(data.frame(x.vals, y.vals, std.markers, label.on.off), 1, .marker.func,
+      invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
+      std.markers <- marker.mat[invals, 3]
+      if (is.numeric(std.markers)) std.markers <- zapsmall(std.markers)
+      x.vals <- x.vals[invals]
+      y.vals <- y.vals[invals]
+      if (ax.aes$tick.label[i]) label.on.off <- rep(1, sum(invals))  else label.on.off <- rep(0, sum(invals))
+      if (!ax.aes$tick.label[i]) label.on.off[c(1, length(label.on.off))] <- 1
+      if(sum(invals)>0) apply(data.frame(x.vals, y.vals, std.markers, label.on.off), 1, .marker.func,
                             coef = lin.coef, col = ax.aes$tick.col[i], tick.size = ax.aes$tick.size[i],
                             side = ax.aes$tick.label.side[i], pos = ax.aes$tick.label.pos[i],
                             offset = ax.aes$tick.label.offset[i], label.col = ax.aes$tick.label.col[i],
