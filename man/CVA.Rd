@@ -5,7 +5,7 @@
 \title{Canonical Variate Analysis (CVA) method}
 \usage{
 CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-group.aes = bp$group.aes,weightedCVA = "weighted", ...)
+classes, weightedCVA = "weighted", ...)
 }
 \arguments{
 \item{bp}{object of class \code{biplot} obtained from preceding function \code{biplot()}.}
@@ -14,8 +14,8 @@ group.aes = bp$group.aes,weightedCVA = "weighted", ...)
 
 \item{e.vects}{which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.}
 
-\item{group.aes}{vector of the same length as the number of rows in the data matrix
-for differentiated aesthetics for samples.}
+\item{classes}{vector of the same length as the number of rows in the data matrix
+with the class indicator for the samples.}
 
 \item{weightedCVA}{the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".}
 

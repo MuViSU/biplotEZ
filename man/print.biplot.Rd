@@ -4,7 +4,7 @@
 \alias{print.biplot}
 \title{Generic print function of objects of class biplot}
 \usage{
-\method{print}{biplot}(x, ...)
+\method{print}{biplot}(x, plot = TRUE, ...)
 }
 \arguments{
 \item{x}{an object of class \code{biplot}.}
