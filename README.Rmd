@@ -49,7 +49,7 @@ the CVA biplot aims to optimally separate specified groups in the data.
 This is a basic example which shows you how to constrct a CVA biplot:
   
 ``` {r CVA_example}
-biplot (iris[,1:4], group.aes=iris[,5], Title="Test CVA biplot") |> CVA() |> plot()
+biplot (iris[,1:4], Title="Test CVA biplot") |> CVA(classes=iris[,5]) |> plot()
 ```
 
 An over-the-top example of changing all the formatting and adding all the
