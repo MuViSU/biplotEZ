@@ -44,9 +44,9 @@
 biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title = NULL)
 {
   # make provision for an object of class prcomp or princomp
-  if ((class(data) == "prcomp") | (class(data) == "princomp"))
+  if ((inherits(data, "prcomp")) | (inherits(data, "princomp")))
     {
-      if (class(data) == "princomp")
+      if (inherits(data, "princomp"))
       {
         data$rotation <- unclass(data$loadings)
         data$x <- data$scores
@@ -313,13 +313,13 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
 #'
 #' @usage CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-#' classes, weightedCVA = "weighted", ...)
+#'            classes, weightedCVA = "weighted", ...)
 #' @aliases CVA
 #'
 #' @export
 #'
 #' @examples
-#' biplot(iris[,1:4],iris[,5]) |> CVA()
+#' biplot(iris[,1:4]) |> CVA(classes=iris[,5])
 CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes,
                 weightedCVA = "weighted",...)
 {
@@ -336,7 +336,7 @@ CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes,
 #' @export
 #'
 #' @examples
-#' biplot(iris[,1:4], classes=iris[,5]) |> CVA()
+#' biplot(iris[,1:4]) |> CVA(classes=iris[,5])
 #'
 CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes,
                        weightedCVA = "weighted", ...)
@@ -692,7 +692,7 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
 #' Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
 #'
 #' @export
-#' @usage alpha.bags(bp, alpha = 0.95, which = NULL, col = ez.col, lty = 1,
+#' @usage alpha.bags(bp, alpha = 0.95, which = NULL, col = bp$sample$col[which], lty = 1,
 #' lwd = 1, max = 2500, trace = TRUE)
 #' @aliases alpha.bags
 #'
@@ -1438,7 +1438,6 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   while (length(lwd) < ellipse.num) lwd <- c(lwd, lwd)
   lwd <- as.vector(lwd[1:ellipse.num])
   while (length(alpha.transparency) < ellipse.num) alpha.transparency <- c(alpha.transparency, alpha.transparency)
-  alpha.transparency <- as.vector(rep(alpha.transparency[1:rep.kappa],each=rep.num))
 
   list(which = which, kappa = kappa, col = col, lty = lty, lwd = lwd, alpha.transparency = alpha.transparency)
 }
@@ -1471,7 +1470,8 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
 #' @export
 #' @usage concentration.ellipse(bp, df=2, kappa = NULL, which = NULL,
-#' alpha = 0.95, col = ez.col, lty = 1, lwd = 1, alpha.transparency = 0.5, trace = TRUE)
+#' alpha = 0.95, col = bp$sample$col[which], lty = 1, lwd = 1,
+#' alpha.transparency = 0.5, trace = TRUE)
 #' @aliases concentration.ellipse
 #'
 #' @examples
@@ -1615,6 +1615,7 @@ biplot.legend <- function(bp, ...)
 #' Generic print function of objects of class biplot
 #'
 #' @param x an object of class \code{biplot}.
+#' @param plot logical, indicating whether plot should be produced.
 #' @param ... additional arguments.
 #'
 #' @return no return value, called for side effects.
@@ -1631,7 +1632,7 @@ print.biplot <- function (x, plot=TRUE, ...)
     cat ("The following", length(x$na.action), "sample-rows where removed due to missing values\n", x$na.action, "\n")
   if (x$g>1)
     cat (x$g, "groups:", x$g.names, "\n")
-  if (plot) plot(x)
+  if (plot) if (!is.null(x$Z)) plot(x)
 }
 
 # ----------------------------------------------------------------------------------------------

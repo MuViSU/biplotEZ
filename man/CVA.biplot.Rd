@@ -34,6 +34,6 @@ an object of class CVA, inherits from class biplot.
 Performs calculations for a CVA biplot.
 }
 \examples{
-biplot(iris[,1:4], classes=iris[,5]) |> CVA()
+biplot(iris[,1:4]) |> CVA(classes=iris[,5])
 
 }

@@ -19,7 +19,7 @@ You can install the development version of biplotEZ like this:
 
 ``` r
 library(devtools)
-devtools::install_github("MuViSU/biplotEZ_beta")
+devtools::install_github("MuViSU/biplotEZ")
 ```
 
 ## Example
@@ -44,7 +44,7 @@ the CVA biplot aims to optimally separate specified groups in the data.
 This is a basic example which shows you how to constrct a CVA biplot:
 
 ``` r
-biplot (iris[,1:4], group.aes=iris[,5], Title="Test CVA biplot") |> CVA() |> plot()
+biplot (iris[,1:4], Title="Test CVA biplot") |> CVA(classes=iris[,5]) |> plot()
 ```
 
 <img src="man/figures/README-CVA_example-1.png" width="100%" />

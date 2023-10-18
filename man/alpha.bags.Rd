@@ -4,7 +4,7 @@
 \alias{alpha.bags}
 \title{Create alpha bags}
 \usage{
-alpha.bags(bp, alpha = 0.95, which = NULL, col = ez.col, lty = 1,
+alpha.bags(bp, alpha = 0.95, which = NULL, col = bp$sample$col[which], lty = 1,
 lwd = 1, max = 2500, trace = TRUE)
 }
 \arguments{

@@ -5,7 +5,8 @@
 \title{Concentration ellipses (\eqn{\kappa}-ellipses)}
 \usage{
 concentration.ellipse(bp, df=2, kappa = NULL, which = NULL,
-alpha = 0.95, col = ez.col, lty = 1, lwd = 1, alpha.transparency = 0.5, trace = TRUE)
+alpha = 0.95, col = bp$sample$col[which], lty = 1, lwd = 1,
+alpha.transparency = 0.5, trace = TRUE)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot}.}
