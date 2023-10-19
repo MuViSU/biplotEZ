@@ -68,4 +68,3 @@ biplot (iris[,1:4], group.aes=iris[,5]) |> PCA() |>
 ## Report Bugs and Support
 If you encounter any issues or have questions,
 please open an issue on the GitHub repository.
->>>>>>> f057adc1e1623fc87c14d5380cd5d19f6583765c
