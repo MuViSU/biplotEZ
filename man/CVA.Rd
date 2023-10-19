@@ -5,7 +5,7 @@
 \title{Canonical Variate Analysis (CVA) method}
 \usage{
 CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-classes, weightedCVA = "weighted", ...)
+           classes, weightedCVA = "weighted", ...)
 }
 \arguments{
 \item{bp}{object of class \code{biplot} obtained from preceding function \code{biplot()}.}
@@ -45,5 +45,5 @@ Object of class CVA with the following elements:
 This function produces a list of elements to be used for CVA biplot construction.
 }
 \examples{
-biplot(iris[,1:4],iris[,5]) |> CVA()
+biplot(iris[,1:4]) |> CVA(classes=iris[,5])
 }

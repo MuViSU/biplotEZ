@@ -9,6 +9,8 @@
 \arguments{
 \item{x}{an object of class \code{biplot}.}
 
+\item{plot}{logical, indicating whether plot should be produced.}
+
 \item{...}{additional arguments.}
 }
 \value{
