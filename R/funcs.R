@@ -45,174 +45,120 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
 {
   # make provision for an object of class prcomp or princomp
   if ((inherits(data, "prcomp")) | (inherits(data, "princomp")))
+  {
+    if (inherits(data, "princomp"))
     {
-      if (inherits(data, "princomp"))
-      {
-        data$rotation <- unclass(data$loadings)
-        data$x <- data$scores
-      }
-      if (is.null(data$x)) stop ("You need to specify retx=TRUE.")
-      if (ncol(data$rotation)<2) stop ("rank needs to be at least 2")
-      X <- data$x %*% t(data$rotation)
-      n <- nrow(X)
-      p <- ncol(X)
-      if (!data$scale[1]) {
-                          scaled <- FALSE
-                          sd <- rep(1, p)
-      }
-      else { X <- scale(X, center=F, scale=1/data$scale)
-             scaled <- TRUE
-             sd <- data$scale
-      }
-      if (!data$center[1]) {
-                           center <- FALSE
-                           means <- rep(0, p)
-      }
-      else { X <- scale(X, center=-1*data$center, scale=F)
-             center <- TRUE
-             means <- data$center
-      }
-      na.vec.df <- NULL
+      data$rotation <- unclass(data$loadings)
+      data$x <- data$scores
+    }
+    if (is.null(data$x)) stop ("You need to specify retx=TRUE.")
+    if (ncol(data$rotation)<2) stop ("rank needs to be at least 2")
+    X <- data$x %*% t(data$rotation)
+    n <- nrow(X)
+    p <- ncol(X)
+    if (!data$scale[1]) {
+      scaled <- FALSE
+      sd <- rep(1, p)
+    }
+    else { X <- scale(X, center=F, scale=1/data$scale)
+    scaled <- TRUE
+    sd <- data$scale
+    }
+    if (!data$center[1]) {
+      center <- FALSE
+      means <- rep(0, p)
+    }
+    else { X <- scale(X, center=-1*data$center, scale=F)
+    center <- TRUE
+    means <- data$center
+    }
+    na.vec.df <- NULL
 
-      if(is.null(group.aes)) group.aes <- factor(rep(1,n))
-      else group.aes <- factor(group.aes)
-      g.names <-levels(group.aes)
-      g <- length(g.names)
+    if(is.null(group.aes)) group.aes <- factor(rep(1,n))
+    else group.aes <- factor(group.aes)
+    g.names <-levels(group.aes)
+    g <- length(g.names)
 
-      Vr <- data$rotation[,1:2]
-      ax.one.unit <- 1/(diag(Vr %*% t(Vr))) * Vr
-      Z <- data$x[,1:2]
-      Xhat <- Z %*% t(Vr)
-      if (scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/sd)
-      if (center) Xhat <- scale(Xhat, center=-1*means, scale=FALSE)
+    Vr <- data$rotation[,1:2]
+    ax.one.unit <- 1/(diag(Vr %*% t(Vr))) * Vr
+    Z <- data$x[,1:2]
+    Xhat <- Z %*% t(Vr)
+    if (scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/sd)
+    if (center) Xhat <- scale(Xhat, center=-1*means, scale=FALSE)
 
-      object <- list(X = X, Xcat = NULL, raw.X = data, na.action=na.vec.df, center=center, scaled=scaled,
+    object <- list(X = X, Xcat = NULL, raw.X = data, na.action=na.vec.df, center=center, scaled=scaled,
                    means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes, g.names = g.names,g = g,
                    Title = Title, Z=Z, Vr=Vr, ax.one.unit=ax.one.unit, Xhat=Xhat)
-      class(object) <- "biplot"
-      class(object)<-append(class(object),"PCA")
+    class(object) <- "biplot"
+    class(object)<-append(class(object),"PCA")
   }
   else
+  {
+    dim.mat<-dim(data)
+    if(is.null(dim.mat)) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
+    if(ncol(data)<2) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
+
+    # check for missing values
+    na.vec.df <- stats::na.action(stats::na.omit(data))
+    if (length(na.vec.df) == nrow(data)) stop("No observations left after deleting missing observations")
+    else if (!is.null(na.vec.df))  warning(paste(length(na.vec.df), "rows deleted due to missing values"))
+    data<-data[stats::complete.cases(data),]
+    if (!is.null(group.aes) & length(na.vec.df) > 0) group.aes <- group.aes[-na.vec.df]
+
+    # Separating numeric and categorical data
+    if (is.matrix(data))
     {
-      dim.mat<-dim(data)
-      if(is.null(dim.mat)) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
-      if(ncol(data)<2) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
-  # make provision for an object of class prcomp or princomp
-  if ((class(data) == "prcomp") | (class(data) == "princomp"))
+      X <- data
+      Xcat <- NULL
+    }
+    else
     {
-      if (class(data) == "princomp")
-      {
-        data$rotation <- unclass(data$loadings)
-        data$x <- data$scores
-      }
-      if (is.null(data$x)) stop ("You need to specify retx=TRUE.")
-      if (ncol(data$rotation)<2) stop ("rank needs to be at least 2")
-      X <- data$x %*% t(data$rotation)
-      n <- nrow(X)
-      p <- ncol(X)
-      if (!data$scale[1]) {
-                          scaled <- FALSE
-                          sd <- rep(1, p)
-      }
-      else { X <- scale(X, center=F, scale=1/data$scale)
-             scaled <- TRUE
-             sd <- data$scale
-      }
-      if (!data$center[1]) {
-                           center <- FALSE
-                           means <- rep(0, p)
-      }
-      else { X <- scale(X, center=-1*data$center, scale=F)
-             center <- TRUE
-             means <- data$center
-      }
-      na.vec.df <- NULL
-
-      if(is.null(group.aes)) group.aes <- factor(rep(1,n))
-      else group.aes <- factor(group.aes)
-      g.names <-levels(group.aes)
-      g <- length(g.names)
-
-      Vr <- data$rotation[,1:2]
-      ax.one.unit <- 1/(diag(Vr %*% t(Vr))) * Vr
-      Z <- data$x[,1:2]
-      Xhat <- Z %*% t(Vr)
-      if (scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/sd)
-      if (center) Xhat <- scale(Xhat, center=-1*means, scale=FALSE)
-
-      object <- list(X = X, Xcat = NULL, raw.X = data, na.action=na.vec.df, center=center, scaled=scaled,
-                   means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes, g.names = g.names,g = g,
-                   Title = Title, Z=Z, Vr=Vr, ax.one.unit=ax.one.unit, Xhat=Xhat)
-      class(object) <- "biplot"
-      class(object)<-append(class(object),"PCA")
-  }
-  else
-    {
-      dim.mat<-dim(data)
-      if(is.null(dim.mat)) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
-      if(ncol(data)<2) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
-
-      # check for missing values
-      na.vec.df <- stats::na.action(stats::na.omit(data))
-      if (length(na.vec.df) == nrow(data)) stop("No observations left after deleting missing observations")
-      else if (!is.null(na.vec.df))  warning(paste(length(na.vec.df), "rows deleted due to missing values"))
-      data<-data[stats::complete.cases(data),]
-      if (!is.null(group.aes) & length(na.vec.df) > 0) group.aes <- group.aes[-na.vec.df]
-
-      # Separating numeric and categorical data
-      if (is.matrix(data))
-      {
-        X <- data
-        Xcat <- NULL
-      }
-      else
-      {
-        type.vec <- unlist(lapply(data, is.numeric), use.names = FALSE)
-        if (sum(type.vec)>0) X <- as.matrix(data[, type.vec, drop=FALSE])
-        else X <- NULL
-        if (sum(type.vec)<length(type.vec)) Xcat <- as.data.frame(data[, !type.vec, drop=FALSE])
-        else Xcat <- NULL
-      }
-
-      # scaling of numeric data
-      if(is.null(X))
-      {  means <- NULL
-         sd <- NULL
-      }
-      else
-      {
-        means <- apply(X, 2, mean)
-        sd <- apply(X, 2, stats::sd)
-        if (!center) {  X <- X
-                        means <- rep(0, ncol(X))
-                        sd <- rep(1, ncol(X))
-                     }
-        else if (scaled) { X <- scale(X) }
-             else { X <- scale(X, scale = FALSE)
-                    sd <- rep(1, ncol(X))
-                  }
-      if (is.null(rownames(X))) rownames(X) <- paste(1:nrow(X))
-      if (is.null(colnames(X))) colnames(X) <- paste("V", 1:ncol(X), sep = "")
-      }
-
-      if(!is.null(Xcat))
-      {
-        if (is.null(rownames(Xcat))) rownames(Xcat) <- paste(1:nrow(Xcat))
-        if (is.null(colnames(Xcat))) colnames(Xcat) <- paste("F", 1:ncol(Xcat), sep = "")
-      }
-
-      if(is.null(group.aes)) group.aes <- factor(rep(1,nrow(data)))
-      else group.aes <- factor(group.aes)
-      g.names <-levels(group.aes)
-      g <- length(g.names)
-
-      object <- list(X = X, Xcat = Xcat, raw.X = data, na.action=na.vec.df, center=center, scaled=scaled,
-                     means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes,g.names = g.names,g = g,
-                     Title = Title)
-      class(object) <- "biplot"
+      type.vec <- unlist(lapply(data, is.numeric), use.names = FALSE)
+      if (sum(type.vec)>0) X <- as.matrix(data[, type.vec, drop=FALSE])
+      else X <- NULL
+      if (sum(type.vec)<length(type.vec)) Xcat <- as.data.frame(data[, !type.vec, drop=FALSE])
+      else Xcat <- NULL
     }
 
-  object
+    # scaling of numeric data
+    if(is.null(X))
+    {  means <- NULL
+    sd <- NULL
+    }
+    else
+    {
+      means <- apply(X, 2, mean)
+      sd <- apply(X, 2, stats::sd)
+      if (!center) {  X <- X
+      means <- rep(0, ncol(X))
+      sd <- rep(1, ncol(X))
+      }
+      else if (scaled) { X <- scale(X) }
+      else { X <- scale(X, scale = FALSE)
+      sd <- rep(1, ncol(X))
+      }
+      if (is.null(rownames(X))) rownames(X) <- paste(1:nrow(X))
+      if (is.null(colnames(X))) colnames(X) <- paste("V", 1:ncol(X), sep = "")
+    }
+
+    if(!is.null(Xcat))
+    {
+      if (is.null(rownames(Xcat))) rownames(Xcat) <- paste(1:nrow(Xcat))
+      if (is.null(colnames(Xcat))) colnames(Xcat) <- paste("F", 1:ncol(Xcat), sep = "")
+    }
+
+    if(is.null(group.aes)) group.aes <- factor(rep(1,nrow(data)))
+    else group.aes <- factor(group.aes)
+    g.names <-levels(group.aes)
+    g <- length(g.names)
+
+    object <- list(X = X, Xcat = Xcat, raw.X = data, na.action=na.vec.df, center=center, scaled=scaled,
+                   means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes,g.names = g.names,g = g,
+                   Title = Title)
+    class(object) <- "biplot"
+  }
+
+object
 }
 
 # -------------------------------------------------------------------------------------------
