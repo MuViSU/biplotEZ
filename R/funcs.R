@@ -97,6 +97,60 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
       dim.mat<-dim(data)
       if(is.null(dim.mat)) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
       if(ncol(data)<2) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
+  # make provision for an object of class prcomp or princomp
+  if ((class(data) == "prcomp") | (class(data) == "princomp"))
+    {
+      if (class(data) == "princomp")
+      {
+        data$rotation <- unclass(data$loadings)
+        data$x <- data$scores
+      }
+      if (is.null(data$x)) stop ("You need to specify retx=TRUE.")
+      if (ncol(data$rotation)<2) stop ("rank needs to be at least 2")
+      X <- data$x %*% t(data$rotation)
+      n <- nrow(X)
+      p <- ncol(X)
+      if (!data$scale[1]) {
+                          scaled <- FALSE
+                          sd <- rep(1, p)
+      }
+      else { X <- scale(X, center=F, scale=1/data$scale)
+             scaled <- TRUE
+             sd <- data$scale
+      }
+      if (!data$center[1]) {
+                           center <- FALSE
+                           means <- rep(0, p)
+      }
+      else { X <- scale(X, center=-1*data$center, scale=F)
+             center <- TRUE
+             means <- data$center
+      }
+      na.vec.df <- NULL
+
+      if(is.null(group.aes)) group.aes <- factor(rep(1,n))
+      else group.aes <- factor(group.aes)
+      g.names <-levels(group.aes)
+      g <- length(g.names)
+
+      Vr <- data$rotation[,1:2]
+      ax.one.unit <- 1/(diag(Vr %*% t(Vr))) * Vr
+      Z <- data$x[,1:2]
+      Xhat <- Z %*% t(Vr)
+      if (scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/sd)
+      if (center) Xhat <- scale(Xhat, center=-1*means, scale=FALSE)
+
+      object <- list(X = X, Xcat = NULL, raw.X = data, na.action=na.vec.df, center=center, scaled=scaled,
+                   means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes, g.names = g.names,g = g,
+                   Title = Title, Z=Z, Vr=Vr, ax.one.unit=ax.one.unit, Xhat=Xhat)
+      class(object) <- "biplot"
+      class(object)<-append(class(object),"PCA")
+  }
+  else
+    {
+      dim.mat<-dim(data)
+      if(is.null(dim.mat)) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
+      if(ncol(data)<2) stop("Not enough variables to construct a biplot \n Consider using data with more columns")
 
       # check for missing values
       na.vec.df <- stats::na.action(stats::na.omit(data))
@@ -320,6 +374,7 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
 #'
 #' @examples
 #' biplot(iris[,1:4]) |> CVA(classes=iris[,5])
+
 CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes,
                 weightedCVA = "weighted",...)
 {
