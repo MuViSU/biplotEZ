@@ -19,13 +19,13 @@ knitr::opts_chunk$set(
 library(biplotEZ)
 ```
 
-The package \pkg{biplotEZ} provides users with an EZ-to-use way of constructing multi-dimensional scatterplots of their data. The simplest form of a biplot is the principal component analysis (PCA) biplot which will be used for illustration in this vignette.
+The package \pkg{biplotEZ} provides users with an **EZ**-to-use way of constructing multi-dimensional scatterplots of their data. The simplest form of a biplot is the principal component analysis (PCA) biplot which will be used for illustration in this vignette.
 
 ## What is a PCA biplot
-Consider a data matrix $\mathbf{X}:n \times p$ containing data on $n$ objects and $p$ variables. To produce a 2D biplot, we need to optimally approximate $\mathbf{X}$ (typically of rank $p$ with $p<n$) with a rank $2$ matrix. In terms of the least squares error, we want to
+Consider a data matrix $\mathbf{X}^{*}:n \times p$ containing data on $n$ objects and $p$ variables. To produce a 2D biplot, we need to optimally approximate $\mathbf{X} = (\mathbf{I}_n-\frac{1}{n}\mathbf{11}')\mathbf{X}^{*}$ (typically of rank $p$ with $p<n$) with a rank $2$ matrix. In terms of the least squares error, we want to
 
 $$
-min \| \hat{\mathbf{X}}-\mathbf{X} \|
+min \| \hat{\mathbf{X}}-\mathbf{X} \|^2
 $$
 where $rank(\hat{\mathbf{X}})=2$. It was shown by @EckartYoung1936 that if the singular value decomposition of $\mathbf{X} = \mathbf{UDV'}$ then
 $$
@@ -38,7 +38,51 @@ $$
               \mathbf{0} & \mathbf{0}
              \end{bmatrix}
 $$
-essentially selecting only the first two columns of $\mathbf{U}$, the diagonal matrix of the first (largest) two singular values and the first two rows of $\mathbf{V}'$.
+essentially selecting only the first two columns of $\mathbf{U}$, the diagonal matrix of the first (largest) two singular values and the first two rows of $\mathbf{V}'$. Define 
+$$
+\mathbf{J}_2 = \begin{bmatrix}
+                \mathbf{I}_2\\
+                \mathbf{0}
+               \end{bmatrix}
+$$
+then $\mathbf{J}_2\mathbf{J}_2' = \mathbf{J}$ and we can write $\hat{\mathbf{X}} = (\mathbf{UDJ}_2)(\mathbf{VJ}_2)'$.
+
+@Gabriel1971 shows that any rank $2$ matrix can be written as
+$$
+\hat{\mathbf{X}} = \mathbf{G} \mathbf{H}'
+$$
+where $\mathbf{G}:n \times 2$ and $\mathbf{H}:p \times 2$.The $n$ rows of $\mathbf{G}$ provide the $n$ pairs of 2D coordinates representing the rows of $\hat{\mathbf{X}}$ and the $p$ rows of $\mathbf{H}$ provide the $p$ pairs of 2D coordinates representing the columns of $\hat{\mathbf{X}}$. Since $\hat{\mathbf{X}} = (\mathbf{UDJ}_2)(\mathbf{VJ}_2)'$, by setting $\mathbf{G}=\mathbf{UDJ}_2$ and $\mathbf{H}=\mathbf{VJ}_2$ we obtains the best least squares approximation of $\mathbf{X}$. @Gabriel1971 further shows that the approximation of distances between the rows are optimal, while the approximation of correlations by the cosines between the angles of the rows of $\mathbf{H}$ is sub-optimal.
+
+The rows of $\mathbf{G}$ is plotted as points, representing the samples. The rows of $\mathbf{H}$ provide the directions of the axes for the variables. Since we have
+$$
+x^{*}_{ij}-\bar{x}_j = x_{ij} \approx \hat{x}_{ij} = \mathbf{g}_{(i)}'\mathbf{h}_{(j)}
+$$
+all the values that will predict $\mu$ for variable $j$ is of the form
+$$
+\mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}
+$$
+which defines a straight line orthogonal to $\mathbf{h}_{(j)}$ in the biplot space. To find the intersection of this prediction line with $\mathbf{h}_{(j)}$ we note that
+$$
+\mathbf{g}'_{(i)}\mathbf{h}_{(j)} = \| \mathbf{g}_{(i)} \| \| \mathbf{h}_{(j)} \| cos(\mathbf{g}_{(i)},\mathbf{h}_{(j)}) = \| \mathbf{p} \| \| \mathbf{h}_{(j)} \| 
+$$
+where $\mathbf{p}$ is the length of the orthogonal projection of $\mathbf{g}_{(i)}$ on $\mathbf{h}_{(j)}$. We can thus write $\mathbf{p} = c\mathbf{h}_{(j)}$ and all points on the prediction line $\mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}$ project on the same point $c_{\mu}\mathbf{h}_{(j)}$. We solve for $c_{\mu}$ from
+$$
+\mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}=\| \mathbf{p} \| \| \mathbf{h}_{(j)} \| = \| c_{\mu}\mathbf{h}_{j} \| \| \mathbf{h}_{(j)} \| 
+$$
+
+$$
+c_{\mu} = \frac{\mu}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}.
+$$
+If we select 'nice' scale markers $\tau_{1}, \tau_{2}, \cdots \tau_{k}$ for variable $j$, then $\tau_{h}-\bar{x}_j = \mu_{h}$ and positions of these scale markers on $\mathbf{h}_{(j)}$ are given by $p_{\mu_{1}}, p_{\mu_{2}}, \cdots p_{\mu_{k}}$ with
+$$
+p_{\mu_h} = c_{\mu_h}\mathbf{h}_{(j)} =  \frac{\mu_h}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}\mathbf{h}_{(j)}
+$$
+To obtain a PCA biplot of the $150\times 4$ iris data we call
+
+```{r}
+biplot(iris) |> PCA() |> plot()
+```
+
 
 
 ## References
