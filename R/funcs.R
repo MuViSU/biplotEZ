@@ -45,34 +45,34 @@ biplot <- function(data, group.aes = NULL, center = TRUE, scaled = FALSE, Title 
 {
   # make provision for an object of class prcomp or princomp
   if ((inherits(data, "prcomp")) | (inherits(data, "princomp")))
-  {
-    if (inherits(data, "princomp"))
     {
-      data$rotation <- unclass(data$loadings)
-      data$x <- data$scores
-    }
-    if (is.null(data$x)) stop ("You need to specify retx=TRUE.")
-    if (ncol(data$rotation)<2) stop ("rank needs to be at least 2")
-    X <- data$x %*% t(data$rotation)
-    n <- nrow(X)
-    p <- ncol(X)
-    if (!data$scale[1]) {
-      scaled <- FALSE
-      sd <- rep(1, p)
-    }
-    else { X <- scale(X, center=F, scale=1/data$scale)
-    scaled <- TRUE
-    sd <- data$scale
-    }
-    if (!data$center[1]) {
-      center <- FALSE
-      means <- rep(0, p)
-    }
-    else { X <- scale(X, center=-1*data$center, scale=F)
-    center <- TRUE
-    means <- data$center
-    }
-    na.vec.df <- NULL
+      if (inherits(data, "princomp"))
+      {
+        data$rotation <- unclass(data$loadings)
+        data$x <- data$scores
+      }
+      if (is.null(data$x)) stop ("You need to specify retx=TRUE.")
+      if (ncol(data$rotation)<2) stop ("rank needs to be at least 2")
+      X <- data$x %*% t(data$rotation)
+      n <- nrow(X)
+      p <- ncol(X)
+      if (!data$scale[1]) {
+                          scaled <- FALSE
+                          sd <- rep(1, p)
+      }
+      else { X <- scale(X, center=F, scale=1/data$scale)
+             scaled <- TRUE
+             sd <- data$scale
+      }
+      if (!data$center[1]) {
+                           center <- FALSE
+                           means <- rep(0, p)
+      }
+      else { X <- scale(X, center=-1*data$center, scale=F)
+             center <- TRUE
+             means <- data$center
+      }
+      na.vec.df <- NULL
 
     if(is.null(group.aes)) group.aes <- factor(rep(1,n))
     else group.aes <- factor(group.aes)
