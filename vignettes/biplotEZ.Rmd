@@ -1,0 +1,44 @@
+---
+title: "biplotEZ"
+output: rmarkdown::html_vignette
+bibliography: references.bib
+vignette: >
+  %\VignetteIndexEntry{biplotEZ}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(biplotEZ)
+```
+
+The package \pkg{biplotEZ} provides users with an EZ-to-use way of constructing multi-dimensional scatterplots of their data. The simplest form of a biplot is the principal component analysis (PCA) biplot which will be used for illustration in this vignette.
+
+## What is a PCA biplot
+Consider a data matrix $\mathbf{X}:n \times p$ containing data on $n$ objects and $p$ variables. To produce a 2D biplot, we need to optimally approximate $\mathbf{X}$ (typically of rank $p$ with $p<n$) with a rank $2$ matrix. In terms of the least squares error, we want to
+
+$$
+min \| \hat{\mathbf{X}}-\mathbf{X} \|
+$$
+where $rank(\hat{\mathbf{X}})=2$. It was shown by @EckartYoung1936 that if the singular value decomposition of $\mathbf{X} = \mathbf{UDV'}$ then
+$$
+\hat{\mathbf{X}} = \mathbf{UJDJV'}
+$$
+with 
+$$
+\mathbf{J} = \begin{bmatrix}
+              \mathbf{I}_2 & \mathbf{0}\\
+              \mathbf{0} & \mathbf{0}
+             \end{bmatrix}
+$$
+essentially selecting only the first two columns of $\mathbf{U}$, the diagonal matrix of the first (largest) two singular values and the first two rows of $\mathbf{V}'$.
+
+
+## References
