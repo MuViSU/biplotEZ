@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 library(biplotEZ)
 ```
 
-The package \pkg{biplotEZ} provides users with an **EZ**-to-use way of constructing multi-dimensional scatterplots of their data. The simplest form of a biplot is the principal component analysis (PCA) biplot which will be used for illustration in this vignette.
+The package \pkg{biplotEZ} provides users with an *EZ*-to-use way of constructing multi-dimensional scatterplots of their data. The simplest form of a biplot is the principal component analysis (PCA) biplot which will be used for illustration in this vignette.
 
 ## What is a PCA biplot
 Consider a data matrix $\mathbf{X}^{*}:n \times p$ containing data on $n$ objects and $p$ variables. To produce a 2D biplot, we need to optimally approximate $\mathbf{X} = (\mathbf{I}_n-\frac{1}{n}\mathbf{11}')\mathbf{X}^{*}$ (typically of rank $p$ with $p<n$) with a rank $2$ matrix. In terms of the least squares error, we want to
@@ -77,12 +77,20 @@ If we select 'nice' scale markers $\tau_{1}, \tau_{2}, \cdots \tau_{k}$ for vari
 $$
 p_{\mu_h} = c_{\mu_h}\mathbf{h}_{(j)} =  \frac{\mu_h}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}\mathbf{h}_{(j)}
 $$
-To obtain a PCA biplot of the $150\times 4$ iris data we call
+To obtain a PCA biplot of the $48\times 4$ rock data in `R` we call
 
-```{r}
-biplot(iris) |> PCA() |> plot()
+```{r, fig.height = 6, fig.width = 7}
+biplot(rock) |> PCA() |> plot()
 ```
 
+## The function `biplot()`
+
+The function `biplot()` takes a data set (usually) and outputs an object of class `biplot`. 
+
+```{r, }
+library(MASS)
+biplot(UScereal)
+```
 
 
 ## References
