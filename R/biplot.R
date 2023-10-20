@@ -21,6 +21,7 @@
 #'
 #' @return A list with the following components is available:
 #' \item{X}{matrix of the centered and scaled numeric variables.}
+#' \item{Xcat}{data frame of the categorical variables.}
 #' \item{raw.X}{original data.}
 #' \item{center}{TRUE or FALSE, whether X is centered.}
 #' \item{scaled}{TRUE or FALSE, wether X is scaled.}
@@ -61,19 +62,20 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
     if (!data$scale[1]) {
       scaled <- FALSE
       sd <- rep(1, p)
+      raw.X <- X
     }
-    else { X <- scale(X, center=F, scale=1/data$scale)
-    scaled <- TRUE
-    sd <- data$scale
-    }
+    else { raw.X <- scale(X, center=F, scale=1/data$scale)
+           scaled <- TRUE
+           sd <- data$scale
+        }
     if (!data$center[1]) {
       center <- FALSE
       means <- rep(0, p)
     }
-    else { X <- scale(X, center=-1*data$center, scale=F)
-    center <- TRUE
-    means <- data$center
-    }
+    else { raw.X <- scale(X, center=-1*data$center, scale=F)
+           center <- TRUE
+           means <- data$center
+         }
     na.vec.df <- NULL
 
     if(is.null(group.aes)) group.aes <- factor(rep(1,n))
@@ -88,7 +90,7 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
     if (scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/sd)
     if (center) Xhat <- scale(Xhat, center=-1*means, scale=FALSE)
 
-    object <- list(X = X, Xcat = NULL, raw.X = data, na.action=na.vec.df, center=center, scaled=scaled,
+    object <- list(X = X, Xcat = NULL, raw.X = raw.X, na.action=na.vec.df, center=center, scaled=scaled,
                    means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes, g.names = g.names,g = g,
                    Title = Title, Z=Z, Vr=Vr, ax.one.unit=ax.one.unit, Xhat=Xhat)
     class(object) <- "biplot"
@@ -265,7 +267,7 @@ print.biplot <- function (x, ...)
   if (!is.null(x$Xcat)) cat (ncol(x$Xcat), "categorical variables.\n")
   if (!is.null(x$na.action))
     cat ("The following", length(x$na.action), "sample-rows where removed due to missing values\n", x$na.action, "\n")
-  if (x$g>1)
-    cat (x$g, "groups:", x$g.names, "\n")
+  if (!is.null(x$classes))
+    cat (nlevels(x$classes), "classes:", levels(x$classes), "\n")
 }
 

@@ -21,7 +21,7 @@ library(biplotEZ)
 
 The package \pkg{biplotEZ} provides users with an *EZ*-to-use way of constructing multi-dimensional scatterplots of their data. The simplest form of a biplot is the principal component analysis (PCA) biplot which will be used for illustration in this vignette.
 
-## What is a PCA biplot
+## 1. What is a PCA biplot
 Consider a data matrix $\mathbf{X}^{*}:n \times p$ containing data on $n$ objects and $p$ variables. To produce a 2D biplot, we need to optimally approximate $\mathbf{X} = (\mathbf{I}_n-\frac{1}{n}\mathbf{11}')\mathbf{X}^{*}$ (typically of rank $p$ with $p<n$) with a rank $2$ matrix. In terms of the least squares error, we want to
 
 $$
@@ -80,17 +80,83 @@ $$
 To obtain a PCA biplot of the $48\times 4$ rock data in `R` we call
 
 ```{r, fig.height = 6, fig.width = 7}
-biplot(rock) |> PCA() |> plot()
+biplot(rock, scale = TRUE) |> PCA() |> plot()
 ```
 
-## The function `biplot()`
+## 2. The function `biplot()`
 
 The function `biplot()` takes a data set (usually) and outputs an object of class `biplot`. 
 
 ```{r, }
-library(MASS)
-biplot(UScereal)
+state.data <- data.frame (state.region, state.x77)
+biplot(state.data)
 ```
 
+Apart from specifying a data set, we can specify a single variable for classification purposes.
+
+```{r, }
+biplot(state.x77, classes=state.region)
+```
+
+If we want to use the variable `state.region` for formatting, say colour coding the samples according to region, we instead specify `grouping.aes` to indicate it pertains to the aesthetics, rather than data structure. We can include or exclude the aestethics varible from the data set.
+
+```{r, }
+biplot(state.x77, group.aes=state.region)
+```
+
+Next, we look at centring and scaling of the numeric data matrix. As we saw in section 1 above, PCA is computed from the centred data matrix. For most methods, centring is either required or has no effect on the methodology, therefore the default is `center = TRUE`. Since centring is usually assumed, you will get a warning message, should you explicitly choose to set `center = FALSE`. The default for `scaled` is `FALSE`, but often when variables are in different units of measurement, it is advisable to devide each variable by its standard deviation which is accomplished by setting `scale = TRUE'.
+
+```{r, }
+biplot(state.data)                 # centred, but no scaling
+biplot(state.data, scale = TRUE)   # centered and scaled
+biplot(state.data, center = FALSE) # no centring (usually not recommended) or scaling
+```
+
+The final optional argument to the function is specifying a title for your plot. We notice in the output above, that centring and / or scaling has no effect on the `print method`. It does however have an effect on the components of the object of class `biplot` in the output.
+
+```{r, }
+out <- biplot(state.data)                 # centred, but no scaling
+out$center
+out$scaled
+out$means
+out$sd
+out <- biplot(state.data, scale = TRUE)   # centered and scaled
+out$center
+out$scaled
+out$means
+out$sd
+out <- biplot(state.data, center = FALSE) # no centring (usually not recommended) or scaling
+out$center
+out$scaled
+out$means
+out$sd
+```
+
+Note that the components `means` and `sd` only contain the sample means and sample sds when either/or `center` and `scaled` is `TRUE`. For values of `FALSE`, these components contain zeros for the `means` and/or ones for the `sd` to ensure back transformation will not have any affect.
+
+### 1.1 Using `biplot()` with `princomp()` or `prcomp()`
+
+Should the user wish to construct a PCA biplot after performing principal component analysis via the built in functions in the `stats` package, the output from either of these functions can be piped into the biplot function, where the piping implies that the argument `data` now takes the value of an object of class `prcomp` or `princomp`.
+
+```{r, }
+princomp(state.x77) |> biplot()
+out <- prcomp(state.x77, scale.=TRUE) |> biplot()
+rbind (head(out$raw.X,3),tail(out$raw.X,3))
+rbind (head(out$X,3),tail(out$X,3))
+out$center
+out$scaled
+out$means
+out$sd
+```
+
+```{r, }
+out <- princomp(state.x77, scale.=TRUE) |> biplot()
+rbind (head(out$raw.X,3),tail(out$raw.X,3))
+rbind (head(out$X,3),tail(out$X,3))
+out$center
+out$scaled
+out$means
+out$sd
+```
 
 ## References

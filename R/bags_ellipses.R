@@ -92,13 +92,13 @@ alpha.bags <- function(bp, alpha=0.95, which = NULL, col = bp$sample$col[which],
 #' @references
 #' Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
 #' @export
-#' @usage concentration.ellipse(bp, df=2, kappa = NULL, which = NULL,
+#' @usage ellipses(bp, df=2, kappa = NULL, which = NULL,
 #' alpha = 0.95, col = bp$sample$col[which], lty = 1, lwd = 1,
 #' alpha.transparency = 0.5, trace = TRUE)
-#' @aliases concentration.ellipse
+#' @aliases ellipses
 #'
 #' @examples
-#' biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> concentration.ellipse(kappa=2) |> plot()
+#' biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> ellipses(kappa=2) |> plot()
 #'
 ellipses <- function(bp, df=2, kappa = NULL, which = NULL, alpha = 0.95,
                                   col = bp$sample$col[which], lty = 1, lwd = 1, alpha.transparency = 0.5, trace = TRUE)

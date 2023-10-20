@@ -23,6 +23,7 @@ Title = NULL)
 \value{
 A list with the following components is available:
 \item{X}{matrix of the centered and scaled numeric variables.}
+\item{Xcat}{data frame of the categorical variables.}
 \item{raw.X}{original data.}
 \item{center}{TRUE or FALSE, whether X is centered.}
 \item{scaled}{TRUE or FALSE, wether X is scaled.}
