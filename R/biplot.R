@@ -51,31 +51,46 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
   {
     if (inherits(data, "princomp"))
     {
-      data$rotation <- unclass(data$loadings)
-      data$x <- data$scores
+      if (is.null(data$scores)) stop ("Your need to specify scores=TRUE.")
+       X <- data$scores %*% t(data$loadings)
+       n <- nrow(X)
+       p <- ncol(X)
+       if (all(data$scale[1]==1)) scaled <- FALSE else scaled <- TRUE
+       sd <- data$scale
+       means <- data$center
+       raw.X <- scale(scale(X, center=F, scale=1/sd), center=-1*means, scale=F)
+       Vr <- data$loadings[,1:2]
+       ax.one.unit <- 1/(diag(Vr %*% t(Vr))) * Vr
+       Z <- data$scores[,1:2]
+       Xhat <- Z %*% t(Vr)
+       if (scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/sd)
+       if (center) Xhat <- scale(Xhat, center=-1*means, scale=FALSE)
     }
-    if (is.null(data$x)) stop ("You need to specify retx=TRUE.")
-    if (ncol(data$rotation)<2) stop ("rank needs to be at least 2")
-    X <- data$x %*% t(data$rotation)
-    n <- nrow(X)
-    p <- ncol(X)
-    if (!data$scale[1]) {
-      scaled <- FALSE
-      sd <- rep(1, p)
-      raw.X <- X
-    }
-    else { raw.X <- scale(X, center=F, scale=1/data$scale)
-           scaled <- TRUE
-           sd <- data$scale
-        }
-    if (!data$center[1]) {
-      center <- FALSE
-      means <- rep(0, p)
-    }
-    else { raw.X <- scale(X, center=-1*data$center, scale=F)
+
+    if (inherits(data, "prcomp"))
+    {  if (is.null(data$x)) stop ("You need to specify retx=TRUE.")
+       if (ncol(data$rotation)<2) stop ("rank needs to be at least 2")
+       X <- data$x %*% t(data$rotation)
+       n <- nrow(X)
+       p <- ncol(X)
+       if (!data$scale[1]) { scaled <- FALSE
+                             sd <- rep(1, p)
+                             raw.X <- X           }
+      else { raw.X <- scale(X, center=F, scale=1/data$scale)
+             scaled <- TRUE
+             sd <- data$scale                     }
+    if (!data$center[1]) { center <- FALSE
+                           means <- rep(0, p)     }
+    else { raw.X <- scale(raw.X, center=-1*data$center, scale=F)
            center <- TRUE
-           means <- data$center
-         }
+           means <- data$center                   }
+     Vr <- data$rotation[,1:2]
+     ax.one.unit <- 1/(diag(Vr %*% t(Vr))) * Vr
+     Z <- data$x[,1:2]
+     Xhat <- Z %*% t(Vr)
+     if (scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/sd)
+     if (center) Xhat <- scale(Xhat, center=-1*means, scale=FALSE)
+    }
     na.vec.df <- NULL
 
     if(is.null(group.aes)) group.aes <- factor(rep(1,n))
@@ -83,14 +98,7 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
     g.names <-levels(group.aes)
     g <- length(g.names)
 
-    Vr <- data$rotation[,1:2]
-    ax.one.unit <- 1/(diag(Vr %*% t(Vr))) * Vr
-    Z <- data$x[,1:2]
-    Xhat <- Z %*% t(Vr)
-    if (scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/sd)
-    if (center) Xhat <- scale(Xhat, center=-1*means, scale=FALSE)
-
-    object <- list(X = X, Xcat = NULL, raw.X = raw.X, na.action=na.vec.df, center=center, scaled=scaled,
+   object <- list(X = X, Xcat = NULL, raw.X = raw.X, na.action=na.vec.df, center=center, scaled=scaled,
                    means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes, g.names = g.names,g = g,
                    Title = Title, Z=Z, Vr=Vr, ax.one.unit=ax.one.unit, Xhat=Xhat)
     class(object) <- "biplot"
@@ -237,7 +245,9 @@ biplot.legend <- function(bp, ...)
 
   if(bp$legend$means) graphics::legend("bottomright",col=bp$means$col,pch=bp$means$pch,legend=bp$classes, ...)
 
-  if(bp$legend$samples) graphics::legend("topright",col=bp$samples$col,pch=bp$samples$pch,legend=bp$g.names, ...)
+  if(bp$legend$samples) graphics::legend("topright", col=bp$samples$col[1:length(bp$samples$which)],
+                                                     pch=bp$samples$pch[1:length(bp$samples$which)],
+                                                     legend=bp$g.names[bp$samples$which], ...)
 
   if(bp$legend$ellipses & !is.null(bp$conc.ellipses))
   { #formatting of legend names
@@ -263,8 +273,8 @@ biplot.legend <- function(bp, ...)
 print.biplot <- function (x, ...)
 {
   cat ("Object of class biplot, based on", x$n, "samples and", ncol(x$raw.X), "variables.\n")
-  if (!is.null(x$X)) cat (ncol(x$X), "numeric variables.\n")
-  if (!is.null(x$Xcat)) cat (ncol(x$Xcat), "categorical variables.\n")
+  if (!is.null(x$X)) if (ncol(x$X) > 1) cat (ncol(x$X), "numeric variables.\n") else cat (ncol(x$X), "numeric variable.\n")
+  if (!is.null(x$Xcat)) if (ncol(x$Xcat) > 1) cat (ncol(x$Xcat), "categorical variables.\n") else cat (ncol(x$Xcat), "categorical variable.\n")
   if (!is.null(x$na.action))
     cat ("The following", length(x$na.action), "sample-rows where removed due to missing values\n", x$na.action, "\n")
   if (!is.null(x$classes))

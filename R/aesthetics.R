@@ -11,9 +11,20 @@
 #' @param cex sample character expansion, with default \code{1}.
 #' @param label logical, whether samples should be labelled or not, with default \code{FALSE}.
 #' @param label.cex label text expansion, with default \code{0.75}.
-#' @param label.side side of the plotting character where label appears, with default \code{bottom}.
+#' @param label.side side of the plotting character where label appears, with default \code{bottom}. Note that unlike
+#'                   the argument `pos` in `text()`, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
+#' @param label.offset offset of the label from the data point. See ?text for a detailed explanation of the
+#'                     argument `offset`.
 #' @param connected logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.
 #' @param alpha opacity of sample plotting character, default is \code{1}.
+#'
+#' @details
+#' The arguments `which`, `col`, `pch` and `cex` are based on the specification of `group.aes` or `classes`. If no groups
+#' are specified, a single colour, plotting character and / or character expansion is expected. If g groups are
+#' specified, vectors of length g is expected, or values are recycled to length g.
+#'
+#' The arguments `label`, `label.cex`, `label.side` and `label.offset` are based on the sample size n. A single value
+#' will be recycled n times or a vector of length n is expected.
 #'
 #' @return A list with the following components is available:
 #' \item{col}{colour of the samples.}
@@ -21,14 +32,16 @@
 #' \item{cex}{expansion of the plotting character of the samples.}
 #' \item{label}{TRUE or FALSE, whether samples should be labelled.}
 #' \item{label.cex}{expansion of the label.}
+#' \item{label.col}{colour of the label, mathcing the colour of the sample point.}
 #' \item{label.side}{side at which to plot the label of samples.}
+#' \item{label.offset}{offset of the label from the data point.}
 #' \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X. (not in current version)}
 #' \item{alpha}{opacity of the samples. (not in current version)}
 #' \item{g}{number of groups.}
 #'
 #' @usage
 #' samples (bp,  which = 1:bp$g, col = ez.col, pch = 3, cex = 1, label = FALSE,
-#' label.cex = 0.75, label.side = "bottom", connected = FALSE, alpha = 1)
+#' label.cex = 0.75, label.side = "bottom", label.offset = 0.5, connected = FALSE, alpha = 1)
 #' @aliases samples
 #'
 #' @export
@@ -36,9 +49,9 @@
 #' @examples biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> plot()
 samples <- function (bp,  which = 1:bp$g, col = ez.col,
                      pch = 3, cex = 1, label = FALSE, label.cex = 0.75, label.side = "bottom",
-                     connected=FALSE, alpha = 1)
+                     label.offset = 0.5, connected=FALSE, alpha = 1)
 {
-  if (!all(is.numeric(which))) which <- match(which, rownames(bp$X), nomatch = 0)
+  if (!all(is.numeric(which))) which <- match(which, bp$g.names, nomatch = 0)
   g <- bp$g
   which <- which[which <= g]
   which <- which[which > 0]
@@ -49,19 +62,39 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col,
   pch <- as.vector(pch[1:sample.group.num])
   while (length(cex) < sample.group.num) cex <- c(cex, cex)
   cex <- as.vector(cex[1:sample.group.num])
-  while (length(label) < sample.group.num) label <- c(label, label)
-  label <- as.vector(label[1:sample.group.num])
-  while (length(label.cex) < sample.group.num) label.cex <- c(label.cex, label.cex)
-  label.cex <- as.vector(label.cex[1:sample.group.num])
-  while (length(label.side) < sample.group.num) label.side <- c(label.side, label.side)
-  label.side <- as.vector(label.side[1:sample.group.num])
+  n <- bp$n
+  if (label[1] == "ggrepel")
+  {
+     label <- label[1]
+     label.side <- NULL
+     label.offset <- NULL
+   }
+  else
+  {
+    while (length(label) < n) label <- c(label, label)
+    label <- as.vector(label[1:n])
+    while (length(label.side) < n) label.side <- c(label.side, label.side)
+    label.side <- as.vector(label.side[1:n])
+    while (length(label.offset) < n) label.offset <- c(label.offset, label.offset)
+    label.offset <- as.vector(label.offset[1:n])
+  }
+  while (length(label.cex) < n) label.cex <- c(label.cex, label.cex)
+  label.cex <- as.vector(label.cex[1:n])
+  label.col <- rep(NA, n)
+  for (j in 1:g)
+    label.col[bp$group.aes==bp$g.names[j]] <- col[j]
   while (length(alpha) < sample.group.num) alpha <- c(alpha, alpha)
   if (length(connected)>1) connected <- connected[1]
   alpha <- as.vector(alpha[1:sample.group.num])
 
   bp$samples = list(which = which, col = col, pch = pch, cex = cex, label = label, label.cex = label.cex,
-                    label.side = label.side, connected=connected, alpha = alpha, g = g)
+                    label.col = label.col, label.side = label.side, label.offset = label.offset, connected=connected, alpha = alpha)
   bp
+}
+
+aes.list.to.vector <- function (aes.list, p)
+{
+
 }
 
 # ----------------------------------------------------------------------------------------------
@@ -80,7 +113,7 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col,
 #' @param label.dir direction of axis label, with default \code{Orthog}.
 #' @param label.col axis label colour, with default, \code{col}.
 #' @param label.cex axis label expansion, with default \code{0.75}.
-#' @param label.dist axis label distance from axis, with default \code{0}.
+#' @param label.line axis label written on which margin line, with default \code{0.1}.
 #' @param ticks number of tick marks per axis, with default \code{5}.
 #' @param tick.col tick mark colour, with default \code{col}.
 #' @param tick.size tick mark size, with default \code{1}.
@@ -105,7 +138,7 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col,
 #' \item{label.dir}{direction of the axis labels.}
 #' \item{label.col}{vector of axis label colours.}
 #' \item{label.cex}{vector of axis labels expansions.}
-#' \item{label.dist}{vector of axis label distances from axes.}
+#' \item{label.line}{vector of axis label margin lines from axes.}
 #' \item{ticks}{vector representing the number of tick marks per axis.}
 #' \item{tick.col}{vector of tick mark colours.}
 #' \item{tick.size}{vector of tick mark sizes.}
@@ -125,7 +158,7 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col,
 #' @usage
 #' axes(bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7),
 #' lwd = 1, lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75,
-#'  label.dist = 0, ticks = 5, tick.col = col, tick.size = 1, tick.label = TRUE,
+#'  label.line = 0.1, ticks = 5, tick.col = col, tick.size = 1, tick.label = TRUE,
 #'  tick.label.col = tick.col, tick.label.cex = 0.6, tick.label.side = "left",
 #'  tick.label.offset = 0.5, tick.label.pos = 1, predict.col = col, predict.lwd = lwd,
 #'   predict.lty = lty, ax.names = X.names, orthogx = 0, orthogy = 0)
@@ -140,7 +173,7 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col,
 #' biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> axes() |> plot()
 #'
 axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), lwd = 1, lty = 1,
-                  label.dir = "Orthog", label.col = col, label.cex = 0.75, label.dist = 0, ticks = 5,
+                  label.dir = "Orthog", label.col = col, label.cex = 0.75, label.line = 0.1, ticks = 5,
                   tick.col = col, tick.size = 1, tick.label = TRUE, tick.label.col = tick.col, tick.label.cex = 0.6,
                   tick.label.side = "left", tick.label.offset = 0.5, tick.label.pos = 1,
                   predict.col = col, predict.lwd = lwd, predict.lty = lty, ax.names = X.names,
@@ -163,8 +196,8 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
   label.col <- as.vector(label.col[1:ax.num])
   while (length(label.cex) < ax.num) label.cex <- c(label.cex, label.cex)
   label.cex <- as.vector(label.cex[1:ax.num])
-  while (length(label.dist) < ax.num) label.dist <- c(label.dist, label.dist)
-  label.dist <- as.vector(label.dist[1:ax.num])
+  while (length(label.line) < ax.num) label.line <- c(label.line, label.line)
+  label.line <- as.vector(label.line[1:ax.num])
   while (length(ticks) < ax.num) ticks <- c(ticks, ticks)
   ticks <- as.vector(ticks[1:ax.num])
   while (length(tick.col) < ax.num) tick.col <- c(tick.col, tick.col)
@@ -197,7 +230,7 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
   while (length(orthogy) < p) orthogy <- c(orthogy, orthogy)
   orthogy <- as.vector(orthogy[1:p])
   bp$axes = list(which = which, col = col, lwd = lwd, lty = lty, label.dir = label.dir, label.col = label.col, label.cex = label.cex,
-                 label.dist = label.dist, ticks = ticks, tick.col = tick.col, tick.size = tick.size, tick.label = tick.label,
+                 label.line = label.line, ticks = ticks, tick.col = tick.col, tick.size = tick.size, tick.label = tick.label,
                  tick.label.col = tick.label.col, tick.label.cex = tick.label.cex, tick.label.side = tick.label.side,
                  tick.label.offset = tick.label.offset, tick.label.pos = tick.label.pos,
                  predict.col = predict.col, predict.lty = predict.lty, predict.lwd = predict.lwd,

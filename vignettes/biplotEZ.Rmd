@@ -48,12 +48,18 @@ $$
 then $\mathbf{J}_2\mathbf{J}_2' = \mathbf{J}$ and we can write $\hat{\mathbf{X}} = (\mathbf{UDJ}_2)(\mathbf{VJ}_2)'$.
 
 @Gabriel1971 shows that any rank $2$ matrix can be written as
-$$
-\hat{\mathbf{X}} = \mathbf{G} \mathbf{H}'
-$$
-where $\mathbf{G}:n \times 2$ and $\mathbf{H}:p \times 2$.The $n$ rows of $\mathbf{G}$ provide the $n$ pairs of 2D coordinates representing the rows of $\hat{\mathbf{X}}$ and the $p$ rows of $\mathbf{H}$ provide the $p$ pairs of 2D coordinates representing the columns of $\hat{\mathbf{X}}$. Since $\hat{\mathbf{X}} = (\mathbf{UDJ}_2)(\mathbf{VJ}_2)'$, by setting $\mathbf{G}=\mathbf{UDJ}_2$ and $\mathbf{H}=\mathbf{VJ}_2$ we obtains the best least squares approximation of $\mathbf{X}$. @Gabriel1971 further shows that the approximation of distances between the rows are optimal, while the approximation of correlations by the cosines between the angles of the rows of $\mathbf{H}$ is sub-optimal.
+\begin{equation}
+  \hat{\mathbf{X}} = \mathbf{G} \mathbf{H}' \tag{1}
+\end{equation}
+where $\mathbf{G}:n \times 2$ and $\mathbf{H}:p \times 2$.The $n$ rows of $\mathbf{G}$ provide the $n$ pairs of 2D coordinates 
+representing the rows of $\hat{\mathbf{X}}$ and the $p$ rows of $\mathbf{H}$ provide the $p$ pairs of 2D coordinates representing 
+the columns of $\hat{\mathbf{X}}$. Since $\hat{\mathbf{X}} = (\mathbf{UDJ}_2)(\mathbf{VJ}_2)'$, by setting $\mathbf{G}=\mathbf{UDJ}_2$ 
+and $\mathbf{H}=\mathbf{VJ}_2$ we obtains the best least squares approximation of $\mathbf{X}$. @Gabriel1971 further shows that the 
+approximation of distances between the rows are optimal, while the approximation of correlations by the cosines between the angles of 
+the rows of $\mathbf{H}$ is sub-optimal.
 
-The rows of $\mathbf{G}$ is plotted as points, representing the samples. The rows of $\mathbf{H}$ provide the directions of the axes for the variables. Since we have
+The rows of $\mathbf{G}$ is plotted as points, representing the samples. The rows of $\mathbf{H}$ provide the directions of the axes 
+for the variables. Since we have
 $$
 x^{*}_{ij}-\bar{x}_j = x_{ij} \approx \hat{x}_{ij} = \mathbf{g}_{(i)}'\mathbf{h}_{(j)}
 $$
@@ -61,13 +67,27 @@ all the values that will predict $\mu$ for variable $j$ is of the form
 $$
 \mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}
 $$
-which defines a straight line orthogonal to $\mathbf{h}_{(j)}$ in the biplot space. To find the intersection of this prediction line with $\mathbf{h}_{(j)}$ we note that
+which defines a straight line orthogonal to $\mathbf{h}_{(j)}$ in the biplot space (see the dotted red line in Figure 1(a)). To find 
+the intersection of this prediction line with $\mathbf{h}_{(j)}$ we note that
 $$
-\mathbf{g}'_{(i)}\mathbf{h}_{(j)} = \| \mathbf{g}_{(i)} \| \| \mathbf{h}_{(j)} \| cos(\mathbf{g}_{(i)},\mathbf{h}_{(j)}) = \| \mathbf{p} \| \| \mathbf{h}_{(j)} \| 
+\mathbf{g}'_{(i)}\mathbf{h}_{(j)} = \| \mathbf{g}_{(i)} \|^2 \| \mathbf{h}_{(j)} \|^2 cos(\mathbf{g}_{(i)},\mathbf{h}_{(j)}) = 
+\| \mathbf{p} \|^2 \| \mathbf{h}_{(j)} \|^2 
 $$
-where $\mathbf{p}$ is the length of the orthogonal projection of $\mathbf{g}_{(i)}$ on $\mathbf{h}_{(j)}$. We can thus write $\mathbf{p} = c\mathbf{h}_{(j)}$ and all points on the prediction line $\mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}$ project on the same point $c_{\mu}\mathbf{h}_{(j)}$. We solve for $c_{\mu}$ from
+where $\mathbf{p}$ is the length of the orthogonal projection of $\mathbf{g}_{(i)}$ on $\mathbf{h}_{(j)}$. This is illustrated in 
+Figure 1(b) with triangle ABC: $cos(\theta) = \frac{AC}{AB}$ or $AC = AB cos(\theta)$ The length of $AC$, written as 
+$\| \mathbf{p} \|^2$ is equal to the cosine times the length of $AB$, i.e. $cos(\mathbf{g}_{(i)},\mathbf{h}_{(j)}) \| \mathbf{g}_{(i)} \|^2$.
+
+```{r out.width='100%', echo = FALSE, fig.cap="Figure 1: Calibration of biplot axes."}
+knitr::include_graphics("axis_calibration.png")
+```
+
+
+Since $\mathbf{p}$ is along $\mathbf{h}_{(j)}$ we can write 
+$\mathbf{p} = c\mathbf{h}_{(j)}$ and all points on the prediction line $\mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}$ project on the 
+same point $c_{\mu}\mathbf{h}_{(j)}$. We solve for $c_{\mu}$ from
 $$
-\mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}=\| \mathbf{p} \| \| \mathbf{h}_{(j)} \| = \| c_{\mu}\mathbf{h}_{j} \| \| \mathbf{h}_{(j)} \| 
+\mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}=\| \mathbf{p} \|^2 \| \mathbf{h}_{(j)} \|^2 = 
+\| c_{\mu}\mathbf{h}_{j} \|^2 \| \mathbf{h}_{(j)} \|^2 
 $$
 
 $$
@@ -75,7 +95,7 @@ c_{\mu} = \frac{\mu}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}.
 $$
 If we select 'nice' scale markers $\tau_{1}, \tau_{2}, \cdots \tau_{k}$ for variable $j$, then $\tau_{h}-\bar{x}_j = \mu_{h}$ and positions of these scale markers on $\mathbf{h}_{(j)}$ are given by $p_{\mu_{1}}, p_{\mu_{2}}, \cdots p_{\mu_{k}}$ with
 $$
-p_{\mu_h} = c_{\mu_h}\mathbf{h}_{(j)} =  \frac{\mu_h}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}\mathbf{h}_{(j)}
+p_{\mu_h} = c_{\mu_h}\mathbf{h}_{(j)} =  \frac{\mu_h}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}\mathbf{h}_{(j)} \tag{2}
 $$
 To obtain a PCA biplot of the $48\times 4$ rock data in `R` we call
 
@@ -98,13 +118,19 @@ Apart from specifying a data set, we can specify a single variable for classific
 biplot(state.x77, classes=state.region)
 ```
 
-If we want to use the variable `state.region` for formatting, say colour coding the samples according to region, we instead specify `grouping.aes` to indicate it pertains to the aesthetics, rather than data structure. We can include or exclude the aestethics varible from the data set.
+If we want to use the variable `state.region` for formatting, say colour coding the samples according to region, we instead specify 
+`grouping.aes` to indicate it pertains to the aesthetics, rather than data structure. We can include or exclude the aestethics variable 
+from the data set.
 
 ```{r, }
 biplot(state.x77, group.aes=state.region)
 ```
 
-Next, we look at centring and scaling of the numeric data matrix. As we saw in section 1 above, PCA is computed from the centred data matrix. For most methods, centring is either required or has no effect on the methodology, therefore the default is `center = TRUE`. Since centring is usually assumed, you will get a warning message, should you explicitly choose to set `center = FALSE`. The default for `scaled` is `FALSE`, but often when variables are in different units of measurement, it is advisable to devide each variable by its standard deviation which is accomplished by setting `scale = TRUE'.
+Next, we look at centring and scaling of the numeric data matrix. As we saw in section 1 above, PCA is computed from the centred data 
+matrix. For most methods, centring is either required or has no effect on the methodology, therefore the default is `center = TRUE`. 
+Since centring is usually assumed, you will get a warning message, should you explicitly choose to set `center = FALSE`. The default 
+for `scaled` is `FALSE`, but often when variables are in different units of measurement, it is advisable to divide each variable by its 
+standard deviation which is accomplished by setting `scale = TRUE'.
 
 ```{r, }
 biplot(state.data)                 # centred, but no scaling
@@ -149,14 +175,145 @@ out$means
 out$sd
 ```
 
+## 3. The functions `PCA()`, `plot()` and `legend.type()` 
+
+The first argument to the function `PCA()` is an object of class `biplot`, i.e. the output of the `biplot()` function. By default we construct a 2D biplot (argument `dim.biplot = 2`) of the first two principal components (argument `e.vects = 1:2`). The `group.aes` argument, if not specified in the function `biplot()`, allows a grouping argument for the sample aesthetics. A PCA biplot of the `state.x77` data with colouring according to `state.region` is obtained as follows:
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = T) |> 
+  PCA(group.aes = state.region) |> plot()
+```
+
+The output of `PCA()` is an object of class `PCA` which inherits from the class `biplot`. Four additional components are present in the 
+`PCA` object. The matrix `Z` contains the coordinates of the sample points, while the matrix `Vr` contains the "coordinates" for the 
+variables. In the notation of equation (1), Z=$\mathbf{G}:n \times 2$ and Vr=$\mathbf{H}:p \times 2$. The component `Xhat` is the 
+matrix $\hat{\mathbf{X}}$ on the left hand side of equation (1). The final component `ax.one.unit` contains as rows the expression in 
+equation (2) with $\mu_h=1$, in other words, one unit in the positive direction of the biplot axis.
+
+By piping the `PCA` class object (inheriting from class `biplot`) to the generic `plot()` function, the `plot.biplot()` function 
+constructs the biplot on the graphical device. To add a legend to the biplot, we call
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = T) |> 
+  PCA(group.aes = state.region) |> 
+  legend.type(samples = TRUE) |> plot()
+```
+
+It was mentioned in section 1 that the default choice $\mathbf{G}=\mathbf{UDJ}_2$ and $\mathbf{H}=\mathbf{VJ}_2$ provides an exact
+representation of the distances between the rows of $\mathbf{\hat{X}}$ which is an optimal approximation in the least squares sense 
+of the distances between the rows of $\mathbf{X}$ (samples). Alternatively, the correlations between the variables (columns of $\mathbf{X}$)
+can be optimally approximated by the cosines of the angles between the axes, leaving the approximation of the distances between the samples 
+to be suboptimal. In this case $\mathbf{G}=\mathbf{UJ}_2$ and $\mathbf{H}=\mathbf{VDJ}_2$ and this biplot is obtained by setting the 
+argument `correlation.biplot = TRUE`.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = T) |> 
+  PCA(group.aes = state.region, correlation.biplot = TRUE) |> 
+  legend.type(samples = TRUE) |> plot()
+```
+
+## 4. The function `samples()`
+
+This function controls the aesthetics of the sample points in the biplot. The function accepts as first argument an object of class 
+`biplot` where the aesthetics should be applied. Let us first construct a PCA biplot of the `state.x77` data with samples coloured 
+according to `state.division`. 
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = T) |> 
+  PCA(group.aes = state.division) |> 
+  legend.type(samples = TRUE) |> plot()
+```
+
+Since the legend interferes with the sample points, we choose to place the legend on a new page, by setting `new = TRUE` in the 
+`legend.type` function. Furthermore, we wish to select colours, other than the defaults, for the divisions.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = T) |> 
+  PCA(group.aes = state.division) |> 
+  samples (col = c("red", "darkorange", "gold", "chartreuse4", 
+                   "green", "salmon", "magenta", "black", "blue")) |>
+  legend.type(samples = TRUE, new = TRUE) |> plot()
+```
+
+Furthermore we want to use a different plotting character for the central regions.
+
 ```{r, }
-out <- princomp(state.x77, scale.=TRUE) |> biplot()
-rbind (head(out$raw.X,3),tail(out$raw.X,3))
-rbind (head(out$X,3),tail(out$X,3))
-out$center
-out$scaled
-out$means
-out$sd
+levels (state.division)
+```
+We want to use `pch = 15` for the first three and final two divisions and `pch = 1` for the remaining four divisions.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = T) |> 
+  PCA(group.aes = state.division) |> 
+  samples (col = c("red", "darkorange", "gold", "chartreuse4", 
+                   "green", "salmon", "magenta", "black", "blue"),
+           pch = c(15, 15, 15, 1, 1, 1, 1, 15, 15)) |>
+  legend.type(samples = TRUE, new = TRUE) |> plot()
+```
+
+To increase the size of the plotting characters of the eastern states, we add the following:
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = T) |> 
+  PCA(group.aes = state.division) |> 
+  samples (col = c("red", "darkorange", "gold", "chartreuse4", 
+                   "green", "salmon", "magenta", "black", "blue"),
+           pch = c(15, 15, 15, 1, 1, 1, 1, 15, 15),
+           cex = c(rep(1.5,4), c(1,1.5,1,1.5))) |>
+  legend.type(samples = TRUE, new = TRUE) |> plot()
+```
+
+If we choose to only show the samples for the central states, the argument `which`  is used either indicating the number(s) in the 
+sequence of levels (`which = 4:7`), or as shown below, the levels themselves:
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = T) |> 
+  PCA(group.aes = state.division) |> 
+  samples (col = c("red", "darkorange", "gold", "chartreuse4", 
+                   "green", "salmon", "magenta", "black", "blue"),
+           which = c("West North Central", "West South Central", "East South Central", 
+                     "East North Central")) |>
+  legend.type(samples = TRUE, new = TRUE) |> plot()
+```
+
+Note that since four regions are selected, the colour (and other aesthetics) is applied to these regions in the order they are 
+specified in `which`. To add the sample names, the `label` argument is set to `TRUE`. For large sample sizes, this is not 
+recommended, as overplotting will render the plot unusable. The size of the labels is controlled with `label.cex` which can be 
+specified either as a single value (for all samples) or a vector indicating size values for each individual sample.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = T) |> PCA() |> 
+  samples (label = TRUE) |> plot()
+```
+
+We can use the arguments `label.cex`, `label.side` and `label.offset` to make the plot more legible with a little effort.
+
+```{r, fig.height = 6, fig.width = 7}
+rownames(state.x77)[match(c("Pennsylvania", "New Jersey", "Massachusetts",
+                            "Minnesota"), rownames(state.x77))] <- c("PA", "NJ", "MA", "MN")
+above <- match(c("Alaska", "California", "Texas", "New York", "Nevada", "Georgia", "Alabama",
+                 "North Carolina", "Colorado", "Washington", "Illinois", "Michigan", "Arizon",
+                 "Florida", "Ohio", "NJ", "Kansas"), rownames(state.x77))
+right.side <- match(c("South Carolina", "Kentucky", "Rhode Island", "New Hampshire", "Virginia",
+                      "Missouri", "Delaware", "Hawaii", "Oregon", "PA", "Nebraska", "Montana",
+                      "Maryland", "Indiana", "Idaho"), rownames(state.x77))
+left.side <- match(c("Wyoming", "Iowa", "MN", "Connecticut"), rownames(state.x77))
+label.offset <- rep(0.3, nrow(state.x77))
+label.offset[match(c("Colorado", "Kansas", "Idaho"), rownames(state.x77))] <- c(0.8, 0.5, 0.8)
+label.side <- rep("bottom", nrow(state.x77))
+label.side[above] <- "top"
+label.side[right.side] <- "right"
+label.side[left.side] <- "left"
+biplot (state.x77, scaled=TRUE) |> PCA() |>
+  samples (label=TRUE, label.cex=0.6, label.side=label.side, label.offset=label.offset) |>
+  plot()
+```
+
+We can also make use of the functionality of the `ggrepel` package to place the labels.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = T) |> PCA() |> 
+  samples (label = "ggrepel", label.cex=0.65) |> plot()
 ```
 
 ## References

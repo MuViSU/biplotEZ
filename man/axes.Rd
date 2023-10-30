@@ -6,7 +6,7 @@
 \usage{
 axes(bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7),
 lwd = 1, lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75,
- label.dist = 0, ticks = 5, tick.col = col, tick.size = 1, tick.label = TRUE,
+ label.line = 0.1, ticks = 5, tick.col = col, tick.size = 1, tick.label = TRUE,
  tick.label.col = tick.col, tick.label.cex = 0.6, tick.label.side = "left",
  tick.label.offset = 0.5, tick.label.pos = 1, predict.col = col, predict.lwd = lwd,
   predict.lty = lty, ax.names = X.names, orthogx = 0, orthogy = 0)
@@ -30,7 +30,7 @@ lwd = 1, lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75,
 
 \item{label.cex}{axis label expansion, with default \code{0.75}.}
 
-\item{label.dist}{axis label distance from axis, with default \code{0}.}
+\item{label.line}{axis label written on which margin line, with default \code{0.1}.}
 
 \item{ticks}{number of tick marks per axis, with default \code{5}.}
 
@@ -71,7 +71,7 @@ A list with the following components is available:
 \item{label.dir}{direction of the axis labels.}
 \item{label.col}{vector of axis label colours.}
 \item{label.cex}{vector of axis labels expansions.}
-\item{label.dist}{vector of axis label distances from axes.}
+\item{label.line}{vector of axis label margin lines from axes.}
 \item{ticks}{vector representing the number of tick marks per axis.}
 \item{tick.col}{vector of tick mark colours.}
 \item{tick.size}{vector of tick mark sizes.}

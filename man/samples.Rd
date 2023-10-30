@@ -5,7 +5,7 @@
 \title{Aesthetics for biplot samples}
 \usage{
 samples (bp,  which = 1:bp$g, col = ez.col, pch = 3, cex = 1, label = FALSE,
-label.cex = 0.75, label.side = "bottom", connected = FALSE, alpha = 1)
+label.cex = 0.75, label.side = "bottom", label.offset = 0.5, connected = FALSE, alpha = 1)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot}.}
@@ -22,7 +22,11 @@ label.cex = 0.75, label.side = "bottom", connected = FALSE, alpha = 1)
 
 \item{label.cex}{label text expansion, with default \code{0.75}.}
 
-\item{label.side}{side of the plotting character where label appears, with default \code{bottom}.}
+\item{label.side}{side of the plotting character where label appears, with default \code{bottom}. Note that unlike
+the argument \code{pos} in \code{text()}, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.}
+
+\item{label.offset}{offset of the label from the data point. See ?text for a detailed explanation of the
+argument \code{offset}.}
 
 \item{connected}{logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.}
 
@@ -35,13 +39,23 @@ A list with the following components is available:
 \item{cex}{expansion of the plotting character of the samples.}
 \item{label}{TRUE or FALSE, whether samples should be labelled.}
 \item{label.cex}{expansion of the label.}
+\item{label.col}{colour of the label, mathcing the colour of the sample point.}
 \item{label.side}{side at which to plot the label of samples.}
+\item{label.offset}{offset of the label from the data point.}
 \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X. (not in current version)}
 \item{alpha}{opacity of the samples. (not in current version)}
 \item{g}{number of groups.}
 }
 \description{
 This function allows formatting changes to samples.
+}
+\details{
+The arguments \code{which}, \code{col}, \code{pch} and \code{cex} are based on the specification of \code{group.aes} or \code{classes}. If no groups
+are specified, a single colour, plotting character and / or character expansion is expected. If g groups are
+specified, vectors of length g is expected, or values are recycled to length g.
+
+The arguments \code{label}, \code{label.cex}, \code{label.side} and \code{label.offset} are based on the sample size n. A single value
+will be recycled n times or a vector of length n is expected.
 }
 \examples{
 biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> plot()
