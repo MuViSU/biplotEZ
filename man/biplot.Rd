@@ -42,6 +42,8 @@ display representations of the variables on which the samples are measured.
 }
 \examples{
 biplot(data = iris)
+# create a PCA biplot
+biplot(data = iris) |> PCA() |> plot()
 }
 \references{
 Gabriel, K.R. (1971) The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.\if{html}{\out{<br>}}\if{html}{\out{<br>}}

@@ -279,7 +279,9 @@ biplot(state.x77, scaled = T) |>
 Note that since four regions are selected, the colour (and other aesthetics) is applied to these regions in the order they are 
 specified in `which`. To add the sample names, the `label` argument is set to `TRUE`. For large sample sizes, this is not 
 recommended, as overplotting will render the plot unusable. The size of the labels is controlled with `label.cex` which can be 
-specified either as a single value (for all samples) or a vector indicating size values for each individual sample.
+specified either as a single value (for all samples) or a vector indicating size values for each individual sample. The colour 
+of the labels defaults to the colour(s) of the samples. However, individual label colours can be spesified with `label.col`,
+similar to `label.cex` as either a single value of a vector of length equal to the number of samples.
 
 ```{r, fig.height = 6, fig.width = 7}
 biplot(state.x77, scaled = T) |> PCA() |> 
@@ -320,7 +322,7 @@ biplot(state.x77, scaled = T) |> PCA() |>
 
 Similar to the `samples()` function, this function allows for changing the aestethics of the biplot axes. The first argument to 
 `axes()` is an object of class `biplot`. The `X.names` argument is typically not specified by the user, but is required for the 
-function to allow specifying which axes to display in the `which` argument, by either speficying the column numbers of \mathbf{X} 
+function to allow specifying which axes to display in the `which` argument, by either speficying the column numbers  
 or the column names. The arguments `col`, `lwd` and `lty` pertains to the axes themselves and can be specified either as a scaler 
 value (to be recycled) or a vector with length equal to that of `which`.
 
@@ -337,9 +339,9 @@ biplot(rock, scaled = TRUE) |> PCA() |>
 
 The following four arguments deal with the axis labels. The argument `label.dir` is based on the graphics parameter `las` and 
 allows for labels to be either orthogonal to the axis direction (`Orthog`), horisontal (`Hor`) or parallel to the plot `Paral`. The 
-argument `label.line` fulfill the role of the `line` argument in `mtext()` to determine on which margin line (how far from the plot) 
-the label is placed while `label.col` and `label.cex` is self-explanatory and defaults to the axis colour. Note in the code below 
-that the colour vector has only three components, so that recycling is applied.
+argument `label.line` fulfills the role of the `line` argument in `mtext()` to determine on which margin line (how far from the plot) 
+the label is placed while `label.col` and `label.cex` is self-explanatory and defaults to the axis colour and size 0.75. Note in for 
+the illustration the in the code below the colour vector has only three components, so that recycling is applied.
 
 ```{r, fig.height = 6, fig.width = 7}
 biplot(rock, scaled = TRUE) |> PCA() |> 
@@ -348,7 +350,7 @@ biplot(rock, scaled = TRUE) |> PCA() |>
                                     plot()
 ```
 
-The function `pretty()` finds 'nice' tick marks where the value specified in the argument `ticks` determine the **desired** number 
+The function `pretty()` finds 'nice' tick marks where the value specified in the argument `ticks` determine the *desired* number 
 of tick marks, although the observed number could be different. The other `tick.*` arguments are similar to their naming counterparts 
 in `par()` or `text()`. Since the tick labels are important to follow the direction of increasing values of the axes, setting 
 `tick.label = FALSE` does not remove the tick marks completely, but limits the labels to the smallest and largest value visible in 
@@ -365,15 +367,16 @@ biplot(rock, scaled = TRUE) |> PCA() |>
 
 ## 5. The function `alpha.bags()`
 
-An alpha-bag encloses the $\alpha100\%$ inner data points in a cloud of points. It is based on the concept of halfspace location depth as defined 
-by  @Tukey1975. @RousseeuwRutsTukey1999 generalised a boxplot to a two-dimensional bagplot where the box is replaced by a bag containing 
-the inner $50\%$ of the observations. @UB2011 replaces the $50$-bag contour by a general $\alpha100\%$ contour referred to as an alpha-bag.
+An $\alpha$-bag encloses the $\alpha100\%$ inner data points in a cloud of points. It is based on the concept of halfspace location depth 
+as defined by  @Tukey1975. @RousseeuwRutsTukey1999 generalised a boxplot to a two-dimensional bagplot where the box is replaced by a bag 
+containing the inner $50\%$ of the observations. @UB2011 replaces the $50\%$-bag contour by a general $\alpha100\%$ contour referred to 
+as an $\alpha$-bag.
 
 When the number of samples in the biplot is larger, it becomes difficult to isolate individual observations. Often, when a grouping 
 variable is present, the interest is not so much in the indivdiual samples, but rather in the location and spread of the groups. In the 
-plot below, we enclose each centrury's number of sunspots by a $95\%$-bag where the months are used as 12 different variables for
-each year (sample point). Note that the legend displays the alpha-bags while `samples = FALSE` is left as the default. Both can be displayed,
-but since the alpha-bags' colour defaults to the colour of the sample points, both are not necessary here.
+plot below, we enclose each century's number of sunspots by a $95\%$-bag where the months are used as 12 different variables for
+each year (sample point). Note that the legend displays the $\alpha$-bags while `samples = FALSE` is left at the default. Both can be 
+displayed, but since the $\alpha$-bags' colour defaults to the colour of the sample points, both are not necessary here.
 
 ```{r, fig.height = 6, fig.width = 7}
 sunspots <- matrix (sunspot.month[1:(264*12)], ncol = 12, byrow = TRUE)
@@ -381,12 +384,84 @@ years <- 1749:2012
 rownames(sunspots) <- years
 colnames(sunspots) <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
                         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
-century <-floor((years-1)/100)+1
+century <-paste(floor((years-1)/100)+1, ifelse (floor((years-1)/100)+1<21, "th","st"), sep = "-")
 biplot(sunspots, group.aes=century) |> PCA() |>
         axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
         alpha.bags () |> 
         legend.type(bags = TRUE) |> plot()
 ```
 
+By default one $95\%$-bag is constructed for each group. In general, the `alpha.bags()` function accepts an object of class 
+biplot as first argument. The next argument `alpha` can be specified as a single value, or to construct a series of $\alpha$-bags 
+for a group, `alpha` can be a vector argument. The argument `which` specifies the groups to be fitted with $\alpha$-bags.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(sunspots, group.aes=century) |> PCA() |>
+        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
+        alpha.bags (alpha = c(0.9, 0.95, 0.99), which = c(1,4)) |> 
+        legend.type(bags = TRUE) |> plot()
+```
+
+In the biplot above, the colours were recycled for each alpha value. To specify differential colours, we can use the `col` argument 
+and similarly the `lty` and or `lwd` arguments. Since we are mostly interested in the location and overlap of the clouds of points 
+we can remove the indivdiual samples by setting `samples (which = NULL)`. The default colours will still be used for the $\alpha$-bags 
+and we chose to specify different line types for different $\alpha$ values.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(sunspots, group.aes=century) |> PCA() |>
+        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
+        samples (which = NULL) |>
+        alpha.bags (alpha = c(0.9, 0.95, 0.99), lty = c(1,3,5)) |> 
+        legend.type(bags = TRUE, new = TRUE) |> plot()
+```
+
+For a completely custom combination of $\alpha$-bags, we do not rely on any recycling and specify each of the arguments `alpha`,
+`which`, `col`, `lty`, `lwd` as a vector. Since the calculate of halfspace location depth is very computationally intensive, a 
+random sample of size 2500 is chosen for each group to construct the $\alpha$-bag. This sample size can be changed with the argument 
+`max`. Setting `trace = FALSE` will suppress the message "Computing $\alpha$" -bag for groupX." 
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(sunspots, group.aes=century) |> PCA() |>
+        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
+        samples (which = NULL) |>
+        alpha.bags (alpha = c(   0.9,   0.95,   0.99,             0.5,         0.6,     0.7), 
+                    which = c(     1,      1,      2,               3,           3,      3),
+                    col   = c("brown", "red", "gold",  "deepskyblue2", "steelblue3","blue"),
+                    lty   = c(     1,      2,     10,               2,           2,      2),
+                    lwd   = c(     1,      1,      3,               1,           2,      1)) |> 
+        legend.type(bags = TRUE) |> plot()
+```
+
+## 5. The function `ellipses()`
+
+If we observe a random sample from a $p$-variate normal distribution with $\bar{\mathbf{x}}$ and $\mathbf{S}$ the usual unbaised estimates 
+of the mean vector and covariance matrix, then
+
+$$
+(\mathbf{x} - \bar{\mathbf{x}})' \mathbf{S}^{-1} (\mathbf{x} - \bar{\mathbf{x}}) = \kappa^2
+$$
+
+traces an ellipsiod in $p$ dimensions. For $p=2$, chosing $\kappa = {(\chi^{2}_{2,1-\alpha})}^{\frac{1}{2}}$ where 
+$\chi^{2}_{2,1-\alpha}$ denotes the $(1-\alpha)100$-th percentage point of the $\chi^2_2$ distribution results in an ellipse covering 
+approximately $100\alpha\%$ of the configuraion of two-dimensional points. With default arguments `df = 2` and `alpha = 0.95`, the 
+value of $\kappa$ is $2.447747$ and the ellipse function constructs an ellipse that would enclose approximately $95\%$ of the 
+observations from a bivariate normal distribution. The argument `kappa` can be specified directly, and will take precedence over the 
+specification of `alpha`. The other arguments of the `ellipses()` function operates identically to the corresponding arguments of 
+the function `alpha.bags()`. Using $\alpha$-bags, rather than ellipses is recommended in general, since the construction of the 
+ellipses are based on the underlying assumption of a random sample observed from a normal distribution.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(sunspots, group.aes=century) |> PCA() |>
+        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
+        samples (which = NULL) |>
+        ellipses (alpha = c(0.9, 0.95), lty = c(1,3,5)) |> 
+        legend.type(ellipses = TRUE) |> plot()
+
+biplot(sunspots, group.aes=century) |> PCA() |>
+        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
+        samples (which = NULL) |>
+        ellipses (kappa = 1:2, lty = c(1,3,5)) |> 
+        legend.type(ellipses = TRUE) |> plot()
+```
 
 ## References

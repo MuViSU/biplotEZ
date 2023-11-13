@@ -270,7 +270,7 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
   which <- which[which > 0]
   ww <- length(which)
 
-  if (length(alpha)>1)
+  if ((length(alpha) > 1) & (length(alpha) != length(which)))
   {
     temp.mat <- expand.grid(which, alpha)
     which <- temp.mat[,1]
@@ -322,7 +322,7 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   which <- which[which > 0]
   ww <- length(which)
 
-  if (length(kappa)>1)
+  if ((length(kappa) > 1) & (length(kappa) != length(which)))
   {
     temp.mat <- expand.grid(which, kappa)
     which <- temp.mat[,1]

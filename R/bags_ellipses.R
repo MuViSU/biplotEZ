@@ -101,7 +101,7 @@ alpha.bags <- function(bp, alpha=0.95, which = NULL, col = bp$sample$col[which],
 #' biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> ellipses(kappa=2) |> plot()
 #'
 ellipses <- function(bp, df=2, kappa = NULL, which = NULL, alpha = 0.95,
-                                  col = bp$sample$col[which], lty = 1, lwd = 1, alpha.transparency = 0.5, trace = TRUE)
+                     col = bp$sample$col[which], lty = 1, lwd = 1, alpha.transparency = 0.5, trace = TRUE)
 {
 
   g <- bp$g

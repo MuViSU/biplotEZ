@@ -43,6 +43,8 @@
 #'
 #' @examples
 #' biplot(data = iris)
+#' # create a PCA biplot
+#' biplot(data = iris) |> PCA() |> plot()
 biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
                    scaled = FALSE, Title = NULL)
 {
@@ -212,7 +214,8 @@ ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple"
 #'     legend.type(samples=TRUE) |> plot()
 legend.type <- function (bp, samples = FALSE, means = FALSE, bags = FALSE, ellipses=FALSE, new=FALSE, ...)
 {
-  bp$legend <- list(samples=samples, means=means, bags=bags,ellipses = ellipses, new=new, arglist=list(...))
+  bp$legend <- list(samples=samples, means=means, bags=bags,ellipses = ellipses, new=new)
+  bp$legend.arglist <- list(...)
   bp
 }
 
@@ -239,8 +242,9 @@ biplot.legend <- function(bp, ...)
 
   if(bp$legend$bags & !is.null(bp$alpha.bags))
   { #formatting of legend names
-    graphics::legend("topleft",col=bp$alpha.bag.aes$col,lty=bp$alpha.bag.aes$lty,lwd=bp$alpha.bag.aes$lwd,
-                     legend=names(bp$alpha.bags), ...)
+    graphics::legend("topleft", col = bp$alpha.bag.aes$col, lty = bp$alpha.bag.aes$lty,
+                     lwd = bp$alpha.bag.aes$lwd, legend = names(bp$alpha.bags),
+                     ...)
   }
 
   if(bp$legend$means) graphics::legend("bottomright",col=bp$means$col,pch=bp$means$pch,legend=bp$classes, ...)

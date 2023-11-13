@@ -295,7 +295,7 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
 
   if (!is.null(x$Title)) graphics::title(main=x$Title)
 
-  if (!is.null(x$legend)) do.call(biplot.legend, list(bp=x, x$legend$arglist))
+  if (!is.null(x$legend)) do.call(biplot.legend, list(bp=x, x$legend.arglist))
 
   invisible(x)
 }
