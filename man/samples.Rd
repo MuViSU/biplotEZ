@@ -5,7 +5,8 @@
 \title{Aesthetics for biplot samples}
 \usage{
 samples (bp,  which = 1:bp$g, col = ez.col, pch = 3, cex = 1, label = FALSE,
-label.cex = 0.75, label.side = "bottom", label.offset = 0.5, connected = FALSE, alpha = 1)
+label.col = NULL,label.cex = 0.75, label.side = "bottom", label.offset = 0.5,
+connected = FALSE, alpha = 1)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot}.}
@@ -19,6 +20,9 @@ label.cex = 0.75, label.side = "bottom", label.offset = 0.5, connected = FALSE, 
 \item{cex}{sample character expansion, with default \code{1}.}
 
 \item{label}{logical, whether samples should be labelled or not, with default \code{FALSE}.}
+
+\item{label.col}{vector of length number of samples with the colour of the labels, defaulting to the
+colour of the sample points.}
 
 \item{label.cex}{label text expansion, with default \code{0.75}.}
 
@@ -38,8 +42,8 @@ A list with the following components is available:
 \item{pch}{plotting character of the samples.}
 \item{cex}{expansion of the plotting character of the samples.}
 \item{label}{TRUE or FALSE, whether samples should be labelled.}
+\item{label.col}{colour of the label.}
 \item{label.cex}{expansion of the label.}
-\item{label.col}{colour of the label, mathcing the colour of the sample point.}
 \item{label.side}{side at which to plot the label of samples.}
 \item{label.offset}{offset of the label from the data point.}
 \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X. (not in current version)}

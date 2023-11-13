@@ -316,4 +316,77 @@ biplot(state.x77, scaled = T) |> PCA() |>
   samples (label = "ggrepel", label.cex=0.65) |> plot()
 ```
 
+## 4. The function `axes()`
+
+Similar to the `samples()` function, this function allows for changing the aestethics of the biplot axes. The first argument to 
+`axes()` is an object of class `biplot`. The `X.names` argument is typically not specified by the user, but is required for the 
+function to allow specifying which axes to display in the `which` argument, by either speficying the column numbers of \mathbf{X} 
+or the column names. The arguments `col`, `lwd` and `lty` pertains to the axes themselves and can be specified either as a scaler 
+value (to be recycled) or a vector with length equal to that of `which`.
+
+To construct a PCA biplot of the rock data, displaying only the axes for peri and shape with different colours for the two axes, 
+different line widths and line type 2, we need to following code:
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(rock, scaled = TRUE) |> PCA() |> 
+                               axes(which = c("shape","peri"), 
+                                    col=c("lightskyblue","slategrey"),
+                                    lwd = c(1,2), lty=2) |>
+                plot()
+```
+
+The following four arguments deal with the axis labels. The argument `label.dir` is based on the graphics parameter `las` and 
+allows for labels to be either orthogonal to the axis direction (`Orthog`), horisontal (`Hor`) or parallel to the plot `Paral`. The 
+argument `label.line` fulfill the role of the `line` argument in `mtext()` to determine on which margin line (how far from the plot) 
+the label is placed while `label.col` and `label.cex` is self-explanatory and defaults to the axis colour. Note in the code below 
+that the colour vector has only three components, so that recycling is applied.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(rock, scaled = TRUE) |> PCA() |> 
+                               axes(col=c("lightskyblue","slategrey","blue"),
+                                    label.dir="Hor", label.line=c(0,0.5,1,1.5)) |>
+                                    plot()
+```
+
+The function `pretty()` finds 'nice' tick marks where the value specified in the argument `ticks` determine the **desired** number 
+of tick marks, although the observed number could be different. The other `tick.*` arguments are similar to their naming counterparts 
+in `par()` or `text()`. Since the tick labels are important to follow the direction of increasing values of the axes, setting 
+`tick.label = FALSE` does not remove the tick marks completely, but limits the labels to the smallest and largest value visible in 
+the plot. If the user would like to specify alternative names for the axes, this can be done in the argument `ax.names`. 
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(rock, scaled = TRUE) |> PCA() |> 
+                               axes(label.dir="Paral",
+                                    ticks = c(3, 5, 5, 10), tick.label=c(F, F, T, T),
+                                    ax.names = c("area", "perimeter", "shape", 
+                                                 "permeability in milli-Darcies")) |>
+                               plot()
+```
+
+## 5. The function `alpha.bags()`
+
+An alpha-bag encloses the $\alpha100\%$ inner data points in a cloud of points. It is based on the concept of halfspace location depth as defined 
+by  @Tukey1975. @RousseeuwRutsTukey1999 generalised a boxplot to a two-dimensional bagplot where the box is replaced by a bag containing 
+the inner $50\%$ of the observations. @UB2011 replaces the $50$-bag contour by a general $\alpha100\%$ contour referred to as an alpha-bag.
+
+When the number of samples in the biplot is larger, it becomes difficult to isolate individual observations. Often, when a grouping 
+variable is present, the interest is not so much in the indivdiual samples, but rather in the location and spread of the groups. In the 
+plot below, we enclose each centrury's number of sunspots by a $95\%$-bag where the months are used as 12 different variables for
+each year (sample point). Note that the legend displays the alpha-bags while `samples = FALSE` is left as the default. Both can be displayed,
+but since the alpha-bags' colour defaults to the colour of the sample points, both are not necessary here.
+
+```{r, fig.height = 6, fig.width = 7}
+sunspots <- matrix (sunspot.month[1:(264*12)], ncol = 12, byrow = TRUE)
+years <- 1749:2012
+rownames(sunspots) <- years
+colnames(sunspots) <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
+century <-floor((years-1)/100)+1
+biplot(sunspots, group.aes=century) |> PCA() |>
+        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
+        alpha.bags () |> 
+        legend.type(bags = TRUE) |> plot()
+```
+
+
 ## References

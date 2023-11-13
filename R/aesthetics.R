@@ -10,6 +10,8 @@
 #' @param pch sample plotting character, with default \code{+}.
 #' @param cex sample character expansion, with default \code{1}.
 #' @param label logical, whether samples should be labelled or not, with default \code{FALSE}.
+#' @param label.col vector of length number of samples with the colour of the labels, defaulting to the
+#'                  colour of the sample points.
 #' @param label.cex label text expansion, with default \code{0.75}.
 #' @param label.side side of the plotting character where label appears, with default \code{bottom}. Note that unlike
 #'                   the argument `pos` in `text()`, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
@@ -31,8 +33,8 @@
 #' \item{pch}{plotting character of the samples.}
 #' \item{cex}{expansion of the plotting character of the samples.}
 #' \item{label}{TRUE or FALSE, whether samples should be labelled.}
+#' \item{label.col}{colour of the label.}
 #' \item{label.cex}{expansion of the label.}
-#' \item{label.col}{colour of the label, mathcing the colour of the sample point.}
 #' \item{label.side}{side at which to plot the label of samples.}
 #' \item{label.offset}{offset of the label from the data point.}
 #' \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X. (not in current version)}
@@ -41,21 +43,25 @@
 #'
 #' @usage
 #' samples (bp,  which = 1:bp$g, col = ez.col, pch = 3, cex = 1, label = FALSE,
-#' label.cex = 0.75, label.side = "bottom", label.offset = 0.5, connected = FALSE, alpha = 1)
+#' label.col = NULL,label.cex = 0.75, label.side = "bottom", label.offset = 0.5,
+#' connected = FALSE, alpha = 1)
 #' @aliases samples
 #'
 #' @export
 #'
 #' @examples biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> plot()
 samples <- function (bp,  which = 1:bp$g, col = ez.col,
-                     pch = 3, cex = 1, label = FALSE, label.cex = 0.75, label.side = "bottom",
-                     label.offset = 0.5, connected=FALSE, alpha = 1)
+                     pch = 3, cex = 1, label = FALSE, label.col=NULL, label.cex = 0.75,
+                     label.side = "bottom", label.offset = 0.5, connected=FALSE, alpha = 1)
 {
-  if (!all(is.numeric(which))) which <- match(which, bp$g.names, nomatch = 0)
   g <- bp$g
-  which <- which[which <= g]
-  which <- which[which > 0]
-  sample.group.num <- length(which)
+  if (!is.null(which))
+  {
+    if (!all(is.numeric(which))) which <- match(which, bp$g.names, nomatch = 0)
+    which <- which[which <= g]
+    which <- which[which > 0]
+  }
+  if (is.null(which)) sample.group.num <- g else sample.group.num <- length(which)
   while (length(col) < sample.group.num) col <- c(col, col)
   col <- as.vector(col[1:sample.group.num])
   while (length(pch) < sample.group.num) pch <- c(pch, pch)
@@ -80,21 +86,25 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col,
   }
   while (length(label.cex) < n) label.cex <- c(label.cex, label.cex)
   label.cex <- as.vector(label.cex[1:n])
-  label.col <- rep(NA, n)
-  for (j in 1:g)
-    label.col[bp$group.aes==bp$g.names[j]] <- col[j]
+  if (is.null(label.col))
+  {
+    label.col <- rep(NA, n)
+    for (j in 1:g)
+      label.col[bp$group.aes==bp$g.names[j]] <- col[j]
+  }
+  else
+  {
+    while (length(label.col) < n) label.col <- c(label.col, label.col)
+    label.col <- as.vector(label.col[1:n])
+  }
   while (length(alpha) < sample.group.num) alpha <- c(alpha, alpha)
   if (length(connected)>1) connected <- connected[1]
   alpha <- as.vector(alpha[1:sample.group.num])
 
-  bp$samples = list(which = which, col = col, pch = pch, cex = cex, label = label, label.cex = label.cex,
-                    label.col = label.col, label.side = label.side, label.offset = label.offset, connected=connected, alpha = alpha)
+  bp$samples = list(which = which, col = col, pch = pch, cex = cex, label = label, label.col = label.col,
+                    label.cex = label.cex, label.side = label.side, label.offset = label.offset,
+                    connected=connected, alpha = alpha)
   bp
-}
-
-aes.list.to.vector <- function (aes.list, p)
-{
-
 }
 
 # ----------------------------------------------------------------------------------------------
