@@ -1,0 +1,157 @@
+---
+title: "Class separation"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Class separation}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(biplotEZ)
+```
+
+This vignette deals with biplot for separating classes. Topics discussed are
+
+* CVA (Canonical variate analysis) biplots
+
+## 1. What is a CVA biplot
+Consider a data matrix $\mathbf{X}:n \times p$ containing data on $n$ objects and $p$ variables. In addition, a vector 
+$\mathbf{g}:n \times 1$ contains information on class membership of each observation. Let $G$ indicate the total number of classes. 
+CVA is closely related to linear discriminant anlaysis, in that the $p$ variables are transformed to $p$ new variables, called
+canonical variates, such that the classes are optimally separated in the canonical space. By optimally separated, we mean maximising
+the between class variance, relative to the within class variance. This can be formulated as follows:
+
+Let $\mathbf{G}:n \times G$ be an indicator matrix with $g_{ij} = 0$ unless observation $i$ belongs to class $j$ and then $g_{ij} = 1$.
+The matrix $\mathbf{G'G}$ is a diagonal matrix containing the number of observations per class on the diagonal. We can form the matrix 
+of class means $\bar{\mathbf{X}}:G \times p = (\mathbf{G'G})^{-1} \mathbf{G'X}$. With the usual analysis of variance the total variance 
+can be decomposed into a between class variance and within class variance:
+
+$$
+\mathbf{T} = \mathbf{B} + \mathbf{W}
+$$
+
+$$
+\mathbf{X'X} = \mathbf{\bar{\mathbf{X}}'G'G \bar{\mathbf{X}}} + \mathbf{X' [I - G(G'G)^{-1}G'] X}
+$$
+
+To find the canonical variates we want to maximise the ratio 
+
+$$
+\frac{\mathbf{m'Bm}}{\mathbf{m'Wm}}
+$$
+
+subject to $\mathbf{m'Wm} = 1$. It can shown that this leads to the following equivalent eigen equations:
+
+$$
+\mathbf{W}^{-1}\mathbf{BM} = \mathbf{M \Lambda}
+$$
+
+$$
+\mathbf{BM} = \mathbf{WM \Lambda}
+$$
+
+$$
+(\mathbf{W}^{-\frac{1}{2}} \mathbf{B} \mathbf{W}^{-\frac{1}{2}}) \mathbf{M} = (\mathbf{W}^{-\frac{1}{2}} \mathbf{M}) \mathbf{\Lambda}
+$$
+
+with $\mathbf{M'BM}= \mathbf{\Lambda}$ and $\mathbf{M'WM}= \mathbf{I}$.
+
+Since the matrix $\mathbf{W}^{-\frac{1}{2}} \mathbf{B} \mathbf{W}^{-\frac{1}{2}}$ is symmetric and positive semi-definite the eigenvalues 
+in the matrix $\mathbf{\Lambda}$ are positive and ordered. The rank of $\mathbf{B} = min(p, G-1)$ so that only the first $rank(\mathbf{B})$ 
+eigenvalues are non-zero. We form the canonical variates with the transformation
+
+$$
+\bar{\mathbf{Y}} = \bar{\mathbf{X}}\mathbf{M}.
+$$
+
+To construct a 2D biplot, we plot the first two canonical variates $\bar{\mathbf{Z}} = \bar{\mathbf{X}}\mathbf{MJ}_2$ where 
+$\mathbf{J}_2' = \begin{bmatrix} \mathbf{I}_2 & \mathbf{0} \end{bmatrix}$. We add the individual sample points with the 
+same transformation
+
+$$
+\mathbf{Z} = \mathbf{X}\mathbf{MJ}_2.
+$$
+
+Using the inverse transformation $\mathbf{x}' = \mathbf{y}'\mathbf{M}^{-1}$, all the points that will predict $\mu$ for variable 
+$j$ will have the form 
+
+$$
+\mu = \mathbf{y}'\mathbf{M}^{-1} \mathbf{e}_j
+$$
+
+where $\mathbf{e}_j$ is a vector of zeros with a one in position $j$. All the points in the 2D biplot that predict the value $\mu$
+will have
+
+$$
+\mu = \begin{bmatrix} z_1 & z_2 & 0 & \dots & 0\end{bmatrix}\mathbf{M}^{-1} \mathbf{e}_j
+$$
+
+defining the prediction line as
+
+$$
+\mu = \mathbf{z}_{\mu}' \mathbf{J}_2 \mathbf{M}^{-1} \mathbf{e}_j.
+$$
+
+Writing $\mathbf{h}_{(j)} = \mathbf{J}_2 \mathbf{M}^{-1} \mathbf{e}_j$ the construction of biplot axes is similar to the discussion
+in the biplotEZ vignette for PCA biplots. The direction of the axis is given by $\mathbf{h}_{(j)}$. To find 
+the intersection of the prediction line with $\mathbf{h}_{(j)}$ we note that
+$$
+\mathbf{z}'_{(\mu)}\mathbf{h}_{(j)} = \| \mathbf{z}_{(\mu)} \|^2 \| \mathbf{h}_{(j)} \|^2 cos(\mathbf{z}_{(\mu)},\mathbf{h}_{(j)}) = 
+\| \mathbf{p} \|^2 \| \mathbf{h}_{(j)} \|^2 
+$$
+where $\mathbf{p}$ is the length of the orthogonal projection of $\mathbf{z}_{(\mu)}$ on $\mathbf{h}_{(j)}$. 
+
+Since $\mathbf{p}$ is along $\mathbf{h}_{(j)}$ we can write 
+$\mathbf{p} = c\mathbf{h}_{(j)}$ and all points on the prediction line $\mu = \mathbf{z}'_{\mu}\mathbf{h}_{(j)}$ project on the 
+same point $c_{\mu}\mathbf{h}_{(j)}$. We solve for $c_{\mu}$ from
+$$
+\mu = \mathbf{z}'_{\mu}\mathbf{h}_{(j)}=\| \mathbf{p} \|^2 \| \mathbf{h}_{(j)} \|^2 = 
+\| c_{\mu}\mathbf{h}_{(j)} \|^2 \| \mathbf{h}_{(j)} \|^2 
+$$
+
+$$
+c_{\mu} = \frac{\mu}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}.
+$$
+If we select 'nice' scale markers $\tau_{1}, \tau_{2}, \cdots \tau_{k}$ for variable $j$, then $\tau_{h}-\bar{x}_j = \mu_{h}$ and 
+positions of these scale markers on $\mathbf{h}_{(j)}$ are given by $p_{\mu_{1}}, p_{\mu_{2}}, \cdots p_{\mu_{k}}$ with
+$$
+p_{\mu_h} = c_{\mu_h}\mathbf{h}_{(j)} =  \frac{\mu_h}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}\mathbf{h}_{(j)}
+$$
+
+$$
+= \frac{\mu_h}{\mathbf{e}_{(j)}' \mathbf{M'}^{-1} \mathbf{J} \mathbf{M}^{-1} \mathbf{e}_{(j)}}\ \mathbf{J}_2 \mathbf{M}^{-1} \mathbf{e}_{(j)}
+$$
+
+with 
+$$
+\mathbf{J} = \begin{bmatrix}
+              \mathbf{I}_2 & \mathbf{0}\\
+              \mathbf{0} & \mathbf{0}
+             \end{bmatrix}.
+$$
+
+## 2. The function `CVA()`
+
+To obtain a CVA biplot of the `state.x77` data set, optimally separating the classes according to `state.region` we call
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77) |> CVA(classes = state.region) |> plot()
+```
+
+Fitting $\alpha$-bags to the classes makes it easier to compare class overlap and separation. For a detailed discussion on 
+$\alpha$-bags, see the biplotEZ vignette.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77) |> CVA(classes = state.region) |> alpha.bags() |> 
+  legend.type (bags = TRUE) |> plot()
+```
+
+
+

@@ -87,7 +87,7 @@ $\mathbf{p} = c\mathbf{h}_{(j)}$ and all points on the prediction line $\mu = \m
 same point $c_{\mu}\mathbf{h}_{(j)}$. We solve for $c_{\mu}$ from
 $$
 \mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}=\| \mathbf{p} \|^2 \| \mathbf{h}_{(j)} \|^2 = 
-\| c_{\mu}\mathbf{h}_{j} \|^2 \| \mathbf{h}_{(j)} \|^2 
+\| c_{\mu}\mathbf{h}_{(j)} \|^2 \| \mathbf{h}_{(j)} \|^2 
 $$
 
 $$
@@ -231,7 +231,7 @@ Since the legend interferes with the sample points, we choose to place the legen
 biplot(state.x77, scaled = T) |> 
   PCA(group.aes = state.division) |> 
   samples (col = c("red", "darkorange", "gold", "chartreuse4", 
-                   "green", "salmon", "magenta", "black", "blue")) |>
+                   "green", "salmon", "magenta", "#000000", "blue")) |>
   legend.type(samples = TRUE, new = TRUE) |> plot()
 ```
 
@@ -260,7 +260,7 @@ biplot(state.x77, scaled = T) |>
                    "green", "salmon", "magenta", "black", "blue"),
            pch = c(15, 15, 15, 1, 1, 1, 1, 15, 15),
            cex = c(rep(1.5,4), c(1,1.5,1,1.5))) |>
-  legend.type(samples = TRUE, new = TRUE) |> plot()
+  legend.type(samples = TRUE, new = TRUE)  |> plot()
 ```
 
 If we choose to only show the samples for the central states, the argument `which`  is used either indicating the number(s) in the 
@@ -273,7 +273,7 @@ biplot(state.x77, scaled = T) |>
                    "green", "salmon", "magenta", "black", "blue"),
            which = c("West North Central", "West South Central", "East South Central", 
                      "East North Central")) |>
-  legend.type(samples = TRUE, new = TRUE) |> plot()
+  legend.type(samples = TRUE, new = TRUE)  |> plot()
 ```
 
 Note that since four regions are selected, the colour (and other aesthetics) is applied to these regions in the order they are 
@@ -388,7 +388,7 @@ century <-paste(floor((years-1)/100)+1, ifelse (floor((years-1)/100)+1<21, "th",
 biplot(sunspots, group.aes=century) |> PCA() |>
         axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
         alpha.bags () |> 
-        legend.type(bags = TRUE) |> plot()
+        legend.type(bags = TRUE)  |> plot()
 ```
 
 By default one $95\%$-bag is constructed for each group. In general, the `alpha.bags()` function accepts an object of class 
@@ -399,7 +399,7 @@ for a group, `alpha` can be a vector argument. The argument `which` specifies th
 biplot(sunspots, group.aes=century) |> PCA() |>
         axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
         alpha.bags (alpha = c(0.9, 0.95, 0.99), which = c(1,4)) |> 
-        legend.type(bags = TRUE) |> plot()
+        legend.type(bags = TRUE)  |> plot()
 ```
 
 In the biplot above, the colours were recycled for each alpha value. To specify differential colours, we can use the `col` argument 
@@ -412,7 +412,7 @@ biplot(sunspots, group.aes=century) |> PCA() |>
         axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
         samples (which = NULL) |>
         alpha.bags (alpha = c(0.9, 0.95, 0.99), lty = c(1,3,5)) |> 
-        legend.type(bags = TRUE, new = TRUE) |> plot()
+        legend.type(bags = TRUE, new = TRUE)  |> plot()
 ```
 
 For a completely custom combination of $\alpha$-bags, we do not rely on any recycling and specify each of the arguments `alpha`,
@@ -455,7 +455,7 @@ biplot(sunspots, group.aes=century) |> PCA() |>
         axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
         samples (which = NULL) |>
         ellipses (alpha = c(0.9, 0.95), lty = c(1,3,5)) |> 
-        legend.type(ellipses = TRUE) |> plot()
+        legend.type(ellipses = TRUE)  |> plot()
 
 biplot(sunspots, group.aes=century) |> PCA() |>
         axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
