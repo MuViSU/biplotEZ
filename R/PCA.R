@@ -32,8 +32,8 @@
 #' \item{g}{number of groups.}
 #' \item{Title}{title of the biplot to be rendered}
 #' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
-#' \item{Vr}{matrix consisting of the eigenvectors as columns.}
-#' \item{Xhat}{predictions of the samples.}
+#' \item{Lmat}{matrix for transformation to the principal components.}
+#' \item{e.vects}{vector indicating which principal components are plotted in the biplot.}
 #' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
 #'
 #' @usage PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
@@ -47,6 +47,8 @@
 #'
 #' @examples
 #' biplot(iris[,1:4]) |> PCA()
+#' # create a PCA biplot
+#' biplot(data = iris) |> PCA() |> plot()
 PCA <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=NULL,
                  correlation.biplot=FALSE, ...)
 {
@@ -64,6 +66,8 @@ PCA <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=
 #'
 #' @examples
 #' biplot(iris[,1:4]) |> PCA()
+#' # create a PCA biplot
+#' biplot(data = iris) |> PCA() |> plot()
 #'
 PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=NULL,
                         correlation.biplot=FALSE, ...)
@@ -88,6 +92,7 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
   V.mat <- svd.out$v
   U.mat <- svd.out$u
   Sigma.mat <- diag(svd.out$d)
+  Lmat <- svd.out$v
   Vr <- svd.out$v[, e.vects, drop = FALSE]
 
   if (correlation.biplot)
@@ -96,6 +101,7 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
     if (dim.biplot>1) lambda.r <- diag(svd(t(X) %*% X)$d[1:dim.biplot])
     else lambda.r <- matrix(svd(t(X) %*% X)$d, nrow=1, ncol=1)
     Z <- sqrt(n - 1) * X %*% Vr %*% sqrt(solve(lambda.r))
+    Lmat <- sqrt(n-1) * Lmat %*% sqrt(solve(diag(svd(t(X) %*% X)$d)))
   }
   else { Z <- X %*% Vr }
   rownames(Z) <- rownames(X)
@@ -106,11 +112,9 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
     ax.one.unit <- 1/(diag(Vr %*% t(Vr))) * Vr
 
   bp$Z <- Z
-  bp$Vr <- Vr
-  bp$Xhat <- Z %*% t(bp$Vr)
+  bp$Lmat <- Lmat
   bp$ax.one.unit <- ax.one.unit
-  if (bp$scaled) bp$Xhat <- scale(bp$Xhat, center=FALSE, scale=1/bp$sd)
-  if (bp$center) bp$Xhat <- scale(bp$Xhat, center=-1*bp$means, scale=FALSE)
+  bp$e.vects <- e.vects
   class(bp)<-append(class(bp),"PCA")
   bp
 }

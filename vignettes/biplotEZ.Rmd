@@ -432,7 +432,7 @@ biplot(sunspots, group.aes=century) |> PCA() |>
         legend.type(bags = TRUE) |> plot()
 ```
 
-## 5. The function `ellipses()`
+## 6. The function `ellipses()`
 
 If we observe a random sample from a $p$-variate normal distribution with $\bar{\mathbf{x}}$ and $\mathbf{S}$ the usual unbaised estimates 
 of the mean vector and covariance matrix, then
@@ -462,6 +462,38 @@ biplot(sunspots, group.aes=century) |> PCA() |>
         samples (which = NULL) |>
         ellipses (kappa = 1:2, lty = c(1,3,5)) |> 
         legend.type(ellipses = TRUE) |> plot()
+```
+
+## 6. The functions `interpolate()` and `newsamples()`
+The process of interpolation is described by @GowerHand1996 as the process of finding the coordinates of a $p$-dimensional 
+sample in the lower dimensional biplot space. For PCA we showed in section 1 that the sample points are represented by $\mathbf{G}=\mathbf{UDJ}_2$ 
+which can be written as $\mathbf{G}=\mathbf{UDV'VJ}_2=\mathbf{XVJ}_2$. Finding the position of a new sample $\mathbf{x}^*:p \times 1$
+make use of the same transformation so that the 2D coordinates is given by ${\mathbf{z}^*}':2 \times 1 ={\mathbf{x}^*}' \mathbf{VJ}_2$.
+
+Adding samples to the plot is facilitated by the function `interpolate()`. Note that the samples to be interpolated did not contribute 
+to the construction of the biplot. This is the reason why @Greenacre2017 term these supplementary points. 
+
+The function `interpolate()` accepts two arguments, the first an object of class `biplot` and the second a matrix or data frame containing 
+the samples to be interpolated. The second argument, `newdata`, needs to have a similar structure to the data set sent to `biplot()`. If 
+`biplot()` received a data frame, `newdata` can be either another data frame or a matrix containing the subset of numerical variables.
+
+Suppose we construct a PCA biplot of the first $40$ samples in the data set `rock` and then $8$ new samples is to be interpolated 
+the call will be:
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(rock[1:40,], scale = TRUE) |> PCA() |> 
+  interpolate (rock[41:48,]) |> plot()
+```
+
+The function `newsamples()` operates similar to samples, allowing changes to the aestethics of the interpolated new samples. There is 
+no argument `which` for `newsamples()` since it is assumed that samples are interpolated to be represented in the biplot. All the other 
+arguments are vectors of length similar to the number of samples in `newdata`. To change the colour of the interpolated samples and 
+add labels, the following call will be used:
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(rock[1:40,], scale = TRUE) |> PCA() |> 
+  interpolate (rock[41:48,]) |>
+  newsamples (label = TRUE, label.side = "top", col = rainbow(10)) |> plot()
 ```
 
 ## References

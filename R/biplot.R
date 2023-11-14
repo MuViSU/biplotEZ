@@ -62,11 +62,10 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
        means <- data$center
        raw.X <- scale(scale(X, center=F, scale=1/sd), center=-1*means, scale=F)
        Vr <- data$loadings[,1:2]
+       Lmat <- data$loadings
        ax.one.unit <- 1/(diag(Vr %*% t(Vr))) * Vr
+       e.vects <- 1:2
        Z <- data$scores[,1:2]
-       Xhat <- Z %*% t(Vr)
-       if (scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/sd)
-       if (center) Xhat <- scale(Xhat, center=-1*means, scale=FALSE)
     }
 
     if (inherits(data, "prcomp"))
@@ -87,11 +86,10 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
            center <- TRUE
            means <- data$center                   }
      Vr <- data$rotation[,1:2]
+     Lmat <- data$rotation
+     e.vects <- 1:2
      ax.one.unit <- 1/(diag(Vr %*% t(Vr))) * Vr
      Z <- data$x[,1:2]
-     Xhat <- Z %*% t(Vr)
-     if (scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/sd)
-     if (center) Xhat <- scale(Xhat, center=-1*means, scale=FALSE)
     }
     na.vec.df <- NULL
 
@@ -102,7 +100,7 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
 
    object <- list(X = X, Xcat = NULL, raw.X = raw.X, na.action=na.vec.df, center=center, scaled=scaled,
                    means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes, g.names = g.names,g = g,
-                   Title = Title, Z=Z, Vr=Vr, ax.one.unit=ax.one.unit, Xhat=Xhat)
+                   Title = Title, Z=Z, Lmat=Lmat, e.vects=e.vects, ax.one.unit=ax.one.unit)
     class(object) <- "biplot"
     class(object)<-append(class(object),"PCA")
   }
@@ -271,7 +269,7 @@ biplot.legend <- function(bp, ...)
 #'
 #' @export
 #' @examples
-#' out <- biplot (iris[,1:4]) |> PCA() |> plot()
+#' out <- biplot (iris[,1:4]) |> PCA()
 #' out
 
 print.biplot <- function (x, ...)
@@ -285,3 +283,90 @@ print.biplot <- function (x, ...)
     cat (nlevels(x$classes), "classes:", levels(x$classes), "\n")
 }
 
+# -----------------------------------------------------------------------------------------------------
+
+#' Interpolation of new samples
+#'
+#' @param bp an object of class \code{biplot} obtained from preceding function \code{biplot()}.
+#' @param newdata a new data set, similar in structure to the data set supplied to \code{biplot()}
+#'                containing supplementary data points to be added on the biplot.
+#'
+#' @return Object of class PCA with the following elements:
+#' \item{X}{matrix of the centered and scaled numeric variables.}
+#' \item{Xcat}{matrix of the categorical variables.}
+#' \item{raw.X}{original data.}
+#' \item{na.action}{vector of observations that have been removed.}
+#' \item{center}{TRUE or FALSE, whether X is centred.}
+#' \item{scaled}{TRUE or FALSE, whether X is scaled.}
+#' \item{means}{mean of each numerical variable.}
+#' \item{sd}{standard deviation of each numerical variable.}
+#' \item{n}{number of observations.}
+#' \item{p}{number of variables.}
+#' \item{group.aes}{vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples.}
+#' \item{g.names}{descriptive name to be used for group labels.}
+#' \item{g}{number of groups.}
+#' \item{Title}{title of the biplot to be rendered}
+#' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+#' \item{Lmat}{matrix for transformation to the principal components.}
+#' \item{e.vects}{vector indicating which principal components are plotted in the biplot.}
+#' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
+#' \item{Xnew.raw}{ newdata numerical variables.}
+#' \item{Xnew}{matrix of the centered and scaled new numeric variables.}
+#' \item{Xnew.cat}{matrix of the new categorical variables.}
+#' \item{Znew}{matrix of the coordinates of the newdata in the biplot.}
+#'
+#' @export
+#'
+#' @examples
+#' biplot(data = iris[1:145,]) |> PCA() |> interpolate(newdata = iris[146:150,]) |> plot()
+#'
+interpolate <- function (bp, newdata)
+{
+  dim.mat<-dim(newdata)
+  if(is.null(dim.mat)) stop("Not enough variables to interpolate.")
+  if(ncol(newdata)<2) stop("Not enough variables to interpolate.")
+
+  # check for missing values
+  na.vec.df <- stats::na.action(stats::na.omit(newdata))
+  if (length(na.vec.df) == nrow(newdata))
+    stop("No observations left after deleting missing observations")
+  else if (!is.null(na.vec.df))
+    warning(paste(length(na.vec.df), "rows deleted due to missing values"))
+  newdata <- newdata[stats::complete.cases(newdata),]
+
+  # Separating numeric and categorical data
+  if (is.matrix(newdata))
+  {
+    Xnew <- newdata
+    Xcat.new <- NULL
+  }
+  else
+  {
+    type.vec <- unlist(lapply(newdata, is.numeric), use.names = FALSE)
+    if (sum(type.vec)>0) Xnew <- as.matrix(newdata[, type.vec, drop=FALSE])
+    else Xnew <- NULL
+    if (sum(type.vec)<length(type.vec)) Xnew.cat <- as.data.frame(newdata[, !type.vec, drop=FALSE])
+    else Xnew.cat <- NULL
+  }
+
+  Xnew.raw <- Xnew
+  if (!is.null(Xnew)) Xnew <- scale(Xnew, bp$means, bp$sd)
+  if (!is.null(Xnew))
+    if (is.null(rownames(Xnew))) rownames(Xnew) <- paste("new",1:nrow(Xnew))
+
+  if(!is.null(Xnew.cat))
+    if (is.null(rownames(Xnew.cat))) rownames(Xnew.cat) <- paste("new",1:nrow(Xnew.cat))
+
+  if (inherits(bp, "PCA") | inherits(bp, "CVA"))
+  {
+    Znew <- Xnew %*% bp$Lmat[,bp$e.vects]
+    if (nrow(Xnew)==1) Znew <- matrix(Znew, nrow=1)
+    rownames(Znew) <- rownames(Xnew)
+  }
+
+  bp$Xnew.raw <- Xnew.raw
+  bp$Xnew <- Xnew
+  bp$Xnew.cat <- Xnew.cat
+  bp$Znew <- Znew
+  bp
+}

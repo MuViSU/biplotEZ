@@ -344,3 +344,92 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   list(which = which, kappa = kappa, col = col, lty = lty, lwd = lwd, alpha.transparency = alpha.transparency)
 }
 
+# ----------------------------------------------------------------------------------------------
+#' Aesthetics for supplementary (new) biplot samples
+#'
+#' @description
+#' This function allows formatting changes to new samples.
+#'
+#' @param bp an object of class \code{biplot}.
+#' @param col new sample colour, with default \code{darkorange1}.
+#' @param pch new sample plotting character, with default \code{o}.
+#' @param cex new sample character expansion, with default \code{1}.
+#' @param label logical, whether samples should be labelled or not, with default \code{FALSE}.
+#' @param label.col vector of length number of new samples with the colour of the labels, defaulting to the
+#'                  colour of the sample points.
+#' @param label.cex label text expansion, with default \code{0.75}.
+#' @param label.side side of the plotting character where label appears, with default \code{bottom}. Note that unlike
+#'                   the argument `pos` in `text()`, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
+#' @param label.offset offset of the label from the data point. See ?text for a detailed explanation of the
+#'                     argument `offset`.
+#' @param connected logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.
+#' @param alpha opacity of sample plotting character, default is \code{1}.
+#'
+#' @return A list with the following components is available:
+#' \item{col}{colour of the samples.}
+#' \item{pch}{plotting character of the samples.}
+#' \item{cex}{expansion of the plotting character of the samples.}
+#' \item{label}{TRUE or FALSE, whether samples should be labelled.}
+#' \item{label.col}{colour of the label.}
+#' \item{label.cex}{expansion of the label.}
+#' \item{label.side}{side at which to plot the label of samples.}
+#' \item{label.offset}{offset of the label from the data point.}
+#' \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X. (not in current version)}
+#' \item{alpha}{opacity of the samples. (not in current version)}
+#' \item{g}{number of groups.}
+#'
+#' @usage
+#' newsamples (bp,  col = "darkorange1", pch = 1, cex = 1, label = FALSE,
+#' label.col = NULL,label.cex = 0.75, label.side = "bottom", label.offset = 0.5,
+#' connected = FALSE, alpha = 1)
+#' @aliases newsamples
+#'
+#' @export
+#'
+#' @examples
+#' biplot(data = iris[1:145,]) |> PCA() |> samples(col = "grey") |>
+#' interpolate(newdata = iris[146:150,]) |> newsamples(col = rainbow(6), pch=15) |> plot()
+
+newsamples <- function (bp,  col = "darkorange1",
+                     pch = 1, cex = 1, label = FALSE, label.col=NULL, label.cex = 0.75,
+                     label.side = "bottom", label.offset = 0.5, connected=FALSE, alpha = 1)
+{
+  nn <- nrow(bp$Xnew)
+  while (length(col) < nn) col <- c(col, col)
+  col <- as.vector(col[1:nn])
+  while (length(pch) < nn) pch <- c(pch, pch)
+  pch <- as.vector(pch[1:nn])
+  while (length(cex) < nn) cex <- c(cex, cex)
+  cex <- as.vector(cex[1:nn])
+  if (label[1] == "ggrepel")
+  {
+    label <- label[1]
+    label.side <- NULL
+    label.offset <- NULL
+  }
+  else
+  {
+    while (length(label) < nn) label <- c(label, label)
+    label <- as.vector(label[1:nn])
+    while (length(label.side) < nn) label.side <- c(label.side, label.side)
+    label.side <- as.vector(label.side[1:nn])
+    while (length(label.offset) < nn) label.offset <- c(label.offset, label.offset)
+    label.offset <- as.vector(label.offset[1:nn])
+  }
+  while (length(label.cex) < nn) label.cex <- c(label.cex, label.cex)
+  label.cex <- as.vector(label.cex[1:nn])
+  if (is.null(label.col)) label.col <- col
+  else
+  {
+    while (length(label.col) < nn) label.col <- c(label.col, label.col)
+    label.col <- as.vector(label.col[1:nn])
+  }
+  while (length(alpha) < nn) alpha <- c(alpha, alpha)
+  if (length(connected)>1) connected <- connected[1]
+  alpha <- as.vector(alpha[1:nn])
+
+  bp$newsamples = list(col = col, pch = pch, cex = cex, label = label, label.col = label.col,
+                    label.cex = label.cex, label.side = label.side, label.offset = label.offset,
+                    connected=connected, alpha = alpha)
+  bp
+}

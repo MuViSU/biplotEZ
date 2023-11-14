@@ -38,7 +38,8 @@ Object of class CVA with the following elements:
 \item{g}{number of groups.}
 \item{Title}{title of the biplot to be rendered.}
 \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
-\item{Xhat}{predictions of the samples.}
+\item{Lmat}{matrix for transformation to the canonical space.}
+\item{e.vects}{vector indicating which canonical variates are plotted in the biplot.}
 \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
 }
 \description{
@@ -46,4 +47,6 @@ This function produces a list of elements to be used for CVA biplot construction
 }
 \examples{
 biplot(iris[,1:4]) |> CVA(classes=iris[,5])
+# create a CVA biplot
+biplot(iris[,1:4]) |> CVA(classes=iris[,5]) |> plot()
 }

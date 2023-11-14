@@ -79,7 +79,7 @@ same transformation
 $$
 \mathbf{Z} = \mathbf{X}\mathbf{MJ}_2.
 $$
-
+Interpolation of a new sample $\mathbf{x}^*:p \times 1$ follows as ${\mathbf{z}^*}':2 \times 1 ={\mathbf{x}^*}' \mathbf{MJ}_2$.
 Using the inverse transformation $\mathbf{x}' = \mathbf{y}'\mathbf{M}^{-1}$, all the points that will predict $\mu$ for variable 
 $j$ will have the form 
 

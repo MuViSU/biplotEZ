@@ -29,7 +29,8 @@
 #' \item{g}{number of groups.}
 #' \item{Title}{title of the biplot to be rendered.}
 #' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
-#' \item{Xhat}{predictions of the samples.}
+#' \item{Lmat}{matrix for transformation to the canonical space.}
+#' \item{e.vects}{vector indicating which canonical variates are plotted in the biplot.}
 #' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
 #'
 #' @usage CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
@@ -40,6 +41,8 @@
 #'
 #' @examples
 #' biplot(iris[,1:4]) |> CVA(classes=iris[,5])
+#' # create a CVA biplot
+#' biplot(iris[,1:4]) |> CVA(classes=iris[,5]) |> plot()
 
 CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes=bp$classes,
                 weightedCVA = "weighted",...)
@@ -113,7 +116,8 @@ CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classe
   bp$Z <- Z
   bp$ax.one.unit <- ax.one.unit
   bp$Xhat <- X %*% M %*% solve(M)
-  bp$M <- M
+  bp$Lmat <- M
+  bp$e.vects <- e.vects
   if (bp$scaled) Xhat <- scale(bp$Xhat, center=FALSE, scale=1/bp$sd)
   if (bp$center) Xhat <- scale(bp$Xhat, center=-1*bp$means, scale=FALSE)
 

@@ -18,6 +18,6 @@ no return value, called for side effects.
 Generic print function of objects of class biplot
 }
 \examples{
-out <- biplot (iris[,1:4]) |> PCA() |> plot()
+out <- biplot (iris[,1:4]) |> PCA()
 out
 }

@@ -38,5 +38,7 @@ Performs calculations for a PCA biplot.
 }
 \examples{
 biplot(iris[,1:4]) |> PCA()
+# create a PCA biplot
+biplot(data = iris) |> PCA() |> plot()
 
 }
