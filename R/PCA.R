@@ -9,12 +9,11 @@
 #' @param e.vects which eigenvectors (principal components) to extract, with default \code{1:dim.biplot}.
 #' @param group.aes vector of the same length as the number of rows in the data matrix
 #'                  for differentiated aesthetics for samples.
+#' @param show.group.means logical, indicating whether group means should be plotted in the biplot.
 #' @param correlation.biplot logical, if \code{FALSE}, the distances between sample points are
 #'                           optimally approximated in the biplot. If \code{TRUE}, the correlations between
 #'                           variables are optimally approximated by the cosine of the angles between
 #'                           axes. Default is \code{FALSE}.
-#' @param ... additional arguments
-#'
 #'
 #' @return  Object of class PCA with the following elements:
 #' \item{X}{matrix of the centered and scaled numeric variables.}
@@ -35,9 +34,11 @@
 #' \item{Lmat}{matrix for transformation to the principal components.}
 #' \item{e.vects}{vector indicating which principal components are plotted in the biplot.}
 #' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
+#' \item{class.means}{logical, indicating whether group means should be plotted in the biplot.}
+#' \item{Zmeans}{matrix of class mean coordinates to be plotted in the biplot.}
 #'
 #' @usage PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-#' group.aes = NULL, correlation.biplot = FALSE, ...)
+#' group.aes = NULL, show.group.means = FALSE, correlation.biplot = FALSE)
 #' @aliases PCA
 #'
 #' @export
@@ -49,8 +50,8 @@
 #' biplot(iris[,1:4]) |> PCA()
 #' # create a PCA biplot
 #' biplot(data = iris) |> PCA() |> plot()
-PCA <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=NULL,
-                 correlation.biplot=FALSE, ...)
+PCA <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=NULL, show.group.means = FALSE,
+                 correlation.biplot=FALSE)
 {
   UseMethod("PCA")
 }
@@ -70,7 +71,7 @@ PCA <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=
 #' biplot(data = iris) |> PCA() |> plot()
 #'
 PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=NULL,
-                        correlation.biplot=FALSE, ...)
+                        show.group.means = FALSE, correlation.biplot=FALSE)
 {
   dim.biplot <- dim.biplot[1]
   if (dim.biplot != 1 & dim.biplot != 2 & dim.biplot != 3) stop("Only 1D, 2D and 3D biplots")
@@ -115,6 +116,14 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
   bp$Lmat <- Lmat
   bp$ax.one.unit <- ax.one.unit
   bp$e.vects <- e.vects
+  if (bp$g == 1) bp$class.means <- FALSE else bp$class.means <- show.group.means
+  if (bp$class.means)
+  {
+    G <- indmat(group.aes)
+    Xmeans <- solve(t(G)%*%G) %*% t(G) %*% X
+    Zmeans <- Xmeans %*% Lmat[,e.vects]
+    bp$Zmeans <- Zmeans
+  }
   class(bp)<-append(class(bp),"PCA")
   bp
 }

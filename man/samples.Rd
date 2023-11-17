@@ -6,7 +6,7 @@
 \usage{
 samples (bp,  which = 1:bp$g, col = ez.col, pch = 3, cex = 1, label = FALSE,
 label.col = NULL,label.cex = 0.75, label.side = "bottom", label.offset = 0.5,
-connected = FALSE, alpha = 1)
+connected = FALSE, connect.col = "black", connect.lty = 1, connect.lwd = 1)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot}.}
@@ -34,10 +34,15 @@ argument \code{offset}.}
 
 \item{connected}{logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.}
 
-\item{alpha}{opacity of sample plotting character, default is \code{1}.}
+\item{connect.col}{colour of the connecting line, with default \code{black}.}
+
+\item{connect.lty}{line type of the connecting line, with default \code{1}.}
+
+\item{connect.lwd}{line width of the connecting line, with default \code{1}.}
 }
 \value{
 A list with the following components is available:
+\item{which}{which means to display.}
 \item{col}{colour of the samples.}
 \item{pch}{plotting character of the samples.}
 \item{cex}{expansion of the plotting character of the samples.}
@@ -46,9 +51,10 @@ A list with the following components is available:
 \item{label.cex}{expansion of the label.}
 \item{label.side}{side at which to plot the label of samples.}
 \item{label.offset}{offset of the label from the data point.}
-\item{connected}{TRUE or FALSE, whether samples should be connected in row order of X. (not in current version)}
-\item{alpha}{opacity of the samples. (not in current version)}
-\item{g}{number of groups.}
+\item{connected}{TRUE or FALSE, whether samples should be connected in row order of X.}
+\item{connect.col}{colour of the connecting line.}
+\item{connect.lty}{line type of the connecting line.}
+\item{connect.lwd}{line width of the connecting line.}
 }
 \description{
 This function allows formatting changes to samples.

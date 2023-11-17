@@ -5,7 +5,7 @@
 \title{Principal Component Analysis (PCA) method}
 \usage{
 PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-group.aes = NULL, correlation.biplot = FALSE, ...)
+group.aes = NULL, show.group.means = FALSE, correlation.biplot = FALSE)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot} obtained from preceding function \code{biplot()}.}
@@ -17,12 +17,12 @@ group.aes = NULL, correlation.biplot = FALSE, ...)
 \item{group.aes}{vector of the same length as the number of rows in the data matrix
 for differentiated aesthetics for samples.}
 
+\item{show.group.means}{logical, indicating whether group means should be plotted in the biplot.}
+
 \item{correlation.biplot}{logical, if \code{FALSE}, the distances between sample points are
 optimally approximated in the biplot. If \code{TRUE}, the correlations between
 variables are optimally approximated by the cosine of the angles between
 axes. Default is \code{FALSE}.}
-
-\item{...}{additional arguments}
 }
 \value{
 Object of class PCA with the following elements:
@@ -44,6 +44,8 @@ Object of class PCA with the following elements:
 \item{Lmat}{matrix for transformation to the principal components.}
 \item{e.vects}{vector indicating which principal components are plotted in the biplot.}
 \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
+\item{class.means}{logical, indicating whether group means should be plotted in the biplot.}
+\item{Zmeans}{matrix of class mean coordinates to be plotted in the biplot.}
 }
 \description{
 This function produces a list of elements to be used for PCA biplot construction.

@@ -5,7 +5,7 @@
 \title{Canonical Variate Analysis (CVA) method}
 \usage{
 CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-           classes=bp$classes, weightedCVA = "weighted", ...)
+           classes=bp$classes, weightedCVA = "weighted", show.class.means = TRUE)
 }
 \arguments{
 \item{bp}{object of class \code{biplot} obtained from preceding function \code{biplot()}.}
@@ -19,7 +19,7 @@ with the class indicator for the samples.}
 
 \item{weightedCVA}{the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".}
 
-\item{...}{additional arguments}
+\item{show.class.means}{logical, indicating whether to plot the class means on the biplot.}
 }
 \value{
 Object of class CVA with the following elements:
@@ -41,6 +41,8 @@ Object of class CVA with the following elements:
 \item{Lmat}{matrix for transformation to the canonical space.}
 \item{e.vects}{vector indicating which canonical variates are plotted in the biplot.}
 \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
+\item{class.means}{logical value, indicating whether the class means should be plotted in the biplot.}
+\item{Zmeans}{matrix of the class mean coordinates to be plotted in the biplot.}
 }
 \description{
 This function produces a list of elements to be used for CVA biplot construction.

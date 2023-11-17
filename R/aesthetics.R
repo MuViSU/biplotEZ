@@ -18,7 +18,9 @@
 #' @param label.offset offset of the label from the data point. See ?text for a detailed explanation of the
 #'                     argument `offset`.
 #' @param connected logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.
-#' @param alpha opacity of sample plotting character, default is \code{1}.
+#' @param connect.col colour of the connecting line, with default \code{black}.
+#' @param connect.lty line type of the connecting line, with default \code{1}.
+#' @param connect.lwd line width of the connecting line, with default \code{1}.
 #'
 #' @details
 #' The arguments `which`, `col`, `pch` and `cex` are based on the specification of `group.aes` or `classes`. If no groups
@@ -29,6 +31,7 @@
 #' will be recycled n times or a vector of length n is expected.
 #'
 #' @return A list with the following components is available:
+#' \item{which}{which means to display.}
 #' \item{col}{colour of the samples.}
 #' \item{pch}{plotting character of the samples.}
 #' \item{cex}{expansion of the plotting character of the samples.}
@@ -37,22 +40,23 @@
 #' \item{label.cex}{expansion of the label.}
 #' \item{label.side}{side at which to plot the label of samples.}
 #' \item{label.offset}{offset of the label from the data point.}
-#' \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X. (not in current version)}
-#' \item{alpha}{opacity of the samples. (not in current version)}
-#' \item{g}{number of groups.}
+#' \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X.}
+#' \item{connect.col}{colour of the connecting line.}
+#' \item{connect.lty}{line type of the connecting line.}
+#' \item{connect.lwd}{line width of the connecting line.}
 #'
 #' @usage
 #' samples (bp,  which = 1:bp$g, col = ez.col, pch = 3, cex = 1, label = FALSE,
 #' label.col = NULL,label.cex = 0.75, label.side = "bottom", label.offset = 0.5,
-#' connected = FALSE, alpha = 1)
+#' connected = FALSE, connect.col = "black", connect.lty = 1, connect.lwd = 1)
 #' @aliases samples
 #'
 #' @export
 #'
 #' @examples biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> plot()
-samples <- function (bp,  which = 1:bp$g, col = ez.col,
-                     pch = 3, cex = 1, label = FALSE, label.col=NULL, label.cex = 0.75,
-                     label.side = "bottom", label.offset = 0.5, connected=FALSE, alpha = 1)
+samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 3, cex = 1,
+                     label = FALSE, label.col=NULL, label.cex = 0.75, label.side = "bottom", label.offset = 0.5,
+                     connected=FALSE, connect.col = "black", connect.lty = 1, connect.lwd = 1)
 {
   g <- bp$g
   if (!is.null(which))
@@ -79,31 +83,141 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col,
   {
     while (length(label) < n) label <- c(label, label)
     label <- as.vector(label[1:n])
+    for (i in 1:g) if (is.na(match(i, which))) label[bp$group.aes==bp$g.names[i]] <- NA
+    label <- stats::na.omit(label)
+
     while (length(label.side) < n) label.side <- c(label.side, label.side)
     label.side <- as.vector(label.side[1:n])
+    for (i in 1:g) if (is.na(match(i, which))) label.side[bp$group.aes==bp$g.names[i]] <- NA
+    label.side <- stats::na.omit(label.side)
+
     while (length(label.offset) < n) label.offset <- c(label.offset, label.offset)
     label.offset <- as.vector(label.offset[1:n])
+    for (i in 1:g) if (is.na(match(i, which))) label.offset[bp$group.aes==bp$g.names[i]] <- NA
+    label.offset <- stats::na.omit(label.offset)
   }
+
   while (length(label.cex) < n) label.cex <- c(label.cex, label.cex)
   label.cex <- as.vector(label.cex[1:n])
+  for (i in 1:g) if (is.na(match(i, which))) label.cex[bp$group.aes==bp$g.names[i]] <- NA
+  label.cex <- stats::na.omit(label.cex)
+
   if (is.null(label.col))
   {
     label.col <- rep(NA, n)
     for (j in 1:g)
-      label.col[bp$group.aes==bp$g.names[j]] <- col[j]
+      if (!is.na(match(i, which))) label.col[bp$group.aes==bp$g.names[j]] <- col[j]
+    label.col <- stats::na.omit(label.col)
   }
   else
   {
     while (length(label.col) < n) label.col <- c(label.col, label.col)
     label.col <- as.vector(label.col[1:n])
   }
-  while (length(alpha) < sample.group.num) alpha <- c(alpha, alpha)
   if (length(connected)>1) connected <- connected[1]
-  alpha <- as.vector(alpha[1:sample.group.num])
+  if (length(connect.col)>1) connect.col <- connect.col[1]
+  if (length(connect.lty)>1) connect.lty <- connect.lty[1]
 
   bp$samples = list(which = which, col = col, pch = pch, cex = cex, label = label, label.col = label.col,
                     label.cex = label.cex, label.side = label.side, label.offset = label.offset,
-                    connected=connected, alpha = alpha)
+                    connected=connected, connect.col = connect.col, connect.lty = connect.lty)
+  bp
+}
+
+# ----------------------------------------------------------------------------------------------
+#' Aesthetics for biplot class / group means
+#'
+#' @description
+#' This function allows formatting changes to class means or group means.
+#'
+#' @param bp an object of class \code{biplot}.
+#' @param which vector of which means to display, with default \code{bp$g}.
+#' @param col mean colour, with default to sample colour.
+#' @param pch mean plotting character, with default \code{o}.
+#' @param cex mean character expansion, with default \code{1}.
+#' @param label logical, whether means should be labelled or not, with default \code{TRUE}.
+#' @param label.col vector of length g with the colour of the labels, defaulting to the
+#'                  colour of the means.
+#' @param label.cex label text expansion, with default \code{0.75}.
+#' @param label.side side of the plotting character where label appears, with default \code{bottom}. Note that unlike
+#'                   the argument `pos` in `text()`, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
+#' @param label.offset offset of the label from the mean point. See ?text for a detailed explanation of the
+#'                     argument `offset`.
+#' @details
+#' The number of classes or groups (defined by group.aes) is indicated as \code{g}. If an argument is not of length \code{g},
+#' recycling is used.
+#'
+#' @return A list with the following components is available:
+#' \item{which}{which means to display.}
+#' \item{col}{colour of the means.}
+#' \item{pch}{plotting character of the means.}
+#' \item{cex}{expansion of the plotting character of the means.}
+#' \item{label}{logical, whether means should be labelled.}
+#' \item{label.col}{colour of the label.}
+#' \item{label.cex}{expansion of the label.}
+#' \item{label.side}{side at which to plot the label of means.}
+#' \item{label.offset}{offset of the label from the mean point.}
+#'
+#' @usage
+#' means (bp,  which = NULL, col = NULL, pch = 1, cex = 1, label = FALSE,
+#' label.col = NULL,label.cex = 0.75, label.side = "bottom", label.offset = 0.5)
+#' @aliases means
+#'
+#' @export
+#'
+#' @examples biplot(iris[,1:4]) |> PCA() |>
+#'           means(col = "purple", pch = 15, cex = 2) |> plot()
+means <- function (bp,  which = NULL, col = NULL,
+                     pch = 1, cex = 1, label = FALSE, label.col=NULL, label.cex = 0.75,
+                     label.side = "bottom", label.offset = 0.5)
+{
+  if (is.null(bp$samples)) bp <- samples(bp)
+  g <- bp$g
+  if (!is.null(which))
+  {
+    if (!all(is.numeric(which))) which <- match(which, bp$g.names, nomatch = 0)
+    which <- which[which <= g]
+    which <- which[which > 0]
+  }
+  else which <- bp$samples$which
+  class.num <- length(which)
+
+  if (is.null(col))
+    if (max(which)<=length(bp$samples$col)) col <- bp$samples$col[which] else col <- bp$samples$col
+  while (length(col) < class.num) col <- c(col, col)
+  col <- as.vector(col[1:class.num])
+
+  while (length(pch) < class.num) pch <- c(pch, pch)
+  pch <- as.vector(pch[1:class.num])
+  while (length(cex) < class.num) cex <- c(cex, cex)
+  cex <- as.vector(cex[1:class.num])
+  if (label[1] == "ggrepel")
+  {
+    label <- label[1]
+    label.side <- NULL
+    label.offset <- NULL
+  }
+  else
+  {
+    while (length(label) < class.num) label <- c(label, label)
+    label <- as.vector(label[1:class.num])
+    while (length(label.side) < class.num) label.side <- c(label.side, label.side)
+    label.side <- as.vector(label.side[1:class.num])
+    while (length(label.offset) < class.num) label.offset <- c(label.offset, label.offset)
+    label.offset <- as.vector(label.offset[1:class.num])
+  }
+  while (length(label.cex) < class.num) label.cex <- c(label.cex, label.cex)
+  label.cex <- as.vector(label.cex[1:class.num])
+
+  if (is.null(label.col)) label.col <- col
+  else
+  {
+    while (length(label.col) < class.num) label.col <- c(label.col, label.col)
+    label.col <- as.vector(label.col[1:class.num])
+  }
+
+  bp$means.aes = list(which = which, col = col, pch = pch, cex = cex, label = label, label.col = label.col,
+                      label.cex = label.cex, label.side = label.side, label.offset = label.offset)
   bp
 }
 
@@ -363,7 +477,9 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' @param label.offset offset of the label from the data point. See ?text for a detailed explanation of the
 #'                     argument `offset`.
 #' @param connected logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.
-#' @param alpha opacity of sample plotting character, default is \code{1}.
+#' @param connect.col colour of the connecting line, with default \code{black}.
+#' @param connect.lty line type of the connecting line, with default \code{1}.
+#' @param connect.lwd line width of the connecting line, with default \code{1}.
 #'
 #' @return A list with the following components is available:
 #' \item{col}{colour of the samples.}
@@ -374,14 +490,15 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' \item{label.cex}{expansion of the label.}
 #' \item{label.side}{side at which to plot the label of samples.}
 #' \item{label.offset}{offset of the label from the data point.}
-#' \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X. (not in current version)}
-#' \item{alpha}{opacity of the samples. (not in current version)}
-#' \item{g}{number of groups.}
+#' \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X.}
+#' \item{connect.col}{colour of the connecting line.}
+#' \item{connect.lty}{line type of the connecting line.}
+#' \item{connect.lwd}{line width of the connecting line.}
 #'
 #' @usage
 #' newsamples (bp,  col = "darkorange1", pch = 1, cex = 1, label = FALSE,
 #' label.col = NULL,label.cex = 0.75, label.side = "bottom", label.offset = 0.5,
-#' connected = FALSE, alpha = 1)
+#' connected = FALSE, connect.col = "black", connect.lty=1, connect.lwd=1)
 #' @aliases newsamples
 #'
 #' @export
@@ -390,9 +507,9 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' biplot(data = iris[1:145,]) |> PCA() |> samples(col = "grey") |>
 #' interpolate(newdata = iris[146:150,]) |> newsamples(col = rainbow(6), pch=15) |> plot()
 
-newsamples <- function (bp,  col = "darkorange1",
-                     pch = 1, cex = 1, label = FALSE, label.col=NULL, label.cex = 0.75,
-                     label.side = "bottom", label.offset = 0.5, connected=FALSE, alpha = 1)
+newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
+                        label = FALSE, label.col=NULL, label.cex = 0.75, label.side = "bottom", label.offset = 0.5,
+                        connected=FALSE, connect.col = "black", connect.lty = 1, connect.lwd = 1)
 {
   nn <- nrow(bp$Xnew)
   while (length(col) < nn) col <- c(col, col)
@@ -424,12 +541,14 @@ newsamples <- function (bp,  col = "darkorange1",
     while (length(label.col) < nn) label.col <- c(label.col, label.col)
     label.col <- as.vector(label.col[1:nn])
   }
-  while (length(alpha) < nn) alpha <- c(alpha, alpha)
   if (length(connected)>1) connected <- connected[1]
-  alpha <- as.vector(alpha[1:nn])
+  if (length(connect.col)>1) connect.col <- connect.col[1]
+  if (length(connect.lty)>1) connect.lty <- connect.lty[1]
+  if (length(connect.lwd)>1) connect.lwd <- connect.lwd[1]
 
   bp$newsamples = list(col = col, pch = pch, cex = cex, label = label, label.col = label.col,
                     label.cex = label.cex, label.side = label.side, label.offset = label.offset,
-                    connected=connected, alpha = alpha)
+                    connected=connected, connect.col = connect.col, connect.lty = connect.lty,
+                    connect.lwd = connect.lwd)
   bp
 }

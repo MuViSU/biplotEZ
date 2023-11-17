@@ -25,8 +25,10 @@
 plot.biplot <- function(x, exp.factor=1.2, ...)
 {
   #----------
-  .samples.plot <- function(Z, group.aes, sample.aes, n, ggrepel.labs)
+  .samples.plot <- function(Z, group.aes, sample.aes, n, g.names, ggrepel.labs)
   {
+    if (sample.aes$connected)
+      graphics::lines (Z[,1], Z[,2], col=sample.aes$connect.col, lty=sample.aes$connect.lty, lwd=sample.aes$connect.lwd)
     x.vals <- Z[, 1]
     y.vals <- Z[, 2]
     invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
@@ -48,9 +50,14 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
     }
     else
     {
-      for (j in 1:n)
+      which.samples <- rep(FALSE, n)
+      for (j in 1:length(sample.aes$which))
+        which.samples[group.aes == g.names[sample.aes$which[j]]] <- TRUE
+      ZZ <- Z[which.samples,]
+      Z.labels <- rownames(Z)[which.samples]
+      for (j in 1:length(sample.aes$label.side))
       {  text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
-         if (sample.aes$label[j]) graphics::text(Z[j, 1], Z[j, 2], labels = rownames(Z)[j],
+         if (sample.aes$label[j]) graphics::text(ZZ[j, 1], ZZ[j, 2], labels = Z.labels[j],
                                               cex = sample.aes$label.cex[j], col = sample.aes$label.col[j],
                                               pos = text.pos, offset = sample.aes$label.offset[j])
       }
@@ -63,15 +70,52 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
     }
   }
   #----------
+  .means.plot <- function(Z, sample.aes, g.names, ggrepel.labs)
+  {
+    x.vals <- Z[, 1]
+    y.vals <- Z[, 2]
+    invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
+    Z <- Z[invals, ]
+    ZZ <- Z[sample.aes$which,]
+    if (sample.aes$label[1]=="ggrepel")
+    {
+      for (j in 1:nrow(ggrepel.labs$coords))
+        graphics::text(ggrepel.labs$coords[j, 1], ggrepel.labs$coords[j, 2], labels = ggrepel.labs$coords[j,3],
+                       cex = sample.aes$label.cex[ggrepel.labs$visible[j]],
+                       col = sample.aes$label.col[ggrepel.labs$visible[j]])
+      for (j in ggrepel.labs$textlines)
+      {
+        label.val <- rownames(ZZ)[j]
+        label.xy <- ggrepel.labs$coords[match(label.val, ggrepel.labs$coords[,3]),1:2]
+        graphics::lines (x=c(label.xy[1],ZZ[j,1]), y=c(label.xy[2],ZZ[j,2]), col=sample.aes$label.col[j])
+      }
+    }
+    else
+    {
+      Z.labels <- rownames(Z)[sample.aes$which]
+      for (j in 1:length(sample.aes$label.side))
+      {  text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
+         if (sample.aes$label[j]) graphics::text(ZZ[j, 1], ZZ[j, 2], labels = Z.labels[j],
+                                              cex = sample.aes$label.cex[j], col = sample.aes$label.col[j],
+                                              pos = text.pos, offset = sample.aes$label.offset[j])
+      }
+    }
+    for (j in 1:length(sample.aes$which))
+      graphics::points(x = Z[sample.aes$which[j], 1], y = Z[sample.aes$which[j], 2],
+                       pch = sample.aes$pch[j], col = sample.aes$col[j], cex = sample.aes$cex[j])
+  }
+  #----------
   .newsamples.plot <- function(Z, sample.aes, ggrepel.labs)
   {
+    if (sample.aes$connected)
+      graphics::lines (Z[,1], Z[,2], col=sample.aes$connect.col, lty=sample.aes$connect.lty, lwd=sample.aes$connect.lwd)
     x.vals <- Z[, 1]
     y.vals <- Z[, 2]
     invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
     Z <- Z[invals, , drop = FALSE]
     if (sample.aes$label[1]=="ggrepel")
     {
-      ggrepel.labs$coords <- ggrepel.labs$coords[invals, ]
+      ggrepel.labs$coords <- ggrepel.labs$coords[invals, ,drop=F]
       ggrepel.labs$visible <- ggrepel.labs$visible[invals]
       ggrepel.labs$textlines <- ggrepel.labs$textlines[invals]
       for (j in 1:nrow(ggrepel.labs$coords))
@@ -274,97 +318,74 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
     for (i in 1:length(z.ellipse))
       graphics::polygon(z.ellipse[[i]], border=ellipse.aes$col[i], lty=ellipse.aes$lty[i], lwd = ellipse.aes$lwd[i])
   }
+  #----------
+  .get.ggrepel.coords <- function(df)
+  {
+    pp <- ggplot2::ggplot (df, aes(df$x,df$y,label=df$z)) + ggplot2::geom_point() + ggrepel::geom_text_repel()
+    print (pp)
+    xrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$x.range
+    yrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$y.range
+    grid::grid.force()
+    kids <- grid::childNames(grid::grid.get("textrepeltree", grep=TRUE))
+    textrepels <- grep("textrepelgrob", kids)
+    textlines <- kids[-textrepels]
+    textlines <- as.numeric(substring(textlines,17,19))
+    textvisible <- kids[textrepels]
+    textvisible <- as.numeric(substring(textvisible,14,16))
+    kids <- kids[textrepels]
+    get.xy.pos.labs <- function(n)
+    {
+      grb <- grid.get(n)
+      data.frame(x = xrg[1]+diff(xrg)*grid::convertX(grb$x, "native", valueOnly = TRUE),
+                 y = yrg[1]+diff(yrg)*grid::convertY(grb$y, "native", valueOnly = TRUE))
+    }
+    ggrepel.labs <- do.call (rbind, lapply(kids, get.xy.pos.labs))
+    ggrepel.labs$lab <- df$z[textvisible]
+    list (coords = ggrepel.labs, visible=textvisible, textlines=textlines)
+  }
 
   #==========
   if (is.null(x$Z)) stop ("Add a biplot method before generating a plot")
   else Z <- x$Z
 
   if (is.null(x$samples)) x <- samples(x)
+  if (!is.null(x$class.means)) if(x$class.means) if (is.null(x$means.aes)) x <- means(x)
   if (!is.null(x$Znew)) if (is.null(x$newsamples)) x <- newsamples(x)
-  ggrepel.labs <- ggrepel.new <- NULL
-  samples.ggrepel <- x$samples$label[1]=="ggrepel"
+
+  if (is.null(x$samples$which)) samples.ggrepel <- FALSE
+  else samples.ggrepel <- x$samples$label[1]=="ggrepel"
   newsamples.ggrepel <- FALSE
   if (!is.null(x$Znew)) newsamples.ggrepel <- x$newsamples$label[1]=="ggrepel"
-  if (samples.ggrepel & !newsamples.ggrepel)
-  {
-    if (is.null(x$Znew)) df <- data.frame (x=Z[,1], y=Z[,2], z=rownames(Z))
-    else df <- data.frame (x=c(Z[,1],x$Znew[,1]), y=c(Z[,2],x$Znew[,2]), z=c(rownames(Z),rownames(x$Znew)))
-    pp <- ggplot2::ggplot (df, aes(df$x,df$y,label=df$z)) + ggplot2::geom_point() + ggrepel::geom_text_repel()
-    print (pp)
-    xrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$x.range
-    yrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$y.range
-    grid::grid.force()
-    kids <- grid::childNames(grid::grid.get("textrepeltree", grep=TRUE))
-    textrepels <- grep("textrepelgrob", kids)
-    textlines <- kids[-textrepels]
-    textlines <- as.numeric(substring(textlines,17,19))
-    textvisible <- kids[textrepels]
-    textvisible <- as.numeric(substring(textvisible,14,16))
-    kids <- kids[textrepels]
-    get.xy.pos.labs <- function(n)
-    {
-      grb <- grid.get(n)
-      data.frame(x = xrg[1]+diff(xrg)*grid::convertX(grb$x, "native", valueOnly = TRUE),
-                 y = yrg[1]+diff(yrg)*grid::convertY(grb$y, "native", valueOnly = TRUE))
-    }
-    ggrepel.labs <- do.call (rbind, lapply(kids, get.xy.pos.labs))
-    ggrepel.labs$lab <- df$z[textvisible]
-    Zrows <- textvisible <= x$n
-    ggrepel.new <- list (coords=ggrepel.labs[!Zrows,], visible=textvisible[!Zrows], textlines=textlines[textlines > x$n])
-    ggrepel.labs <- list (coords=ggrepel.labs[Zrows,], visible=textvisible[Zrows], textlines=textlines[textlines <= x$n])
+  means.ggrepel <- FALSE
+  if (!is.null(x$class.means)) if (x$class.means) means.ggrepel <- x$means.aes$label[1]=="ggrepel"
+
+  do.ggrepel <- samples.ggrepel | means.ggrepel | newsamples.ggrepel
+  if (samples.ggrepel)
+    {  df <- data.frame (x=Z[,1], y=Z[,2], z=rownames(Z))
+       for (i in 1:x$g)
+         if (is.na(match(i, x$samples$which))) df$x[x$g.names[i]==x$group.aes] <- NA
+       df <- stats::na.omit(df)
   }
-  if (samples.ggrepel & newsamples.ggrepel)
+  else df <- data.frame (x=NULL, y=NULL, z=NULL)
+  n.samples <- nrow(df)
+  if (means.ggrepel) df <- rbind (df, data.frame(x=x$Zmeans[x$means.aes$which,1], y=x$Zmeans[x$means.aes$which,2],
+                                           z=rownames(x$Zmeans)[x$means.aes$which]))
+  n.means <- nrow(df)
+  if (newsamples.ggrepel) df <- rbind (df, data.frame(x=x$Znew[,1], y=x$Znew[,2],z=rownames(x$Znew)))
+  n.newsamples <- nrow(df)
+  ggrepel.new <- ggrepel.means <- ggrepel.samples <- NULL
+  if (do.ggrepel)
   {
-    if (is.null(x$Znew)) df <- data.frame (x=Z[,1], y=Z[,2], z=rownames(Z))
-    else df <- data.frame (x=c(Z[,1],x$Znew[,1]), y=c(Z[,2],x$Znew[,2]), z=c(rownames(Z),rownames(x$Znew)))
-    pp <- ggplot2::ggplot (df, aes(df$x,df$y,label=df$z)) + ggplot2::geom_point() + ggrepel::geom_text_repel()
-    print (pp)
-    xrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$x.range
-    yrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$y.range
-    grid::grid.force()
-    kids <- grid::childNames(grid::grid.get("textrepeltree", grep=TRUE))
-    textrepels <- grep("textrepelgrob", kids)
-    textlines <- kids[-textrepels]
-    textlines <- as.numeric(substring(textlines,17,19))
-    textvisible <- kids[textrepels]
-    textvisible <- as.numeric(substring(textvisible,14,16))
-    kids <- kids[textrepels]
-    get.xy.pos.labs <- function(n)
-    {
-      grb <- grid.get(n)
-      data.frame(x = xrg[1]+diff(xrg)*grid::convertX(grb$x, "native", valueOnly = TRUE),
-                 y = yrg[1]+diff(yrg)*grid::convertY(grb$y, "native", valueOnly = TRUE))
-    }
-    ggrepel.labs <- do.call (rbind, lapply(kids, get.xy.pos.labs))
-    ggrepel.labs$lab <- df$z[textvisible]
-    Zrows <- textvisible <= x$n
-    ggrepel.new <- list (coords=ggrepel.labs[!Zrows,], visible=textvisible[!Zrows], textlines=textlines[textlines > x$n])
-    ggrepel.labs <- list (coords=ggrepel.labs[Zrows,], visible=textvisible[Zrows], textlines=textlines[textlines <= x$n])
-  }
-  if (!samples.ggrepel & newsamples.ggrepel)
-  {
-    df <- data.frame (x=x$Znew[,1], y=x$Znew[,2], z=rownames(x$Znew))
-    pp <- ggplot2::ggplot (df, aes(df$x,df$y,label=df$z)) + ggplot2::geom_point() + ggrepel::geom_text_repel()
-    print (pp)
-    xrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$x.range
-    yrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$y.range
-    grid::grid.force()
-    kids <- grid::childNames(grid::grid.get("textrepeltree", grep=TRUE))
-    textrepels <- grep("textrepelgrob", kids)
-    textlines <- kids[-textrepels]
-    textlines <- as.numeric(substring(textlines,17,19))
-    textvisible <- kids[textrepels]
-    textvisible <- as.numeric(substring(textvisible,14,16))
-    kids <- kids[textrepels]
-    get.xy.pos.labs <- function(n)
-    {
-      grb <- grid.get(n)
-      data.frame(x = xrg[1]+diff(xrg)*grid::convertX(grb$x, "native", valueOnly = TRUE),
-                 y = yrg[1]+diff(yrg)*grid::convertY(grb$y, "native", valueOnly = TRUE))
-    }
-    ggrepel.labs <- do.call (rbind, lapply(kids, get.xy.pos.labs))
-    ggrepel.labs$lab <- df$z[textvisible]
-    ggrepel.new <- list (coords=ggrepel.labs, visible=textvisible, textlines=textlines)
+    out <- .get.ggrepel.coords(df)
+    if (n.newsamples>n.means) ggrepel.new <-list(coords = out$coords[out$visible>n.newsamples & out$visible<n.means+1,,drop=F],
+                                                 visible = out$visible[out$visible>n.newsamples & out$visible<n.means+1]-n.means,
+                                                 textlines = out$textlines[out$textlines>n.newsamples & out$textlines<n.means+1]-n.means)
+    if (n.means>n.samples) ggrepel.means <- list(coords = out$coords[out$visible>n.samples & out$visible<n.newsamples+1,,drop=F],
+                                                 visible = out$visible[out$visible>n.samples & out$visible<n.newsamples+1]-n.samples,
+                                                 textlines = out$textlines[out$textlines>n.samples & out$textlines<n.newsamples+1]-n.samples)
+    if (samples.ggrepel) ggrepel.samples <- list(coords = out$coords[out$visible<n.samples+1,,drop=F],
+                                                 visible = out$visible[out$visible<n.samples+1],
+                                                 textlines = out$textlines[out$textlines<n.samples+1])
   }
 
   old.par <- graphics::par(pty = "s", ...)
@@ -389,9 +410,13 @@ plot.biplot <- function(x, exp.factor=1.2, ...)
 
   }
 
-  .samples.plot(Z, x$group.aes, x$samples, x$n, ggrepel.labs)
-
+  if (!is.null(x$samples$which)) .samples.plot(Z, x$group.aes, x$samples, x$n, x$g.names, ggrepel.samples)
   if (!is.null(x$Znew)) .newsamples.plot (x$Znew, x$newsamples, ggrepel.new)
+  if (!is.null(x$class.means)) if (x$class.means)
+    {
+       if (is.null(x$means.aes)) x <- means(x)
+       .means.plot (x$Zmeans, x$means.aes, x$g.names, ggrepel.means)
+    }
 
   if (!is.null(x$alpha.bags)) .bags.plot (x$alpha.bags, x$alpha.bag.aes)
 

@@ -10,7 +10,7 @@
   e.vects = 1:ncol(bp$X),
   classes = bp$classes,
   weightedCVA = "weighted",
-  ...
+  show.class.means = TRUE
 )
 }
 \arguments{
@@ -25,7 +25,7 @@ with the class indicator for the samples.}
 
 \item{weightedCVA}{the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".}
 
-\item{...}{additional arguments}
+\item{show.class.means}{logical, indicating whether to plot the class means on the biplot.}
 }
 \value{
 an object of class CVA, inherits from class biplot.

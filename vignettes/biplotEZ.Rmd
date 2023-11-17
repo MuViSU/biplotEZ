@@ -174,13 +174,15 @@ out$scaled
 out$means
 out$sd
 ```
-
 ## 3. The functions `PCA()`, `plot()` and `legend.type()` 
 
-The first argument to the function `PCA()` is an object of class `biplot`, i.e. the output of the `biplot()` function. By default we construct a 2D biplot (argument `dim.biplot = 2`) of the first two principal components (argument `e.vects = 1:2`). The `group.aes` argument, if not specified in the function `biplot()`, allows a grouping argument for the sample aesthetics. A PCA biplot of the `state.x77` data with colouring according to `state.region` is obtained as follows:
+The first argument to the function `PCA()` is an object of class `biplot`, i.e. the output of the `biplot()` function. By default we c
+onstruct a 2D biplot (argument `dim.biplot = 2`) of the first two principal components (argument `e.vects = 1:2`). The `group.aes` 
+argument, if not specified in the function `biplot()`, allows a grouping argument for the sample aesthetics. A PCA biplot of the 
+`state.x77` data with colouring according to `state.region` is obtained as follows:
 
 ```{r, fig.height = 6, fig.width = 7}
-biplot(state.x77, scaled = T) |> 
+biplot(state.x77, scaled = TRUE) |> 
   PCA(group.aes = state.region) |> plot()
 ```
 
@@ -194,11 +196,10 @@ By piping the `PCA` class object (inheriting from class `biplot`) to the generic
 constructs the biplot on the graphical device. To add a legend to the biplot, we call
 
 ```{r, fig.height = 6, fig.width = 7}
-biplot(state.x77, scaled = T) |> 
+biplot(state.x77, scaled = TRUE) |> 
   PCA(group.aes = state.region) |> 
   legend.type(samples = TRUE) |> plot()
 ```
-
 It was mentioned in section 1 that the default choice $\mathbf{G}=\mathbf{UDJ}_2$ and $\mathbf{H}=\mathbf{VJ}_2$ provides an exact
 representation of the distances between the rows of $\mathbf{\hat{X}}$ which is an optimal approximation in the least squares sense 
 of the distances between the rows of $\mathbf{X}$ (samples). Alternatively, the correlations between the variables (columns of $\mathbf{X}$)
@@ -207,7 +208,7 @@ to be suboptimal. In this case $\mathbf{G}=\mathbf{UJ}_2$ and $\mathbf{H}=\mathb
 argument `correlation.biplot = TRUE`.
 
 ```{r, fig.height = 6, fig.width = 7}
-biplot(state.x77, scaled = T) |> 
+biplot(state.x77, scaled = TRUE) |> 
   PCA(group.aes = state.region, correlation.biplot = TRUE) |> 
   legend.type(samples = TRUE) |> plot()
 ```
@@ -219,7 +220,7 @@ This function controls the aesthetics of the sample points in the biplot. The fu
 according to `state.division`. 
 
 ```{r, fig.height = 6, fig.width = 7}
-biplot(state.x77, scaled = T) |> 
+biplot(state.x77, scaled = TRUE) |> 
   PCA(group.aes = state.division) |> 
   legend.type(samples = TRUE) |> plot()
 ```
@@ -228,7 +229,7 @@ Since the legend interferes with the sample points, we choose to place the legen
 `legend.type` function. Furthermore, we wish to select colours, other than the defaults, for the divisions.
 
 ```{r, fig.height = 6, fig.width = 7}
-biplot(state.x77, scaled = T) |> 
+biplot(state.x77, scaled = TRUE) |> 
   PCA(group.aes = state.division) |> 
   samples (col = c("red", "darkorange", "gold", "chartreuse4", 
                    "green", "salmon", "magenta", "#000000", "blue")) |>
@@ -243,7 +244,7 @@ levels (state.division)
 We want to use `pch = 15` for the first three and final two divisions and `pch = 1` for the remaining four divisions.
 
 ```{r, fig.height = 6, fig.width = 7}
-biplot(state.x77, scaled = T) |> 
+biplot(state.x77, scaled = TRUE) |> 
   PCA(group.aes = state.division) |> 
   samples (col = c("red", "darkorange", "gold", "chartreuse4", 
                    "green", "salmon", "magenta", "black", "blue"),
@@ -254,7 +255,7 @@ biplot(state.x77, scaled = T) |>
 To increase the size of the plotting characters of the eastern states, we add the following:
 
 ```{r, fig.height = 6, fig.width = 7}
-biplot(state.x77, scaled = T) |> 
+biplot(state.x77, scaled = TRUE) |> 
   PCA(group.aes = state.division) |> 
   samples (col = c("red", "darkorange", "gold", "chartreuse4", 
                    "green", "salmon", "magenta", "black", "blue"),
@@ -267,7 +268,7 @@ If we choose to only show the samples for the central states, the argument `whic
 sequence of levels (`which = 4:7`), or as shown below, the levels themselves:
 
 ```{r, fig.height = 6, fig.width = 7}
-biplot(state.x77, scaled = T) |> 
+biplot(state.x77, scaled = TRUE) |> 
   PCA(group.aes = state.division) |> 
   samples (col = c("red", "darkorange", "gold", "chartreuse4", 
                    "green", "salmon", "magenta", "black", "blue"),
@@ -284,7 +285,7 @@ of the labels defaults to the colour(s) of the samples. However, individual labe
 similar to `label.cex` as either a single value of a vector of length equal to the number of samples.
 
 ```{r, fig.height = 6, fig.width = 7}
-biplot(state.x77, scaled = T) |> PCA() |> 
+biplot(state.x77, scaled = TRUE) |> PCA() |> 
   samples (label = TRUE) |> plot()
 ```
 
@@ -314,11 +315,31 @@ biplot (state.x77, scaled=TRUE) |> PCA() |>
 We can also make use of the functionality of the `ggrepel` package to place the labels.
 
 ```{r, fig.height = 6, fig.width = 7}
-biplot(state.x77, scaled = T) |> PCA() |> 
+biplot(state.x77, scaled = TRUE) |> PCA() |> 
   samples (label = "ggrepel", label.cex=0.65) |> plot()
 ```
 
-## 4. The function `axes()`
+If the data plotted in the biplot is a multivariate time series, it can make sense to connect the data points in order. Let us 
+consider the four quarters of the `UKgas` data set as four variables and we represent the years as sample points in a PCA biplot.
+
+```{r, fig.height = 6, fig.width = 7}
+gas.data <- matrix (UKgas, ncol=4, byrow=T)
+colnames(gas.data) <- paste("Q", 1:4, sep="")
+rownames(gas.data) <- 60:86
+even.labels <- rep(c(TRUE, FALSE), 14)
+biplot(gas.data, scaled = TRUE) |> PCA() |> 
+  samples (connected = TRUE, connect.col="red", label = even.labels, label.cex=0.6) |> 
+  plot()
+```
+
+## 4. The function `means()`
+
+The function `means()` allow changing the aesthetics for group means specified by group.aes, when the argument 
+`show.group.means = TRUE` in the call to the function `PCA()`. The functionality of `means()` mirrors that of 
+`samples()` and is discussed in detail in the vignette *Class separation* where class means are more prominent 
+than in PCA biplots.
+
+## 5. The function `axes()`
 
 Similar to the `samples()` function, this function allows for changing the aestethics of the biplot axes. The first argument to 
 `axes()` is an object of class `biplot`. The `X.names` argument is typically not specified by the user, but is required for the 
@@ -365,7 +386,7 @@ biplot(rock, scaled = TRUE) |> PCA() |>
                                plot()
 ```
 
-## 5. The function `alpha.bags()`
+## 6. The function `alpha.bags()`
 
 An $\alpha$-bag encloses the $\alpha100\%$ inner data points in a cloud of points. It is based on the concept of halfspace location depth 
 as defined by  @Tukey1975. @RousseeuwRutsTukey1999 generalised a boxplot to a two-dimensional bagplot where the box is replaced by a bag 
@@ -408,13 +429,12 @@ we can remove the indivdiual samples by setting `samples (which = NULL)`. The de
 and we chose to specify different line types for different $\alpha$ values.
 
 ```{r, fig.height = 6, fig.width = 7}
-biplot(sunspots, group.aes=century) |> PCA() |>
-        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
-        samples (which = NULL) |>
-        alpha.bags (alpha = c(0.9, 0.95, 0.99), lty = c(1,3,5)) |> 
-        legend.type(bags = TRUE, new = TRUE)  |> plot()
+#biplot(sunspots, group.aes=century) |> PCA() |>
+#        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
+#        samples (which = NULL) |>
+#        alpha.bags (alpha = c(0.9, 0.95, 0.99), lty = c(1,3,5)) |> 
+#        legend.type(bags = TRUE, new = TRUE)  |> plot()
 ```
-
 For a completely custom combination of $\alpha$-bags, we do not rely on any recycling and specify each of the arguments `alpha`,
 `which`, `col`, `lty`, `lwd` as a vector. Since the calculate of halfspace location depth is very computationally intensive, a 
 random sample of size 2500 is chosen for each group to construct the $\alpha$-bag. This sample size can be changed with the argument 
@@ -432,7 +452,7 @@ biplot(sunspots, group.aes=century) |> PCA() |>
         legend.type(bags = TRUE) |> plot()
 ```
 
-## 6. The function `ellipses()`
+## 7. The function `ellipses()`
 
 If we observe a random sample from a $p$-variate normal distribution with $\bar{\mathbf{x}}$ and $\mathbf{S}$ the usual unbaised estimates 
 of the mean vector and covariance matrix, then
@@ -464,7 +484,7 @@ biplot(sunspots, group.aes=century) |> PCA() |>
         legend.type(ellipses = TRUE) |> plot()
 ```
 
-## 6. The functions `interpolate()` and `newsamples()`
+## 8. The functions `interpolate()` and `newsamples()`
 The process of interpolation is described by @GowerHand1996 as the process of finding the coordinates of a $p$-dimensional 
 sample in the lower dimensional biplot space. For PCA we showed in section 1 that the sample points are represented by $\mathbf{G}=\mathbf{UDJ}_2$ 
 which can be written as $\mathbf{G}=\mathbf{UDV'VJ}_2=\mathbf{XVJ}_2$. Finding the position of a new sample $\mathbf{x}^*:p \times 1$

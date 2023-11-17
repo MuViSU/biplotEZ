@@ -146,12 +146,65 @@ biplot(state.x77) |> CVA(classes = state.region) |> plot()
 ```
 
 Fitting $\alpha$-bags to the classes makes it easier to compare class overlap and separation. For a detailed discussion on 
-$\alpha$-bags, see the biplotEZ vignette.
+$\alpha$-bags, see the *biplotEZ* vignette.
 
 ```{r, fig.height = 6, fig.width = 7}
 biplot(state.x77) |> CVA(classes = state.region) |> alpha.bags() |> 
   legend.type (bags = TRUE) |> plot()
 ```
 
+## 3. The function `means()`
 
+This function controls the aesthetics of the class means in the biplot. The function accepts as first argument an object of class 
+`biplot` where the aesthetics should be applied. Let us first construct a CVA biplot of the `state.x77` data with samples optimally separated according to `state.division`. 
 
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = TRUE) |> 
+  CVA(classes = state.division) |> 
+  legend.type(means = TRUE) |> plot()
+```
+
+Instead of adding a legend, we can choose to label the class means. Furthermore, the colour of each class mean defaults to the 
+colour of the samples. We wish to select a different colour and plotting character for the class means.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = TRUE) |> 
+  CVA(classes = state.division) |> 
+  means(label = TRUE, col = "olivedrab", pch = 15) |> plot()
+```
+
+If we choose to only show the class means for the central states, the argument `which`  is used either indicating the number(s) in the 
+sequence of levels (`which = 4:7`), or as shown below, the levels themselves:
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = TRUE) |> 
+  CVA(classes = state.division) |> 
+  means (which = c("West North Central", "West South Central", "East South Central", 
+                     "East North Central"), label = TRUE) |>
+  plot()
+```
+
+The size of the labels is controlled with `label.cex` which can be 
+specified either as a single value (for all class means) or a vector indicating size values for each individual sample. The colour 
+of the labels defaults to the colour(s) of the class means. However, individual label colours can be spesified with `label.col`,
+similar to `label.cex` as either a single value of a vector of length equal to the number of classes.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = TRUE) |> 
+  CVA(classes = state.division) |> 
+  means (col = "olivedrab", pch = 15, cex = 1.5,
+         label = TRUE, label.col = c("blue","green","gold","cyan","magenta",
+                                     "black","red","grey","purple")) |>
+  plot()
+```
+
+We can also make use of the functionality of the `ggrepel` package to place the labels.
+
+```{r, fig.height = 6, fig.width = 7}
+biplot(state.x77, scaled = TRUE) |> 
+  CVA(classes = state.division) |> 
+  samples (label = "ggrepel", label.cex=0.65) |> 
+  means (label = "ggrepel", label.cex=0.8) |> plot()
+```
+
+References

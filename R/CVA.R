@@ -10,7 +10,7 @@
 #' @param classes vector of the same length as the number of rows in the data matrix
 #'                  with the class indicator for the samples.
 #' @param weightedCVA the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".
-#' @param ... additional arguments
+#' @param show.class.means logical, indicating whether to plot the class means on the biplot.
 #'
 #'
 #' @return  Object of class CVA with the following elements:
@@ -32,9 +32,11 @@
 #' \item{Lmat}{matrix for transformation to the canonical space.}
 #' \item{e.vects}{vector indicating which canonical variates are plotted in the biplot.}
 #' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
+#' \item{class.means}{logical value, indicating whether the class means should be plotted in the biplot.}
+#' \item{Zmeans}{matrix of the class mean coordinates to be plotted in the biplot.}
 #'
 #' @usage CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-#'            classes=bp$classes, weightedCVA = "weighted", ...)
+#'            classes=bp$classes, weightedCVA = "weighted", show.class.means = TRUE)
 #' @aliases CVA
 #'
 #' @export
@@ -45,7 +47,7 @@
 #' biplot(iris[,1:4]) |> CVA(classes=iris[,5]) |> plot()
 
 CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes=bp$classes,
-                weightedCVA = "weighted",...)
+                weightedCVA = "weighted", show.class.means = TRUE)
 {
   UseMethod("CVA")
 }
@@ -63,7 +65,7 @@ CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes=bp$cl
 #' biplot(iris[,1:4]) |> CVA(classes=iris[,5])
 #'
 CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes=bp$classes,
-                       weightedCVA = "weighted", ...)
+                       weightedCVA = "weighted", show.class.means = TRUE)
 {
   dim.biplot <- dim.biplot[1]
   if (dim.biplot != 1 & dim.biplot != 2 & dim.biplot != 3) stop("Only 1D, 2D and 3D biplots")
@@ -115,11 +117,16 @@ CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classe
 
   bp$Z <- Z
   bp$ax.one.unit <- ax.one.unit
-  bp$Xhat <- X %*% M %*% solve(M)
   bp$Lmat <- M
   bp$e.vects <- e.vects
-  if (bp$scaled) Xhat <- scale(bp$Xhat, center=FALSE, scale=1/bp$sd)
-  if (bp$center) Xhat <- scale(bp$Xhat, center=-1*bp$means, scale=FALSE)
+  bp$class.means <- show.class.means
+  if (bp$class.means)
+  {
+    G <- indmat(classes)
+    Xmeans <- solve(t(G)%*%G) %*% t(G) %*% X
+    Zmeans <- Xmeans %*% M[,e.vects]
+    bp$Zmeans <- Zmeans
+  }
 
   class(bp) <- append(class(bp),"CVA")
   bp

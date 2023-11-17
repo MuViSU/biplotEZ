@@ -9,8 +9,8 @@
   dim.biplot = c(2, 1, 3),
   e.vects = 1:ncol(bp$X),
   group.aes = NULL,
-  correlation.biplot = FALSE,
-  ...
+  show.group.means = FALSE,
+  correlation.biplot = FALSE
 )
 }
 \arguments{
@@ -23,12 +23,12 @@
 \item{group.aes}{vector of the same length as the number of rows in the data matrix
 for differentiated aesthetics for samples.}
 
+\item{show.group.means}{logical, indicating whether group means should be plotted in the biplot.}
+
 \item{correlation.biplot}{logical, if \code{FALSE}, the distances between sample points are
 optimally approximated in the biplot. If \code{TRUE}, the correlations between
 variables are optimally approximated by the cosine of the angles between
 axes. Default is \code{FALSE}.}
-
-\item{...}{additional arguments}
 }
 \value{
 an object of class PCA, inherits from class biplot.

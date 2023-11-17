@@ -245,7 +245,8 @@ biplot.legend <- function(bp, ...)
                      ...)
   }
 
-  if(bp$legend$means) graphics::legend("bottomright",col=bp$means$col,pch=bp$means$pch,legend=bp$classes, ...)
+  if(bp$legend$means) graphics::legend("bottomright",col=bp$means.aes$col,pch=bp$means.aes$pch,
+                                       legend=bp$g.names[bp$means.aes$which], ...)
 
   if(bp$legend$samples) graphics::legend("topright", col=bp$samples$col[1:length(bp$samples$which)],
                                                      pch=bp$samples$pch[1:length(bp$samples$which)],
