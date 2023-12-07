@@ -39,16 +39,22 @@ $$
 $$
 
 $$
-\mathbf{X'X} = \mathbf{\bar{\mathbf{X}}'G'G \bar{\mathbf{X}}} + \mathbf{X' [I - G(G'G)^{-1}G'] X}
+\mathbf{X'X} = \mathbf{\bar{\mathbf{X}}'C \bar{\mathbf{X}}} + \mathbf{X' [I - G(G'G)^{-1}C(G'G)^{-1}G'] X}
 $$
 
-To find the canonical variates we want to maximise the ratio 
+The default choice for the centring matrix $\mathbf{C = G'G}$ leads to the simplification
+
+$$
+\mathbf{X'X} = \mathbf{\bar{\mathbf{X}}'G'G \bar{\mathbf{X}}} + \mathbf{X' [I - G(G'G)^{-1}G'] X}.
+$$
+
+Other options are $\mathbf{C = I}$ and $\mathbf{C} = (\mathbf{I}_G - \frac{1}{G}\mathbf{11'})$. To find the canonical variates we want to maximise the ratio 
 
 $$
 \frac{\mathbf{m'Bm}}{\mathbf{m'Wm}}
 $$
 
-subject to $\mathbf{m'Wm} = 1$. It can shown that this leads to the following equivalent eigen equations:
+subject to $\mathbf{m'Wm} = 1$. It can be shown that this leads to the following equivalent eigen equations:
 
 $$
 \mathbf{W}^{-1}\mathbf{BM} = \mathbf{M \Lambda}
@@ -207,4 +213,108 @@ biplot(state.x77, scaled = TRUE) |>
   means (label = "ggrepel", label.cex=0.8) |> plot()
 ```
 
-References
+## 4. The functions `fit.measures()` and `summary()`
+
+There is a number of fit measures that are specific to CVA biplots. The measures are computed with the function `fit.measures()` and the results are displayed by the function `summary()`.
+
+Canonical variate analysis can be considered as a transformation of the original variables to the canonical space followed by constructing a PCA biplot of canonical variables. The matrix of class means $\bar{\mathbf{X}} = (\mathbf{G'G})^{-1} \mathbf{G'X}$ is transformed to $\mathbf{\bar{X}L}$ where $\mathbf{L}$ is a non-singular matrix such that $\mathbf{LL'=W}^{-1}$. Pricipal component analysis finds the orthogonal matrix $\mathbf{V}$ such that 
+
+$$
+\mathbf{(L'\bar{X}'C\bar{X}L)V=V \Lambda}
+$$
+
+where $\mathbf{M = LV}$ as defined in section 1. The predicted values for the class means is given by
+
+$$
+\mathbf{\hat{\bar{X}}} = \mathbf{\bar{X}MJ}\mathbf{M}^{-1}.
+$$
+
+### Overall quality of fit
+
+Based on the two-step process described above, there are two measures of quality of fit. The quality of the approximation of the canonical variables $\mathbf{\bar{X}L}$ in the $2$-dimensional display is given by
+
+$$
+Quality (canonical \: variables) = \frac{tr(\mathbf{\Lambda J})}{tr(\mathbf{\Lambda)}}
+$$
+and the quality of the approximation of the original variables $\mathbf{\bar{X}}$ in the 2D CVA biplot is given by
+
+$$
+Quality (original \: variables) = \frac{tr(\mathbf{\Lambda J})}{tr(\mathbf{\Lambda)}}
+$$
+
+### Adequacy of representation of variables
+
+The adequacy with which each of the variables is represented in the biplot is given by the elementwise ratios
+
+$$
+Adequacy = \frac{diag(\mathbf{MJM'})}{diag(\mathbf{MM'})}.
+$$
+
+### Predictivity
+
+#### Between class predictivity
+
+The axis and class mean predictivities are defined in terms of the weighted class means.
+
+##### Axis predictivity
+
+The elementwise ratios for the predictivity of each of the axes are given by
+
+$$
+axis \: predictivity = \frac{diag(\mathbf{\hat{\bar{X}}}'\mathbf{C\hat{\bar{X}}})}{diag(\mathbf{\bar{X}}'\mathbf{C\bar{X}})}.
+$$
+
+##### Class predictivity
+
+Similarly for each of the class means the elementwise ratio is computed from
+
+$$
+class \: predictivity = \frac{diag(\mathbf{C}^{\frac{1}{2}}\mathbf{\hat{\bar{X}}}'\mathbf{W^{-1}}\mathbf{\hat{\bar{X}}}\mathbf{C}^{\frac{1}{2}})}{diag(\mathbf{C}^{\frac{1}{2}}\mathbf{\bar{X}}'\mathbf{W^{-1}}\mathbf{\bar{X}}\mathbf{C}^{\frac{1}{2}})}.
+$$
+
+#### Within class predictivity
+
+We define the matrix of samples as deviations from their class means as
+
+$$
+(\mathbf{I-H})\mathbf{X}=(\mathbf{I}_n-\mathbf{G}(\mathbf{G'G})^{-1}\mathbf{G}')\mathbf{X}
+$$
+
+where $\mathbf{H} = \mathbf{G}(\mathbf{G'G})^{-1}\mathbf{G}'$.
+
+##### Within class axis predictivity
+
+The within class axis predictivity is computed as the elementwise ratios
+
+
+$$
+within \: class \: axis \: predictivity = \frac{diag(\mathbf{\hat{X}}'(\mathbf{I-H)\hat{X}})}{diag(\mathbf{X}'(\mathbf{I-H)X})}.
+$$
+
+##### Within class sample predictivity
+
+Unlike PCA biplots, sample predictivity for CVA biplots are computed for the observations expressed as deviations from their class means. The elementwise ratios is obtained from
+
+$$
+within \: class \: axis \: predictivity = \frac{diag(\mathbf{(I-H)\hat{X}}\mathbf{W}^{-1}\mathbf{\hat{X}'(I-H)})}{diag(\mathbf{(I-H)X}\mathbf{W}^{-1}\mathbf{X'(I-H)})}.
+$$
+To display the fit measures, we create a `biplot` object with the measures added by the function `fit.measures()` and call `summary()`.
+
+```{r, fig.height = 6, fig.width = 7}
+obj <- biplot(state.x77, scaled = TRUE) |> 
+       CVA(classes = state.division) |> 
+       fit.measures() |>
+       plot()
+summary (obj)
+```
+
+The call to `biplot()`, `CVA()` and `fit.measures()` is required to (a) create an object of class `biplot`, (b) extend the object to class `CVA` and (c) compute the fit measures. The call to the function `plot()` is optional. It is further possible to select which fit measures to display in the `summary()` function where all measures default to `TRUE`.
+
+```{r, fig.height = 6, fig.width = 7}
+obj <- biplot(state.x77, scaled = TRUE) |> 
+       CVA(classes = state.region) |> 
+       fit.measures()
+summary (obj, adequacy = FALSE, within.class.axis.predictivity = FALSE,
+         within.class.sample.predictivity = FALSE)
+```
+

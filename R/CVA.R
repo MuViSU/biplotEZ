@@ -28,8 +28,19 @@
 #' \item{g.names}{descriptive name to be used for group labels.}
 #' \item{g}{number of groups.}
 #' \item{Title}{title of the biplot to be rendered.}
+#' \item{Gmat}{indicator matrix for class membership.}
+#' \item{Xmeans}{matrix of class means.}
 #' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+#' \item{Zmeans}{matrix of canonical means.}
 #' \item{Lmat}{matrix for transformation to the canonical space.}
+#' \item{eigenvalues}{vector of eigenvalues of the two-sided eigenvalue problem.}
+#' \item{Cmat}{Centring matrix based on different choices of weighting.
+#'             For \code{"weighted"}, \code{Cmat} is a diagonal matrix with
+#'             the class sizes, for \code{"unweightedI"}, \code{Cmat} is an
+#'             indicator matrix and for
+#'             \code{"unweightedCent"}, \code{Cmat} is the usual centring matrix. }
+#' \item{Bmat}{Between class sums of squares and cross products matrix.}
+#' \item{Wmat}{Within class sums of squares and corss products matrix.}
 #' \item{e.vects}{vector indicating which canonical variates are plotted in the biplot.}
 #' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
 #' \item{class.means}{logical value, indicating whether the class means should be plotted in the biplot.}
@@ -98,8 +109,8 @@ CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classe
   W <- t(X) %*% X - t(X_bar) %*% N %*% X_bar
   B <- t(X_bar) %*% N %*% X_bar
 
-  W_minhalf <- eigen(W)$vectors %*% diag(1/sqrt(eigen(W)$values)) %*% t(eigen(W)$vectors)
-  L <- W_minhalf
+  svd.W <- svd(W)
+  W_minhalf <- svd.W$u %*% diag(1/sqrt(svd.W$d)) %*% t(svd.W$v)
   if (weightedCVA == "weighted")
     Cmat <- N
   if (weightedCVA == "unweightedI")
@@ -108,25 +119,26 @@ CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classe
     Cmat <- diag(J) - matrix(1/J, nrow = J, ncol = J)
   if (is.na(match(weightedCVA, c("weighted", "unweightedI", "unweightedCent"))))
     stop(" Argument 'weightedCVA' must be one of 'weighted','unweightedI','unweightedCent' ")
-  eigenresult <- eigen(W_minhalf %*% t(X_bar) %*% Cmat %*% X_bar %*% W_minhalf)
-  V <- eigenresult$vectors
-  M <- L %*% V
+  svd.out <- svd(W_minhalf %*% t(X_bar) %*% Cmat %*% X_bar %*% W_minhalf)
+  V <- svd.out$v
+  M <- W_minhalf %*% V
 
-  Z <- X %*% M[,1:dim.biplot]
-  ax.one.unit <- solve(diag(diag(t(solve(M)[1:dim.biplot,]) %*% solve(M)[1:dim.biplot,]))) %*% t(solve(M)[1:dim.biplot,])
+  Z <- X %*% M[,e.vects]
+  Minv <- solve(M)
+  ax.one.unit <- 1/(diag(t(Minv[e.vects,]) %*% Minv[e.vects,])) * t(Minv[e.vects,])
 
+  bp$Gmat <- G
+  bp$Xmeans <- X_bar
   bp$Z <- Z
+  bp$Zmeans <- bp$Xmeans %*% M[,e.vects]
   bp$ax.one.unit <- ax.one.unit
   bp$Lmat <- M
+  bp$eigenvalues <- svd.out$d
   bp$e.vects <- e.vects
+  bp$Cmat <- Cmat
+  bp$Bmat <- B
+  bp$Wmat <- W
   bp$class.means <- show.class.means
-  if (bp$class.means)
-  {
-    G <- indmat(classes)
-    Xmeans <- solve(t(G)%*%G) %*% t(G) %*% X
-    Zmeans <- Xmeans %*% M[,e.vects]
-    bp$Zmeans <- Zmeans
-  }
 
   class(bp) <- append(class(bp),"CVA")
   bp

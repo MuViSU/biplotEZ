@@ -36,38 +36,18 @@
 plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predictivity=NULL, ...)
 {
   #----------
-  .samples.plot <- function(Z, group.aes, sample.aes, n, g.names,
-                            ggrepel.labs, too.small, cex.vec)
+  .samples.plot <- function(Z, group.aes, sample.aes, n, g.names, ggrepel.labs)
   {
     if (sample.aes$connected)
       graphics::lines (Z[,1], Z[,2], col=sample.aes$connect.col, lty=sample.aes$connect.lty, lwd=sample.aes$connect.lwd)
     x.vals <- Z[, 1]
     y.vals <- Z[, 2]
     invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
-    which.samples <- rep(FALSE, n)
-    for (j in 1:length(sample.aes$which))
-      which.samples[group.aes == g.names[sample.aes$which[j]]] <- TRUE
+    Z <- Z[invals, ]
     groups <- levels(group.aes)
-
+    group.aes <- group.aes[invals]
     if (sample.aes$label[1]=="ggrepel")
     {
-      ZZ <- data.frame (no=1:n, group.aes = group.aes, pch = rep(NA,n),
-                        col = rep(NA,n), cex = rep(NA,n),
-                        cex.vec, Z)
-
-      for(j in 1:length(sample.aes$which))
-      {
-        ZZ$pch[group.aes==g.names[sample.aes$which[j]]] = sample.aes$pch[j]
-        ZZ$col[group.aes==g.names[sample.aes$which[j]]] = sample.aes$col[j]
-        ZZ$cex[group.aes==g.names[sample.aes$which[j]]] = sample.aes$cex[j]
-      }
-      ZZ <- ZZ[which.samples,]
-      ZZ <- ZZ[invals[which.samples],]
-      if (!is.null(too.small))
-        ZZ <- ZZ[-stats::na.omit(match(too.small,ZZ[,1])),]
-      ZZ <- ZZ[,-1]
-      ZZ.points <- ZZ[,2:5]
-      ZZ <- ZZ[,-(1:5)]
       for (j in 1:nrow(ggrepel.labs$coords))
          graphics::text(ggrepel.labs$coords[j, 1], ggrepel.labs$coords[j, 2], labels = ggrepel.labs$coords[j,3],
                         cex = sample.aes$label.cex[ggrepel.labs$visible[j]],
@@ -81,40 +61,24 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
     }
     else
     {
-      ZZ <- data.frame (no=1:n, names=rownames(Z), label=sample.aes$label,
-                        label.side = sample.aes$label.side, label.cex = sample.aes$label.cex,
-                        label.col = sample.aes$label.col, label.offset = sample.aes$label.offset,
-                        group.aes = group.aes, pch = rep(NA,n),
-                        col = rep(NA,n), cex = rep(NA,n),
-                        cex.vec, Z)
-
-      for(j in 1:length(sample.aes$which))
-      {
-        ZZ$pch[group.aes==g.names[sample.aes$which[j]]] = sample.aes$pch[j]
-        ZZ$col[group.aes==g.names[sample.aes$which[j]]] = sample.aes$col[j]
-        ZZ$cex[group.aes==g.names[sample.aes$which[j]]] = sample.aes$cex[j]
-      }
-      ZZ <- ZZ[which.samples,]
-      ZZ <- ZZ[invals[which.samples],]
-      if (!is.null(too.small))
-        ZZ <- ZZ[-stats::na.omit(match(too.small,ZZ[,1])),]
-      ZZ <- ZZ[,-1]
-      ZZ.labels <- ZZ[,1:6]
-      ZZ <- ZZ[,-(1:6)]
-      ZZ.points <- ZZ[,2:5]
-      ZZ <- ZZ[,-(1:5)]
-      for (j in 1:nrow(ZZ.labels))
-      {  text.pos <- match(ZZ.labels$label.side[j], c("bottom", "left", "top", "right"))
-         if (ZZ.labels$label[j])
-           graphics::text(ZZ[j, 1], ZZ[j, 2], labels = ZZ.labels$names[j],
-                          cex = ZZ.labels$label.cex[j], col = ZZ.labels$label.col[j],
-                          pos = text.pos, offset = ZZ.labels$label.offset[j])
+      which.samples <- rep(FALSE, n)
+      for (j in 1:length(sample.aes$which))
+        which.samples[group.aes == g.names[sample.aes$which[j]]] <- TRUE
+      ZZ <- Z[which.samples,]
+      Z.labels <- rownames(Z)[which.samples]
+      for (j in 1:length(sample.aes$label.side))
+      {  text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
+         if (sample.aes$label[j]) graphics::text(ZZ[j, 1], ZZ[j, 2], labels = Z.labels[j],
+                                              cex = sample.aes$label.cex[j], col = sample.aes$label.col[j],
+                                              pos = text.pos, offset = sample.aes$label.offset[j])
       }
     }
-    for (i in 1:nrow(ZZ.points))
-      graphics::points (x=ZZ[i,1], y=ZZ[i,2], pch=ZZ.points$pch[i],
-                           col=ZZ.points$col[i],
-                           cex=ZZ.points$cex.vec[i]*ZZ.points$cex[i])
+    for (j in 1:length(sample.aes$which))
+    {  group.num <- levels(group.aes)[sample.aes$which[j]]
+       Z.class <- Z[group.aes==group.num, , drop = FALSE]
+       graphics::points(x = Z.class[, 1], y = Z.class[, 2], pch = sample.aes$pch[j], col = sample.aes$col[j],
+                     cex = sample.aes$cex[j])
+    }
   }
   #----------
   .means.plot <- function(Z, sample.aes, g.names, ggrepel.labs)
@@ -485,19 +449,32 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
 
   }
 
-  too.small <- NULL
-  cex.vec <- rep(1, x$n)
-  if (!is.null(sample.predictivity) & !inherits(x, "CVA"))
-  {
-    if(is.null(x$sample.predictivity)) x <- fit.measures(x)
-    if(is.numeric(sample.predictivity))
-      too.small <- (1:x$n)[x$sample.predictivity<sample.predictivity]
-    if(sample.predictivity)
-      cex.vec <- x$sample.predictivity
-  }
+#  too.small <- NULL
+#  if (!is.null(sample.predictivity))
+#  {
+#    if(is.null(x$sample.predictivity)) x <- fit.measures(x)
+#    if(is.numeric(sample.predictivity))
+#    {
+#      too.small <- (1:x$n)[x$sample.predictivity<sample.predictivity]
+#    }
+#    if(sample.predictivity)
+#    {
+#      for (j in 1:length(ax.aes$which))
+#      {
+#        ax.num <- ax.aes$which[j]
+#        ax.col <- ax.aes$col[j]
+#        ax.aes$col[j] <- colorRampPalette(c("white",ax.col))(101)[round(100*x$axis.predictivity[ax.num])+1]
+#        ax.col <- ax.aes$label.col[ax.num]
+#        ax.aes$label.col[j] <- grDevices::colorRampPalette(c("white",ax.col))(101)[round(100*x$axis.predictivity[ax.num])+1]
+#        ax.col <- ax.aes$tick.col[j]
+#        ax.aes$tick.col[j] <- grDevices::colorRampPalette(c("white",ax.col))(101)[round(100*x$axis.predictivity[ax.num])+1]
+#        ax.col <- ax.aes$tick.label.col[j]
+#        ax.aes$tick.label.col[j] <- grDevices::colorRampPalette(c("white",ax.col))(101)[round(100*x$axis.predictivity[ax.num])+1]
+#      }
+#    }
+#  }
 
-  if (!is.null(x$samples$which)) .samples.plot(Z, x$group.aes, x$samples, x$n, x$g.names, ggrepel.samples,
-                                               too.small, cex.vec)
+  if (!is.null(x$samples$which)) .samples.plot(Z, x$group.aes, x$samples, x$n, x$g.names, ggrepel.samples)
 
     if (!is.null(x$Znew)) .newsamples.plot (x$Znew, x$newsamples, ggrepel.new)
   if (!is.null(x$class.means)) if (x$class.means)

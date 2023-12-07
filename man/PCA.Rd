@@ -42,6 +42,7 @@ Object of class PCA with the following elements:
 \item{Title}{title of the biplot to be rendered}
 \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 \item{Lmat}{matrix for transformation to the principal components.}
+\item{eigenvalues}{vector of eigenvalues of the covariance matrix of \code{X}.}
 \item{e.vects}{vector indicating which principal components are plotted in the biplot.}
 \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
 \item{class.means}{logical, indicating whether group means should be plotted in the biplot.}

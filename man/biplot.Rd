@@ -14,9 +14,9 @@ Title = NULL)
 
 \item{group.aes}{vector identifying groups for aesthetic formatting.}
 
-\item{center}{logical, indicating whether {data} should be column centered, with default \code{TRUE}.}
+\item{center}{logical, indicating whether \code{data} should be column centered, with default \code{TRUE}.}
 
-\item{scaled}{logical, indicating whether {data} should be standardized to unit column variances, with default \code{FALSE}.}
+\item{scaled}{logical, indicating whether \code{data} should be standardized to unit column variances, with default \code{FALSE}.}
 
 \item{Title}{title of the biplot to be rendered, enter text in "  ".}
 }

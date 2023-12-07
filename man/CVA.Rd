@@ -37,8 +37,19 @@ Object of class CVA with the following elements:
 \item{g.names}{descriptive name to be used for group labels.}
 \item{g}{number of groups.}
 \item{Title}{title of the biplot to be rendered.}
+\item{Gmat}{indicator matrix for class membership.}
+\item{Xmeans}{matrix of class means.}
 \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+\item{Zmeans}{matrix of canonical means.}
 \item{Lmat}{matrix for transformation to the canonical space.}
+\item{eigenvalues}{vector of eigenvalues of the two-sided eigenvalue problem.}
+\item{Cmat}{Centring matrix based on different choices of weighting.
+For \code{"weighted"}, \code{Cmat} is a diagonal matrix with
+the class sizes, for \code{"unweightedI"}, \code{Cmat} is an
+indicator matrix and for
+\code{"unweightedCent"}, \code{Cmat} is the usual centring matrix. }
+\item{Bmat}{Between class sums of squares and cross products matrix.}
+\item{Wmat}{Within class sums of squares and corss products matrix.}
 \item{e.vects}{vector indicating which canonical variates are plotted in the biplot.}
 \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
 \item{class.means}{logical value, indicating whether the class means should be plotted in the biplot.}

@@ -70,12 +70,12 @@ $$
 which defines a straight line orthogonal to $\mathbf{h}_{(j)}$ in the biplot space (see the dotted red line in Figure 1(a)). To find 
 the intersection of this prediction line with $\mathbf{h}_{(j)}$ we note that
 $$
-\mathbf{g}'_{(i)}\mathbf{h}_{(j)} = \| \mathbf{g}_{(i)} \|^2 \| \mathbf{h}_{(j)} \|^2 cos(\mathbf{g}_{(i)},\mathbf{h}_{(j)}) = 
-\| \mathbf{p} \|^2 \| \mathbf{h}_{(j)} \|^2 
+\mathbf{g}'_{(i)}\mathbf{h}_{(j)} = \| \mathbf{g}_{(i)} \| \| \mathbf{h}_{(j)} \| cos(\mathbf{g}_{(i)},\mathbf{h}_{(j)}) = 
+\| \mathbf{p} \| \| \mathbf{h}_{(j)} \| 
 $$
 where $\mathbf{p}$ is the length of the orthogonal projection of $\mathbf{g}_{(i)}$ on $\mathbf{h}_{(j)}$. This is illustrated in 
 Figure 1(b) with triangle ABC: $cos(\theta) = \frac{AC}{AB}$ or $AC = AB cos(\theta)$ The length of $AC$, written as 
-$\| \mathbf{p} \|^2$ is equal to the cosine times the length of $AB$, i.e. $cos(\mathbf{g}_{(i)},\mathbf{h}_{(j)}) \| \mathbf{g}_{(i)} \|^2$.
+$\| \mathbf{p} \|$ is equal to the cosine times the length of $AB$, i.e. $cos(\mathbf{g}_{(i)},\mathbf{h}_{(j)}) \| \mathbf{g}_{(i)} \|$.
 
 ```{r out.width='100%', echo = FALSE, fig.cap="Figure 1: Calibration of biplot axes."}
 knitr::include_graphics("axis_calibration.png")
@@ -86,8 +86,8 @@ Since $\mathbf{p}$ is along $\mathbf{h}_{(j)}$ we can write
 $\mathbf{p} = c\mathbf{h}_{(j)}$ and all points on the prediction line $\mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}$ project on the 
 same point $c_{\mu}\mathbf{h}_{(j)}$. We solve for $c_{\mu}$ from
 $$
-\mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}=\| \mathbf{p} \|^2 \| \mathbf{h}_{(j)} \|^2 = 
-\| c_{\mu}\mathbf{h}_{(j)} \|^2 \| \mathbf{h}_{(j)} \|^2 
+\mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}=\| \mathbf{p} \| \| \mathbf{h}_{(j)} \| = 
+\| c_{\mu}\mathbf{h}_{(j)} \| \| \mathbf{h}_{(j)} \|
 $$
 
 $$
@@ -160,7 +160,7 @@ out$sd
 
 Note that the components `means` and `sd` only contain the sample means and sample sds when either/or `center` and `scaled` is `TRUE`. For values of `FALSE`, these components contain zeros for the `means` and/or ones for the `sd` to ensure back transformation will not have any affect.
 
-### 1.1 Using `biplot()` with `princomp()` or `prcomp()`
+### 2.1 Using `biplot()` with `princomp()` or `prcomp()`
 
 Should the user wish to construct a PCA biplot after performing principal component analysis via the built in functions in the `stats` package, the output from either of these functions can be piped into the biplot function, where the piping implies that the argument `data` now takes the value of an object of class `prcomp` or `princomp`.
 
@@ -174,6 +174,7 @@ out$scaled
 out$means
 out$sd
 ```
+
 ## 3. The functions `PCA()`, `plot()` and `legend.type()` 
 
 The first argument to the function `PCA()` is an object of class `biplot`, i.e. the output of the `biplot()` function. By default we c
@@ -200,6 +201,7 @@ biplot(state.x77, scaled = TRUE) |>
   PCA(group.aes = state.region) |> 
   legend.type(samples = TRUE) |> plot()
 ```
+
 It was mentioned in section 1 that the default choice $\mathbf{G}=\mathbf{UDJ}_2$ and $\mathbf{H}=\mathbf{VJ}_2$ provides an exact
 representation of the distances between the rows of $\mathbf{\hat{X}}$ which is an optimal approximation in the least squares sense 
 of the distances between the rows of $\mathbf{X}$ (samples). Alternatively, the correlations between the variables (columns of $\mathbf{X}$)
@@ -241,6 +243,7 @@ Furthermore we want to use a different plotting character for the central region
 ```{r, }
 levels (state.division)
 ```
+
 We want to use `pch = 15` for the first three and final two divisions and `pch = 1` for the remaining four divisions.
 
 ```{r, fig.height = 6, fig.width = 7}
@@ -355,7 +358,7 @@ biplot(rock, scaled = TRUE) |> PCA() |>
                                axes(which = c("shape","peri"), 
                                     col=c("lightskyblue","slategrey"),
                                     lwd = c(1,2), lty=2) |>
-                plot()
+                               plot()
 ```
 
 The following four arguments deal with the axis labels. The argument `label.dir` is based on the graphics parameter `las` and 
@@ -368,7 +371,7 @@ the illustration the in the code below the colour vector has only three componen
 biplot(rock, scaled = TRUE) |> PCA() |> 
                                axes(col=c("lightskyblue","slategrey","blue"),
                                     label.dir="Hor", label.line=c(0,0.5,1,1.5)) |>
-                                    plot()
+                               plot()
 ```
 
 The function `pretty()` finds 'nice' tick marks where the value specified in the argument `ticks` determine the *desired* number 
@@ -386,7 +389,120 @@ biplot(rock, scaled = TRUE) |> PCA() |>
                                plot()
 ```
 
-## 6. The function `alpha.bags()`
+## 6. The functions `fit.measures()` and `summary()`
+
+The `print` method provides a short summary of the biplot object.
+
+```{r, }
+  obj <- biplot(airquality)
+  obj
+```
+
+The output from `summary()` will be very similar.
+
+```{r, }
+  summary(obj)
+```
+
+Additional information about the biplot object is added by the `fit.measures()` function. 
+
+### Quality of approximation
+
+We start with the identity
+
+$$
+\mathbf{X} = \mathbf{\hat{X}} + \mathbf{X-\hat{X}}
+$$
+which decomposes $\mathbf{X}$ into a fitted part
+
+$$
+\mathbf{\hat{X}} = \mathbf{UJDJV'} = \mathbf{UDJ}_2(\mathbf{VJ}_2)' = \mathbf{UDV'VJ}_2(\mathbf{VJ}_2)' = \mathbf{XVJV'}
+$$
+
+and the residual part $\mathbf{X-\hat{X}}$. The lack of fit is quantified by the quantity we are minimising
+
+$$
+\| \hat{\mathbf{X}}-\mathbf{X} \|^2
+$$
+where we have the orthogonal decomposition
+
+$$
+\|\mathbf{X}\|^2 = \|\hat{\mathbf{X}}\|^2 + \|\hat{\mathbf{X}}-\mathbf{X} \|^2.
+$$
+The overall quality of fit is therefore defined as
+
+$$
+quality = \frac{\|\hat{\mathbf{X}}\|^2}{\|\mathbf{X}\|^2} =
+\frac{tr(\mathbf{XX}')}{tr(\mathbf{\hat{X}\hat{X}'})} =
+\frac{tr(\mathbf{X'X})}{tr(\mathbf{\hat{X}'\hat{X}})} =
+\frac{tr(\mathbf{VD}^2\mathbf{V'})}{tr(\mathbf{VD}^2\mathbf{JV'})}.
+$$
+In *biplotEZ* the overall quality is displayed as a percentage:
+
+$$
+quality =\frac{d_1^2+d_2^2}{d_1^2+\dots+d_p^2}100\%.
+$$
+
+### Adequacy of representation of the variables
+
+Researchers who construct the PCA biplot representing the columns with arrows (vectors) often fit the biplot with a unit circle. The rationale being that perfect representation of a variable will have unit length and the length of each arrow vs the distance to the unit circle represent the adequacy with which the variable is represented.
+
+By fitting the biplot with calibrated axes, it is much easier to read off values for the variables, but the adequacy values can still be computed from
+
+$$
+\frac{diag(\mathbf{V}_r\mathbf{V}_r')}{diag(\mathbf{VV}')}= diag(\mathbf{V}_r\mathbf{V}_r')
+$$
+
+due to the orthogonality of the matrix $\mathbf{V}:p \times p$.
+
+### Predictivities
+
+The predictivity provides a measure of who well the original values are recovered from the biplot. An element that is well represented will have a predictivity close to one, indicating that the sample or variable values from prediction is close to the observed values. If an element is poorly represented, the predicted values will be very different from the original values and the predictivity value will be close to zero.
+
+#### Axis predictivity
+
+The predictivity for each of the $p$ variables is computed as the elementwise ratios
+
+$$
+axis \: predictivity = \frac{diag(\mathbf{\hat{X}'\hat{X}})}{diag(\mathbf{X'X})}
+$$
+
+#### Sample predictivity
+
+The predictivity for each of the $n$ samples is computed as the elementwise ratios
+
+$$
+sample \: predictivity = \frac{diag(\mathbf{\hat{X}\hat{X}'})}{diag(\mathbf{XX'})}
+$$
+By calling the function `fit.measures()` these quantities are computed for the specific biplot object. The values are displayed with the `summary()` function.
+
+```{r, fig.height = 6, fig.width = 7}
+obj <- biplot(state.x77, scale = TRUE) |> PCA() |> 
+  fit.measures() |> plot()
+summary (obj)
+```
+
+If is not necessary to call the `plot()` function to obtain the fit measures, but one of the biplot methods, such as `PCA()` is required, since the measures differ depending on which type of biplot is constructed. To suppress the output of some fit measures, for instance if the interest is in the axis predictivity and there are many samples which result in a very long output, these can be set in the call to `summary()`. By default all measures are set to `TRUE`.
+
+```{r, }
+obj <- biplot(state.x77, scale = TRUE) |> PCA() |> 
+  fit.measures() 
+summary (obj, adequacy = FALSE, sample.predictivity = FALSE)
+```
+
+The axis predictivities and sample predictivities can be represented in the biplot in two ways: setting either `axis.predictivity` and / or `sample.predictivity` to `TRUE`, applies shading for axes and shrinking for samples according to the predictivity values.
+
+```{r, }
+biplot(state.x77, scale = TRUE) |> PCA(group.aes = state.region) |>
+  samples (which = "South", pch = 15, label = T, label.cex=0.5) |> 
+  axes (col = "black") |>
+  fit.measures() |> plot (sample.predictivity = TRUE,
+                          axis.predictivity = TRUE) 
+```
+
+Comparing the plot with the `summary` output it is clear that the variables Population and Frost are not very well represented and it can be expected that predictions on these variables will be less accurate. Furthermore, the samples located close to the origin are not as well represented as those located towards the bottom right. This is typically the case where samples nearly orthogonal to the PCA plane are projected close to the origin and due to their orthogonality, very poorly represented.
+
+## 7. The function `alpha.bags()`
 
 An $\alpha$-bag encloses the $\alpha100\%$ inner data points in a cloud of points. It is based on the concept of halfspace location depth 
 as defined by  @Tukey1975. @RousseeuwRutsTukey1999 generalised a boxplot to a two-dimensional bagplot where the box is replaced by a bag 
@@ -452,7 +568,7 @@ biplot(sunspots, group.aes=century) |> PCA() |>
         legend.type(bags = TRUE) |> plot()
 ```
 
-## 7. The function `ellipses()`
+## 8. The function `ellipses()`
 
 If we observe a random sample from a $p$-variate normal distribution with $\bar{\mathbf{x}}$ and $\mathbf{S}$ the usual unbaised estimates 
 of the mean vector and covariance matrix, then
@@ -484,7 +600,7 @@ biplot(sunspots, group.aes=century) |> PCA() |>
         legend.type(ellipses = TRUE) |> plot()
 ```
 
-## 8. The functions `interpolate()` and `newsamples()`
+## 9. The functions `interpolate()` and `newsamples()`
 The process of interpolation is described by @GowerHand1996 as the process of finding the coordinates of a $p$-dimensional 
 sample in the lower dimensional biplot space. For PCA we showed in section 1 that the sample points are represented by $\mathbf{G}=\mathbf{UDJ}_2$ 
 which can be written as $\mathbf{G}=\mathbf{UDV'VJ}_2=\mathbf{XVJ}_2$. Finding the position of a new sample $\mathbf{x}^*:p \times 1$

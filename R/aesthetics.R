@@ -84,43 +84,46 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 3, cex = 1,
     while (length(label) < n) label <- c(label, label)
     label <- as.vector(label[1:n])
     for (i in 1:g) if (is.na(match(i, which))) label[bp$group.aes==bp$g.names[i]] <- NA
-    label <- stats::na.omit(label)
+#    label <- stats::na.omit(label)
 
     while (length(label.side) < n) label.side <- c(label.side, label.side)
     label.side <- as.vector(label.side[1:n])
     for (i in 1:g) if (is.na(match(i, which))) label.side[bp$group.aes==bp$g.names[i]] <- NA
-    label.side <- stats::na.omit(label.side)
+#    label.side <- stats::na.omit(label.side)
 
     while (length(label.offset) < n) label.offset <- c(label.offset, label.offset)
     label.offset <- as.vector(label.offset[1:n])
     for (i in 1:g) if (is.na(match(i, which))) label.offset[bp$group.aes==bp$g.names[i]] <- NA
-    label.offset <- stats::na.omit(label.offset)
+#    label.offset <- stats::na.omit(label.offset)
   }
 
   while (length(label.cex) < n) label.cex <- c(label.cex, label.cex)
   label.cex <- as.vector(label.cex[1:n])
   for (i in 1:g) if (is.na(match(i, which))) label.cex[bp$group.aes==bp$g.names[i]] <- NA
-  label.cex <- stats::na.omit(label.cex)
+#  label.cex <- stats::na.omit(label.cex)
 
   if (is.null(label.col))
   {
     label.col <- rep(NA, n)
     for (j in 1:g)
-      if (!is.na(match(i, which))) label.col[bp$group.aes==bp$g.names[j]] <- col[j]
-    label.col <- stats::na.omit(label.col)
+      if (!is.na(match(j, which))) label.col[bp$group.aes==bp$g.names[j]] <- col[which==j]
+#    label.col <- stats::na.omit(label.col)
   }
   else
   {
     while (length(label.col) < n) label.col <- c(label.col, label.col)
     label.col <- as.vector(label.col[1:n])
   }
+
   if (length(connected)>1) connected <- connected[1]
   if (length(connect.col)>1) connect.col <- connect.col[1]
   if (length(connect.lty)>1) connect.lty <- connect.lty[1]
+  if (length(connect.lwd)>1) connect.lwd <- connect.lwd[1]
 
   bp$samples = list(which = which, col = col, pch = pch, cex = cex, label = label, label.col = label.col,
                     label.cex = label.cex, label.side = label.side, label.offset = label.offset,
-                    connected=connected, connect.col = connect.col, connect.lty = connect.lty)
+                    connected=connected, connect.col = connect.col, connect.lty = connect.lty,
+                    connect.lwd = connect.lwd)
   bp
 }
 

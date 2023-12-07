@@ -15,8 +15,8 @@
 #' @param data a dataframe or matrix containing all variables the user wants to analyse.
 #' @param classes vector identifying class membership.
 #' @param group.aes vector identifying groups for aesthetic formatting.
-#' @param center logical, indicating whether {data} should be column centered, with default \code{TRUE}.
-#' @param scaled logical, indicating whether {data} should be standardized to unit column variances, with default \code{FALSE}.
+#' @param center logical, indicating whether \code{data} should be column centered, with default \code{TRUE}.
+#' @param scaled logical, indicating whether \code{data} should be standardized to unit column variances, with default \code{FALSE}.
 #' @param Title title of the biplot to be rendered, enter text in "  ".
 #'
 #' @return A list with the following components is available:
@@ -176,6 +176,76 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
   object
 }
 
+#' Compute measures of fit for biplot.
+#'
+#' @param bp an object of class \code{biplot}.
+#'
+#' @return An object of class \code{biplot}. The object is augmented with
+#'         additional items, depending on the type of biplot object.
+#' \item{quality}{overall quality of fit.}
+#' \item{adequacy}{adequacy of representation of variables.}
+#'
+#' For an object of class \code{PCA}:
+#' \item{axis.predictivity}{fit measure of each individual axis.}
+#' \item{sample.predictivity}{fit measure for each individual sample.}
+
+#' For an object of class \code{CVA}:
+#' \item{axis.predictivity}{fit measure of each individual axis.}
+#' \item{class.predictivity}{fit measure for each class mean.}
+#' \item{within.class.axis.predictivity}{fit measure for each axis based on values
+#'                                       expressed as deviations from their class means.}
+#' \item{within.class.sample.predictivity}{fit measure for each sample expressed as
+#'                                         deviation from its class mean.}
+#' @export
+#'
+#' @examples
+#' out <- biplot (iris[,1:4]) |> PCA() |> fit.measures()
+#' summary(out)
+fit.measures <- function (bp)
+{
+  if (inherits(bp, "PCA"))
+  {
+    bp$quality <- sum(bp$eigenvalues[bp$e.vects])/sum(bp$eigenvalues)
+    bp$adequacy <- apply(bp$Lmat[,bp$e.vects],1,function(x)sum(x^2))
+    names(bp$adequacy) <- colnames(bp$X)
+    Xhat <- bp$Z %*% t(bp$Lmat[,bp$e.vects])
+    bp$axis.predictivity <- diag(t(Xhat)%*%Xhat)/diag(t(bp$X)%*%bp$X)
+    names(bp$axis.predictivity) <- colnames(bp$X)
+    bp$sample.predictivity <- diag(Xhat%*%t(Xhat))/diag(bp$X%*%t(bp$X))
+    names(bp$sample.predictivity) <- rownames(bp$X)
+  }
+  if (inherits(bp, "CVA"))
+  {
+    Xbar.hat <- bp$Zmeans %*% solve(bp$Lmat)[bp$e.vects,,drop=F]
+    svd.out <- svd(bp$Cmat)
+    C.half <- svd.out$u %*% diag(sqrt(svd.out$d)) %*% t(svd.out$v)
+    G <- bp$Gmat
+    Xwithin <- (diag(bp$n)-G%*%solve(t(G)%*%G)%*%t(G))%*%bp$X
+    Xwithin.hat <- Xwithin %*% bp$Lmat[,bp$e.vects,drop=F] %*% solve(bp$Lmat)[bp$e.vects,,drop=F]
+
+    bp$quality <- list ("canonical variables" =
+                          sum(bp$eigenvalues[bp$e.vects])/sum(bp$eigenvalues),
+                        "original variables" =
+                          sum(diag(t(Xbar.hat)%*%bp$Cmat%*%Xbar.hat))/
+                          sum(diag(t(bp$Xmeans)%*%bp$Cmat%*%bp$Xmeans)))
+    bp$adequacy <- apply(bp$Lmat[,bp$e.vects,drop=F],1,function(x)sum(x^2)) /
+                             diag(bp$Lmat%*%t(bp$Lmat))
+    names(bp$adequacy) <- colnames(bp$X)
+    bp$axis.predictivity <- diag(t(Xbar.hat)%*%bp$Cmat%*%Xbar.hat)/
+                            diag(t(bp$Xmeans)%*%bp$Cmat%*%bp$Xmeans)
+    names(bp$axis.predictivity) <- colnames(bp$X)
+    bp$class.predictivity <- diag(C.half%*%Xbar.hat%*%solve(bp$Wmat)%*%t(Xbar.hat)%*%C.half)/
+                             diag(C.half%*%bp$Xmeans%*%solve(bp$Wmat)%*%t(bp$Xmeans)%*%C.half)
+    names(bp$class.predictivity) <- bp$g.names
+    bp$within.class.axis.predictivity <- diag(t(Xwithin.hat)%*%Xwithin.hat)/
+                                         diag(t(Xwithin)%*%Xwithin)
+    names(bp$within.class.axis.predictivity) <- colnames(bp$X)
+    bp$within.class.sample.predictivity <- diag(Xwithin.hat%*%solve(bp$Wmat)%*%t(Xwithin.hat))/
+                                           diag(Xwithin%*%solve(bp$Wmat)%*%t(Xwithin))
+    names(bp$within.class.sample.predictivity) <- rownames(bp$X)
+  }
+  bp
+}
 # ---------------------------------------------------------------------------------------------
 
 ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple","salmon")
@@ -278,10 +348,102 @@ print.biplot <- function (x, ...)
   cat ("Object of class biplot, based on", x$n, "samples and", ncol(x$raw.X), "variables.\n")
   if (!is.null(x$X)) if (ncol(x$X) > 1) cat (ncol(x$X), "numeric variables.\n") else cat (ncol(x$X), "numeric variable.\n")
   if (!is.null(x$Xcat)) if (ncol(x$Xcat) > 1) cat (ncol(x$Xcat), "categorical variables.\n") else cat (ncol(x$Xcat), "categorical variable.\n")
-  if (!is.null(x$na.action))
-    cat ("The following", length(x$na.action), "sample-rows where removed due to missing values\n", x$na.action, "\n")
   if (!is.null(x$classes))
     cat (nlevels(x$classes), "classes:", levels(x$classes), "\n")
+
+  if (!is.null(x$na.action))
+    cat ("\nThe following", length(x$na.action), "sample-rows where removed due to missing values\n", x$na.action, "\n")
+
+  if (!is.null(x$quality))
+    if (!is.list(x$quality))
+      cat ("\nQuality of fit =", paste(round(x$quality*100,1),"%",sep=""), "\n")
+  else
+  {
+    cat("\n")
+    for (i in 1:length(x$quality))
+      cat ("Quality of fit of", names(x$quality)[i], "=",
+           paste(round(x$quality[[i]]*100,1),"%",sep=""), "\n")
+  }
+}
+
+# ----------------------------------------------------------------------------------------------
+#' Generic summary function of objects of class biplot
+#'
+#' @param object an object of class \code{biplot}.
+#' @param adequacy logical, whether variable adequacies should be reported.
+#' @param axis.predictivity logical, whether axis predictivities should be reported.
+#' @param sample.predictivity logical, whether sample predictivities should be reported.
+#' @param class.predictivity logical, whether class predictivities should be reported
+#'                           (only applicable to objects of class \code{CVA}).
+#' @param within.class.axis.predictivity logical, whether within class axis predictivity
+#'                                       should be reported(only applicable to objects
+#'                                       of class \code{CVA}).
+#' @param within.class.sample.predictivity logical, whether within class sample predictivity
+#'                                       should be reported(only applicable to objects
+#'                                       of class \code{CVA}).
+#' @param ... additional arguments.
+#'
+#' @return no return value, called for side effects.
+#'
+#' @export
+#' @examples
+#' out <- biplot (iris[,1:4]) |> PCA() |> fit.measures()
+#' summary(out)
+
+summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
+                            sample.predictivity = TRUE, class.predictivity = TRUE,
+                            within.class.axis.predictivity = TRUE,
+                            within.class.sample.predictivity = TRUE, ...)
+{
+  cat ("Object of class biplot, based on", object$n, "samples and", ncol(object$raw.X), "variables.\n")
+  if (!is.null(object$X)) if (ncol(object$X) > 1) cat (ncol(object$X), "numeric variables.\n") else cat (ncol(object$X), "numeric variable.\n")
+  if (!is.null(object$Xcat)) if (ncol(object$Xcat) > 1) cat (ncol(object$Xcat), "categorical variables.\n") else cat (ncol(object$Xcat), "categorical variable.\n")
+  if (!is.null(object$classes))
+    cat (nlevels(object$classes), "classes:", levels(object$classes), "\n")
+
+  if (!is.null(object$na.action))
+    cat ("\nThe following", length(object$na.action), "sample-rows where removed due to missing values\n", object$na.action, "\n")
+
+  if (!is.null(object$quality))
+    if (!is.list(object$quality))
+      cat ("\nQuality of fit =", paste(round(object$quality*100,1),"%",sep=""), "\n")
+  else
+  {
+    cat("\n")
+    for (i in 1:length(object$quality))
+      cat ("Quality of fit of", names(object$quality)[i], "=",
+           paste(round(object$quality[[i]]*100,1),"%",sep=""), "\n")
+  }
+  if (!is.null(object$adequacy) & adequacy)
+  {
+    cat ("Adequacy of variables:\n")
+    print (object$adequacy)
+  }
+  if (!is.null(object$axis.predictivity) & axis.predictivity)
+  {
+    cat ("Axis predictivity:\n")
+    print (object$axis.predictivity)
+  }
+  if (!is.null(object$sample.predictivity) & sample.predictivity)
+  {
+    cat ("Sample predictivity:\n")
+    print (object$sample.predictivity)
+  }
+  if (!is.null(object$class.predictivity) & class.predictivity)
+  {
+    cat ("Class predictivity:\n")
+    print (object$class.predictivity)
+  }
+  if (!is.null(object$within.class.axis.predictivity) & within.class.axis.predictivity)
+  {
+    cat ("Within class axis predictivity:\n")
+    print (object$within.class.axis.predictivity)
+  }
+  if (!is.null(object$within.class.sample.predictivity) & within.class.sample.predictivity)
+  {
+    cat ("Within class sample predictivity:\n")
+    print (object$within.class.sample.predictivity)
+  }
 }
 
 # -----------------------------------------------------------------------------------------------------
