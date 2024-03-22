@@ -124,7 +124,7 @@ CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classe
   M <- W_minhalf %*% V
 
   Z <- X %*% M[,e.vects]
-  Minv <- solve(M)
+  Minv <- solve(M)[e.vects, , drop = F]
   ax.one.unit <- 1/(diag(t(Minv[e.vects,]) %*% Minv[e.vects,])) * t(Minv[e.vects,])
 
   bp$Gmat <- G
@@ -138,6 +138,7 @@ CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classe
   bp$Cmat <- Cmat
   bp$Bmat <- B
   bp$Wmat <- W
+  bp$Mrr <- Minv
   bp$class.means <- show.class.means
 
   class(bp) <- append(class(bp),"CVA")
