@@ -118,6 +118,7 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
   bp$eigenvalues <- svd.out$d^2
   bp$ax.one.unit <- ax.one.unit
   bp$e.vects <- e.vects
+  bp$Vr <- Vr
   if (bp$g == 1) bp$class.means <- FALSE else bp$class.means <- show.group.means
   if (bp$class.means)
   {

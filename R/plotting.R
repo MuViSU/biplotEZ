@@ -191,6 +191,18 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
     graphics::points(x = Z[, 1], y = Z[, 2], pch = sample.aes$pch, col = sample.aes$col,
                      cex = sample.aes$cex)
   }
+  
+  .predict.func <- function(p.point, coef, col, lty, lwd) {
+    if (is.na(coef[2])) lines(c(p.point[1], coef[1]), rep(p.point[2], 2), col = col, lwd = lwd, lty = lty)
+    else if (coef[2] == 0) lines(rep(p.point[1], 2), p.point[2:3], col = col, lwd = lwd, lty = lty)
+    else {  intercept.projection <- p.point[2] + p.point[1]/coef[2]
+    project.on.x <- (intercept.projection - coef[1])/(coef[2] + 1/coef[2])
+    project.on.y <- coef[1] + coef[2] * project.on.x
+    lines(c(p.point[1], project.on.x), c(p.point[2], project.on.y), col = col, lwd = lwd, lty = lty)     
+    }
+  }  
+  
+  
   #----------
   .calibrate.axis <- function (j, Xhat, means, sd, axes.rows, ax.which, ax.tickvec,
                                ax.orthogxvec, ax.orthogyvec)
@@ -356,7 +368,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
                             side = ax.aes$tick.label.side[i], pos = ax.aes$tick.label.pos[i],
                             offset = ax.aes$tick.label.offset[i], label.col = ax.aes$tick.label.col[i],
                             cex = ax.aes$tick.label.cex[i])
-    #  if (!is.null(predict.mat)) apply(cbind(predict.mat, y.vals[1]), 1, .predict.func, coef = lin.coef, col = ax.aes$predict.col[i], lty = ax.aes$predict.lty[i], lwd = ax.aes$predict.lwd[i])
+    if (!is.null(predict.mat)) apply(cbind(predict.mat, y.vals[1]), 1, .predict.func, coef = lin.coef,col=ax.aes$predict.col,lwd=ax.aes$predict.lwd,lty=ax.aes$predict.lty)
     }
   }
   #----------
@@ -400,11 +412,13 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
   #==========
   if (is.null(x$Z)) stop ("Add a biplot method before generating a plot")
   else Z <- x$Z
-
+  
   if (is.null(x$samples)) x <- samples(x)
   if (!is.null(x$class.means)) if(x$class.means) if (is.null(x$means.aes)) x <- means(x)
   if (!is.null(x$Znew)) if (is.null(x$newsamples)) x <- newsamples(x)
-
+  if (!is.null(x$predict.samples)) predict.mat <- Z[x$predict.samples, , drop = F] else predict.mat <- NULL
+  if (!is.null(x$predict.means)) predict.mat <- rbind(predict.mat, x$Zmeans[x$predict.means, , drop = F])
+  
   if (is.null(x$samples$which)) samples.ggrepel <- FALSE
   else samples.ggrepel <- x$samples$label[1]=="ggrepel"
   newsamples.ggrepel <- FALSE
@@ -484,7 +498,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
 
     z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
                      ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
-    .lin.axes.plot(z.axes, ax.aes, predict.mat=NULL, too.small)
+    .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small)
 
   }
 

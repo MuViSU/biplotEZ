@@ -533,3 +533,77 @@ interpolate <- function (bp, newdata)
   bp$Znew <- Znew
   bp
 }
+
+# -----------------------------------------------------------------------------------------------------
+
+#' Prediction of samples
+#'
+#' @param bp an object of class \code{biplot} obtained from preceding function \code{biplot()}.
+#' @param predict.samples a vector specifying which samples to predict.
+#' @param predict.means a vector specifying which group means to predict.
+#'
+#' @return Object of class PCA with the following elements:
+#' \item{predict.samples}{which samples are predicted.}
+#' \item{predict.mat}{matrix of predicted samples.}
+#' \item{predict.means}{which group means are predicted.}
+#' \item{predict.means.mat}{matrix of predicted group means.}
+#'
+#'
+#' @export
+#'
+#' @examples
+#' biplot(data = iris[,1:4]) |> PCA(group.aes=iris[,5]) |> prediction(1:145,1:3) |> plot()
+#'
+prediction <- function (bp, predict.samples=NULL,predict.means=NULL)
+{
+  Z <- bp$Z
+  means <- bp$means
+  sd <- bp$sd
+  Zmeans <- bp$Zmeans
+  
+  if (inherits(bp, "PCA"))
+  {
+    Vr <- bp$Vr
+    if (!is.null(predict.samples)) {
+      predict.mat <- scale(Z[predict.samples, , drop = F] %*% t(Vr), center = F, scale = 1 / sd)
+    } else predict.mat <- NULL
+    if (!is.null(predict.mat))
+      predict.mat <- scale(predict.mat, center = -means, scale = F)
+    if (!is.null(predict.means)) {
+      predict.means.mat <- scale(Zmeans[predict.means, , drop = F] %*% t(Vr),center = F, scale = 1 / sd)
+    } else
+      predict.means.mat <- NULL
+    if (!is.null(predict.means.mat))
+      predict.mat <- rbind(predict.mat, scale(predict.means.mat, center = -means, scale = F))
+    if (!is.null(predict.mat)) 
+      dimnames(predict.mat) <- list(c(dimnames(bp$raw.X)[[1]][predict.samples], bp$g.names[predict.means]), dimnames(bp$raw.X)[[2]])
+    
+    bp$predict.samples <- predict.samples
+    bp$predict.means <- predict.means
+    bp$predict.mat <- predict.mat
+    bp$predict.means.mat <- predict.means.mat
+  }
+  
+   if (inherits(bp, "CVA"))
+   {
+     Mrr <- bp$Mrr
+     
+     if (!is.null(predict.samples)) 
+       predict.mat <- scale(Z[predict.samples, , drop = F] %*% Mrr, center = -means, scale = F) else predict.mat <- NULL
+       if (!is.null(predict.means)) 
+         predict.mat <- rbind(predict.mat, scale(Zmeans[predict.means, , drop = F] %*% Mrr, center = -means, scale = F))
+       if (!is.null(predict.mat)) 
+         dimnames(predict.mat) <- list(c(dimnames(bp$raw.X)[[1]][predict.samples], bp$g.names[predict.means]), dimnames(bp$raw.X)[[2]])
+       
+       bp$predict.samples <- predict.samples
+       bp$predict.means <- predict.means
+       bp$predict.mat <- predict.mat
+
+   }
+  
+  bp
+  
+}
+
+
+
