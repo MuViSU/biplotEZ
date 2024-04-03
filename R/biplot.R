@@ -93,7 +93,8 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
     }
     na.vec.df <- NULL
 
-    if(is.null(group.aes)) group.aes <- factor(rep(1,n))
+    if(is.null(group.aes))
+      { if(!is.null(classes)) group.aes <- factor(classes) else group.aes <- factor(rep(1,n)) }
     else group.aes <- factor(group.aes)
     g.names <-levels(group.aes)
     g <- length(g.names)
@@ -162,7 +163,8 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
     if(!is.null(classes))
       classes <- factor(classes)
 
-    if(is.null(group.aes)) group.aes <- factor(rep(1,nrow(data)))
+    if(is.null(group.aes))
+      { if (!is.null(classes)) group.aes <- classes else group.aes <- factor(rep(1,nrow(data))) }
     else group.aes <- factor(group.aes)
     g.names <-levels(group.aes)
     g <- length(g.names)
@@ -560,7 +562,7 @@ prediction <- function (bp, predict.samples=NULL,predict.means=NULL)
   means <- bp$means
   sd <- bp$sd
   Zmeans <- bp$Zmeans
-  
+
   if (inherits(bp, "PCA"))
   {
     Vr <- bp$Vr
@@ -575,34 +577,34 @@ prediction <- function (bp, predict.samples=NULL,predict.means=NULL)
       predict.means.mat <- NULL
     if (!is.null(predict.means.mat))
       predict.mat <- rbind(predict.mat, scale(predict.means.mat, center = -means, scale = F))
-    if (!is.null(predict.mat)) 
+    if (!is.null(predict.mat))
       dimnames(predict.mat) <- list(c(dimnames(bp$raw.X)[[1]][predict.samples], bp$g.names[predict.means]), dimnames(bp$raw.X)[[2]])
-    
+
     bp$predict.samples <- predict.samples
     bp$predict.means <- predict.means
     bp$predict.mat <- predict.mat
     bp$predict.means.mat <- predict.means.mat
   }
-  
+
    if (inherits(bp, "CVA"))
    {
      Mrr <- bp$Mrr
-     
-     if (!is.null(predict.samples)) 
+
+     if (!is.null(predict.samples))
        predict.mat <- scale(Z[predict.samples, , drop = F] %*% Mrr, center = -means, scale = F) else predict.mat <- NULL
-       if (!is.null(predict.means)) 
+       if (!is.null(predict.means))
          predict.mat <- rbind(predict.mat, scale(Zmeans[predict.means, , drop = F] %*% Mrr, center = -means, scale = F))
-       if (!is.null(predict.mat)) 
+       if (!is.null(predict.mat))
          dimnames(predict.mat) <- list(c(dimnames(bp$raw.X)[[1]][predict.samples], bp$g.names[predict.means]), dimnames(bp$raw.X)[[2]])
-       
+
        bp$predict.samples <- predict.samples
        bp$predict.means <- predict.means
        bp$predict.mat <- predict.mat
 
    }
-  
+
   bp
-  
+
 }
 
 

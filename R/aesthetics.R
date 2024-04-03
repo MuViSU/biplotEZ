@@ -393,6 +393,7 @@ control.alpha.bags <- function (g, g.names, alpha, which, col, lty, lwd, max)
     which <- temp.mat[,1]
     alpha <- temp.mat[,2]
   }
+  ww <- length(which)
 
   bag.num <- length(which)
   while (length(alpha) < bag.num)

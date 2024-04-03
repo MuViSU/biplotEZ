@@ -39,7 +39,7 @@ alpha.bags <- function(bp, alpha=0.95, which = NULL, col = bp$sample$col[which],
   g.names <- bp$g.names
   if (is.null(which)) which <- 1:g
 
-    control.output <- control.alpha.bags (g=g, g.names=g.names, alpha=alpha, which=which,
+  control.output <- control.alpha.bags (g=g, g.names=g.names, alpha=alpha, which=which,
                                         col=col, lty=lty, lwd=lwd, max=max)
 
   all.alpha.bags <- list()
@@ -47,6 +47,7 @@ alpha.bags <- function(bp, alpha=0.95, which = NULL, col = bp$sample$col[which],
   {
     if (trace) cat (paste("Computing", control.output$alpha[a], "-bag for",g.names[control.output$which[a]], "\n"))
     Zgroup <- bp$Z[bp$group.aes==g.names[control.output$which[a]],]
+
     calc <- calc.alpha.bags(Zgroup, aa=control.output$alpha[a], approx.limit=control.output$max)$xy[,1:2]
     all.alpha.bags[[a]] <- calc
   }
