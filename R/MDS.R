@@ -170,9 +170,6 @@ PCO.biplot <- function (bp, Dmat=NULL, dist.func=NULL,
   bp$dim.biplot <- dim.biplot
   bp$PCOaxes <- axes[1]
   
-  if(axes[1] == "splines") bp$spline.control <- biplot.spline.axis.control()
-
-
   if (bp$g == 1) bp$class.means <- FALSE else bp$class.means <- show.class.means
   if (bp$class.means)
   {
