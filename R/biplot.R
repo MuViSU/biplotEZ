@@ -367,7 +367,7 @@ legend.type <- function (bp, samples = FALSE, means = FALSE, bags = FALSE, ellip
 #' Constructs the biplot legend
 #'
 #' @param bp an object of class \code{biplot}.
-#' @param ... more arguments to be sent to `legend`.
+#' @param ... more arguments to be sent to \code{legend}.
 #'
 #' @noRd
 biplot.legend <- function(bp, ...)
@@ -583,7 +583,7 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
 #' @param newvariable a new data set, similar in structure to the data set supplied to \code{biplot()}
 #'                containing supplementary variables to be added on the biplot.
 #'
-#' @return Object of class PCA with the following elements:
+#' @return Object of class \code{biplot} with the following elements:
 #' \item{X}{matrix of the centered and scaled numeric variables.}
 #' \item{Xcat}{matrix of the categorical variables.}
 #' \item{raw.X}{original data.}
@@ -722,7 +722,7 @@ interpolate <- function (bp, newdata=NULL,newvariable=NULL)
 #' @param predict.means a vector specifying which group means to predict.
 #' @param which a vector specifying which variable to do the prediction.
 #'
-#' @return Object of class PCA with the following elements:
+#' @return Object of class \code{biplot} with the following elements:
 #' \item{predict.samples}{which samples are predicted.}
 #' \item{predict.mat}{matrix of predicted samples.}
 #' \item{predict.means}{which group means are predicted.}
