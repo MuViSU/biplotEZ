@@ -2,6 +2,10 @@
 ### biplotEZ functions
 ### ========================================================
 
+.onLoad <- function(libname,pkgname){
+  message("Welcome to biplotEZ! \n This package is used to construct biplots \n Run ?biplot for more information")
+}
+
 #' First step to create a new biplot with \pkg{biplotEZ}
 #'
 #' @description
@@ -12,12 +16,17 @@
 #' distribution of a sample in a few dimensions and they superimpose on this
 #' display representations of the variables on which the samples are measured.
 #'
-#' @param data a dataframe or matrix containing all variables the user wants to analyse.
+#' @param data a dataframe or numeric matrix containing all variables the user wants to analyse.
 #' @param classes vector identifying class membership.
 #' @param group.aes vector identifying groups for aesthetic formatting.
 #' @param center logical, indicating whether \code{data} should be column centered, with default \code{TRUE}.
 #' @param scaled logical, indicating whether \code{data} should be standardized to unit column variances, with default \code{FALSE}.
 #' @param Title title of the biplot to be rendered, enter text in "  ".
+#'
+#' @details
+#'This function is the entry-level function in \code{biplotEZ} to construct a biplot display.
+#'It initialises an object of class \code{biplot} which can then be piped to various other functions
+#'to build up the biplot display.
 #'
 #' @return A list with the following components is available:
 #' \item{X}{matrix of the centered and scaled numeric variables.}
@@ -30,6 +39,44 @@
 #' \item{group.aes}{vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.}
 #' \item{Title}{title of the biplot to be rendered}
 #'
+#' @section Useful links: 
+#' 
+#' The biplot display can be built up in four broad steps depending on the needs for the display. 
+#' Firstly, choose an appropriate method to construct the display;
+#' Secondly, change the aesthetics of the display; 
+#' Thirdly, append the display with supplementary features such as axes, samples and means;
+#' Finally, superimpose shapes, characters or elements onto the display.
+#'
+#' \strong{1. Different types of biplots:}
+#' * [PCA()]: Principal Component Analysis biplot of various dimensions
+#' * [CVA()]: Canonical Variate Analysis biplot
+#' * [PCO()]: Principal Coordinate Analysis biplot
+#' * [CA()]: Correspondence Analysis biplot
+#' * [regress()]: Regression biplot method
+#'
+#' \strong{2. Customise the biplot display with aesthetic functions:}
+#' * [samples()]: Change the formatting of sample points on the biplot display
+#' * [axes()]: Change the formatting of the biplot axes
+#'
+#' \strong{3. Supplement the existing biplot with additional axes, samples and group means:}
+#' * [newsamples()]: Add and change formatting of additional samples
+#' * [newaxes()]: Add and change formatting of additional axes
+#' * [means()]: Insert class means to the display, and format appropriately
+#' 
+#' \strong{4. Append the biplot display:}
+#' * [alpha.bags()]: Add alpha bags
+#' * [ellipses()]: Add ellipses
+#' * [density2D()]: Add 2D density regions
+#' 
+#' \strong{Other useful links:}
+#'  * [plot()]
+#'  * [fit.measures()]
+#'  * [legend.type()]
+#'  * [prediction()]
+#'  * [classify()]
+#'  * [reflect()]
+#'  * [rotate()]
+#' 
 #' @references
 #' Gabriel, K.R. (1971) The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.<br><br>
 #' Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
