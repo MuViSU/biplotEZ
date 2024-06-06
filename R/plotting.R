@@ -150,15 +150,10 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
             if (x$scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/x$sd)
             if (x$center) Xhat <- scale(Xhat, center=-1*x$means, scale=FALSE)
             
-            
-            if(!is.null(x$PCOaxes)) { 
               z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
                                ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
               .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,x=x)
               
-            }
-            
-            
             }
           
         } else  { # if calibrated axes = FALSE, then show vectors - only for PCA biplot. 
@@ -690,12 +685,6 @@ plot1D <-  function(bp, exp.factor = 1.2,...)
       .lin.axes.plot(z.axes, ax.aes, too.small, usr)
     }
 
-    if (!is.null(bp$predict.samples) | !is.null(bp$predict.means)){
-      .predict.func(p.point=predict.mat, total.num.vars, ax.aes$predict.col,
-                    ax.aes$predict.lty, ax.aes$predict.lwd)
-    }
-    .samples.plot(bp)
-    
     if(!is.null(bp$z.density)) {
       z.density <- bp$z.density
       density.style <- bp$density.style 
@@ -708,6 +697,12 @@ plot1D <-  function(bp, exp.factor = 1.2,...)
     
     if (!is.null(bp$conc.ellipses))
       .conc.ellipse.plot (bp$conc.ellipses, bp$conc.ellipse.aes)
+    
+    if (!is.null(bp$predict.samples) | !is.null(bp$predict.means)){
+      .predict.func(p.point=predict.mat, total.num.vars, ax.aes$predict.col,
+                    ax.aes$predict.lty, ax.aes$predict.lwd)
+    }
+    .samples.plot(bp)
     
     if (!is.null(bp$Znew))
       .newsamples.plot (bp$Znew, bp$newsamples)
