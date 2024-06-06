@@ -23,7 +23,7 @@
     which.samples[group.aes == g.names[sample.aes$which[j]]] <- TRUE
   groups <- levels(group.aes)
   
-  if (sample.aes$label[1]=="ggrepel")
+  if (any(na.omit(sample.aes$label[1]=="ggrepel")))
   {
     ZZ <- data.frame (no=1:n, group.aes = group.aes, pch = rep(NA,n),
                       col = rep(NA,n), cex = rep(NA,n),
@@ -109,7 +109,7 @@
   invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
   Z <- Z[invals, ]
   ZZ <- Z[sample.aes$which,]
-  if (sample.aes$label[1]=="ggrepel")
+  if (any(na.omit(sample.aes$label[1]=="ggrepel")))
   {
     for (j in 1:nrow(ggrepel.labs$coords))
       graphics::text(ggrepel.labs$coords[j, 1], ggrepel.labs$coords[j, 2], labels = ggrepel.labs$coords[j,3],
@@ -154,7 +154,7 @@
   y.vals <- Z[, 2]
   invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
   Z <- Z[invals, , drop = FALSE]
-  if (sample.aes$label[1]=="ggrepel")
+  if (any(na.omit(sample.aes$label[1]=="ggrepel")))
   {
     ggrepel.labs$coords <- ggrepel.labs$coords[invals, ,drop=F]
     ggrepel.labs$visible <- ggrepel.labs$visible[invals]

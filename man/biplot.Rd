@@ -8,7 +8,7 @@ biplot(data, classes = NULL, group.aes = NULL, center = TRUE, scaled = FALSE,
 Title = NULL)
 }
 \arguments{
-\item{data}{a dataframe or matrix containing all variables the user wants to analyse.}
+\item{data}{a dataframe or numeric matrix containing all variables the user wants to analyse.}
 
 \item{classes}{vector identifying class membership.}
 
@@ -40,6 +40,61 @@ multivariate analogue of scatter plots. They approximate the multivariate
 distribution of a sample in a few dimensions and they superimpose on this
 display representations of the variables on which the samples are measured.
 }
+\details{
+This function is the entry-level function in \code{biplotEZ} to construct a biplot display.
+It initialises an object of class \code{biplot} which can then be piped to various other functions
+to build up the biplot display.
+}
+\section{Useful links}{
+
+
+The biplot display can be built up in four broad steps depending on the needs for the display.
+Firstly, choose an appropriate method to construct the display;
+Secondly, change the aesthetics of the display;
+Thirdly, append the display with supplementary features such as axes, samples and means;
+Finally, superimpose shapes, characters or elements onto the display.
+
+\strong{1. Different types of biplots:}
+\itemize{
+\item \code{\link[=PCA]{PCA()}}: Principal Component Analysis biplot of various dimensions
+\item \code{\link[=CVA]{CVA()}}: Canonical Variate Analysis biplot
+\item \code{\link[=PCO]{PCO()}}: Principal Coordinate Analysis biplot
+\item \code{\link[=CA]{CA()}}: Correspondence Analysis biplot
+\item \code{\link[=regress]{regress()}}: Regression biplot method
+}
+
+\strong{2. Customise the biplot display with aesthetic functions:}
+\itemize{
+\item \code{\link[=samples]{samples()}}: Change the formatting of sample points on the biplot display
+\item \code{\link[=axes]{axes()}}: Change the formatting of the biplot axes
+}
+
+\strong{3. Supplement the existing biplot with additional axes, samples and group means:}
+\itemize{
+\item \code{\link[=newsamples]{newsamples()}}: Add and change formatting of additional samples
+\item \code{\link[=newaxes]{newaxes()}}: Add and change formatting of additional axes
+\item \code{\link[=means]{means()}}: Insert class means to the display, and format appropriately
+}
+
+\strong{4. Append the biplot display:}
+\itemize{
+\item \code{\link[=alpha.bags]{alpha.bags()}}: Add alpha bags
+\item \code{\link[=ellipses]{ellipses()}}: Add ellipses
+\item \code{\link[=density2D]{density2D()}}: Add 2D density regions
+}
+
+\strong{Other useful links:}
+\itemize{
+\item \code{\link[=plot]{plot()}}
+\item \code{\link[=fit.measures]{fit.measures()}}
+\item \code{\link[=legend.type]{legend.type()}}
+\item \code{\link[=prediction]{prediction()}}
+\item \code{\link[=classify]{classify()}}
+\item \code{\link[=reflect]{reflect()}}
+\item \code{\link[=rotate]{rotate()}}
+}
+}
+
 \examples{
 biplot(data = iris)
 # create a PCA biplot

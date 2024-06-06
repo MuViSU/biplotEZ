@@ -16,7 +16,7 @@ prediction(bp, predict.samples = NULL, predict.means = NULL, which = 1:bp$p)
 \item{which}{a vector specifying which variable to do the prediction.}
 }
 \value{
-Object of class PCA with the following elements:
+Object of class \code{biplot} with the following elements:
 \item{predict.samples}{which samples are predicted.}
 \item{predict.mat}{matrix of predicted samples.}
 \item{predict.means}{which group means are predicted.}

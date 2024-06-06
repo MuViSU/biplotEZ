@@ -43,7 +43,6 @@ Imports:
     graphics,
     grDevices,
     plotrix,
-    splines,
     stats,
     withr
 NeedsCompilation: yes

@@ -5,10 +5,10 @@
 #' This function produces a list of elements to be used for CVA biplot construction.
 #'
 #' @param bp object of class \code{biplot} obtained from preceding function \code{biplot()}.
-#' @param dim.biplot dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.
-#' @param e.vects which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.
 #' @param classes vector of the same length as the number of rows in the data matrix
 #'                  with the class indicator for the samples.
+#' @param dim.biplot dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.
+#' @param e.vects which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.
 #' @param weightedCVA the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".
 #' @param show.class.means logical, indicating whether to plot the class means on the biplot.
 #'
@@ -51,8 +51,8 @@
 #' \item{class.means}{logical value, indicating whether the class means should be plotted in the biplot.}
 #' \item{Zmeans}{matrix of the class mean coordinates to be plotted in the biplot.}
 #'
-#' @usage CVA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-#'            classes=bp$classes, weightedCVA = "weighted", show.class.means = TRUE,
+#' @usage CVA(bp, classes=bp$classes, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
+#'            weightedCVA = "weighted", show.class.means = TRUE,
 #'            low.dim = "sample.opt")
 #' @aliases CVA
 #'
@@ -63,7 +63,7 @@
 #' # create a CVA biplot
 #' biplot(iris[,1:4]) |> CVA(classes=iris[,5]) |> plot()
 
-CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes=bp$classes,
+CVA <- function(bp, classes=bp$classes, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), 
                 weightedCVA = "weighted", show.class.means = TRUE, low.dim = "sample.opt")
 {
   UseMethod("CVA")
@@ -81,7 +81,7 @@ CVA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes=bp$cl
 #' @examples
 #' biplot(iris[,1:4]) |> CVA(classes=iris[,5])
 #'
-CVA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), classes=bp$classes,
+CVA.biplot <- function(bp, classes=bp$classes, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), 
                        weightedCVA = "weighted", show.class.means = TRUE, low.dim="sample.opt")
 {
   dim.biplot <- dim.biplot[1]

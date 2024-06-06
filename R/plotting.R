@@ -39,12 +39,11 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
   if (!is.null(x$predict$means)) 
     predict.mat <- rbind(predict.mat, x$Zmeans[x$predict$means, , drop = F])
   if (is.null(x$samples$which)) samples.ggrepel <- FALSE
-  else samples.ggrepel <- x$samples$label[1]=="ggrepel"
+  else samples.ggrepel <- any(na.omit(x$samples$label=="ggrepel"))
   newsamples.ggrepel <- FALSE
-  if (!is.null(x$Znew)) newsamples.ggrepel <- x$newsamples$label[1]=="ggrepel"
+  if (!is.null(x$Znew)) newsamples.ggrepel <- any(na.omit(x$newsamples$label=="ggrepel"))
   means.ggrepel <- FALSE
-  if (!is.null(x$class.means)) if (x$class.means) means.ggrepel <- x$means.aes$label[1]=="ggrepel"
-
+  if (!is.null(x$class.means)) if (x$class.means) means.ggrepel <- any(na.omit(x$means.aes$label=="ggrepel"))
 
   do.ggrepel <- samples.ggrepel | means.ggrepel | newsamples.ggrepel
   if (samples.ggrepel)
@@ -152,14 +151,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
             if (x$center) Xhat <- scale(Xhat, center=-1*x$means, scale=FALSE)
             
             
-            if(!is.null(x$PCOaxes)) { if(x$PCOaxes == "splines") # Only for PCO - if axes (type) is set to splines.  
-            {
-              z.axes <- lapply(1:length(ax.aes$which), biplot.spline.axis, Z, Xhat, means=x$means, sd=x$sd, n.int=ax.aes$ticks, 
-                               spline.control=x$spline.control)
-              .nonlin.axes.plot(z.axes,ax.aes,predict.mat,too.small, usr=usr,x=x)
-              
-            }} else { # Otherwise calibrate linear axes
-              
+            if(!is.null(x$PCOaxes)) { 
               z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
                                ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
               .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,x=x)

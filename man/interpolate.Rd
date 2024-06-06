@@ -16,7 +16,7 @@ containing supplementary data points to be added on the biplot.}
 containing supplementary variables to be added on the biplot.}
 }
 \value{
-Object of class PCA with the following elements:
+Object of class \code{biplot} with the following elements:
 \item{X}{matrix of the centered and scaled numeric variables.}
 \item{Xcat}{matrix of the categorical variables.}
 \item{raw.X}{original data.}
