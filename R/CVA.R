@@ -38,6 +38,7 @@
 #' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 #' \item{Zmeans}{matrix of canonical means.}
 #' \item{Lmat}{matrix for transformation to the canonical space.}
+#' \item{Linv}{inverse of the Lmat matrix.}
 #' \item{eigenvalues}{vector of eigenvalues of the two-sided eigenvalue problem.}
 #' \item{Cmat}{Centring matrix based on different choices of weighting.
 #'             For \code{"weighted"}, \code{Cmat} is a diagonal matrix with
@@ -133,18 +134,20 @@ CVA.biplot <- function(bp, classes=bp$classes, dim.biplot = c(2,1,3), e.vects = 
   crit.opt <- NULL
   if (K < dim.biplot) 
     {  out <- CVA.2class (bp, G, W, M, low.dim, K, e.vects)
-       Mr <- out$Mr
-       bp$Lmat <- NULL
+       Mr <- out$Lmat[,e.vects, drop = F]
+       bp$Lmat <- out$Lmat
+       bp$Linv <- solve(out$Lmat)
        bp$eigenvalues <- NULL
-       Minv <- out$Mrr
+       Minv <- solve(out$Lmat)[e.vects, , drop = F]
        crit.opt <- out$TSRES
        low.dim <- out$low.dim
        warning (paste("The dimension of the canonical space < dim.biplot", low.dim, "method used for additional dimension(s)."))
     }
     else
     {
-       Mr <- M[,e.vects]
+       Mr <- M[, e.vects, drop = F]
        bp$Lmat <- M
+       bp$Linv <- solve(M)
        bp$eigenvalues <- svd.out$d
     }
 
@@ -192,10 +195,6 @@ CVA.biplot <- function(bp, classes=bp$classes, dim.biplot = c(2,1,3), e.vects = 
 #' \item{Lmat}{pxp matrix for transformation to the canonical space.}
 CVA.2class <- function (bp, G, W, Mmat, low.dim, K, e.vects)
 {
-  svd.Wmat <- svd(W)
-  lambdamatI <- diag(svd.Wmat$d)
-  Lmat <- svd.Wmat$u %*% solve(sqrt(lambdamatI))
-  extra.vects <- e.vects[-(1:K)]
   first.dims <- e.vects[1:K]
   
   if (!is.na(pmatch(low.dim,"sample.opt")))
@@ -203,19 +202,13 @@ CVA.2class <- function (bp, G, W, Mmat, low.dim, K, e.vects)
     # Calculate fvek.opt
     Minv <- solve(Mmat)
     M.sup2 <- Minv[-first.dims,,drop=FALSE]
-    fvek.opt <- svd(M.sup2 %*% t(M.sup2))$v[,1:length(extra.vects),drop=FALSE]
+    fvek.opt <- svd(M.sup2 %*% t(M.sup2))$v
     # Note that fvek.opt is a linear combination of the columns of M.sup2
-    f.mat <- cbind(rbind(diag(length(first.dims)), matrix(0, ncol=length(first.dims),nrow=bp$p-length(first.dims))), 
-                   rbind(matrix(0,ncol=length(extra.vects),nrow=length(first.dims)),fvek.opt))
-    D2 <- Mmat %*% f.mat
-    D22 <- t(f.mat) %*% solve(Mmat)
-    M2.opt <- Mmat[,(1:bp$p)[-first.dims]] %*% fvek.opt
-    #Linear combination of last p-1 columns of B
-    M.opt <- cbind(Mmat[,first.dims], M2.opt)
-    
-    Mr <- M.opt
-    Mrr <- D22
-    Lmat <- M2.opt
+    M.opt <- cbind(Mmat[,first.dims],Mmat[,-first.dims]%*%fvek.opt)
+
+    Mr <- M.opt[,e.vects]
+    Mrr <- solve(M.opt)[e.vects,]
+    Lmat <- M.opt
     low.dim <- "sample.opt"
   }
   
@@ -247,7 +240,7 @@ CVA.2class <- function (bp, G, W, Mmat, low.dim, K, e.vects)
   X.hat <- bp$X %*% Mr %*% Mrr
   TSRES  <- sum((bp$X-X.hat)^2) / sum(bp$X^2)
   
-  list (Mr = Mr, Mrr = Mrr, Lmat = Lmat, TSRES = TSRES, low.dim = low.dim)
+  list (Lmat = Lmat, TSRES = TSRES, low.dim = low.dim)
 }
 
 # -------------------------------------------------------------------------------------------

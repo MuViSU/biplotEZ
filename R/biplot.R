@@ -222,7 +222,7 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
 
    object <- list(X = X, Xcat = NULL, raw.X = raw.X, na.action=na.vec.df, center=center, scaled=scaled,
                    means = means, sd = sd, n=nrow(X), p=ncol(X), group.aes = group.aes, g.names = g.names,g = g,
-                   Title = Title, Z=Z, Lmat=Lmat, e.vects=e.vects, ax.one.unit=ax.one.unit)
+                   Title = Title, Z=Z, Lmat=Lmat, Linv=solve(Lmat), e.vects=e.vects, ax.one.unit=ax.one.unit)
     class(object) <- "biplot"
     class(object)<-append(class(object),"PCA")
   }
@@ -339,12 +339,12 @@ fit.measures <- function (bp)
   }
   if (inherits(bp, "CVA"))
   {
-    Xbar.hat <- bp$Zmeans %*% solve(bp$Lmat)[bp$e.vects,,drop=F]
+    Xbar.hat <- bp$Zmeans %*% bp$Linv[bp$e.vects,,drop=F]
     svd.out <- svd(bp$Cmat)
     C.half <- svd.out$u %*% diag(sqrt(svd.out$d)) %*% t(svd.out$v)
     G <- bp$Gmat
     Xwithin <- (diag(bp$n)-G%*%solve(t(G)%*%G)%*%t(G))%*%bp$X
-    Xwithin.hat <- Xwithin %*% bp$Lmat[,bp$e.vects,drop=F] %*% solve(bp$Lmat)[bp$e.vects,,drop=F]
+    Xwithin.hat <- Xwithin %*% bp$Lmat[,bp$e.vects,drop=F] %*% bp$Linv[bp$e.vects,,drop=F]
 
     bp$quality <- list ("canonical variables" =
                           sum(bp$eigenvalues[bp$e.vects])/sum(bp$eigenvalues),
@@ -804,7 +804,7 @@ prediction <- function (bp, predict.samples=NULL,predict.means=NULL,which=1:bp$p
   if(length(predict.means)>0) { if(!bp$class.means) stop("Set show.class.means to TRUE in PCA()") }
   Zmeans <- bp$Zmeans
 
-  if (!is.null(bp$Lmat)) Lrr <- solve(bp$Lmat)[bp$e.vects,,drop=F]
+  if (!is.null(bp$Lmat)) Lrr <- bp$Linv[bp$e.vects,,drop=F]
   else Lrr <- bp$Mrr
   
   if (length(predict.samples)>0) 

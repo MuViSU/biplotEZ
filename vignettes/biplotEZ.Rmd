@@ -487,7 +487,7 @@ obj <- biplot(state.x77, scale = TRUE) |> PCA() |>
 summary (obj)
 ```
 
-If is not necessary to call the `plot()` function to obtain the fit measures, but one of the biplot methods, such as `PCA()` is required, since the measures differ depending on which type of biplot is constructed. To suppress the output of some fit measures, for instance if the interest is in the axis predictivity and there are many samples which result in a very long output, these can be set in the call to `summary()`. By default all measures are set to `TRUE`.
+It is not necessary to call the `plot()` function to obtain the fit measures, but one of the biplot methods, such as `PCA()` is required, since the measures differ depending on which type of biplot is constructed. To suppress the output of some fit measures, for instance if the interest is in the axis predictivity and there are many samples which result in a very long output, these can be set in the call to `summary()`. By default all measures are set to `TRUE`.
 
 ```{r, }
 obj <- biplot(state.x77, scale = TRUE) |> PCA() |> 

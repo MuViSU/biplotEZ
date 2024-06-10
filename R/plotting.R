@@ -141,10 +141,8 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
         if(x$axes$calibrated.axes) { # If x does not inherit object of class "CA" then call to calibrate axes. 
           if (length(ax.aes$which) > 0)
           {
-            if (!is.null(x$Lmat))
-              if (nrow(x$Lmat) == ncol(x$Lmat)) 
-                Xhat <- x$Z %*% solve(x$Lmat)[x$e.vects,]
-              else Xhat <- x$X
+            if (!is.null(x$Linv))
+              Xhat <- x$Z %*% x$Linv[x$e.vects,]
             else
               Xhat <- x$X
             if (x$scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/x$sd)
@@ -287,8 +285,8 @@ plot3D <- function(bp,
   
   if (length(ax.aes$which) > 0)
   {
-    if (!is.null(bp$Lmat))
-      Xhat <- bp$Z %*% solve(bp$Lmat)[bp$e.vects,]
+    if (!is.null(bp$Linv))
+      Xhat <- bp$Z %*% bp$Linv[bp$e.vects,]
     else
       Xhat <- bp$X
     if (bp$scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/bp$sd)
@@ -668,7 +666,7 @@ plot1D <-  function(bp, exp.factor = 1.2,...)
 
     if (length(ax.aes$which) > 0)
     {
-      Xhat <- bp$Z %*% solve(bp$Lmat)[bp$e.vects, ]
+      Xhat <- bp$Z %*% bp$Linv[bp$e.vects, ]
       if (bp$scaled)
         Xhat <- scale(Xhat, center = FALSE, scale = 1 / bp$sd)
       if (bp$center)
