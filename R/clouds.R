@@ -1,3 +1,124 @@
+
+
+#' Create a density in 2-dimensions 
+#'
+#' @param bp object of class `biplot`
+#' @param which which group.
+#' @param contours logical indicating whether contours are added to the density plot
+#' @param h vector of bandwidths for x and y directions, see \code{\link[MASS]{kde2d}}.
+#' @param n number of grid points in each direction. Can be scalar or a length-2 integer 
+#'          vector.
+#' @param col vector of colours to use to form a 'continuous' sequence of colours. 
+#' @param contour.col colour of the contours.
+#' @param cuts number of colours in `col`.
+#' @param cex character expansion.
+#' @param tcl The length of tick marks as a fraction of the height of a line of text. 
+#' @param mgp The margin line.
+#' @param layout.heights A vector of values for the heights of rows.
+#' @param legend.mar The margin line of the legend.
+#'
+#' @return An object of class \code{biplot}.
+#' @export
+#'
+#' @examples
+#' biplot(iris[,1:4],group.aes = iris[,5]) |> PCA() |> 
+#'   density2D(which=3,col=c("white","purple","cyan","blue")) |> plot()
+#' biplot(iris[,1:4],group.aes = iris[,5]) |> PCA() |> 
+#'   density2D(which=3,col=c("white","purple","cyan","blue"),contours = TRUE,
+#'   contour.col = "grey") |> plot()
+
+density2D <- function(bp,which = NULL,contours = F, h = NULL, n = 100, 
+                      col = c("green", "yellow", "red"), contour.col = "black", cuts = 50, cex = 0.6, 
+                      tcl = -0.2, mgp = c(0, -0.25, 0), layout.heights = c(100, 10), legend.mar = c(2, 5, 0, 5))
+{
+  g <- bp$g
+  g.names <- bp$g.names
+  if (is.null(which)) which <- 1:g
+  G <- indmat(bp$group.aes)
+  
+  density.style <- biplot.density.2D.control(g=g, g.names=g.names, which=which,
+                                             contours=contours, h=h,
+                                             n=n,col=col,contour.col=contour.col,
+                                             cuts=cuts, cex=cex,tcl=tcl,mgp=mgp,
+                                             layout.heights = layout.heights,
+                                             legend.mar=legend.mar)
+  if (!is.null(which)) 
+  { if (which == 0) 
+    mat <- bp$Z 
+  else 
+    mat <- bp$Z[G[, which] == 1, ]
+  x.range <- range(bp$Z[, 1])
+  y.range <- range(bp$Z[, 2])
+  width <- max(x.range[2] - x.range[1], y.range[2] - y.range[1])
+  xlim <- mean(bp$Z[, 1]) + c(-1, 1) * 0.75 * width
+  ylim <- mean(bp$Z[, 1]) + c(-1, 1) * 0.75 * width
+  if (is.null(density.style$h)) z.density <- MASS::kde2d(mat[, 1], mat[, 2], n = density.style$n, lims = c(xlim, ylim))
+  else z.density <- MASS::kde2d(mat[, 1], mat[, 2], h = density.style$h, n = density.style$n, lims = c(xlim, ylim))
+  } else z.density <- NULL
+  if(length(density.style$col)==1) density.style$col <- c("white",density.style$col)
+  bp$z.density <- z.density
+  bp$density.style <- density.style
+  bp
+}
+
+#' Kernel density estimates of 1D samples
+#'
+#' @param bp an object of class \code{biplot}
+#' @param which the selection of groups or classes to be fitted with densitiy estimates
+#' @param bw the smoothing bandwidth to be used.See \code{?density}
+#'        for more details
+#' @param kernel a character string giving the smoothig kernel to be used. See \code{?density}
+#'        for more details
+#' @param col vector of colours for the density estimates
+#' @param lwd vector  of line widths for the density estimates
+#' @param legend.mar margin width for the legend
+#' @param ... additional arguments to be passed to \code{density}
+#'
+#' @return
+#' @export
+#'
+#' @examples
+density1D <- function(bp,which = NULL, bw = "nrd0", kernel="gaussian", 
+                      col = ez.col, lwd=1.5, 
+                      legend.mar = c(2, 5, 0, 5), ...)
+{
+  g <- bp$g
+  g.names <- bp$g.names
+  
+  if (is.null(which)) which <- 1:g
+  G <- indmat(bp$group.aes)
+  tmp.g <- length(which)
+  if (length(lwd)==tmp.g){lwd.vec <- lwd} else {lwd.vec <- rep(lwd,bp$g)}
+  
+  density.style <- list(g=g, g.names=g.names[which], which=which,
+                        h=bw,col=col[which],lwd=lwd.vec[which],
+                        legend.mar=legend.mar)
+  
+  z.density <- vector("list", bp$g)
+  
+  z.density.max <- numeric(bp$g)
+  
+  
+  for (i in 1:tmp.g) {
+    j <- which[i]
+    mat <- bp$Z[G[, j] == 1]
+    if(is.numeric(bw)){
+      z.density[[i]] <- stats::density(mat, width=bw, kernel=kernel)
+    } else {z.density[[i]] <- stats::density(mat, bw=bw, kernel=kernel)}
+    z.density.max[i] <- max(z.density[[i]]$y)
+  }
+  maxy <- max(z.density.max)
+  for (j in 1:tmp.g) {
+    y.dens <- z.density[[j]]$y
+    z.density[[j]]$y <- (y.dens)/(maxy)*2.5
+  }
+  
+  bp$z.density <- z.density
+  bp$density.style <- density.style
+  bp
+}
+
+
 # ----------------------------------------------------------------------------------------------
 #' Create alpha bags
 #'
@@ -850,108 +971,4 @@ calc.alpha.bags <- function (x, y, aa=0.95, na.rm = TRUE, approx.limit = 2500, p
   h <- h[!is.nan(h[, 1]) & !is.nan(h[, 2]), ]
   list (xy=h[chull(h[, 1], h[, 2]), ])
 }
-
-
-
-#' Create a density in 2-dimensions 
-#'
-#' @param bp object of class `biplot`
-#' @param which which group.
-#' @param contours logical indicating whether contours are added to the density plot
-#' @param h vector of bandwidths for x and y directions, see \code{\link[MASS]{kde2d}}.
-#' @param n number of grid points in each direction. Can be scalar or a length-2 integer 
-#'          vector.
-#' @param col vector of colours to use to form a 'continuous' sequence of colours. 
-#' @param contour.col colour of the contours.
-#' @param cuts number of colours in `col`.
-#' @param cex character expansion.
-#' @param tcl The length of tick marks as a fraction of the height of a line of text. 
-#' @param mgp The margin line.
-#' @param layout.heights A vector of values for the heights of rows.
-#' @param legend.mar The margin line of the legend.
-#'
-#' @return An object of class \code{biplot}.
-#' @export
-#'
-#' @examples
-#' biplot(iris[,1:4],group.aes = iris[,5]) |> PCA() |> 
-#'   density2D(which=3,col=c("white","purple","cyan","blue")) |> plot()
-#' biplot(iris[,1:4],group.aes = iris[,5]) |> PCA() |> 
-#'   density2D(which=3,col=c("white","purple","cyan","blue"),contours = TRUE,
-#'   contour.col = "grey") |> plot()
-
-density2D <- function(bp,which = NULL,contours = F, h = NULL, n = 100, 
-                      col = c("green", "yellow", "red"), contour.col = "black", cuts = 50, cex = 0.6, 
-                      tcl = -0.2, mgp = c(0, -0.25, 0), layout.heights = c(100, 10), legend.mar = c(2, 5, 0, 5))
-{
-  g <- bp$g
-  g.names <- bp$g.names
-  if (is.null(which)) which <- 1:g
-  G <- indmat(bp$group.aes)
-  
-  density.style <- biplot.density.2D.control(g=g, g.names=g.names, which=which,
-                                             contours=contours, h=h,
-                                             n=n,col=col,contour.col=contour.col,
-                                             cuts=cuts, cex=cex,tcl=tcl,mgp=mgp,
-                                             layout.heights = layout.heights,
-                                             legend.mar=legend.mar)
-  if (!is.null(which)) 
-  { if (which == 0) 
-    mat <- bp$Z 
-  else 
-    mat <- bp$Z[G[, which] == 1, ]
-  x.range <- range(bp$Z[, 1])
-  y.range <- range(bp$Z[, 2])
-  width <- max(x.range[2] - x.range[1], y.range[2] - y.range[1])
-  xlim <- mean(bp$Z[, 1]) + c(-1, 1) * 0.75 * width
-  ylim <- mean(bp$Z[, 1]) + c(-1, 1) * 0.75 * width
-  if (is.null(density.style$h)) z.density <- MASS::kde2d(mat[, 1], mat[, 2], n = density.style$n, lims = c(xlim, ylim))
-  else z.density <- MASS::kde2d(mat[, 1], mat[, 2], h = density.style$h, n = density.style$n, lims = c(xlim, ylim))
-  } else z.density <- NULL
-  if(length(density.style$col)==1) density.style$col <- c("white",density.style$col)
-  bp$z.density <- z.density
-  bp$density.style <- density.style
-  bp
-}
-
-density1D <- function(bp,which = NULL, h = "nrd0", kernel="gaussian", 
-                      col = ez.col, lwd=1.5, 
-                      legend.mar = c(2, 5, 0, 5), ...)
-{
-  g <- bp$g
-  g.names <- bp$g.names
-
-  if (is.null(which)) which <- 1:g
-  G <- indmat(bp$group.aes)
-  tmp.g <- length(which)
-  if (length(lwd)==tmp.g){lwd.vec <- lwd} else {lwd.vec <- rep(lwd,bp$g)}
-  
-  density.style <- list(g=g, g.names=g.names[which], which=which,
-                        h=h,col=col[which],lwd=lwd.vec[which],
-                        legend.mar=legend.mar)
-  
-  z.density <- vector("list", bp$g)
-  
-  z.density.max <- numeric(bp$g)
-  
-  
-  for (i in 1:tmp.g) {
-    j <- which[i]
-    mat <- bp$Z[G[, j] == 1]
-    if(is.numeric(h)){
-      z.density[[i]] <- stats::density(mat, width=h, kernel=kernel)
-    } else {z.density[[i]] <- stats::density(mat, bw=h, kernel=kernel)}
-    z.density.max[i] <- max(z.density[[i]]$y)
-  }
-  maxy <- max(z.density.max)
-  for (j in 1:tmp.g) {
-    y.dens <- z.density[[j]]$y
-    z.density[[j]]$y <- (y.dens)/(maxy)*2.5
-  }
-  
-  bp$z.density <- z.density
-  bp$density.style <- density.style
-  bp
-}
-
 

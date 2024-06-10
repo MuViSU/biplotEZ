@@ -364,7 +364,7 @@ plot1D <-  function(bp, exp.factor = 1.2,...)
      graphics::rect(borders[1], 0.5, borders[2], bounds[4], col = col, border = border) 
   }
   #----------
-  .means.plot <- function(Z, sample.aes, g.names, ggrepel.labs, usr)
+  .means.plot <- function(Z, sample.aes, g.names, ggrepel.means, usr)
   {
       x.vals <- Z[, 1, drop = FALSE]
       y.vals <- rep(0, length(Z))
@@ -716,7 +716,7 @@ plot1D <-  function(bp, exp.factor = 1.2,...)
     if (!is.null(bp$class.means)) if (bp$class.means)
     {
       if (is.null(bp$means.aes)) bp <- means(bp)
-      .means.plot (bp$Zmeans, bp$means.aes, bp$g.names, ggrepel.means=FALSE)
+      .means.plot (bp$Zmeans, bp$means.aes, bp$g.names, ggrepel.means=FALSE, usr)
     }
     
     invisible(bp)
