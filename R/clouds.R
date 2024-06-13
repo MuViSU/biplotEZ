@@ -2,7 +2,7 @@
 
 #' Create a density in 2-dimensions 
 #'
-#' @param bp object of class `biplot`
+#' @param bp object of class \code{biplot}
 #' @param which which group.
 #' @param contours logical indicating whether contours are added to the density plot
 #' @param h vector of bandwidths for x and y directions, see \code{\link[MASS]{kde2d}}.
@@ -10,7 +10,7 @@
 #'          vector.
 #' @param col vector of colours to use to form a 'continuous' sequence of colours. 
 #' @param contour.col colour of the contours.
-#' @param cuts number of colours in `col`.
+#' @param cuts number of colours in \code{col}.
 #' @param cex character expansion.
 #' @param tcl The length of tick marks as a fraction of the height of a line of text. 
 #' @param mgp The margin line.

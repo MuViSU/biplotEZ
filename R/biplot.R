@@ -64,7 +64,7 @@
 #' * [means()]: Insert class means to the display, and format appropriately
 #' 
 #' \strong{4. Append the biplot display:}
-#' * [alpha.bags()]: Add alpha bags
+#' * [alpha.bags()]: Add \eqn{\alpha}-bags
 #' * [ellipses()]: Add ellipses
 #' * [density2D()]: Add 2D density regions
 #' 
@@ -395,8 +395,8 @@ ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple"
 #' @return A list with the following components is available:
 #' \item{samples}{TRUE or FALSE, whether legend for samples are provided.}
 #' \item{means}{TRUE or FALSE, whether legend for class means are provided.}
-#' \item{bags}{TRUE or FALSE, whether legend for alpha-bags are provided.}
-#' \item{ellipses}{TRUE or FALSE, whether legend for kappa-ellipses are provided.}
+#' \item{bags}{TRUE or FALSE, whether legend for \eqn{\alpha}-bags are provided.}
+#' \item{ellipses}{TRUE or FALSE, whether legend for \eqn{\kappa}-ellipses are provided.}
 #' \item{new}{TRUE or FALSE, whether legend appears on new plot.}
 #'
 #' @export
