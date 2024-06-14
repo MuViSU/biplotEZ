@@ -16,9 +16,9 @@
 #'                  colour of the sample points.
 #' @param label.cex label text expansion, with default \code{0.75}.
 #' @param label.side side of the plotting character where label appears, with default \code{bottom}. Note that unlike
-#'                   the argument `pos` in `text()`, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
+#'                   the argument \code{pos} in \code{text()}, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
 #' @param label.offset offset of the label from the data point. See ?text for a detailed explanation of the
-#'                     argument `offset`.
+#'                     argument \code{offset}.
 #' @param connected logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.
 #' @param connect.col colour of the connecting line, with default \code{black}.
 #' @param connect.lty line type of the connecting line, with default \code{1}.
@@ -26,11 +26,11 @@
 #' @param opacity opacity of sample points, with default 1 (opaque).
 #'
 #' @details
-#' The arguments `which`, `col`, `pch` and `cex` are based on the specification of `group.aes` or `classes`. If no groups
+#' The arguments \code{which}, \code{col}, \code{pch} and \code{cex} are based on the specification of \code{group.aes} or \code{classes}. If no groups
 #' are specified, a single colour, plotting character and / or character expansion is expected. If g groups are
 #' specified, vectors of length g is expected, or values are recycled to length g.
 #'
-#' The arguments `label`, `label.cex`, `label.side` and `label.offset` are based on the sample size n. A single value
+#' The arguments \code{label}, \code{label.cex}, \code{label.side} and \code{label.offset} are based on the sample size n. A single value
 #' will be recycled n times or a vector of length n is expected.
 #'
 #' @return A list with the following components is available:
@@ -173,9 +173,9 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
 #'                  colour of the means.
 #' @param label.cex label text expansion, with default \code{0.75}.
 #' @param label.side side of the plotting character where label appears, with default \code{bottom}. Note that unlike
-#'                   the argument `pos` in `text()`, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
+#'                   the argument \code{pos} in \code{text()}, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
 #' @param label.offset offset of the label from the mean point. See ?text for a detailed explanation of the
-#'                     argument `offset`.
+#'                     argument \code{offset}.
 #' @param opacity transparency of means.
 #' @param shade.darker automatically makes the colour of the means a darker shade than the default (or specified) colour
 #' 
@@ -529,9 +529,9 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #'                  colour of the sample points.
 #' @param label.cex label text expansion, with default \code{0.75}.
 #' @param label.side side of the plotting character where label appears, with default \code{bottom}. Note that unlike
-#'                   the argument `pos` in `text()`, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
+#'                   the argument \code{pos} in \code{text()}, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
 #' @param label.offset offset of the label from the data point. See ?text for a detailed explanation of the
-#'                     argument `offset`.
+#'                     argument \code{offset}.
 #' @param connected logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.
 #' @param connect.col colour of the connecting line, with default \code{black}.
 #' @param connect.lty line type of the connecting line, with default \code{1}.
@@ -612,12 +612,12 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
 
 #' Aesthetics for supplementary (new) biplot axes
 #'
-#' @param bp object of class `biplot`
+#' @param bp object of class \code{biplot}
 #' @param X.new.names refers to the new column names of \code{bp} to specify which axes to label.
 #' @param which vector of new columns to be displayed in the biplot.
 #' @inheritParams axes
 #'
-#' @return an object of class `biplot`
+#' @return an object of class \code{biplot}
 #' @export
 #'
 #' @usage
@@ -707,7 +707,7 @@ newaxes <- function (bp, X.new.names=bp$var.names, which = 1:bp$num.vars, col = 
 #' @param n number of grid points in each direction. Can be scalar or a length-2 integer vector.
 #' @param col vector of colours to use to form a 'continuous' sequence of colours.
 #' @param contour.col colour of the contours.
-#' @param cuts number of colours in `col`.
+#' @param cuts number of colours in \code{col}.
 #' @param cex character expansion.
 #' @param tcl The length of tick marks as a fraction of the height of a line of text. 
 #' @param mgp The margin line.
