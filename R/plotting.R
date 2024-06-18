@@ -325,11 +325,11 @@ plot3D <- function(bp,
 
 #' Plotting function for 1D biplots
 #'
-#' @param x object of class `biplot`
+#' @param x object of class \code{biplot}
 #' @param exp.factor expansion factor
 #' @param ... more arguments
 #'
-#' @return an object of class `biplot`
+#' @return an object of class \code{biplot}
 #'
 #' @noRd
 #' 

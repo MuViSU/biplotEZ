@@ -12,9 +12,9 @@
 #' @param weightedCVA the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".
 #' @param show.class.means logical, indicating whether to plot the class means on the biplot.
 #'
-#' @param low.dim if the dimension of the canonical space is smaller than `dim.biplot`, the method to use to construct
-#'                   additional dimension(s). Currently two options are implemented: `sample.opt` maximises the sample predictivity
-#'                   of the individual samples in the biplot and `Bhattacharyya.dist` is based on the decomposition of the
+#' @param low.dim if the dimension of the canonical space is smaller than \code{dim.biplot}, the method to use to construct
+#'                   additional dimension(s). Currently two options are implemented: \code{sample.opt} maximises the sample predictivity
+#'                   of the individual samples in the biplot and \code{Bhattacharyya.dist} is based on the decomposition of the
 #'                   Bhattacharyya distance into a component for the sample means and a component for the dissimilarity
 #'                   between the sample covariance matrices.
 #'
@@ -33,13 +33,15 @@
 #' \item{g.names}{descriptive name to be used for group labels.}
 #' \item{g}{number of groups.}
 #' \item{Title}{title of the biplot to be rendered.}
-#' \item{Gmat}{indicator matrix for class membership.}
-#' \item{Xmeans}{matrix of class means.}
-#' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
-#' \item{Zmeans}{matrix of canonical means.}
 #' \item{Lmat}{matrix for transformation to the canonical space.}
 #' \item{Linv}{inverse of the Lmat matrix.}
 #' \item{eigenvalues}{vector of eigenvalues of the two-sided eigenvalue problem.}
+#' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+#' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
+#' \item{Xbar}{}
+#' \item{Gmat}{indicator matrix for class membership.}
+#' \item{Xmeans}{matrix of class means.}
+#' \item{Zmeans}{matrix of the class mean coordinates to be plotted in the biplot.}
 #' \item{Cmat}{Centring matrix based on different choices of weighting.
 #'             For \code{"weighted"}, \code{Cmat} is a diagonal matrix with
 #'             the class sizes, for \code{"unweightedI"}, \code{Cmat} is an
@@ -48,9 +50,7 @@
 #' \item{Bmat}{Between class sums of squares and cross products matrix.}
 #' \item{Wmat}{Within class sums of squares and corss products matrix.}
 #' \item{e.vects}{vector indicating which canonical variates are plotted in the biplot.}
-#' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
 #' \item{class.means}{logical value, indicating whether the class means should be plotted in the biplot.}
-#' \item{Zmeans}{matrix of the class mean coordinates to be plotted in the biplot.}
 #'
 #' @usage CVA(bp, classes=bp$classes, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 #'            weightedCVA = "weighted", show.class.means = TRUE,
@@ -177,13 +177,13 @@ CVA.biplot <- function(bp, classes=bp$classes, dim.biplot = c(2,1,3), e.vects = 
 
 #' CVA extra dimensions if dim(canonical space) < dimension of the biplot
 #'
-#' @param bp object of class `biplot`
+#' @param bp object of class \code{biplot}
 #' @param G indicator matrix of class membership
 #' @param W within class covariance matrix
 #' @param Mmat eigenvector matrix from CVA
-#' @param low.dim if the dimension of the canonical space is smaller than `dim.biplot`, the method to use to construct
-#'                   additional dimension(s). Currently two options are implemented: `sample.opt` maximises the sample predictivity
-#'                   of the individual samples in the biplot and `Bhattacharyya.dist` is based on the decomposition of the
+#' @param low.dim if the dimension of the canonical space is smaller than \code{dim.biplot}, the method to use to construct
+#'                   additional dimension(s). Currently two options are implemented: \code{sample.opt} maximises the sample predictivity
+#'                   of the individual samples in the biplot and \code{Bhattacharyya.dist} is based on the decomposition of the
 #'                   Bhattacharyya distance into a component for the sample means and a component for the dissimilarity
 #'                   between the sample covariance matrices.
 #' @param K dimension of the canonical space
