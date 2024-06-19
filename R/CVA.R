@@ -22,6 +22,7 @@
 #' \item{X}{matrix of the centered and scaled numeric variables.}
 #' \item{Xcat}{matrix of the categorical variables.}
 #' \item{raw.X}{original data.}
+#' \item{classes}{vector of category levels for the class variable. This is to be used for colour, pch and cex specifications.}
 #' \item{na.action}{vector of observations that have been removed.}
 #' \item{center}{TRUE or FALSE, whether X is centred.}
 #' \item{scaled}{TRUE or FALSE, whether X is scaled.}
@@ -38,10 +39,11 @@
 #' \item{eigenvalues}{vector of eigenvalues of the two-sided eigenvalue problem.}
 #' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 #' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
-#' \item{Xbar}{}
-#' \item{Gmat}{indicator matrix for class membership.}
+#' \item{Xbar}{the matrix of group means.}
+#' \item{Gmat}{indicator matrix defining membership of the classes.}
 #' \item{Xmeans}{matrix of class means.}
 #' \item{Zmeans}{matrix of the class mean coordinates to be plotted in the biplot.}
+#' \item{e.vects}{vector indicating which canonical variates are plotted in the biplot.}
 #' \item{Cmat}{Centring matrix based on different choices of weighting.
 #'             For \code{"weighted"}, \code{Cmat} is a diagonal matrix with
 #'             the class sizes, for \code{"unweightedI"}, \code{Cmat} is an
@@ -49,8 +51,13 @@
 #'             \code{"unweightedCent"}, \code{Cmat} is the usual centring matrix. }
 #' \item{Bmat}{Between class sums of squares and cross products matrix.}
 #' \item{Wmat}{Within class sums of squares and corss products matrix.}
-#' \item{e.vects}{vector indicating which canonical variates are plotted in the biplot.}
+#' \item{Mrr}{...}
+#' \item{Mr}{...}
+#' \item{Nmat}{a matrix with the class sizes on the diagonal.}
+#' \item{lambda.mat}{...}
 #' \item{class.means}{logical value, indicating whether the class means should be plotted in the biplot.}
+#' \item{dim.biplot}{dimension of the biplot.}
+#' \item{low.dim}{...}
 #'
 #' @usage CVA(bp, classes=bp$classes, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 #'            weightedCVA = "weighted", show.class.means = TRUE,

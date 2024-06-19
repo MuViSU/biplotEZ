@@ -26,8 +26,8 @@ new = FALSE, ...)
 A list with the following components is available:
 \item{samples}{TRUE or FALSE, whether legend for samples are provided.}
 \item{means}{TRUE or FALSE, whether legend for class means are provided.}
-\item{bags}{TRUE or FALSE, whether legend for alpha-bags are provided.}
-\item{ellipses}{TRUE or FALSE, whether legend for kappa-ellipses are provided.}
+\item{bags}{TRUE or FALSE, whether legend for \eqn{\alpha}-bags are provided.}
+\item{ellipses}{TRUE or FALSE, whether legend for \eqn{\kappa}-ellipses are provided.}
 \item{new}{TRUE or FALSE, whether legend appears on new plot.}
 }
 \description{

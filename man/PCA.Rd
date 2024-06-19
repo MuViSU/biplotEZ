@@ -29,6 +29,7 @@ Object of class PCA with the following elements:
 \item{X}{matrix of the centered and scaled numeric variables.}
 \item{Xcat}{matrix of the categorical variables.}
 \item{raw.X}{original data.}
+\item{classes}{vector of category levels for the class variable. This is to be used for colour, pch and cex specifications. Used in CVA}
 \item{na.action}{vector of observations that have been removed.}
 \item{center}{TRUE or FALSE, whether X is centred.}
 \item{scaled}{TRUE or FALSE, whether X is scaled.}
@@ -42,9 +43,15 @@ Object of class PCA with the following elements:
 \item{Title}{title of the biplot to be rendered}
 \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 \item{Lmat}{matrix for transformation to the principal components.}
+\item{Linv}{inverse of the Lmat matrix.}
 \item{eigenvalues}{vector of eigenvalues of the covariance matrix of \code{X}.}
-\item{e.vects}{vector indicating which principal components are plotted in the biplot.}
 \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
+\item{e.vects}{vector indicating which principal components are plotted in the biplot.}
+\item{Vr}{the \code{1:dim.biplot} columns of the \code{V.mat}.}
+\item{dim.biplot}{dimension of the biplot.}
+\item{V.mat}{the matrix containing the right singular vectors of \code{X}.}
+\item{Sigma.mat}{the matrix with the singular values of \code{X} on the diagonal.}
+\item{U.mat}{the matrix containing the left singular vectors of \code{X}.}
 \item{class.means}{logical, indicating whether group means should be plotted in the biplot.}
 \item{Zmeans}{matrix of class mean coordinates to be plotted in the biplot.}
 }

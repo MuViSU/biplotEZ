@@ -6,9 +6,9 @@
 \usage{
 \method{CVA}{biplot}(
   bp,
+  classes = bp$classes,
   dim.biplot = c(2, 1, 3),
   e.vects = 1:ncol(bp$X),
-  classes = bp$classes,
   weightedCVA = "weighted",
   show.class.means = TRUE,
   low.dim = "sample.opt"
@@ -17,12 +17,12 @@
 \arguments{
 \item{bp}{object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
+\item{classes}{vector of the same length as the number of rows in the data matrix
+with the class indicator for the samples.}
+
 \item{dim.biplot}{dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
 
 \item{e.vects}{which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.}
-
-\item{classes}{vector of the same length as the number of rows in the data matrix
-with the class indicator for the samples.}
 
 \item{weightedCVA}{the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".}
 

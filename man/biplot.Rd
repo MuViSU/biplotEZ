@@ -25,11 +25,17 @@ A list with the following components is available:
 \item{X}{matrix of the centered and scaled numeric variables.}
 \item{Xcat}{data frame of the categorical variables.}
 \item{raw.X}{original data.}
+\item{classes}{vector of category levels for the class variable. This is to be used for colour, pch and cex specifications. Used in CVA}
+\item{na.action}{vector of observations that have been removed.}
 \item{center}{TRUE or FALSE, whether X is centered.}
 \item{scaled}{TRUE or FALSE, wether X is scaled.}
 \item{means}{vector of means for each numeric variable.}
 \item{sd}{vector of standard deviations for each numeric variable.}
+\item{n}{number of observations.}
+\item{p}{number of variables.}
 \item{group.aes}{vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.}
+\item{g.names}{descriptive name to be used for group labels.}
+\item{g}{number of groups.}
 \item{Title}{title of the biplot to be rendered}
 }
 \description{
@@ -78,7 +84,7 @@ Finally, superimpose shapes, characters or elements onto the display.
 
 \strong{4. Append the biplot display:}
 \itemize{
-\item \code{\link[=alpha.bags]{alpha.bags()}}: Add alpha bags
+\item \code{\link[=alpha.bags]{alpha.bags()}}: Add \eqn{\alpha}-bags
 \item \code{\link[=ellipses]{ellipses()}}: Add ellipses
 \item \code{\link[=density2D]{density2D()}}: Add 2D density regions
 }
