@@ -35,7 +35,7 @@
 #' \item{g}{number of groups.}
 #' \item{Title}{title of the biplot to be rendered.}
 #' \item{Lmat}{matrix for transformation to the canonical space.}
-#' \item{Linv}{inverse of the Lmat matrix.}
+#' \item{Linv}{inverse of the \code{Lmat} matrix.}
 #' \item{eigenvalues}{vector of eigenvalues of the two-sided eigenvalue problem.}
 #' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 #' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
@@ -44,20 +44,21 @@
 #' \item{Xmeans}{matrix of class means.}
 #' \item{Zmeans}{matrix of the class mean coordinates to be plotted in the biplot.}
 #' \item{e.vects}{vector indicating which canonical variates are plotted in the biplot.}
-#' \item{Cmat}{Centring matrix based on different choices of weighting.
+#' \item{Cmat}{centring matrix based on different choices of weighting.
 #'             For \code{"weighted"}, \code{Cmat} is a diagonal matrix with
 #'             the class sizes, for \code{"unweightedI"}, \code{Cmat} is an
 #'             indicator matrix and for
 #'             \code{"unweightedCent"}, \code{Cmat} is the usual centring matrix. }
-#' \item{Bmat}{Between class sums of squares and cross products matrix.}
-#' \item{Wmat}{Within class sums of squares and corss products matrix.}
-#' \item{Mrr}{...}
-#' \item{Mr}{...}
+#' \item{Bmat}{between class sums of squares and cross products matrix.}
+#' \item{Wmat}{within class sums of squares and cross products matrix.}
+#' \item{Mrr}{the inverse of the matrix \eqn{M = LV}.}
+#' \item{Mr}{the first r dimensions of **M** to be plotted.}
 #' \item{Nmat}{a matrix with the class sizes on the diagonal.}
-#' \item{lambda.mat}{...}
+#' \item{lambda.mat}{the matrix with the eigenvalues of \eqn{W^{-1/2}(\bar{X}'C\bar{X})W^{-1/2}} on the diagonal.}
 #' \item{class.means}{logical value, indicating whether the class means should be plotted in the biplot.}
 #' \item{dim.biplot}{dimension of the biplot.}
-#' \item{low.dim}{...}
+#' \item{low.dim}{if the dimension of the canonical space is smaller than \code{dim.biplot}, the method used to construct
+#'                   additional dimension(s).}
 #'
 #' @usage CVA(bp, classes=bp$classes, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 #'            weightedCVA = "weighted", show.class.means = TRUE,
