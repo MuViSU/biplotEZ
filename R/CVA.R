@@ -52,9 +52,9 @@
 #' \item{Bmat}{between class sums of squares and cross products matrix.}
 #' \item{Wmat}{within class sums of squares and cross products matrix.}
 #' \item{Mrr}{the inverse of the matrix \eqn{M = LV}.}
-#' \item{Mr}{the first r dimensions of **M** to be plotted.}
+#' \item{Mr}{the first r dimensions of the solution to be plotted.}
 #' \item{Nmat}{a matrix with the class sizes on the diagonal.}
-#' \item{lambda.mat}{the matrix with the eigenvalues of \eqn{W^{-1/2}(\bar{X}'C\bar{X})W^{-1/2}} on the diagonal.}
+#' \item{lambda.mat}{the matrix with the eigenvalues of \eqn{W^{-1/2}BW^{-1/2}} on the diagonal.}
 #' \item{class.means}{logical value, indicating whether the class means should be plotted in the biplot.}
 #' \item{dim.biplot}{dimension of the biplot.}
 #' \item{low.dim}{if the dimension of the canonical space is smaller than \code{dim.biplot}, the method used to construct
