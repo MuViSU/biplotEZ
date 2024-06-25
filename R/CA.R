@@ -13,16 +13,18 @@
 #'  equally by the singular values. 
 #'
 #' @return A list with the following components is available:
-#' \item{rowcoor}{Row coordinates based on the selected \code{variant}.}
-#' \item{colcoor}{Column coordinates based on the selected \code{variant}.}
-#' \item{rowPrinc}{Row principal coordinates from the SVD of the Pearson residuals.}
-#' \item{colPrinc}{Column principal coordinates from the SVD of the Pearson residuals.}
-#' \item{rowStand}{Row standard coordinates from the SVD of the Pearson residuals.}
-#' \item{colStand}{Column standard coordinates from the SVD of the Pearson residuals.}
-#' \item{P}{Correspondence Matrix}
+#' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+#' \item{rowcoor}{row coordinates based on the selected \code{variant}.}
+#' \item{colcoor}{column coordinates based on the selected \code{variant}.}
+#' \item{rowPrinc}{row principal coordinates from the SVD of the Pearson residuals.}
+#' \item{colPrinc}{column principal coordinates from the SVD of the Pearson residuals.}
+#' \item{rowStand}{row standard coordinates from the SVD of the Pearson residuals.}
+#' \item{colStand}{column standard coordinates from the SVD of the Pearson residuals.}
+#' \item{P}{correspondence matrix}
 #' \item{Smat}{Pearson residuals.}
-#' \item{SVD}{Singular value decomposition solution: \code{d, u, v}.}
-#' \item{qual}{Quality of the approximation.}
+#' \item{SVD}{singular value decomposition solution: \code{d, u, v}.}
+#' \item{qual}{quality of the approximation.}
+#' \item{dim.biplot}{dimension of the biplot}
 #'
 #' @usage CA(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant = "Princ")
 #' @aliases CA
