@@ -17,7 +17,7 @@ for differentiated aesthetics for samples.}
 \item{show.group.means}{logical, indicating whether group means should be plotted in the biplot.}
 }
 \value{
-an object of class biplot.
+an object of class \code{biplot}.
 }
 \description{
 Computes regression biplot axes

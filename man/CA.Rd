@@ -27,11 +27,12 @@ A list with the following components is available:
 \item{colPrinc}{column principal coordinates from the SVD of the Pearson residuals.}
 \item{rowStand}{row standard coordinates from the SVD of the Pearson residuals.}
 \item{colStand}{column standard coordinates from the SVD of the Pearson residuals.}
-\item{P}{correspondence matrix}
+\item{P}{correspondence matrix.}
 \item{Smat}{Pearson residuals.}
 \item{SVD}{singular value decomposition solution: \code{d, u, v}.}
 \item{qual}{quality of the approximation.}
-\item{dim.biplot}{dimension of the biplot}
+\item{dim.biplot}{dimension of the biplot.}
+\item{samples}{a list of aesthetics for sample points.}
 }
 \description{
 This function produces a list of elements to be used for CA biplot construction by approximation of the Pearson residuals.

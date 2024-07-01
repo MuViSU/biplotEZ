@@ -29,7 +29,7 @@ regress <- function (bp, Z, group.aes=NULL, show.group.means = TRUE)
 #'
 #' @inheritParams regress
 #'
-#' @return an object of class biplot.
+#' @return an object of class \code{biplot}.
 #' @export
 #'
 #' @examples

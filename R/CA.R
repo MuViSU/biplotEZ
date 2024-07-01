@@ -20,11 +20,12 @@
 #' \item{colPrinc}{column principal coordinates from the SVD of the Pearson residuals.}
 #' \item{rowStand}{row standard coordinates from the SVD of the Pearson residuals.}
 #' \item{colStand}{column standard coordinates from the SVD of the Pearson residuals.}
-#' \item{P}{correspondence matrix}
+#' \item{P}{correspondence matrix.}
 #' \item{Smat}{Pearson residuals.}
 #' \item{SVD}{singular value decomposition solution: \code{d, u, v}.}
 #' \item{qual}{quality of the approximation.}
-#' \item{dim.biplot}{dimension of the biplot}
+#' \item{dim.biplot}{dimension of the biplot.}
+#' \item{samples}{a list of aesthetics for sample points.}
 #'
 #' @usage CA(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant = "Princ")
 #' @aliases CA
