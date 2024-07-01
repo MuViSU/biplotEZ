@@ -27,20 +27,20 @@ axes. Default is \code{FALSE}.}
 \value{
 Object of class PCA with the following elements:
 \item{X}{matrix of the centered and scaled numeric variables.}
-\item{Xcat}{matrix of the categorical variables.}
+\item{Xcat}{data frame of the categorical variables.}
 \item{raw.X}{original data.}
-\item{classes}{vector of category levels for the class variable. This is to be used for colour, pch and cex specifications. Used in CVA}
+\item{classes}{vector of category levels for the class variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
 \item{na.action}{vector of observations that have been removed.}
-\item{center}{TRUE or FALSE, whether X is centred.}
-\item{scaled}{TRUE or FALSE, whether X is scaled.}
-\item{means}{mean of each numerical variable.}
-\item{sd}{standard deviation of each numerical variable.}
+\item{center}{logical. indicating whether X is centered.}
+\item{scaled}{logical. indicating whether X is scaled.}
+\item{means}{vector of means for each numerical variable.}
+\item{sd}{vector of standard deviations for each numerical variable.}
 \item{n}{number of observations.}
 \item{p}{number of variables.}
 \item{group.aes}{vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples.}
-\item{g.names}{descriptive name to be used for group labels.}
+\item{g.names}{descriptive names to be used for group labels.}
 \item{g}{number of groups.}
-\item{Title}{title of the biplot to be rendered}
+\item{Title}{title of the biplot to be rendered.}
 \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 \item{Lmat}{matrix for transformation to the principal components.}
 \item{Linv}{inverse of the Lmat matrix.}
@@ -52,7 +52,7 @@ Object of class PCA with the following elements:
 \item{V.mat}{the matrix containing the right singular vectors of \code{X}.}
 \item{Sigma.mat}{the matrix with the singular values of \code{X} on the diagonal.}
 \item{U.mat}{the matrix containing the left singular vectors of \code{X}.}
-\item{class.means}{logical, indicating whether group means should be plotted in the biplot.}
+\item{class.means}{logical. indicating whether group means should be plotted in the biplot.}
 \item{Zmeans}{matrix of class mean coordinates to be plotted in the biplot.}
 }
 \description{

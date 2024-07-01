@@ -24,11 +24,11 @@ new = FALSE, ...)
 }
 \value{
 A list with the following components is available:
-\item{samples}{TRUE or FALSE, whether legend for samples are provided.}
-\item{means}{TRUE or FALSE, whether legend for class means are provided.}
-\item{bags}{TRUE or FALSE, whether legend for \eqn{\alpha}-bags are provided.}
-\item{ellipses}{TRUE or FALSE, whether legend for \eqn{\kappa}-ellipses are provided.}
-\item{new}{TRUE or FALSE, whether legend appears on new plot.}
+\item{samples}{TRUE or FALSE, indicating whether legend for samples are provided.}
+\item{means}{TRUE or FALSE, indicating whether legend for class means are provided.}
+\item{bags}{TRUE or FALSE, indicating whether legend for \eqn{\alpha}-bags are provided.}
+\item{ellipses}{TRUE or FALSE, indicating whether legend for \eqn{\kappa}-ellipses are provided.}
+\item{new}{TRUE or FALSE, indicating whether legend appears on new plot.}
 }
 \description{
 This function enables the user to format the legend and make a required selection to display.

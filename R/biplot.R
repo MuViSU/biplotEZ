@@ -16,11 +16,11 @@
 #' distribution of a sample in a few dimensions and they superimpose on this
 #' display representations of the variables on which the samples are measured.
 #'
-#' @param data a dataframe or numeric matrix containing all variables the user wants to analyse.
+#' @param data a data frame or numeric matrix containing all variables the user wants to analyse.
 #' @param classes vector identifying class membership.
 #' @param group.aes vector identifying groups for aesthetic formatting.
 #' @param center logical, indicating whether \code{data} should be column centered, with default \code{TRUE}.
-#' @param scaled logical, indicating whether \code{data} should be standardized to unit column variances, with default \code{FALSE}.
+#' @param scaled logical, indicating whether \code{data} should be standardised to unit column variances, with default \code{FALSE}.
 #' @param Title title of the biplot to be rendered, enter text in "  ".
 #'
 #' @details
@@ -32,16 +32,16 @@
 #' \item{X}{matrix of the centered and scaled numeric variables.}
 #' \item{Xcat}{data frame of the categorical variables.}
 #' \item{raw.X}{original data.}
-#' \item{classes}{vector of category levels for the class variable. This is to be used for colour, pch and cex specifications. Used in CVA}
+#' \item{classes}{vector of category levels for the class variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
 #' \item{na.action}{vector of observations that have been removed.}
-#' \item{center}{TRUE or FALSE, whether X is centered.}
-#' \item{scaled}{TRUE or FALSE, wether X is scaled.}
+#' \item{center}{TRUE or FALSE, indicating whether X is centered.}
+#' \item{scaled}{TRUE or FALSE, indicating whether X is scaled.}
 #' \item{means}{vector of means for each numeric variable.}
 #' \item{sd}{vector of standard deviations for each numeric variable.}
 #' \item{n}{number of observations.}
 #' \item{p}{number of variables.}
-#' \item{group.aes}{vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.}
-#' \item{g.names}{descriptive name to be used for group labels.}
+#' \item{group.aes}{vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
+#' \item{g.names}{descriptive names to be used for group labels.}
 #' \item{g}{number of groups.}
 #' \item{Title}{title of the biplot to be rendered}
 #'
@@ -78,6 +78,7 @@
 #'  * [plot()]
 #'  * [fit.measures()]
 #'  * [legend.type()]
+#'  * [interpolate()]
 #'  * [prediction()]
 #'  * [classify()]
 #'  * [reflect()]
@@ -305,7 +306,7 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
   object
 }
 
-#' Compute measures of fit for biplot.
+#' Compute measures of fit for the biplot.
 #'
 #' @param bp an object of class \code{biplot}.
 #'
@@ -399,11 +400,11 @@ ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple"
 #' @param ... additional arguments to be sent to \code{legend()}.
 #'
 #' @return A list with the following components is available:
-#' \item{samples}{TRUE or FALSE, whether legend for samples are provided.}
-#' \item{means}{TRUE or FALSE, whether legend for class means are provided.}
-#' \item{bags}{TRUE or FALSE, whether legend for \eqn{\alpha}-bags are provided.}
-#' \item{ellipses}{TRUE or FALSE, whether legend for \eqn{\kappa}-ellipses are provided.}
-#' \item{new}{TRUE or FALSE, whether legend appears on new plot.}
+#' \item{samples}{TRUE or FALSE, indicating whether legend for samples are provided.}
+#' \item{means}{TRUE or FALSE, indicating whether legend for class means are provided.}
+#' \item{bags}{TRUE or FALSE, indicating whether legend for \eqn{\alpha}-bags are provided.}
+#' \item{ellipses}{TRUE or FALSE, indicating whether legend for \eqn{\kappa}-ellipses are provided.}
+#' \item{new}{TRUE or FALSE, indicating whether legend appears on new plot.}
 #'
 #' @export
 #' @examples
@@ -527,15 +528,15 @@ print.biplot <- function (x, ...)
 #' Generic summary function of objects of class biplot
 #'
 #' @param object an object of class \code{biplot}.
-#' @param adequacy logical, whether variable adequacies should be reported.
-#' @param axis.predictivity logical, whether axis predictivities should be reported.
-#' @param sample.predictivity logical, whether sample predictivities should be reported.
-#' @param class.predictivity logical, whether class predictivities should be reported
+#' @param adequacy logical, indicating whether variable adequacies should be reported.
+#' @param axis.predictivity logical, indicating whether axis predictivities should be reported.
+#' @param sample.predictivity logical, indicating whether sample predictivities should be reported.
+#' @param class.predictivity logical, indicating whether class predictivities should be reported
 #'                           (only applicable to objects of class \code{CVA}).
-#' @param within.class.axis.predictivity logical, whether within class axis predictivity
+#' @param within.class.axis.predictivity logical, indicating whether within class axis predictivity
 #'                                       should be reported(only applicable to objects
 #'                                       of class \code{CVA}).
-#' @param within.class.sample.predictivity logical, whether within class sample predictivity
+#' @param within.class.sample.predictivity logical, indicating whether within class sample predictivity
 #'                                       should be reported(only applicable to objects
 #'                                       of class \code{CVA}).
 #' @param ... additional arguments.
@@ -638,27 +639,27 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
 #'
 #' @return Object of class \code{biplot} with the following elements:
 #' \item{X}{matrix of the centered and scaled numeric variables.}
-#' \item{Xcat}{matrix of the categorical variables.}
+#' \item{Xcat}{data frame of the categorical variables.}
 #' \item{raw.X}{original data.}
 #' \item{na.action}{vector of observations that have been removed.}
-#' \item{center}{TRUE or FALSE, whether X is centred.}
-#' \item{scaled}{TRUE or FALSE, whether X is scaled.}
-#' \item{means}{mean of each numerical variable.}
-#' \item{sd}{standard deviation of each numerical variable.}
+#' \item{center}{TRUE or FALSE, indicating whether X is centered.}
+#' \item{scaled}{TRUE or FALSE, indicating whether X is scaled.}
+#' \item{means}{vector of means for each numerical variable.}
+#' \item{sd}{vector of standard deviations for each numerical variable.}
 #' \item{n}{number of observations.}
 #' \item{p}{number of variables.}
-#' \item{group.aes}{vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples.}
-#' \item{g.names}{descriptive name to be used for group labels.}
+#' \item{group.aes}{vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
+#' \item{g.names}{descriptive names to be used for group labels.}
 #' \item{g}{number of groups.}
-#' \item{Title}{title of the biplot to be rendered}
+#' \item{Title}{title of the biplot to be rendered.}
 #' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 #' \item{Lmat}{matrix for transformation to the principal components.}
 #' \item{e.vects}{vector indicating which principal components are plotted in the biplot.}
 #' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
-#' \item{Xnew.raw}{ newdata numerical variables.}
-#' \item{Xnew}{matrix of the centered and scaled new numeric variables.}
-#' \item{Xnew.cat}{matrix of the new categorical variables.}
-#' \item{Znew}{matrix of the coordinates of the newdata in the biplot.}
+#' \item{Xnew.raw}{new data.}
+#' \item{Xnew}{matrix of the centered and scaled new numeric variables of new data.}
+#' \item{Xnew.cat}{matrix of the categorical variables of new data.}
+#' \item{Znew}{matrix of the coordinates of the new data in the biplot.}
 #'
 #' @export
 #'
@@ -843,11 +844,11 @@ prediction <- function (bp, predict.samples=NULL,predict.means=NULL,which=1:bp$p
 # -----------------------------------------------------------------------------------------------------
 #' Classification of samples into classes
 #'
-#' @param bp object of class `biplot`
-#' @param classify.regions logical indicating whether classifications regions are
+#' @param bp object of class \code{biplot}
+#' @param classify.regions logical, indicating whether classifications regions are
 #'                         shown in the biplot
-#' @param col color of classification regions
-#' @param shade opacity of classification regions
+#' @param col colour of classification regions
+#' @param opacity opacity of classification regions
 #' @param borders border colour of classification regions
 #'
 #' @return An object of class \code{biplot}
@@ -855,8 +856,8 @@ prediction <- function (bp, predict.samples=NULL,predict.means=NULL,which=1:bp$p
 #'
 #' @examples
 #' biplot(iris[,1:4],classes = iris[,5]) |> CVA() |> axes(col="black") |> 
-#'   classify(col=c("red","blue","orange"),shade=0.1) |> plot()
-classify <- function(bp,classify.regions = TRUE,col=ez.col,shade=0.4,borders = FALSE)
+#'   classify(col=c("red","blue","orange"),opacity=0.1) |> plot()
+classify <- function(bp,classify.regions = TRUE,col=ez.col,opacity=0.4,borders = FALSE)
 {
   if (!inherits(bp, "CVA")) warning("Classification only works for CVA objects") 
   else {
@@ -881,7 +882,7 @@ classify <- function(bp,classify.regions = TRUE,col=ez.col,shade=0.4,borders = F
   rate <- caret::confusionMatrix(actual_group,predicted)$overall[1]
   
   bp$classify <- list(table=table,rate=rate,classify.regions=classify.regions,
-                      aes=list(col=col,shade=shade,borders=borders))
+                      aes=list(col=col,opacity=opacity,borders=borders))
 }
   bp
 }
@@ -889,7 +890,7 @@ classify <- function(bp,classify.regions = TRUE,col=ez.col,shade=0.4,borders = F
 # -----------------------------------------------------------------------------------------------------
 #' Reflect
 #'
-#' @param bp object of class `biplot`
+#' @param bp object of class \code{biplot}
 #' @param reflect.axis Defaults to FALSE. Possible values are "x" for reflection about x-axis or "y" for reflection about y-axis.
 #'
 #' @return An object of class \code{biplot}
@@ -918,8 +919,8 @@ reflect <- function(bp,reflect.axis = c("FALSE","x","y","xy"))
 # -----------------------------------------------------------------------------------------------------
 #' Rotate
 #'
-#' @param bp object of class `biplot`
-#' @param rotate.degrees Default is 0. Positive value results in anti-clockwise rotation and negative value in clockwise rotation.
+#' @param bp object of class \code{biplot}
+#' @param rotate.degrees Default is \code{0}. Positive value results in anti-clockwise rotation and negative value in clockwise rotation.
 #'
 #' @return An object of class \code{biplot}.
 #' @export

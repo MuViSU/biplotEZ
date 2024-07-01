@@ -8,19 +8,19 @@ classify(
   bp,
   classify.regions = TRUE,
   col = ez.col,
-  shade = 0.4,
+  opacity = 0.4,
   borders = FALSE
 )
 }
 \arguments{
 \item{bp}{object of class \code{biplot}}
 
-\item{classify.regions}{logical indicating whether classifications regions are
+\item{classify.regions}{logical, indicating whether classifications regions are
 shown in the biplot}
 
-\item{col}{color of classification regions}
+\item{col}{colour of classification regions}
 
-\item{shade}{opacity of classification regions}
+\item{opacity}{opacity of classification regions}
 
 \item{borders}{border colour of classification regions}
 }
@@ -32,5 +32,5 @@ Classification of samples into classes
 }
 \examples{
 biplot(iris[,1:4],classes = iris[,5]) |> CVA() |> axes(col="black") |> 
-  classify(col=c("red","blue","orange"),shade=0.1) |> plot()
+  classify(col=c("red","blue","orange"),opacity=0.1) |> plot()
 }

@@ -9,7 +9,7 @@ rotate(bp, rotate.degrees = 0)
 \arguments{
 \item{bp}{object of class \code{biplot}}
 
-\item{rotate.degrees}{Default is 0. Positive value results in anti-clockwise rotation and negative value in clockwise rotation.}
+\item{rotate.degrees}{Default is \code{0}. Positive value results in anti-clockwise rotation and negative value in clockwise rotation.}
 }
 \value{
 An object of class \code{biplot}.

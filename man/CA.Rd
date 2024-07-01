@@ -15,7 +15,7 @@ CA(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant = "Princ")
 
 \item{variant}{which correspondence analysis variant, with default "Princ", presents a biplot with rows in principal coordinates
 and columns in standard coordinates. \code{variant = "Stand"}, presents a biplot with rows in standard coordinates and columns in
-principal coordinates. \code{variant = "symmetric"}, presents a symmtric biplot with row and column standard coordinates scaled
+principal coordinates. \code{variant = "symmetric"}, presents a symmetric biplot with row and column standard coordinates scaled
 equally by the singular values.}
 }
 \value{
@@ -32,7 +32,6 @@ A list with the following components is available:
 \item{SVD}{singular value decomposition solution: \code{d, u, v}.}
 \item{qual}{quality of the approximation.}
 \item{dim.biplot}{dimension of the biplot.}
-\item{samples}{a list of aesthetics for sample points.}
 }
 \description{
 This function produces a list of elements to be used for CA biplot construction by approximation of the Pearson residuals.

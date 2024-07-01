@@ -8,7 +8,7 @@ biplot(data, classes = NULL, group.aes = NULL, center = TRUE, scaled = FALSE,
 Title = NULL)
 }
 \arguments{
-\item{data}{a dataframe or numeric matrix containing all variables the user wants to analyse.}
+\item{data}{a data frame or numeric matrix containing all variables the user wants to analyse.}
 
 \item{classes}{vector identifying class membership.}
 
@@ -16,7 +16,7 @@ Title = NULL)
 
 \item{center}{logical, indicating whether \code{data} should be column centered, with default \code{TRUE}.}
 
-\item{scaled}{logical, indicating whether \code{data} should be standardized to unit column variances, with default \code{FALSE}.}
+\item{scaled}{logical, indicating whether \code{data} should be standardised to unit column variances, with default \code{FALSE}.}
 
 \item{Title}{title of the biplot to be rendered, enter text in "  ".}
 }
@@ -25,16 +25,16 @@ A list with the following components is available:
 \item{X}{matrix of the centered and scaled numeric variables.}
 \item{Xcat}{data frame of the categorical variables.}
 \item{raw.X}{original data.}
-\item{classes}{vector of category levels for the class variable. This is to be used for colour, pch and cex specifications. Used in CVA}
+\item{classes}{vector of category levels for the class variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
 \item{na.action}{vector of observations that have been removed.}
-\item{center}{TRUE or FALSE, whether X is centered.}
-\item{scaled}{TRUE or FALSE, wether X is scaled.}
+\item{center}{TRUE or FALSE, indicating whether X is centered.}
+\item{scaled}{TRUE or FALSE, indicating whether X is scaled.}
 \item{means}{vector of means for each numeric variable.}
 \item{sd}{vector of standard deviations for each numeric variable.}
 \item{n}{number of observations.}
 \item{p}{number of variables.}
-\item{group.aes}{vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.}
-\item{g.names}{descriptive name to be used for group labels.}
+\item{group.aes}{vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
+\item{g.names}{descriptive names to be used for group labels.}
 \item{g}{number of groups.}
 \item{Title}{title of the biplot to be rendered}
 }
@@ -94,6 +94,7 @@ Finally, superimpose shapes, characters or elements onto the display.
 \item \code{\link[=plot]{plot()}}
 \item \code{\link[=fit.measures]{fit.measures()}}
 \item \code{\link[=legend.type]{legend.type()}}
+\item \code{\link[=interpolate]{interpolate()}}
 \item \code{\link[=prediction]{prediction()}}
 \item \code{\link[=classify]{classify()}}
 \item \code{\link[=reflect]{reflect()}}

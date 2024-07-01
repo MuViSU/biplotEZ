@@ -19,6 +19,7 @@
 #'
 #' @return An object of class \code{biplot}.
 #' @export
+#' @noRd
 #'
 #' @examples
 #' biplot(iris[,1:4],group.aes = iris[,5]) |> PCA() |> 
@@ -61,23 +62,24 @@ density2D <- function(bp,which = NULL,contours = F, h = NULL, n = 100,
   bp
 }
 
-#' Kernel density estimates of 1D samples
+#' Creates a kernel density in one dimension
 #'
 #' @param bp an object of class \code{biplot}
-#' @param which the selection of groups or classes to be fitted with densitiy estimates
-#' @param bw the smoothing bandwidth to be used.See \code{?density}
-#'        for more details
-#' @param kernel a character string giving the smoothig kernel to be used. See \code{?density}
-#'        for more details
-#' @param col vector of colours for the density estimates
-#' @param lwd vector  of line widths for the density estimates
-#' @param legend.mar margin width for the legend
-#' @param ... additional arguments to be passed to \code{density}
+#' @param which the selection of groups or classes to be fitted with density estimates.
+#' @param h the smoothing bandwidth to be used. See \code{?density} for more details.
+#' @param kernel a character string giving the smoothing kernel to be used. See \code{?density}
+#'        for more details.
+#' @param col vector of colours to be used for each of the density curves.
+#' @param lwd vector of line widths to be used for each of the density curves.
+#' @param legend.mar the margin line of the legend.
+#' @param ... additional arguments to be passed to \code{density}.
 #'
-#' @return
+#' @return An object of class \code{biplot}.
 #' @export
+#' 
+#' @noRd
 #'
-#' @examples
+#' @examples biplot(iris,classes = iris[,5]) |> CVA(dim = 1) |> density1D() |> plot()
 density1D <- function(bp,which = NULL, bw = "nrd0", kernel="gaussian", 
                       col = ez.col, lwd=1.5, 
                       legend.mar = c(2, 5, 0, 5), ...)

@@ -18,27 +18,27 @@ containing supplementary variables to be added on the biplot.}
 \value{
 Object of class \code{biplot} with the following elements:
 \item{X}{matrix of the centered and scaled numeric variables.}
-\item{Xcat}{matrix of the categorical variables.}
+\item{Xcat}{data frame of the categorical variables.}
 \item{raw.X}{original data.}
 \item{na.action}{vector of observations that have been removed.}
-\item{center}{TRUE or FALSE, whether X is centred.}
-\item{scaled}{TRUE or FALSE, whether X is scaled.}
-\item{means}{mean of each numerical variable.}
-\item{sd}{standard deviation of each numerical variable.}
+\item{center}{TRUE or FALSE, indicating whether X is centered.}
+\item{scaled}{TRUE or FALSE, indicating whether X is scaled.}
+\item{means}{vector of means for each numerical variable.}
+\item{sd}{vector of standard deviations for each numerical variable.}
 \item{n}{number of observations.}
 \item{p}{number of variables.}
-\item{group.aes}{vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples.}
-\item{g.names}{descriptive name to be used for group labels.}
+\item{group.aes}{vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
+\item{g.names}{descriptive names to be used for group labels.}
 \item{g}{number of groups.}
-\item{Title}{title of the biplot to be rendered}
+\item{Title}{title of the biplot to be rendered.}
 \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 \item{Lmat}{matrix for transformation to the principal components.}
 \item{e.vects}{vector indicating which principal components are plotted in the biplot.}
 \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
-\item{Xnew.raw}{ newdata numerical variables.}
-\item{Xnew}{matrix of the centered and scaled new numeric variables.}
-\item{Xnew.cat}{matrix of the new categorical variables.}
-\item{Znew}{matrix of the coordinates of the newdata in the biplot.}
+\item{Xnew.raw}{new data.}
+\item{Xnew}{matrix of the centered and scaled new numeric variables of new data.}
+\item{Xnew.cat}{matrix of the categorical variables of new data.}
+\item{Znew}{matrix of the coordinates of the new data in the biplot.}
 }
 \description{
 Interpolation of new samples

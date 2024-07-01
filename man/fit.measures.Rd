@@ -2,7 +2,7 @@
 % Please edit documentation in R/biplot.R
 \name{fit.measures}
 \alias{fit.measures}
-\title{Compute measures of fit for biplot.}
+\title{Compute measures of fit for the biplot.}
 \usage{
 fit.measures(bp)
 }
@@ -27,7 +27,7 @@ expressed as deviations from their class means.}
 deviation from its class mean.}
 }
 \description{
-Compute measures of fit for biplot.
+Compute measures of fit for the biplot.
 }
 \examples{
 out <- biplot (iris[,1:4]) |> PCA() |> fit.measures()

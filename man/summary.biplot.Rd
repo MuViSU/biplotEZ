@@ -18,20 +18,20 @@
 \arguments{
 \item{object}{an object of class \code{biplot}.}
 
-\item{adequacy}{logical, whether variable adequacies should be reported.}
+\item{adequacy}{logical, indicating whether variable adequacies should be reported.}
 
-\item{axis.predictivity}{logical, whether axis predictivities should be reported.}
+\item{axis.predictivity}{logical, indicating whether axis predictivities should be reported.}
 
-\item{sample.predictivity}{logical, whether sample predictivities should be reported.}
+\item{sample.predictivity}{logical, indicating whether sample predictivities should be reported.}
 
-\item{class.predictivity}{logical, whether class predictivities should be reported
+\item{class.predictivity}{logical, indicating whether class predictivities should be reported
 (only applicable to objects of class \code{CVA}).}
 
-\item{within.class.axis.predictivity}{logical, whether within class axis predictivity
+\item{within.class.axis.predictivity}{logical, indicating whether within class axis predictivity
 should be reported(only applicable to objects
 of class \code{CVA}).}
 
-\item{within.class.sample.predictivity}{logical, whether within class sample predictivity
+\item{within.class.sample.predictivity}{logical, indicating whether within class sample predictivity
 should be reported(only applicable to objects
 of class \code{CVA}).}
 

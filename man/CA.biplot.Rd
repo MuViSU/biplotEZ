@@ -15,7 +15,7 @@
 
 \item{variant}{which correspondence analysis variant, with default "Princ", presents a biplot with rows in principal coordinates
 and columns in standard coordinates. \code{variant = "Stand"}, presents a biplot with rows in standard coordinates and columns in
-principal coordinates. \code{variant = "symmetric"}, presents a symmtric biplot with row and column standard coordinates scaled
+principal coordinates. \code{variant = "symmetric"}, presents a symmetric biplot with row and column standard coordinates scaled
 equally by the singular values.}
 }
 \value{
