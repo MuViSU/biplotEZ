@@ -34,8 +34,8 @@
 #' \item{raw.X}{the original data.}
 #' \item{classes}{the vector of category levels for the class variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
 #' \item{na.action}{the vector of observations that have been removed.}
-#' \item{center}{a logical value indicating whether X is centered.}
-#' \item{scaled}{a logical value indicating whether X is scaled.}
+#' \item{center}{a logical value indicating whether \eqn{\mathbf{X}} is centered.}
+#' \item{scaled}{a logical value indicating whether \eqn{\mathbf{X}} is scaled.}
 #' \item{means}{the vector of means for each numeric variable.}
 #' \item{sd}{the vector of standard deviations for each numeric variable.}
 #' \item{n}{the number of observations.}
@@ -653,9 +653,10 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
 #' \item{X}{a matrix of the centered and scaled numeric variables.}
 #' \item{Xcat}{a data frame of the categorical variables.}
 #' \item{raw.X}{the original data.}
+#' \item{classes}{the vector of category levels for the class variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
 #' \item{na.action}{the vector of observations that have been removed.}
-#' \item{center}{a logical value indicating whether X is centered.}
-#' \item{scaled}{a logical value indicating whether X is scaled.}
+#' \item{center}{a logical value indicating whether \eqn{\mathbf{X}} is centered.}
+#' \item{scaled}{a logical value indicating whether \eqn{\mathbf{X}} is scaled.}
 #' \item{means}{the vector of means for each numerical variable.}
 #' \item{sd}{the vector of standard deviations for each numerical variable.}
 #' \item{n}{the number of observations.}
@@ -666,8 +667,16 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
 #' \item{Title}{the title of the biplot rendered.}
 #' \item{Z}{the matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
 #' \item{Lmat}{the matrix for transformation to the principal components.}
-#' \item{e.vects}{the vector indicating which principal components are plotted in the biplot.}
+#' \item{Linv}{the inverse of \eqn{\mathbf{L}}.}
+#' \item{eigenvalues}{the vector of eigenvalues of the covariance matrix of \eqn{\mathbf{X}}.}
 #' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
+#' \item{e.vects}{the vector indicating which principal components are plotted in the biplot.}
+#' \item{Vr}{the \code{1:dim.biplot} columns of \eqn{\mathbf{V}}.}
+#' \item{dim.biplot}{the dimension of the biplot.}
+#' \item{V.mat}{the matrix containing the right singular vectors of \eqn{\mathbf{X}}.}
+#' \item{Sigma.mat}{the matrix with the singular values of \eqn{\mathbf{X}} on the diagonal.}
+#' \item{U.mat}{the matrix containing the left singular vectors of \eqn{\mathbf{X}}.}
+#' \item{class.means}{a logical value indicating whether group means are plotted in the biplot.}
 #' \item{Xnew.raw}{the new data.}
 #' \item{Xnew}{the matrix of the centered and scaled new numeric variables of new data.}
 #' \item{Xnew.cat}{the matrix of the categorical variables of new data.}
@@ -791,10 +800,11 @@ interpolate <- function (bp, newdata=NULL,newvariable=NULL)
 #' @param predict.means a vector specifying which group means to predict.
 #' @param which a vector specifying which variable to do the prediction.
 #'
-#' @return Object of class \code{biplot} with the following elements:
-#' \item{predict.samples}{a vector of indices of samples which are being predicted.}
-#' \item{predict.mat}{the matrix of predicted samples.}
+#' @return A list object called \code{predict} appended to the object of class \code{biplot} with the following elements:
+#' \item{samples}{a vector of indices of samples which are being predicted.}
 #' \item{predict.means}{a vector of group names of groups for which the means are being predicted.}
+#' \item{which}{the vector of indices variables which are being predicted.}
+#' \item{predict.mat}{the matrix of predicted samples.}
 #' \item{predict.means.mat}{the matrix of predicted group means.}
 #'
 #'
@@ -860,13 +870,18 @@ prediction <- function (bp, predict.samples=NULL,predict.means=NULL,which=1:bp$p
 #' Classify samples into classes
 #'
 #' @param bp an object of class \code{biplot}
-#' @param classify.regions a logical value indicating whether classifications regions are
+#' @param classify.regions a logical value indicating whether classifications regions should be
 #'                         shown in the biplot, with default \code{TRUE}.
 #' @param col the colours of the classification regions
 #' @param opacity the opacity levels of the classification regions
 #' @param borders the border colours of the classification regions
 #'
-#' @return An object of class \code{biplot}
+#' @return A list object called \code{classify} appended to the object of class \code{biplot} with the following elements:
+#' \item{table}{the confusion matrix resulting from the classification into classes.}
+#' \item{rate}{the classification accuracy rate.}
+#' \item{classify.regions}{a logical value indicating whether classification regions are shown in the biplot.}
+#' \item{aes}{a list of chosen aesthetics for the colours, opacity levels and border colours of the classification regions.}
+#' 
 #' @export
 #'
 #' @examples

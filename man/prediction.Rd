@@ -16,10 +16,11 @@ prediction(bp, predict.samples = NULL, predict.means = NULL, which = 1:bp$p)
 \item{which}{a vector specifying which variable to do the prediction.}
 }
 \value{
-Object of class \code{biplot} with the following elements:
-\item{predict.samples}{a vector of indices of samples which are being predicted.}
-\item{predict.mat}{the matrix of predicted samples.}
+A list object called \code{predict} appended to the object of class \code{biplot} with the following elements:
+\item{samples}{a vector of indices of samples which are being predicted.}
 \item{predict.means}{a vector of group names of groups for which the means are being predicted.}
+\item{which}{the vector of indices variables which are being predicted.}
+\item{predict.mat}{the matrix of predicted samples.}
 \item{predict.means.mat}{the matrix of predicted group means.}
 }
 \description{

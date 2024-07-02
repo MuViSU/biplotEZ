@@ -15,7 +15,7 @@ classify(
 \arguments{
 \item{bp}{an object of class \code{biplot}}
 
-\item{classify.regions}{a logical value indicating whether classifications regions are
+\item{classify.regions}{a logical value indicating whether classifications regions should be
 shown in the biplot, with default \code{TRUE}.}
 
 \item{col}{the colours of the classification regions}
@@ -25,7 +25,11 @@ shown in the biplot, with default \code{TRUE}.}
 \item{borders}{the border colours of the classification regions}
 }
 \value{
-An object of class \code{biplot}
+A list object called \code{classify} appended to the object of class \code{biplot} with the following elements:
+\item{table}{the confusion matrix resulting from the classification into classes.}
+\item{rate}{the classification accuracy rate.}
+\item{classify.regions}{a logical value indicating whether classification regions are shown in the biplot.}
+\item{aes}{a list of chosen aesthetics for the colours, opacity levels and border colours of the classification regions.}
 }
 \description{
 Classify samples into classes

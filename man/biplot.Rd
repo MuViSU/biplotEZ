@@ -27,8 +27,8 @@ A list with the following components is available:
 \item{raw.X}{the original data.}
 \item{classes}{the vector of category levels for the class variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
 \item{na.action}{the vector of observations that have been removed.}
-\item{center}{a logical value indicating whether X is centered.}
-\item{scaled}{a logical value indicating whether X is scaled.}
+\item{center}{a logical value indicating whether \eqn{\mathbf{X}} is centered.}
+\item{scaled}{a logical value indicating whether \eqn{\mathbf{X}} is scaled.}
 \item{means}{the vector of means for each numeric variable.}
 \item{sd}{the vector of standard deviations for each numeric variable.}
 \item{n}{the number of observations.}

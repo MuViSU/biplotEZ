@@ -98,7 +98,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
           a <- predict.regions(x$Zmeans,usr)
           for(i in 1:length(a))
           {
-            graphics::polygon(a[[i]],col=grDevices::adjustcolor(classify.aes$col[i],classify.aes$shade),
+            graphics::polygon(a[[i]],col=grDevices::adjustcolor(classify.aes$col[i],classify.aes$opacity),
                               border = classify.aes$border)
           }
         }}
