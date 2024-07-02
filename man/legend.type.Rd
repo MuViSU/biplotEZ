@@ -2,7 +2,7 @@
 % Please edit documentation in R/biplot.R
 \name{legend.type}
 \alias{legend.type}
-\title{Legend type}
+\title{Format the legend for the biplot}
 \usage{
 legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE, ellipses = FALSE,
 new = FALSE, ...)
@@ -10,25 +10,25 @@ new = FALSE, ...)
 \arguments{
 \item{bp}{an object of class \code{biplot}.}
 
-\item{samples}{logical, indicating whether legend should be printed for samples, with default \code{FALSE}.}
+\item{samples}{a logical value indicating whether a legend should be printed for samples, with default \code{FALSE}.}
 
-\item{means}{logical, indicating whether legend should be printed for means, with default \code{FLASE}.}
+\item{means}{a logical value indicating whether a legend should be printed for means, with default \code{FALSE}.}
 
-\item{bags}{logical, indicating whether legend should be printed for bags, with default \code{FALSE}.}
+\item{bags}{a logical value indicating whether a legend should be printed for bags, with default \code{FALSE}.}
 
-\item{ellipses}{logical, indicating whether legend should be printed for concentration ellipses, with default \code{FALSE}.}
+\item{ellipses}{a logical value indicating whether a legend should be printed for concentration ellipses, with default \code{FALSE}.}
 
-\item{new}{logical, indicating whether the legend should appear in a new window, with default \code{FALSE}.}
+\item{new}{a logical value indicating whether the legend should appear in a new window, with default \code{FALSE}.}
 
 \item{...}{additional arguments to be sent to \code{legend()}.}
 }
 \value{
 A list with the following components is available:
-\item{samples}{TRUE or FALSE, indicating whether legend for samples are provided.}
-\item{means}{TRUE or FALSE, indicating whether legend for class means are provided.}
-\item{bags}{TRUE or FALSE, indicating whether legend for \eqn{\alpha}-bags are provided.}
-\item{ellipses}{TRUE or FALSE, indicating whether legend for \eqn{\kappa}-ellipses are provided.}
-\item{new}{TRUE or FALSE, indicating whether legend appears on new plot.}
+\item{samples}{a logical value indicating whether a legend for samples are provided.}
+\item{means}{a logical value indicating whether a legend for class means are provided.}
+\item{bags}{a logical value indicating whether a legend for \eqn{\alpha}-bags are provided.}
+\item{ellipses}{a logical value indicating whether a legend for \eqn{\kappa}-ellipses are provided.}
+\item{new}{a logical value indicating whether the legend appears on new plot.}
 }
 \description{
 This function enables the user to format the legend and make a required selection to display.

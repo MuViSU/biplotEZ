@@ -2,20 +2,20 @@
 % Please edit documentation in R/biplot.R
 \name{rotate}
 \alias{rotate}
-\title{Rotate}
+\title{Rotate the biplot a chosen amount of degrees}
 \usage{
 rotate(bp, rotate.degrees = 0)
 }
 \arguments{
-\item{bp}{object of class \code{biplot}}
+\item{bp}{an object of class \code{biplot}}
 
-\item{rotate.degrees}{Default is \code{0}. Positive value results in anti-clockwise rotation and negative value in clockwise rotation.}
+\item{rotate.degrees}{a value specifying the degrees the biplot should be rotated, with default \code{0}. A positive value results in anti-clockwise rotation and a negative value in clockwise rotation.}
 }
 \value{
 An object of class \code{biplot}.
 }
 \description{
-Rotate
+This function provides the user with an option to rotate the biplot anti-clockwise or clockwise.
 }
 \examples{
 biplot(iris[,1:4],group.aes = iris[,5]) |> PCA() |> rotate(200) |> plot()

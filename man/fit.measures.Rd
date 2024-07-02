@@ -12,22 +12,22 @@ fit.measures(bp)
 \value{
 An object of class \code{biplot}. The object is augmented with
 additional items, depending on the type of biplot object.
-\item{quality}{overall quality of fit.}
-\item{adequacy}{adequacy of representation of variables.}
+\item{quality}{the overall quality of fit.}
+\item{adequacy}{the adequacy of representation of variables.}
 
 For an object of class \code{PCA}:
-\item{axis.predictivity}{fit measure of each individual axis.}
-\item{sample.predictivity}{fit measure for each individual sample.}
+\item{axis.predictivity}{the fit measure of each individual axis.}
+\item{sample.predictivity}{the fit measure for each individual sample.}
 For an object of class \code{CVA}:
-\item{axis.predictivity}{fit measure of each individual axis.}
-\item{class.predictivity}{fit measure for each class mean.}
-\item{within.class.axis.predictivity}{fit measure for each axis based on values
+\item{axis.predictivity}{the fit measure of each individual axis.}
+\item{class.predictivity}{the fit measure for each class mean.}
+\item{within.class.axis.predictivity}{the fit measure for each axis based on values
 expressed as deviations from their class means.}
-\item{within.class.sample.predictivity}{fit measure for each sample expressed as
+\item{within.class.sample.predictivity}{the fit measure for each sample expressed as
 deviation from its class mean.}
 }
 \description{
-Compute measures of fit for the biplot.
+This function computes the measures of fit for the biplot. The biplot object is augmented with additional items, which can differ depending on the type of biplot. The measures provide information on the overall quality of fit and the adequacy of representation of variables.
 }
 \examples{
 out <- biplot (iris[,1:4]) |> PCA() |> fit.measures()

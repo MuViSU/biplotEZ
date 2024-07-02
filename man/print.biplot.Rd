@@ -2,7 +2,7 @@
 % Please edit documentation in R/biplot.R
 \name{print.biplot}
 \alias{print.biplot}
-\title{Generic print function of objects of class biplot}
+\title{Generic print function for objects of class biplot}
 \usage{
 \method{print}{biplot}(x, ...)
 }
@@ -12,10 +12,10 @@
 \item{...}{additional arguments.}
 }
 \value{
-no return value, called for side effects.
+This function will not produce a return value, it is called for side effects.
 }
 \description{
-Generic print function of objects of class biplot
+This function is used to print output when the biplot object is created.
 }
 \examples{
 out <- biplot (iris[,1:4]) |> PCA()

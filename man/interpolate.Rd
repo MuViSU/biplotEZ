@@ -2,7 +2,7 @@
 % Please edit documentation in R/biplot.R
 \name{interpolate}
 \alias{interpolate}
-\title{Interpolation of new samples}
+\title{Interpolate supplementary points and variables to add to the biplot}
 \usage{
 interpolate(bp, newdata = NULL, newvariable = NULL)
 }
@@ -10,38 +10,38 @@ interpolate(bp, newdata = NULL, newvariable = NULL)
 \item{bp}{an object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
 \item{newdata}{a new data set, similar in structure to the data set supplied to \code{biplot()}
-containing supplementary data points to be added on the biplot.}
+containing supplementary data points to be added onto the biplot.}
 
 \item{newvariable}{a new data set, similar in structure to the data set supplied to \code{biplot()}
-containing supplementary variables to be added on the biplot.}
+containing supplementary variables to be added onto the biplot.}
 }
 \value{
 Object of class \code{biplot} with the following elements:
-\item{X}{matrix of the centered and scaled numeric variables.}
-\item{Xcat}{data frame of the categorical variables.}
-\item{raw.X}{original data.}
-\item{na.action}{vector of observations that have been removed.}
-\item{center}{TRUE or FALSE, indicating whether X is centered.}
-\item{scaled}{TRUE or FALSE, indicating whether X is scaled.}
-\item{means}{vector of means for each numerical variable.}
-\item{sd}{vector of standard deviations for each numerical variable.}
-\item{n}{number of observations.}
-\item{p}{number of variables.}
-\item{group.aes}{vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
-\item{g.names}{descriptive names to be used for group labels.}
-\item{g}{number of groups.}
-\item{Title}{title of the biplot to be rendered.}
-\item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
-\item{Lmat}{matrix for transformation to the principal components.}
-\item{e.vects}{vector indicating which principal components are plotted in the biplot.}
+\item{X}{a matrix of the centered and scaled numeric variables.}
+\item{Xcat}{a data frame of the categorical variables.}
+\item{raw.X}{the original data.}
+\item{na.action}{the vector of observations that have been removed.}
+\item{center}{a logical value indicating whether X is centered.}
+\item{scaled}{a logical value indicating whether X is scaled.}
+\item{means}{the vector of means for each numerical variable.}
+\item{sd}{the vector of standard deviations for each numerical variable.}
+\item{n}{the number of observations.}
+\item{p}{the number of variables.}
+\item{group.aes}{the vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
+\item{g.names}{the descriptive names to be used for group labels.}
+\item{g}{the number of groups.}
+\item{Title}{the title of the biplot rendered.}
+\item{Z}{the matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+\item{Lmat}{the matrix for transformation to the principal components.}
+\item{e.vects}{the vector indicating which principal components are plotted in the biplot.}
 \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
-\item{Xnew.raw}{new data.}
-\item{Xnew}{matrix of the centered and scaled new numeric variables of new data.}
-\item{Xnew.cat}{matrix of the categorical variables of new data.}
-\item{Znew}{matrix of the coordinates of the new data in the biplot.}
+\item{Xnew.raw}{the new data.}
+\item{Xnew}{the matrix of the centered and scaled new numeric variables of new data.}
+\item{Xnew.cat}{the matrix of the categorical variables of new data.}
+\item{Znew}{the matrix of the coordinates of the new data in the biplot.}
 }
 \description{
-Interpolation of new samples
+This function adds supplementary points and variables to the plot from a new data set.
 }
 \examples{
 biplot(data = iris[1:145,]) |> PCA() |> interpolate(newdata = iris[146:150,]) |> plot()

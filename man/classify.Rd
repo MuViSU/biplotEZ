@@ -2,7 +2,7 @@
 % Please edit documentation in R/biplot.R
 \name{classify}
 \alias{classify}
-\title{Classification of samples into classes}
+\title{Classify samples into classes}
 \usage{
 classify(
   bp,
@@ -13,22 +13,22 @@ classify(
 )
 }
 \arguments{
-\item{bp}{object of class \code{biplot}}
+\item{bp}{an object of class \code{biplot}}
 
-\item{classify.regions}{logical, indicating whether classifications regions are
-shown in the biplot}
+\item{classify.regions}{a logical value indicating whether classifications regions are
+shown in the biplot, with default \code{TRUE}.}
 
-\item{col}{colour of classification regions}
+\item{col}{the colours of the classification regions}
 
-\item{opacity}{opacity of classification regions}
+\item{opacity}{the opacity levels of the classification regions}
 
-\item{borders}{border colour of classification regions}
+\item{borders}{the border colours of the classification regions}
 }
 \value{
 An object of class \code{biplot}
 }
 \description{
-Classification of samples into classes
+Classify samples into classes
 }
 \examples{
 biplot(iris[,1:4],classes = iris[,5]) |> CVA() |> axes(col="black") |> 

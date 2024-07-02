@@ -17,11 +17,11 @@
 #' display representations of the variables on which the samples are measured.
 #'
 #' @param data a data frame or numeric matrix containing all variables the user wants to analyse.
-#' @param classes vector identifying class membership.
-#' @param group.aes vector identifying groups for aesthetic formatting.
-#' @param center logical, indicating whether \code{data} should be column centered, with default \code{TRUE}.
-#' @param scaled logical, indicating whether \code{data} should be standardised to unit column variances, with default \code{FALSE}.
-#' @param Title title of the biplot to be rendered, enter text in "  ".
+#' @param classes a vector identifying class membership.
+#' @param group.aes a vector identifying groups for aesthetic formatting.
+#' @param center a logical value indicating whether \code{data} should be column centered, with default \code{TRUE}.
+#' @param scaled a logical value indicating whether \code{data} should be standardised to unit column variances, with default \code{FALSE}.
+#' @param Title the title of the biplot to be rendered, enter text in "  ".
 #'
 #' @details
 #'This function is the entry-level function in \code{biplotEZ} to construct a biplot display.
@@ -29,21 +29,21 @@
 #'to build up the biplot display.
 #'
 #' @return A list with the following components is available:
-#' \item{X}{matrix of the centered and scaled numeric variables.}
-#' \item{Xcat}{data frame of the categorical variables.}
-#' \item{raw.X}{original data.}
-#' \item{classes}{vector of category levels for the class variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
-#' \item{na.action}{vector of observations that have been removed.}
-#' \item{center}{TRUE or FALSE, indicating whether X is centered.}
-#' \item{scaled}{TRUE or FALSE, indicating whether X is scaled.}
-#' \item{means}{vector of means for each numeric variable.}
-#' \item{sd}{vector of standard deviations for each numeric variable.}
-#' \item{n}{number of observations.}
-#' \item{p}{number of variables.}
-#' \item{group.aes}{vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
-#' \item{g.names}{descriptive names to be used for group labels.}
-#' \item{g}{number of groups.}
-#' \item{Title}{title of the biplot to be rendered}
+#' \item{X}{the matrix of the centered and scaled numeric variables.}
+#' \item{Xcat}{the data frame of the categorical variables.}
+#' \item{raw.X}{the original data.}
+#' \item{classes}{the vector of category levels for the class variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
+#' \item{na.action}{the vector of observations that have been removed.}
+#' \item{center}{a logical value indicating whether X is centered.}
+#' \item{scaled}{a logical value indicating whether X is scaled.}
+#' \item{means}{the vector of means for each numeric variable.}
+#' \item{sd}{the vector of standard deviations for each numeric variable.}
+#' \item{n}{the number of observations.}
+#' \item{p}{the number of variables.}
+#' \item{group.aes}{the vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
+#' \item{g.names}{the descriptive names to be used for group labels.}
+#' \item{g}{the number of groups.}
+#' \item{Title}{the title of the biplot rendered}
 #'
 #' @section Useful links: 
 #' 
@@ -307,24 +307,27 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
 }
 
 #' Compute measures of fit for the biplot.
+#' 
+#' @description
+#' This function computes the measures of fit for the biplot. The biplot object is augmented with additional items, which can differ depending on the type of biplot. The measures provide information on the overall quality of fit and the adequacy of representation of variables.  
 #'
 #' @param bp an object of class \code{biplot}.
 #'
 #' @return An object of class \code{biplot}. The object is augmented with
 #'         additional items, depending on the type of biplot object.
-#' \item{quality}{overall quality of fit.}
-#' \item{adequacy}{adequacy of representation of variables.}
+#' \item{quality}{the overall quality of fit.}
+#' \item{adequacy}{the adequacy of representation of variables.}
 #'
 #' For an object of class \code{PCA}:
-#' \item{axis.predictivity}{fit measure of each individual axis.}
-#' \item{sample.predictivity}{fit measure for each individual sample.}
+#' \item{axis.predictivity}{the fit measure of each individual axis.}
+#' \item{sample.predictivity}{the fit measure for each individual sample.}
 
 #' For an object of class \code{CVA}:
-#' \item{axis.predictivity}{fit measure of each individual axis.}
-#' \item{class.predictivity}{fit measure for each class mean.}
-#' \item{within.class.axis.predictivity}{fit measure for each axis based on values
+#' \item{axis.predictivity}{the fit measure of each individual axis.}
+#' \item{class.predictivity}{the fit measure for each class mean.}
+#' \item{within.class.axis.predictivity}{the fit measure for each axis based on values
 #'                                       expressed as deviations from their class means.}
-#' \item{within.class.sample.predictivity}{fit measure for each sample expressed as
+#' \item{within.class.sample.predictivity}{the fit measure for each sample expressed as
 #'                                         deviation from its class mean.}
 #' @export
 #'
@@ -382,7 +385,7 @@ ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple"
 
 # ----------------------------------------------------------------------------------------------
 
-#'Legend type
+#'Format the legend for the biplot
 #'
 #' @description
 #' This function enables the user to format the legend and make a required selection to display.
@@ -392,19 +395,19 @@ ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple"
 #' @aliases legend.type
 #'
 #' @param bp an object of class \code{biplot}.
-#' @param samples logical, indicating whether legend should be printed for samples, with default \code{FALSE}.
-#' @param means logical, indicating whether legend should be printed for means, with default \code{FLASE}.
-#' @param bags logical, indicating whether legend should be printed for bags, with default \code{FALSE}.
-#' @param ellipses logical, indicating whether legend should be printed for concentration ellipses, with default \code{FALSE}.
-#' @param new logical, indicating whether the legend should appear in a new window, with default \code{FALSE}.
+#' @param samples a logical value indicating whether a legend should be printed for samples, with default \code{FALSE}.
+#' @param means a logical value indicating whether a legend should be printed for means, with default \code{FALSE}.
+#' @param bags a logical value indicating whether a legend should be printed for bags, with default \code{FALSE}.
+#' @param ellipses a logical value indicating whether a legend should be printed for concentration ellipses, with default \code{FALSE}.
+#' @param new a logical value indicating whether the legend should appear in a new window, with default \code{FALSE}.
 #' @param ... additional arguments to be sent to \code{legend()}.
 #'
 #' @return A list with the following components is available:
-#' \item{samples}{TRUE or FALSE, indicating whether legend for samples are provided.}
-#' \item{means}{TRUE or FALSE, indicating whether legend for class means are provided.}
-#' \item{bags}{TRUE or FALSE, indicating whether legend for \eqn{\alpha}-bags are provided.}
-#' \item{ellipses}{TRUE or FALSE, indicating whether legend for \eqn{\kappa}-ellipses are provided.}
-#' \item{new}{TRUE or FALSE, indicating whether legend appears on new plot.}
+#' \item{samples}{a logical value indicating whether a legend for samples are provided.}
+#' \item{means}{a logical value indicating whether a legend for class means are provided.}
+#' \item{bags}{a logical value indicating whether a legend for \eqn{\alpha}-bags are provided.}
+#' \item{ellipses}{a logical value indicating whether a legend for \eqn{\kappa}-ellipses are provided.}
+#' \item{new}{a logical value indicating whether the legend appears on new plot.}
 #'
 #' @export
 #' @examples
@@ -418,7 +421,7 @@ legend.type <- function (bp, samples = FALSE, means = FALSE, bags = FALSE, ellip
 }
 
 # ----------------------------------------------------------------------------------------------
-#' Constructs the biplot legend
+#' Construct the legend for the biplot
 #'
 #' @param bp an object of class \code{biplot}.
 #' @param ... more arguments to be sent to \code{legend}.
@@ -461,12 +464,15 @@ biplot.legend <- function(bp, ...)
 }
 
 # ----------------------------------------------------------------------------------------------
-#' Generic print function of objects of class biplot
-#'
+#' Generic print function for objects of class biplot
+#' 
+#' @description
+#' This function is used to print output when the biplot object is created.
+#' 
 #' @param x an object of class \code{biplot}.
 #' @param ... additional arguments.
 #'
-#' @return no return value, called for side effects.
+#' @return This function will not produce a return value, it is called for side effects.
 #'
 #' @export
 #' @examples
@@ -525,23 +531,26 @@ print.biplot <- function (x, ...)
 }
 
 # ----------------------------------------------------------------------------------------------
-#' Generic summary function of objects of class biplot
+#' Generic summary function for objects of class biplot
+#' 
+#' @description
+#' This function is used to print summary output of the biplot. These summary outputs are related to measures of fit. 
 #'
 #' @param object an object of class \code{biplot}.
-#' @param adequacy logical, indicating whether variable adequacies should be reported.
-#' @param axis.predictivity logical, indicating whether axis predictivities should be reported.
-#' @param sample.predictivity logical, indicating whether sample predictivities should be reported.
-#' @param class.predictivity logical, indicating whether class predictivities should be reported
+#' @param adequacy a logical value indicating whether variable adequacies should be reported, with default \code{TRUE}.
+#' @param axis.predictivity a logical value indicating whether axis predictivities should be reported, with default \code{TRUE}.
+#' @param sample.predictivity a logical value indicating whether sample predictivities should be reported, with default \code{TRUE}.
+#' @param class.predictivity a logical value indicating whether class predictivities should be reported, with default \code{TRUE}
 #'                           (only applicable to objects of class \code{CVA}).
-#' @param within.class.axis.predictivity logical, indicating whether within class axis predictivity
-#'                                       should be reported(only applicable to objects
+#' @param within.class.axis.predictivity a logical value indicating whether within class axis predictivity
+#'                                       should be reported, with default \code{TRUE} (only applicable to objects
 #'                                       of class \code{CVA}).
-#' @param within.class.sample.predictivity logical, indicating whether within class sample predictivity
-#'                                       should be reported(only applicable to objects
+#' @param within.class.sample.predictivity a logical value indicating whether within class sample predictivity
+#'                                       should be reported, with default \code{TRUE} (only applicable to objects
 #'                                       of class \code{CVA}).
 #' @param ... additional arguments.
 #'
-#' @return no return value, called for side effects.
+#' @return This function will not produce a return value, it is called for side effects.
 #'
 #' @export
 #' @examples
@@ -629,37 +638,40 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
 
 # -----------------------------------------------------------------------------------------------------
 
-#' Interpolation of new samples
+#' Interpolate supplementary points and variables to add to the biplot
+#' 
+#' @description
+#' This function adds supplementary points and variables to the plot from a new data set. 
 #'
 #' @param bp an object of class \code{biplot} obtained from preceding function \code{biplot()}.
 #' @param newdata a new data set, similar in structure to the data set supplied to \code{biplot()}
-#'                containing supplementary data points to be added on the biplot.
+#'                containing supplementary data points to be added onto the biplot.
 #' @param newvariable a new data set, similar in structure to the data set supplied to \code{biplot()}
-#'                containing supplementary variables to be added on the biplot.
+#'                containing supplementary variables to be added onto the biplot.
 #'
 #' @return Object of class \code{biplot} with the following elements:
-#' \item{X}{matrix of the centered and scaled numeric variables.}
-#' \item{Xcat}{data frame of the categorical variables.}
-#' \item{raw.X}{original data.}
-#' \item{na.action}{vector of observations that have been removed.}
-#' \item{center}{TRUE or FALSE, indicating whether X is centered.}
-#' \item{scaled}{TRUE or FALSE, indicating whether X is scaled.}
-#' \item{means}{vector of means for each numerical variable.}
-#' \item{sd}{vector of standard deviations for each numerical variable.}
-#' \item{n}{number of observations.}
-#' \item{p}{number of variables.}
-#' \item{group.aes}{vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
-#' \item{g.names}{descriptive names to be used for group labels.}
-#' \item{g}{number of groups.}
-#' \item{Title}{title of the biplot to be rendered.}
-#' \item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
-#' \item{Lmat}{matrix for transformation to the principal components.}
-#' \item{e.vects}{vector indicating which principal components are plotted in the biplot.}
+#' \item{X}{a matrix of the centered and scaled numeric variables.}
+#' \item{Xcat}{a data frame of the categorical variables.}
+#' \item{raw.X}{the original data.}
+#' \item{na.action}{the vector of observations that have been removed.}
+#' \item{center}{a logical value indicating whether X is centered.}
+#' \item{scaled}{a logical value indicating whether X is scaled.}
+#' \item{means}{the vector of means for each numerical variable.}
+#' \item{sd}{the vector of standard deviations for each numerical variable.}
+#' \item{n}{the number of observations.}
+#' \item{p}{the number of variables.}
+#' \item{group.aes}{the vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
+#' \item{g.names}{the descriptive names to be used for group labels.}
+#' \item{g}{the number of groups.}
+#' \item{Title}{the title of the biplot rendered.}
+#' \item{Z}{the matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+#' \item{Lmat}{the matrix for transformation to the principal components.}
+#' \item{e.vects}{the vector indicating which principal components are plotted in the biplot.}
 #' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
-#' \item{Xnew.raw}{new data.}
-#' \item{Xnew}{matrix of the centered and scaled new numeric variables of new data.}
-#' \item{Xnew.cat}{matrix of the categorical variables of new data.}
-#' \item{Znew}{matrix of the coordinates of the new data in the biplot.}
+#' \item{Xnew.raw}{the new data.}
+#' \item{Xnew}{the matrix of the centered and scaled new numeric variables of new data.}
+#' \item{Xnew.cat}{the matrix of the categorical variables of new data.}
+#' \item{Znew}{the matrix of the coordinates of the new data in the biplot.}
 #'
 #' @export
 #'
@@ -769,18 +781,21 @@ interpolate <- function (bp, newdata=NULL,newvariable=NULL)
 }
 
 # -----------------------------------------------------------------------------------------------------
-#' Prediction of samples
-#'
+#' Predict samples to display on the biplot
+#' 
+#' @description
+#' This function makes predictions of sample points, variables and means and displays them on the biplot.
+#' 
 #' @param bp an object of class \code{biplot} obtained from preceding function \code{biplot()}.
 #' @param predict.samples a vector specifying which samples to predict.
 #' @param predict.means a vector specifying which group means to predict.
 #' @param which a vector specifying which variable to do the prediction.
 #'
 #' @return Object of class \code{biplot} with the following elements:
-#' \item{predict.samples}{which samples are predicted.}
-#' \item{predict.mat}{matrix of predicted samples.}
-#' \item{predict.means}{which group means are predicted.}
-#' \item{predict.means.mat}{matrix of predicted group means.}
+#' \item{predict.samples}{a vector of indices of samples which are being predicted.}
+#' \item{predict.mat}{the matrix of predicted samples.}
+#' \item{predict.means}{a vector of group names of groups for which the means are being predicted.}
+#' \item{predict.means.mat}{the matrix of predicted group means.}
 #'
 #'
 #' @export
@@ -842,14 +857,14 @@ prediction <- function (bp, predict.samples=NULL,predict.means=NULL,which=1:bp$p
 }
 
 # -----------------------------------------------------------------------------------------------------
-#' Classification of samples into classes
+#' Classify samples into classes
 #'
-#' @param bp object of class \code{biplot}
-#' @param classify.regions logical, indicating whether classifications regions are
-#'                         shown in the biplot
-#' @param col colour of classification regions
-#' @param opacity opacity of classification regions
-#' @param borders border colour of classification regions
+#' @param bp an object of class \code{biplot}
+#' @param classify.regions a logical value indicating whether classifications regions are
+#'                         shown in the biplot, with default \code{TRUE}.
+#' @param col the colours of the classification regions
+#' @param opacity the opacity levels of the classification regions
+#' @param borders the border colours of the classification regions
 #'
 #' @return An object of class \code{biplot}
 #' @export
@@ -888,10 +903,13 @@ classify <- function(bp,classify.regions = TRUE,col=ez.col,opacity=0.4,borders =
 }
 
 # -----------------------------------------------------------------------------------------------------
-#' Reflect
-#'
-#' @param bp object of class \code{biplot}
-#' @param reflect.axis Defaults to FALSE. Possible values are "x" for reflection about x-axis or "y" for reflection about y-axis.
+#' Reflect the biplot about a chosen axis
+#' 
+#' @description
+#' This function provides the user with an option to reflect the biplot horizontally, vertically or diagonally.
+#' 
+#' @param bp an object of class \code{biplot}
+#' @param reflect.axis a character string indicating which axis about to reflect. One of \code{FALSE} (default), "x" for reflection about the x-axis, "y" for reflection about the y-axis and "xy" for reflection about both axes. 
 #'
 #' @return An object of class \code{biplot}
 #' @export
@@ -917,10 +935,13 @@ reflect <- function(bp,reflect.axis = c("FALSE","x","y","xy"))
 }
 
 # -----------------------------------------------------------------------------------------------------
-#' Rotate
-#'
-#' @param bp object of class \code{biplot}
-#' @param rotate.degrees Default is \code{0}. Positive value results in anti-clockwise rotation and negative value in clockwise rotation.
+#' Rotate the biplot a chosen amount of degrees
+#' 
+#' @description
+#' This function provides the user with an option to rotate the biplot anti-clockwise or clockwise.
+#' 
+#' @param bp an object of class \code{biplot}
+#' @param rotate.degrees a value specifying the degrees the biplot should be rotated, with default \code{0}. A positive value results in anti-clockwise rotation and a negative value in clockwise rotation.
 #'
 #' @return An object of class \code{biplot}.
 #' @export

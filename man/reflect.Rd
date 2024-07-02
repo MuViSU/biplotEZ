@@ -2,20 +2,20 @@
 % Please edit documentation in R/biplot.R
 \name{reflect}
 \alias{reflect}
-\title{Reflect}
+\title{Reflect the biplot about a chosen axis}
 \usage{
 reflect(bp, reflect.axis = c("FALSE", "x", "y", "xy"))
 }
 \arguments{
-\item{bp}{object of class \code{biplot}}
+\item{bp}{an object of class \code{biplot}}
 
-\item{reflect.axis}{Defaults to FALSE. Possible values are "x" for reflection about x-axis or "y" for reflection about y-axis.}
+\item{reflect.axis}{a character string indicating which axis about to reflect. One of \code{FALSE} (default), "x" for reflection about the x-axis, "y" for reflection about the y-axis and "xy" for reflection about both axes.}
 }
 \value{
 An object of class \code{biplot}
 }
 \description{
-Reflect
+This function provides the user with an option to reflect the biplot horizontally, vertically or diagonally.
 }
 \examples{
 biplot(iris[,1:4],group.aes = iris[,5]) |> PCA() |> reflect("x") |> plot()

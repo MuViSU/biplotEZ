@@ -2,7 +2,7 @@
 % Please edit documentation in R/biplot.R
 \name{prediction}
 \alias{prediction}
-\title{Prediction of samples}
+\title{Predict samples to display on the biplot}
 \usage{
 prediction(bp, predict.samples = NULL, predict.means = NULL, which = 1:bp$p)
 }
@@ -17,13 +17,13 @@ prediction(bp, predict.samples = NULL, predict.means = NULL, which = 1:bp$p)
 }
 \value{
 Object of class \code{biplot} with the following elements:
-\item{predict.samples}{which samples are predicted.}
-\item{predict.mat}{matrix of predicted samples.}
-\item{predict.means}{which group means are predicted.}
-\item{predict.means.mat}{matrix of predicted group means.}
+\item{predict.samples}{a vector of indices of samples which are being predicted.}
+\item{predict.mat}{the matrix of predicted samples.}
+\item{predict.means}{a vector of group names of groups for which the means are being predicted.}
+\item{predict.means.mat}{the matrix of predicted group means.}
 }
 \description{
-Prediction of samples
+This function makes predictions of sample points, variables and means and displays them on the biplot.
 }
 \examples{
 biplot(data = iris[,1:4]) |> PCA(group.aes=iris[,5], show.class.means = TRUE) |> 

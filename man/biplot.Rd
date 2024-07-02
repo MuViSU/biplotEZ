@@ -10,33 +10,33 @@ Title = NULL)
 \arguments{
 \item{data}{a data frame or numeric matrix containing all variables the user wants to analyse.}
 
-\item{classes}{vector identifying class membership.}
+\item{classes}{a vector identifying class membership.}
 
-\item{group.aes}{vector identifying groups for aesthetic formatting.}
+\item{group.aes}{a vector identifying groups for aesthetic formatting.}
 
-\item{center}{logical, indicating whether \code{data} should be column centered, with default \code{TRUE}.}
+\item{center}{a logical value indicating whether \code{data} should be column centered, with default \code{TRUE}.}
 
-\item{scaled}{logical, indicating whether \code{data} should be standardised to unit column variances, with default \code{FALSE}.}
+\item{scaled}{a logical value indicating whether \code{data} should be standardised to unit column variances, with default \code{FALSE}.}
 
-\item{Title}{title of the biplot to be rendered, enter text in "  ".}
+\item{Title}{the title of the biplot to be rendered, enter text in "  ".}
 }
 \value{
 A list with the following components is available:
-\item{X}{matrix of the centered and scaled numeric variables.}
-\item{Xcat}{data frame of the categorical variables.}
-\item{raw.X}{original data.}
-\item{classes}{vector of category levels for the class variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
-\item{na.action}{vector of observations that have been removed.}
-\item{center}{TRUE or FALSE, indicating whether X is centered.}
-\item{scaled}{TRUE or FALSE, indicating whether X is scaled.}
-\item{means}{vector of means for each numeric variable.}
-\item{sd}{vector of standard deviations for each numeric variable.}
-\item{n}{number of observations.}
-\item{p}{number of variables.}
-\item{group.aes}{vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
-\item{g.names}{descriptive names to be used for group labels.}
-\item{g}{number of groups.}
-\item{Title}{title of the biplot to be rendered}
+\item{X}{the matrix of the centered and scaled numeric variables.}
+\item{Xcat}{the data frame of the categorical variables.}
+\item{raw.X}{the original data.}
+\item{classes}{the vector of category levels for the class variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
+\item{na.action}{the vector of observations that have been removed.}
+\item{center}{a logical value indicating whether X is centered.}
+\item{scaled}{a logical value indicating whether X is scaled.}
+\item{means}{the vector of means for each numeric variable.}
+\item{sd}{the vector of standard deviations for each numeric variable.}
+\item{n}{the number of observations.}
+\item{p}{the number of variables.}
+\item{group.aes}{the vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
+\item{g.names}{the descriptive names to be used for group labels.}
+\item{g}{the number of groups.}
+\item{Title}{the title of the biplot rendered}
 }
 \description{
 This function produces a list of elements to be used when producing a biplot,
