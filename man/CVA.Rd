@@ -2,77 +2,68 @@
 % Please edit documentation in R/CVA.R
 \name{CVA}
 \alias{CVA}
-\title{Canonical Variate Analysis (CVA) method}
+\title{Perform Canonical Variate Analysis (CVA)}
 \usage{
 CVA(bp, classes=bp$classes, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
            weightedCVA = "weighted", show.class.means = TRUE,
            low.dim = "sample.opt")
 }
 \arguments{
-\item{bp}{object of class \code{biplot} obtained from preceding function \code{biplot()}.}
+\item{bp}{an object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
-\item{classes}{vector of the same length as the number of rows in the data matrix
+\item{classes}{a vector of the same length as the number of rows in the data matrix
 with the class indicator for the samples.}
 
-\item{dim.biplot}{dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
+\item{dim.biplot}{the dimension of the biplot. Only values \code{1}, \code{2} and \code{3} are accepted, with default \code{2}.}
 
-\item{e.vects}{which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.}
+\item{e.vects}{the vector indicating which eigenvectors (canonical variates) should be plotted in the biplot, with default \code{1:dim.biplot}.}
 
-\item{weightedCVA}{the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".}
+\item{weightedCVA}{a character string indicating which type of CVA to perform. One of "\code{weighted}" (default) for a weighted CVA to be performed (The centring matrix will be a diagonal matrix with the class sizes (\eqn{\mathbf{C} = \mathbf{N}}), "\code{unweightedCent}" for unweighted CVA to be performed (The centring matrix is the usual centring matrix (\eqn{\mathbf{C} = \mathbf{I}_{J} - J^{-1}\mathbf{1}_{J}\mathbf{1}_{J}'})) or "\code{unweightedI}" for unweighted CVA to be performed while retaining the weighted centroid (The centring matrix is an indicator matrix (\eqn{\mathbf{C} = \mathbf{I}_{J}})).}
 
-\item{show.class.means}{logical, indicating whether to plot the class means on the biplot.}
+\item{show.class.means}{a logical value indicating whether to plot the class means on the biplot.}
 
-\item{low.dim}{if the dimension of the canonical space is smaller than \code{dim.biplot}, the method to use to construct
-additional dimension(s). Currently two options are implemented: \code{sample.opt} maximises the sample predictivity
-of the individual samples in the biplot and \code{Bhattacharyya.dist} is based on the decomposition of the
-Bhattacharyya distance into a component for the sample means and a component for the dissimilarity
-between the sample covariance matrices.}
+\item{low.dim}{a character string indicating which method to use to construct additional dimension(s) if the dimension of the canonical space is smaller than \code{dim.biplot}. One of "\code{sample.opt}" (default) for maximising the sample predictivity of the individual samples in the biplot or "\code{Bhattacharyya.dist}" which is based on the decomposition of the Bhattacharyya distance into a component for the sample means and a component for the dissimilarity between the sample covariance matrices.}
 }
 \value{
 Object of class CVA with the following elements:
-\item{X}{matrix of the centered and scaled numeric variables.}
-\item{Xcat}{matrix of the categorical variables.}
-\item{raw.X}{original data.}
-\item{classes}{vector of category levels for the class variable. This is to be used for colour, pch and cex specifications.}
-\item{na.action}{vector of observations that have been removed.}
-\item{center}{TRUE or FALSE, whether X is centred.}
-\item{scaled}{TRUE or FALSE, whether X is scaled.}
-\item{means}{mean of each numerical variable.}
-\item{sd}{standard deviation of each numerical variable.}
-\item{n}{number of observations.}
-\item{p}{number of variables.}
-\item{group.aes}{vector of the same length as the number of rows in the data matrix for differentiated aesthetics for samples. }
-\item{g.names}{descriptive name to be used for group labels.}
-\item{g}{number of groups.}
-\item{Title}{title of the biplot to be rendered.}
-\item{Lmat}{matrix for transformation to the canonical space.}
-\item{Linv}{inverse of the \code{Lmat} matrix.}
-\item{eigenvalues}{vector of eigenvalues of the two-sided eigenvalue problem.}
-\item{Z}{matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
+\item{X}{the matrix of the centered and scaled numeric variables.}
+\item{Xcat}{the data frame of the categorical variables.}
+\item{raw.X}{the original data.}
+\item{classes}{the vector of category levels for the class variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
+\item{na.action}{the vector of observations that have been removed.}
+\item{center}{a logical value indicating whether \eqn{\mathbf{X}} is centered.}
+\item{scaled}{a logical value indicating whether \eqn{\mathbf{X}} is scaled.}
+\item{means}{the vector of means for each numerical variable.}
+\item{sd}{the vector of standard deviations for each numerical variable.}
+\item{n}{the number of observations.}
+\item{p}{the number of variables.}
+\item{group.aes}{the vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications. }
+\item{g.names}{the descriptive names to be used for group labels.}
+\item{g}{the number of groups.}
+\item{Title}{the title of the biplot rendered.}
+\item{Lmat}{the matrix for transformation to the canonical space.}
+\item{Linv}{the inverse of \eqn{\mathbf{L}}.}
+\item{eigenvalues}{the vector of eigenvalues of the two-sided eigenvalue problem.}
+\item{Z}{the matrix with each row containing the details of the points to be plotted (i.e. coordinates).}
 \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
-\item{Xbar}{the matrix of group means.}
-\item{Gmat}{indicator matrix defining membership of the classes.}
-\item{Xmeans}{matrix of class means.}
-\item{Zmeans}{matrix of the class mean coordinates to be plotted in the biplot.}
-\item{e.vects}{vector indicating which canonical variates are plotted in the biplot.}
-\item{Cmat}{centring matrix based on different choices of weighting.
-For \code{"weighted"}, \code{Cmat} is a diagonal matrix with
-the class sizes, for \code{"unweightedI"}, \code{Cmat} is an
-indicator matrix and for
-\code{"unweightedCent"}, \code{Cmat} is the usual centring matrix. }
-\item{Bmat}{between class sums of squares and cross products matrix.}
-\item{Wmat}{within class sums of squares and cross products matrix.}
-\item{Mrr}{the inverse of the matrix \eqn{M = LV}.}
+\item{Xbar}{the matrix of the group means.}
+\item{Gmat}{the indicator matrix defining membership of the classes.}
+\item{Xmeans}{the matrix of the class means.}
+\item{Zmeans}{the matrix of the class mean coordinates that are plotted in the biplot.}
+\item{e.vects}{the vector indicating which canonical variates are plotted in the biplot.}
+\item{Cmat}{the centring matrix based on different choices of weighting described in arguments.}
+\item{Bmat}{the between class sums of squares and cross products matrix.}
+\item{Wmat}{the within class sums of squares and cross products matrix.}
+\item{Mrr}{the inverse of \eqn{\mathbf{M}=\mathbf{LV}}.}
 \item{Mr}{the first r dimensions of the solution to be plotted.}
-\item{Nmat}{a matrix with the class sizes on the diagonal.}
-\item{lambda.mat}{the matrix with the eigenvalues of \eqn{W^{-1/2}BW^{-1/2}} on the diagonal.}
-\item{class.means}{logical value, indicating whether the class means should be plotted in the biplot.}
-\item{dim.biplot}{dimension of the biplot.}
-\item{low.dim}{if the dimension of the canonical space is smaller than \code{dim.biplot}, the method used to construct
-additional dimension(s).}
+\item{Nmat}{the matrix with the class sizes on the diagonal.}
+\item{lambda.mat}{the matrix with the eigenvalues of \eqn{\mathbf{W}^{-1/2}\mathbf{BW}^{-1/2}} on the diagonal.}
+\item{class.means}{a logical value indicating whether the class means should be plotted in the biplot.}
+\item{dim.biplot}{the dimension of the biplot.}
+\item{low.dim}{the method used to construct additional dimension(s).}
 }
 \description{
-This function produces a list of elements to be used for CVA biplot construction.
+This function appends the \code{biplot} object with elements resulting from performing CVA.
 }
 \examples{
 biplot(iris[,1:4]) |> CVA(classes=iris[,5])

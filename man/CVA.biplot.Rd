@@ -2,7 +2,7 @@
 % Please edit documentation in R/CVA.R
 \name{CVA.biplot}
 \alias{CVA.biplot}
-\title{CVA biplot}
+\title{Calculate elements for the CVA biplot}
 \usage{
 \method{CVA}{biplot}(
   bp,
@@ -15,30 +15,26 @@
 )
 }
 \arguments{
-\item{bp}{object of class \code{biplot} obtained from preceding function \code{biplot()}.}
+\item{bp}{an object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
-\item{classes}{vector of the same length as the number of rows in the data matrix
+\item{classes}{a vector of the same length as the number of rows in the data matrix
 with the class indicator for the samples.}
 
-\item{dim.biplot}{dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
+\item{dim.biplot}{the dimension of the biplot. Only values \code{1}, \code{2} and \code{3} are accepted, with default \code{2}.}
 
-\item{e.vects}{which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.}
+\item{e.vects}{the vector indicating which eigenvectors (canonical variates) should be plotted in the biplot, with default \code{1:dim.biplot}.}
 
-\item{weightedCVA}{the default is "weighted", specifying a weighted CVA to be performed. Other possible values are "unweightedI" and "unweightedCent".}
+\item{weightedCVA}{a character string indicating which type of CVA to perform. One of "\code{weighted}" (default) for a weighted CVA to be performed (The centring matrix will be a diagonal matrix with the class sizes (\eqn{\mathbf{C} = \mathbf{N}}), "\code{unweightedCent}" for unweighted CVA to be performed (The centring matrix is the usual centring matrix (\eqn{\mathbf{C} = \mathbf{I}_{J} - J^{-1}\mathbf{1}_{J}\mathbf{1}_{J}'})) or "\code{unweightedI}" for unweighted CVA to be performed while retaining the weighted centroid (The centring matrix is an indicator matrix (\eqn{\mathbf{C} = \mathbf{I}_{J}})).}
 
-\item{show.class.means}{logical, indicating whether to plot the class means on the biplot.}
+\item{show.class.means}{a logical value indicating whether to plot the class means on the biplot.}
 
-\item{low.dim}{if the dimension of the canonical space is smaller than \code{dim.biplot}, the method to use to construct
-additional dimension(s). Currently two options are implemented: \code{sample.opt} maximises the sample predictivity
-of the individual samples in the biplot and \code{Bhattacharyya.dist} is based on the decomposition of the
-Bhattacharyya distance into a component for the sample means and a component for the dissimilarity
-between the sample covariance matrices.}
+\item{low.dim}{a character string indicating which method to use to construct additional dimension(s) if the dimension of the canonical space is smaller than \code{dim.biplot}. One of "\code{sample.opt}" (default) for maximising the sample predictivity of the individual samples in the biplot or "\code{Bhattacharyya.dist}" which is based on the decomposition of the Bhattacharyya distance into a component for the sample means and a component for the dissimilarity between the sample covariance matrices.}
 }
 \value{
-an object of class CVA, inherits from class biplot.
+an object of class \code{CVA}, inherits from class \code{biplot}.
 }
 \description{
-Performs calculations for a CVA biplot.
+This function performs calculations for the construction of a CVA biplot.
 }
 \examples{
 biplot(iris[,1:4]) |> CVA(classes=iris[,5])

@@ -2,7 +2,7 @@
 % Please edit documentation in R/PCA.R
 \name{PCA.biplot}
 \alias{PCA.biplot}
-\title{PCA biplot}
+\title{Calculate elements for the PCA biplot}
 \usage{
 \method{PCA}{biplot}(
   bp,
@@ -16,25 +16,25 @@
 \arguments{
 \item{bp}{an object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
-\item{dim.biplot}{dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
+\item{dim.biplot}{the dimension of the biplot. Only values \code{1}, \code{2} and \code{3} are accepted, with default \code{2}.}
 
-\item{e.vects}{which eigenvectors (principal components) to extract, with default \code{1:dim.biplot}.}
+\item{e.vects}{the vector indicating which eigenvectors (principal components) should be plotted in the biplot, with default \code{1:dim.biplot}.}
 
-\item{group.aes}{vector of the same length as the number of rows in the data matrix
+\item{group.aes}{a vector of the same length as the number of rows in the data matrix
 for differentiated aesthetics for samples.}
 
-\item{show.class.means}{logical, indicating whether group means should be plotted in the biplot.}
+\item{show.class.means}{a logical value indicating whether group means should be plotted in the biplot.}
 
-\item{correlation.biplot}{logical, if \code{FALSE}, the distances between sample points are
+\item{correlation.biplot}{a logical value. If \code{FALSE}, the distances between sample points are
 optimally approximated in the biplot. If \code{TRUE}, the correlations between
 variables are optimally approximated by the cosine of the angles between
 axes. Default is \code{FALSE}.}
 }
 \value{
-an object of class PCA, inherits from class biplot.
+an object of class \code{PCA}, inherits from class \code{biplot}.
 }
 \description{
-Performs calculations for a PCA biplot.
+This function performs calculations for the construction of a PCA biplot.
 }
 \examples{
 biplot(iris[,1:4]) |> PCA()

@@ -649,34 +649,7 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
 #' @param newvariable a new data set, similar in structure to the data set supplied to \code{biplot()}
 #'                containing supplementary variables to be added onto the biplot.
 #'
-#' @return Object of class \code{biplot} with the following elements:
-#' \item{X}{a matrix of the centered and scaled numeric variables.}
-#' \item{Xcat}{a data frame of the categorical variables.}
-#' \item{raw.X}{the original data.}
-#' \item{classes}{the vector of category levels for the class variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
-#' \item{na.action}{the vector of observations that have been removed.}
-#' \item{center}{a logical value indicating whether \eqn{\mathbf{X}} is centered.}
-#' \item{scaled}{a logical value indicating whether \eqn{\mathbf{X}} is scaled.}
-#' \item{means}{the vector of means for each numerical variable.}
-#' \item{sd}{the vector of standard deviations for each numerical variable.}
-#' \item{n}{the number of observations.}
-#' \item{p}{the number of variables.}
-#' \item{group.aes}{the vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
-#' \item{g.names}{the descriptive names to be used for group labels.}
-#' \item{g}{the number of groups.}
-#' \item{Title}{the title of the biplot rendered.}
-#' \item{Z}{the matrix with each row containing the details of the point to be plotted (i.e. coordinates).}
-#' \item{Lmat}{the matrix for transformation to the principal components.}
-#' \item{Linv}{the inverse of \eqn{\mathbf{L}}.}
-#' \item{eigenvalues}{the vector of eigenvalues of the covariance matrix of \eqn{\mathbf{X}}.}
-#' \item{ax.one.unit}{one unit in the positive direction of each biplot axis.}
-#' \item{e.vects}{the vector indicating which principal components are plotted in the biplot.}
-#' \item{Vr}{the \code{1:dim.biplot} columns of \eqn{\mathbf{V}}.}
-#' \item{dim.biplot}{the dimension of the biplot.}
-#' \item{V.mat}{the matrix containing the right singular vectors of \eqn{\mathbf{X}}.}
-#' \item{Sigma.mat}{the matrix with the singular values of \eqn{\mathbf{X}} on the diagonal.}
-#' \item{U.mat}{the matrix containing the left singular vectors of \eqn{\mathbf{X}}.}
-#' \item{class.means}{a logical value indicating whether group means are plotted in the biplot.}
+#' @return The object of class \code{biplot} will be appended with the following elements:
 #' \item{Xnew.raw}{the new data.}
 #' \item{Xnew}{the matrix of the centered and scaled new numeric variables of new data.}
 #' \item{Xnew.cat}{the matrix of the categorical variables of new data.}
@@ -924,7 +897,7 @@ classify <- function(bp,classify.regions = TRUE,col=ez.col,opacity=0.4,borders =
 #' This function provides the user with an option to reflect the biplot horizontally, vertically or diagonally.
 #' 
 #' @param bp an object of class \code{biplot}
-#' @param reflect.axis a character string indicating which axis about to reflect. One of \code{FALSE} (default), "x" for reflection about the x-axis, "y" for reflection about the y-axis and "xy" for reflection about both axes. 
+#' @param reflect.axis a character string indicating which axis about to reflect. One of \code{FALSE} (default), "\code{x}" for reflection about the x-axis, "\code{y}" for reflection about the y-axis and "\code{xy}" for reflection about both axes. 
 #'
 #' @return An object of class \code{biplot}
 #' @export

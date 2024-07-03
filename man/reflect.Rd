@@ -9,7 +9,7 @@ reflect(bp, reflect.axis = c("FALSE", "x", "y", "xy"))
 \arguments{
 \item{bp}{an object of class \code{biplot}}
 
-\item{reflect.axis}{a character string indicating which axis about to reflect. One of \code{FALSE} (default), "x" for reflection about the x-axis, "y" for reflection about the y-axis and "xy" for reflection about both axes.}
+\item{reflect.axis}{a character string indicating which axis about to reflect. One of \code{FALSE} (default), "\code{x}" for reflection about the x-axis, "\code{y}" for reflection about the y-axis and "\code{xy}" for reflection about both axes.}
 }
 \value{
 An object of class \code{biplot}
