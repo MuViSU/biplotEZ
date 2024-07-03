@@ -11,14 +11,14 @@ CVA(bp, classes=bp$classes, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 \arguments{
 \item{bp}{an object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
-\item{classes}{a vector of the same length as the number of rows in the data matrix
+\item{classes}{a vector of the same length as the number of rows in the data matrix.
 with the class indicator for the samples.}
 
 \item{dim.biplot}{the dimension of the biplot. Only values \code{1}, \code{2} and \code{3} are accepted, with default \code{2}.}
 
 \item{e.vects}{the vector indicating which eigenvectors (canonical variates) should be plotted in the biplot, with default \code{1:dim.biplot}.}
 
-\item{weightedCVA}{a character string indicating which type of CVA to perform. One of "\code{weighted}" (default) for a weighted CVA to be performed (The centring matrix will be a diagonal matrix with the class sizes (\eqn{\mathbf{C} = \mathbf{N}}), "\code{unweightedCent}" for unweighted CVA to be performed (The centring matrix is the usual centring matrix (\eqn{\mathbf{C} = \mathbf{I}_{J} - J^{-1}\mathbf{1}_{J}\mathbf{1}_{J}'})) or "\code{unweightedI}" for unweighted CVA to be performed while retaining the weighted centroid (The centring matrix is an indicator matrix (\eqn{\mathbf{C} = \mathbf{I}_{J}})).}
+\item{weightedCVA}{a character string indicating which type of CVA to perform. One of "\code{weighted}" (default) for a weighted CVA to be performed (The centring matrix will be a diagonal matrix with the class sizes (\eqn{\mathbf{C} = \mathbf{N}}), "\code{unweightedCent}" for unweighted CVA to be performed (The centring matrix is the usual centring matrix (\eqn{\mathbf{C} = \mathbf{I}_{G} - G^{-1}\mathbf{1}_{G}\mathbf{1}_{G}'})) or "\code{unweightedI}" for unweighted CVA to be performed while retaining the weighted centroid (The centring matrix is an indicator matrix (\eqn{\mathbf{C} = \mathbf{I}_{G}})).}
 
 \item{show.class.means}{a logical value indicating whether to plot the class means on the biplot.}
 

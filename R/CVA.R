@@ -5,11 +5,11 @@
 #' This function appends the \code{biplot} object with elements resulting from performing CVA.
 #'
 #' @param bp an object of class \code{biplot} obtained from preceding function \code{biplot()}.
-#' @param classes a vector of the same length as the number of rows in the data matrix
+#' @param classes a vector of the same length as the number of rows in the data matrix.
 #'                  with the class indicator for the samples.
 #' @param dim.biplot the dimension of the biplot. Only values \code{1}, \code{2} and \code{3} are accepted, with default \code{2}.
 #' @param e.vects the vector indicating which eigenvectors (canonical variates) should be plotted in the biplot, with default \code{1:dim.biplot}.
-#' @param weightedCVA a character string indicating which type of CVA to perform. One of "\code{weighted}" (default) for a weighted CVA to be performed (The centring matrix will be a diagonal matrix with the class sizes (\eqn{\mathbf{C} = \mathbf{N}}), "\code{unweightedCent}" for unweighted CVA to be performed (The centring matrix is the usual centring matrix (\eqn{\mathbf{C} = \mathbf{I}_{J} - J^{-1}\mathbf{1}_{J}\mathbf{1}_{J}'})) or "\code{unweightedI}" for unweighted CVA to be performed while retaining the weighted centroid (The centring matrix is an indicator matrix (\eqn{\mathbf{C} = \mathbf{I}_{J}})).
+#' @param weightedCVA a character string indicating which type of CVA to perform. One of "\code{weighted}" (default) for a weighted CVA to be performed (The centring matrix will be a diagonal matrix with the class sizes (\eqn{\mathbf{C} = \mathbf{N}}), "\code{unweightedCent}" for unweighted CVA to be performed (The centring matrix is the usual centring matrix (\eqn{\mathbf{C} = \mathbf{I}_{G} - G^{-1}\mathbf{1}_{G}\mathbf{1}_{G}'})) or "\code{unweightedI}" for unweighted CVA to be performed while retaining the weighted centroid (The centring matrix is an indicator matrix (\eqn{\mathbf{C} = \mathbf{I}_{G}})).
 #' @param show.class.means a logical value indicating whether to plot the class means on the biplot.
 #' @param low.dim a character string indicating which method to use to construct additional dimension(s) if the dimension of the canonical space is smaller than \code{dim.biplot}. One of "\code{sample.opt}" (default) for maximising the sample predictivity of the individual samples in the biplot or "\code{Bhattacharyya.dist}" which is based on the decomposition of the Bhattacharyya distance into a component for the sample means and a component for the dissimilarity between the sample covariance matrices.
 #'
@@ -173,19 +173,19 @@ CVA.biplot <- function(bp, classes=bp$classes, dim.biplot = c(2,1,3), e.vects = 
   bp
 }
 
-#' CVA extra dimensions if dim(canonical space) < dimension of the biplot
+#' Construct additional dimensions when the dimension of the canonical space is lower than the dimension of the biplot
 #'
-#' @param bp object of class \code{biplot}
-#' @param G indicator matrix of class membership
-#' @param W within class covariance matrix
+#' @param bp an object of class \code{biplot}.
+#' @param G the indicator matrix defining membership of the classes.
+#' @param W the within class sums of squares and cross products matrix.
 #' @param Mmat eigenvector matrix from CVA
 #' @param low.dim if the dimension of the canonical space is smaller than \code{dim.biplot}, the method to use to construct
 #'                   additional dimension(s). Currently two options are implemented: \code{sample.opt} maximises the sample predictivity
 #'                   of the individual samples in the biplot and \code{Bhattacharyya.dist} is based on the decomposition of the
 #'                   Bhattacharyya distance into a component for the sample means and a component for the dissimilarity
 #'                   between the sample covariance matrices.
-#' @param K dimension of the canonical space
-#' @param e.vects which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}
+#' @param K the dimension of the canonical space
+#' @param e.vects the vector indicating which canonical variates are plotted in the biplot, with default \code{1:dim.biplot}
 #'
 #' @return A list with three components:
 #' \item{Mr}{pxr matrix for the transformation to the canonical space.}

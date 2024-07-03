@@ -2,16 +2,16 @@
 % Please edit documentation in R/CVA.R
 \name{CVA.2class}
 \alias{CVA.2class}
-\title{CVA extra dimensions if dim(canonical space) < dimension of the biplot}
+\title{Construct additional dimensions when the dimension of the canonical space is lower than the dimension of the biplot}
 \usage{
 \method{CVA}{`2class`}(bp, G, W, Mmat, low.dim, K, e.vects)
 }
 \arguments{
-\item{bp}{object of class \code{biplot}}
+\item{bp}{an object of class \code{biplot}.}
 
-\item{G}{indicator matrix of class membership}
+\item{G}{the indicator matrix defining membership of the classes.}
 
-\item{W}{within class covariance matrix}
+\item{W}{the within class sums of squares and cross products matrix.}
 
 \item{Mmat}{eigenvector matrix from CVA}
 
@@ -21,9 +21,9 @@ of the individual samples in the biplot and \code{Bhattacharyya.dist} is based o
 Bhattacharyya distance into a component for the sample means and a component for the dissimilarity
 between the sample covariance matrices.}
 
-\item{K}{dimension of the canonical space}
+\item{K}{the dimension of the canonical space}
 
-\item{e.vects}{which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}}
+\item{e.vects}{the vector indicating which canonical variates are plotted in the biplot, with default \code{1:dim.biplot}}
 }
 \value{
 A list with three components:
@@ -32,5 +32,5 @@ A list with three components:
 \item{Lmat}{pxp matrix for transformation to the canonical space.}
 }
 \description{
-CVA extra dimensions if dim(canonical space) < dimension of the biplot
+Construct additional dimensions when the dimension of the canonical space is lower than the dimension of the biplot
 }
