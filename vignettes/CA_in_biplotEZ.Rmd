@@ -1,0 +1,267 @@
+---
+title: "CA in biplotEZ"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: true
+bibliography: references.bib
+vignette: >
+  %\VignetteIndexEntry{CA in biplotEZ}
+  %\VignetteEncoding{UTF-8}
+  %\VignetteEngine{knitr::rmarkdown}
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.height = 6, fig.width = 7,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(biplotEZ)
+```
+
+# What is a Correspondence Analysis?
+
+In its simplest form Correspondence Analysis (CA) aims to expose the
+association between two categorical variables by utilising a two-way
+frequency table. Numerous variants of CA are available for the
+application to diverse problems, the interested reader is referred to:
+@UB2011, @BehLombardo2014.
+
+In `biplotEZ` focus will be places on three *EZ*-to-use versions based on the Pearson residuals (@UB2011: Page 300).
+
+Now, the two-way frequency table is also referred to as the data matrix:
+$\mathbf{X}:r\times c$. This data matrix is different from the
+continuous case used for the `PCA()` and `CVA()` examples, as it
+represents the cross-tabulations of two categorical variables (i.e.
+factors), each with a finite number of levels (i.e response values). The
+elements of the data matrix represent the frequency of the co-occurrence
+of two particular levels of the two variables. Consider the
+`HairEyeColor` data set in `R`, which summarises the hair and eye color
+of male and female statistics students. For the purpose of this example
+only the male students will be considered:
+
+```{r}
+X <- HairEyeColor[,,2]
+X
+```
+
+The grand total of the table $N$ is obtained from the total of all
+frequencies:
+
+$$
+\sum_{r=1}^{R}\sum_{c=1}^{C}x_{rc}=N
+$$
+```{r}
+N <- sum(X)
+N
+```
+
+It is common to work with the proportions rather than the frequencies
+in terms of the correspondence matrix, $\mathbf{P}$:
+
+$$
+\mathbf{P}=\frac{\mathbf{X}}{N}
+$$ 
+```{r}
+P <- X/N
+P
+```
+
+Other useful summaries of $\mathbf{P}$ include the row and column masses (for arbitrary row and column $r$ and $c$, respectively), also expressed as diagonal matrices:
+
+$$
+\mathbf{r}_r = \sum_{c=1}^{C}p_{rc}; \hspace{0.5 cm}
+\mathbf{c}_c = \sum_{r=1}^{R}p_{rc}\\
+\mathbf{r}=\mathbf{P1}; \hspace{0.5 cm} \mathbf{c}=\mathbf{P}^\prime\mathbf{1}
+$$
+```{r}
+rMass <- rowSums(P)
+rMass
+cMass <- colSums(P)
+cMass
+```
+
+Diagonal matrices:
+
+$$
+\mathbf{D_r}=\text{diag}(\mathbf{r}); \hspace{0.5 cm} \mathbf{D_c}=\text{diag}(\mathbf{c})
+$$
+```{r}
+Dr <- diag(apply(P, 1, sum))
+Dr
+Dc <- diag(apply(P, 2, sum))
+Dc
+```
+In order to obtain the first form of the row and column coordinates, the singular value decomposition (SVD) of the matrix of standardised Pearson residuals ($\mathbf{S}$) is computed:
+
+$$
+\begin{aligned}
+\text{SVD}(\mathbf{S}) &= \text{SVD}\left(\mathbf{D_r^{-\frac{1}{2}}}(\mathbf{P}-\mathbf{rc^\prime})\mathbf{D_c^{-\frac{1}{2}}}\right)\\&= \mathbf{U\Lambda V^\prime}
+\end{aligned}
+$$
+The return value for the Standardised pearson residuals is `Smat` and the singular value decomposition, `SVD`.
+
+```{r}
+Smat <- sqrt(solve(Dr))%*%(P-(Dr %*%matrix(1, nrow = nrow(X), ncol = ncol(X)) %*%  Dc))%*%sqrt(solve(Dc))
+svd.out <- svd(Smat)
+svd.out
+```
+This is linked to the $\chi^2$-statistic to determine whether the two categorical variables (i.e. the rows and columns of the contingency table) are independent. The expected frequencies represented by the product of the row and column masses ($\mathbf{rc^\prime}$). 
+
+Furthermore, since the weights of certain objects might be substantially different from others which could result in a distorted approximation in lower dimension, the $\chi^2$-distance, also referred to as the weighted Euclidean distance, is rather used to measure distances in CA.
+This is an intuitive decision as it follows from the $\chi^2$-statistic to test the independence between two categorical variables, in this case the independence between the rows and columns of the contingency table. (@BehLombardo2014, @Greenacre2017).
+
+# CA biplot
+
+## Coordinates
+
+In order to construct a biplot in which the distances between the row and column coordinates are meaningful an asymmetric display should be constructed. This means that the contribution of the singular values should be different for the row and column coordinates. (@Gabriel1971)
+The standard coordinates are expressed by:
+
+$$
+\begin{aligned}
+\text{Row standard coordinates:} \hspace{0.5 cm}&\mathbf{U}\\
+\text{Column standard coordinates:} \hspace{0.5 cm}&\mathbf{V}
+\end{aligned}
+$$
+
+The principal coordinates are expressed by:
+
+$$
+\begin{aligned}
+\text{Row principal coordinates:} \hspace{0.5 cm}&\mathbf{U\Lambda}\\
+\text{Column principal coordinates:} \hspace{0.5 cm}&\mathbf{V\Lambda}
+\end{aligned}
+$$
+
+By including the singular values the magnitude of the association between the variables are incorporated in the scaling of the coordinates.
+
+In the `ca()` function the argument `variant` allows the user to choose between three types of CA biplots: `Princ`, `Stand` and `Symmetric`.
+
+$$
+\begin{aligned}
+\text{Row coordinates:} \hspace{0.5 cm}&\mathbf{U\Lambda^\gamma}\\
+\text{Column coordinates:} \hspace{0.5 cm}&\mathbf{V\Lambda^{1-\gamma}}
+\end{aligned}
+$$
+The row standard (i.e. column principal) coordinate biplot: `Stand`, results from $\gamma=0$.
+
+The row principal (i.e. column standard) coordinate biplot: `Princ`, results from $\gamma=1$.
+
+The symmetric plot in which row and column coordinates are scaled equally: `Symmetric`, results from $\gamma=0.5$.
+
+The return value is `rowcoor` and `colcoor`, respectively.
+
+```{r}
+gamma <- 0
+rowcoor <- svd.out[[2]]%*%(diag(svd.out[[1]])^gamma)
+colcoor <- svd.out[[3]]%*%(diag(svd.out[[1]])^(1-gamma))
+```
+
+## The quality of the biplot display
+
+This is measured by the ratio of the variance explained (sum of the squared singular values of the utilised ($M$) components) and the total variance (sum of all squared singular values ($p$)).
+
+$$
+\frac{\sum_{m=1}^{M}\lambda_m^2}{\sum_{m=1}^{p}\lambda_m^2}
+$$
+The return value is `qual`.
+
+## Lambda scaling
+
+As presented in @UB2011 page 24, when constructing a biplot representing the rows of a coordinate matrix $\mathbf{A}$ and $\mathbf{B}^\prime$. Take note that the inner product is invariant when $\mathbf{A}$ and $\mathbf{B}$ are scaled inversely by $\lambda$. 
+
+$$
+\mathbf{AB} = (\lambda\mathbf{A})(\mathbf{B}/\lambda)
+$$
+An arbitrary value of $\lambda$ can be selected or an *optimal* value could be to ensure that the average squared distance of the points in $\lambda\mathbf{A}$ and $\mathbf{B}/\lambda$ is equal.
+
+$$
+\lambda^4 =\frac{r}{c}\frac{||\mathbf{B}||^2}{||\mathbf{A}||^2}
+$$
+
+The default setting is to not apply lambda-scaling (i.e. $\lambda=1$).
+The return value is `lamb.val`.
+
+# The function CA()
+
+The function `CA()` requires a two-way contingency table as input and will return an object of class `CA` and `biplot`. As this is not a standard data matrix as for `PCA` and `CVA`, scaling and centering is not allowed on the two-way contingency table and a warning will be given if either `scale` or `center` is specified as `TRUE` in biplot()`.
+
+## `Variant="Princ"`
+
+The default CA biplot is a row principal coordinate biplot:
+
+```{r}
+biplot(HairEyeColor[,,2], center = FALSE) |> CA() |> plot()
+```
+
+## `Variant="Stand"`
+
+To construct the CA biplot for row standard coordinates:
+
+```{r}
+ca.out <- biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Stand") |> plot()
+ca.out$qual
+```
+
+## `Variant="Symmetric"`
+
+To construct the symmetric CA map:
+
+```{r}
+ca.out <- biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> plot()
+ca.out$qual
+ca.out$lambda.val
+```
+
+## Aesthetics and legend
+
+The `sample()` function should be utilised to specify the colours, plotting characters and expansion of the samples.
+
+```{r}
+biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Princ") |> 
+  samples(col=c("cyan","purple"), pch=c(15,17), label.side=c("bottom","top"), 
+          label.cex=1) |> legend.type(samples = TRUE, new = TRUE) |> plot()
+```
+
+```{r}
+biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
+  samples(col=c("forestgreen","magenta"), pch=c(12,17), label.side=c("top","bottom")) |> legend.type(samples = TRUE) |> plot()
+```
+## Additional example
+
+Consider the South African Crime data set 2008, extracted from the South African police website (http://www.saps.gov.za/). @UB2011 page 312.
+
+```{r}
+SACrime <- matrix(c(1235,432,1824,1322,573,588,624,169,629,34479,16833,46993,30606,13670,
+              16849,15861,9898,24915,2160,939,5257,4946,722,1271,881,775,1844,5946,
+              4418,15117,10258,5401,4273,4987,1956,10639,29508,15705,62703,37203,
+              11857,18855,14722,4924,42376,604,156,7466,3889,203,664,291,5,923,19875,
+              19885,57153,29410,11024,12202,10406,5431,32663,7086,4193,22152,9264,3760,
+              4752,3863,1337,8578,7929,4525,12348,24174,3198,1770,7004,2201,45985,764,
+              427,1501,1197,215,251,345,213,1850,3515,879,3674,4713,696,835,917,422,2836,
+              88,59,174,76,31,61,117,32,257,5499,2628,8073,6502,2816,2635,3017,1020,4000,
+              8939,4501,50970,24290,2447,5907,5528,1175,14555),nrow=9, ncol=14)
+dimnames(SACrime) <- list(paste(c("ECpe", "FrSt", "Gaut", "KZN",  "Limp", "Mpml", "NWst", "NCpe",
+                            "WCpe")), paste(c("Arsn", "AGBH", "AtMr", "BNRs", "BRs",  "CrJk",
+                                              "CmAs", "CmRb", "DrgR", "InAs", "Mrd", "PubV", 
+                                              "Rape", "RAC" )))
+names(dimnames(SACrime))[[1]] <- "Provinces"
+names(dimnames(SACrime))[[2]] <- "Crimes"
+SACrime
+```
+
+```{r}
+biplot(SACrime, center = FALSE) |> CA(variant = "Symmetric", lambda.scal = TRUE) |> 
+  samples(col=c("cyan","purple"), pch=c(15,17), label.side=c("bottom","top")) |>
+  legend.type(samples = TRUE, new = TRUE) |> plot()
+```
+
+# References

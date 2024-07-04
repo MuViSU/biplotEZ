@@ -1,0 +1,231 @@
+---
+title: "Biplots in 1D"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: true
+
+bibliography: references.bib
+vignette: >
+  %\VignetteIndexEntry{Biplots in 1D}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.height = 6, fig.width = 7,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(biplotEZ)
+```
+
+
+<img src='../man/figures/logo.png' alt='alt text' style='width:10%; height:auto;' class="center">
+
+This vignette illustrates how to create one-dimensional biplot. The biplotEZ vignette demonstrates many functions of the functions in the package. The vignette will serve as a supplement to the biplotEZ vignette.
+
+
+ 
+
+# One-dimensional PCA biplot
+One-dimensional PCA biplots are obtained by specifying `dim.biplot = 1` in the call to `PCA()`.
+
+The one-dimensional representation of the data is displayed by the colour points on the top horizontal line. The accompanying calibrated variable axes are displayed as horizontal lines below. The variable name is displayed on the side to which the variable increases.
+
+```{r }
+biplot(iris) |> PCA(group.aes = iris$Species,dim.biplot = 1)  |> plot()
+```
+
+
+
+# One-dimensional CVA biplot
+Similarly for a CVA 1d biplot, `dim.biplot = 1` is specified in the call to `CVA()`. The one-dimensioal CVA biplot displays the one-dimensional linear combination that maximises the between class variance, relative to the within class variance.
+```{r}
+biplot(iris) |> CVA(classes = iris$Species,dim.biplot = 1) |>
+  axes(col="black") |> plot()
+```
+
+## Classification using `classify()`
+
+CVA models can be employed as a classifier. New observations are classified to the nearest class mean, where the means are indicated by the shaded squares on the scatter line. The classification regions are displayed above the scatter line using `classify()`.
+
+
+
+```{r}
+bp <- biplot(iris) |> CVA(classes = iris[,5],dim.biplot = 1)|>
+  axes(col="black") |> 
+  classify(borders = TRUE,opacity = 1)|>plot()
+```
+
+
+The `print()` function provides the misclassification rate, as well as the confusion matrix, of the CVA classifier applied to the training data.
+
+```{r}
+print(bp)
+```
+
+
+# The function `interpolate()`
+
+`interpolate()` allows for new observations or axes to be added to the biplot.
+
+## The function `newsamples()`
+The process of adding new samples to the biplot, called interpolation utilises the functions `interpolate()` and `newsamples()`. These functions work in the same way as in the call to the two-dimensional biplot. The function `interpolate()` accepts the argument `newdata` to specify a matrix or data frame containing the new samples to be interpolated. The function `newsamples()` operates the same way as `samples()` in that the user can specify the aesthetics of the interpolated samples. 
+
+```{r}
+biplot(iris[c(1:50,101:150),1:4])|> PCA(dim.biplot = 1) |> axes(col="black") |> 
+  interpolate(newdata = iris[51:100,1:4]) |> newsamples(col="purple") |> plot()
+```
+
+
+
+## The function `newaxes()`
+To interpolate new variables to the biplot, the function `interpolate()` and `newaxes()` are called. The function `interpolate()` accepts the argument `newvariable` to specify a matrix or data frame of the same number of rows in the data specified in `biplot()` containing the new variables to be interpolated. The function `newaxes()` allows the user to specify the aesthetics of the interpolated variables. 
+
+```{r}
+biplot(iris[,1:3])|> PCA(dim.biplot = 1) |> axes(col="black") |> 
+  interpolate(newvariable = iris[,4]) |> 
+  newaxes(col="darkred",X.new.names = "Petal.Width") |> plot()
+```
+
+
+# The function `prediction()`
+
+## Predicting Samples
+To add the prediction of samples on the biplot, the `prediction()` function is used. The `predict.samples` argument takes in a vector indicating either the row numbers of the samples to predict or set to TRUE indicating to predict all samples. In the example below, the predictions for samples 100 to 150 are shown. The aesthetics for the display of the predictions are arguments in the `axes()` function: `predict.col` and `predict.lwd`. 
+```{r}
+biplot(iris) |> 
+  PCA(group.aes = iris$Species,dim.biplot = 1,show.class.means = TRUE) |> 
+  axes(col="black",predict.col = "darkred") |> 
+  prediction(predict.samples=100:150) |> plot()
+```
+
+
+## Predicting Group Means 
+
+Similarly, to add the prediction of group means, the function `prediction()` is used. The argument `predict.means` takes in a vector specifying which group means to predict. In the example below, only the first group means is predicted. Important to note that the argument `show.class.means` must be set to TRUE in the `PCA()` function. 
+```{r}
+biplot(iris) |> 
+  PCA(group.aes = iris$Species,dim.biplot = 1,show.class.means = TRUE) |> 
+  axes(col="black",predict.col = "darkred") |> means(label=TRUE,which=1:3)|>
+  prediction(predict.means = 1) |> plot()
+```
+
+
+
+# Ellipses and Alpha bags
+
+Ellipses are added to a 1d biplot using the `ellipses()` function which works in the same way as a 2d biplot. In one dimension concentration ellipses are simply a confidence interval. The concentration interval is indicated using rectangles spanning the range of the interval.
+
+```{r}
+biplot(iris) |> PCA(group.aes = iris[,5],dim.biplot = 1) |> 
+  axes(col="black") |> 
+  ellipses() |> plot()
+```
+
+The one-dimensional representation of an Alpha bag will simply be an empirical interval. The empirical interval is indicated using rectangles spanning the range of the interval.
+
+```{r}
+biplot(iris) |> PCA(group.aes = iris[,5],dim.biplot = 1) |> 
+  axes(col="black") |> 
+  alpha.bags(alpha = 0.7) |> plot()
+```
+
+
+
+# The function `density1D()`
+
+Overlapping points make the distribution of points on the scatter line difficult to identify. `density1D()` uses kernel density estimation (KDE), which adds a density plot to the one-dimensional biplot.
+
+```{r}
+biplot(iris) |> PCA(dim.biplot = 1) |> 
+  axes(col="black") |>
+  density1D() |> plot()
+```
+
+This KDE may be too smooth to display the distribution of the data. By changing the parameters of the KDE, we are able to address this issue. The bandwidth and kernel used in `density1D()` are controlled by the arguments `h=` and `kernel=`, respectively. The bandwidth `h` can take any positive value, see `?stats::density` for more detail. `kernel` can take on any kernel supported by `stats::density()`.
+
+```{r}
+biplot(iris) |> PCA(dim.biplot = 1) |> axes(col='black') |>
+  density1D(h = 0.5 ,kernel = "triangular") |> plot()
+```
+
+The high concentration of observations in the right of the plot now becomes evident. To further explore the distributions of the observations, we may want to explore the density of groupings in the data. To do this, simply specify the `group.aes=` argument in `PCA()`. Here the density of the three species of iris is displayed.
+
+
+```{r}
+biplot(iris) |> PCA(group.aes = iris[,5],dim.biplot = 1) |> 
+  axes(col="black") |>
+  density1D() |> plot()
+```
+
+To only display the density of certain groups, use the `which=` argument in `density1D()`.
+
+```{r}
+biplot(iris) |> PCA(group.aes = iris[,5],dim.biplot = 1) |> 
+  axes(col="black") |>
+  density1D(which = c(2,3)) |> plot()
+```
+
+
+# The function `legend.type()`
+
+`legend.type` adds a legend to the plot. A separate legend is created for each of the elements by setting  each of `samples`, `means`, `bags` and `ellipses` equal to `TRUE`. Here, we add a legend for the samples.
+
+```{r}
+biplot(iris) |> PCA(group.aes  = iris[,5],dim.biplot = 1, show.class.means = TRUE) |>
+  axes(col="black") |> density1D() |> samples(opacity=0.5)|> alpha.bags()|>
+  legend.type(samples = TRUE) |> plot()
+```
+
+If other legends are added, they will overlap with the elements of the plot as displayed below.
+
+```{r}
+biplot(iris) |> PCA(group.aes  = iris[,5],dim.biplot = 1, show.class.means = TRUE) |>
+  axes(col="black") |> density1D() |> samples(opacity=0.5)|> alpha.bags()|>
+  legend.type(samples = TRUE,means = TRUE, bags = TRUE) |> plot()
+```
+
+By specifying `new=TRUE`, the legends will be displayed on a new plot. 
+
+```{r}
+biplot(iris) |> PCA(group.aes  = iris[,5],dim.biplot = 1, show.class.means = TRUE) |>
+  axes(col="black") |> density1D() |> samples(opacity=0.5)|> alpha.bags()|>
+  legend.type(samples = TRUE,means = TRUE, bags = TRUE, new=TRUE) |> plot()
+```
+
+For the CVA biplot `legend.type` also displays a legend for classification regions if `
+
+
+```{r}
+bp <- biplot(iris) |> CVA(classes  = iris[,5],dim.biplot = 1, show.class.means = TRUE) |>
+  axes(col="black") |> classify() |> density1D() |> samples(opacity=0.5)|> alpha.bags()|>
+  legend.type(samples = TRUE,means = TRUE, bags = TRUE, regions = TRUE, new=TRUE) |> plot() #
+```
+
+# The function `fit.measures()`
+
+`fit.measures()` calculates measures of fit for the biplot. Passing a biplot object which has been piped to `fit.measures()` to `summary()` will output:
+
+  * For the plot: Quality of fit. 
+  * For each variable: an Adequacy measure and a measure of Axis Predictivity. 
+  * For each sample:  Sample Predictivity
+
+
+
+```{r}
+a <- biplot(iris) |> PCA(group.aes = iris[,5],dim.biplot = 1) |> fit.measures()
+summary(a)
+```
+
+
+
+
+
+# References

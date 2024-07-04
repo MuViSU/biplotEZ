@@ -1,0 +1,165 @@
+
+---
+title: "Biplots in 3D"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    number_sections: true
+vignette: >
+  %\VignetteIndexEntry{Biplots in 3D}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  fig.height = 6, fig.width = 7,
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup, include=FALSE}
+library(biplotEZ)
+library(rgl)
+```
+
+# PCA 3D biplot
+Three-dimensional PCA biplots are obtained by specifying `dim.biplot = 3` in the call to `PCA()`. The package `rgl` is required and on calling the `plot()` the biplot is drawn in an `rgl` window. The plot can then be interactively rotated and zoomed using the mouse buttons.  
+
+```{r }
+biplot(iris) |> PCA(group.aes = iris$Species,dim.biplot = 3) |>
+  axes(col="black") |> plot()
+```
+
+```{r echo=FALSE}
+my.plot <- scene3d()
+rglwidget(my.plot)
+```
+
+## Adding new samples
+The process of adding new samples to the biplot, called interpolation utilises the functions `interpolate()` and `newsamples()`. These functions work in the same way as in the call to the two-dimensional biplot. The function `interpolate()` accepts the argument `newdata` to specify a matrix or data frame containing the new samples to be interpolated. The function `newsamples()` operates the same way as `samples()` in that the user can specify the aesthetics of the interpolated samples. 
+
+```{r}
+biplot(iris[1:100,1:4])|> PCA(dim.biplot = 3) |> axes(col="black") |> 
+  interpolate(newdata = iris[101:150,1:4]) |> newsamples(col="purple") |> plot()
+```
+
+```{r echo=FALSE}
+my.plot <- scene3d()
+rglwidget(my.plot)
+```
+
+## Adding new variables
+To interpolate new variables to the biplot, the function `interpolate()` and `newaxes()` are called. The function `interpolate()` accepts the argument `newvariable` to specify a matrix or data frame of the same number of rows in the data specified in `biplot()` containing the new variables to be interpolated. The function `newaxes()` allows the user to specify the aesthetics of the interpolated variables. 
+
+```{r}
+biplot(iris[,1:3])|> PCA(dim.biplot = 3) |> axes(col="black") |> 
+  interpolate(newvariable = iris[,4]) |> 
+  newaxes(col="darkred",X.new.names = "Petal.Width") |> plot()
+```
+
+
+```{r echo=FALSE}
+my.plot <- scene3d()
+rglwidget(my.plot)
+```
+
+## Predicting samples
+To add the prediction of samples on the biplot, the `prediction()` function is used. The `predict.samples` argument takes in a vector indicating either the row numbers of the samples to predict or set to TRUE indicating to predict all samples. The argument `which` allows the user to select which variable to predict the sample on. In the example below, samples 100 to 150 predictions are shown for variables 1 and 4. The aesthetics for the display of the predictions are arguments in the `axes()` function: `predict.col` and `predict.lwd`. 
+```{r}
+biplot(iris) |> PCA(group.aes = iris$Species,dim.biplot = 3,show.class.means = TRUE) |> 
+  axes(col="black",predict.col = "orange") |>  
+  prediction(predict.samples=100:150,which = c(1,4))  |> plot()
+```
+
+```{r echo=FALSE}
+my.plot <- scene3d()
+rglwidget(my.plot)
+```
+
+## Predicting group means 
+Similarly, to add the prediction of group means, the function `prediction()` is used. The argument `predict.means` takes in a vector specifying which group means to predict. In the example below, only the first group means is predicted. Important to note that the argument `show.class.means` must be set to TRUE in the `PCA()` function. 
+```{r}
+biplot(iris) |> 
+  PCA(group.aes = iris$Species,dim.biplot = 3,show.class.means = TRUE) |> 
+  axes(col="black",predict.col = "darkred") |> 
+  prediction(predict.means = 1) |> plot()
+```
+
+```{r echo=FALSE}
+my.plot <- scene3d()
+rglwidget(my.plot)
+```
+
+## Ellipses 
+Ellipses are added to a 3D biplot using the `ellipses()` function which works in the same way as a 2D biplot. 
+```{r}
+biplot(iris) |> PCA(group.aes = iris[,5],dim.biplot = 3) |> 
+  axes(col="black") |> 
+  ellipses(kappa = 3,opacity = 0.5) |> plot()
+```
+
+```{r echo=FALSE}
+my.plot <- scene3d()
+rglwidget(my.plot)
+```
+
+# CVA 3d biplot
+Similarly for a CVA 3D biplot, `dim.biplot = 3` is specified in the call to `CVA()`. 
+```{r}
+biplot(iris) |> CVA(classes = iris$Species,dim.biplot = 3) |>
+  axes(col="black") |> plot()
+```
+
+```{r echo=FALSE}
+my.plot <- scene3d()
+rglwidget(my.plot)
+```
+
+# CA 3D biplot
+
+As with `PCA()`, three-dimensional CA biplots are obtained by specifying `dim.biplot = 3` in the call to `CA()`. Again, an interactive biplot will be drawn in a separate `rgl` window.
+
+Consider the `HairEyeColor` example again as discussed in `Ca in biplotEZ`:
+
+```{r}
+biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric", dim.biplot = 3) |> 
+samples(col=c("darkred","forestgreen"), pch=c(15,17), label.col="black") |> plot()
+```
+
+```{r echo=FALSE}
+my.plot <- scene3d()
+rglwidget(my.plot)
+```
+
+We also illustrate the three dimensional CA biplot of the `SA Crime` example: 
+
+```{r}
+SACrime <- matrix(c(1235,432,1824,1322,573,588,624,169,629,34479,16833,46993,30606,13670,
+              16849,15861,9898,24915,2160,939,5257,4946,722,1271,881,775,1844,5946,
+              4418,15117,10258,5401,4273,4987,1956,10639,29508,15705,62703,37203,
+              11857,18855,14722,4924,42376,604,156,7466,3889,203,664,291,5,923,19875,
+              19885,57153,29410,11024,12202,10406,5431,32663,7086,4193,22152,9264,3760,
+              4752,3863,1337,8578,7929,4525,12348,24174,3198,1770,7004,2201,45985,764,
+              427,1501,1197,215,251,345,213,1850,3515,879,3674,4713,696,835,917,422,2836,
+              88,59,174,76,31,61,117,32,257,5499,2628,8073,6502,2816,2635,3017,1020,4000,
+              8939,4501,50970,24290,2447,5907,5528,1175,14555),nrow=9, ncol=14)
+dimnames(SACrime) <- list(paste(c("ECpe", "FrSt", "Gaut", "KZN",  "Limp", "Mpml", "NWst", "NCpe",
+                            "WCpe")), paste(c("Arsn", "AGBH", "AtMr", "BNRs", "BRs",  "CrJk",
+                                              "CmAs", "CmRb", "DrgR", "InAs", "Mrd", "PubV", 
+                                              "Rape", "RAC" )))
+names(dimnames(SACrime))[[1]] <- "Provinces"
+names(dimnames(SACrime))[[2]] <- "Crimes"
+```
+
+```{r}
+biplot(SACrime, center = FALSE) |> CA(variant = "Symmetric", dim.biplot = 3) |> 
+samples(col=c("royalblue","darkred"), pch=c(15,17), label.col="black") |> plot()
+```
+
+```{r echo=FALSE}
+my.plot <- scene3d()
+rglwidget(my.plot)
+```

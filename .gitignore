@@ -3,4 +3,9 @@
 .RData
 .Ruserdata
 \R\.Rhistory
+.DS_Store
+.o
+.so
+.dll
 
+docs
