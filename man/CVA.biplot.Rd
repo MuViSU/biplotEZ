@@ -17,8 +17,7 @@
 \arguments{
 \item{bp}{an object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
-\item{classes}{a vector of the same length as the number of rows in the data matrix.
-with the class indicator for the samples.}
+\item{classes}{a vector of the same length as the number of rows in the data matrix with the class indicator for the samples.}
 
 \item{dim.biplot}{the dimension of the biplot. Only values \code{1}, \code{2} and \code{3} are accepted, with default \code{2}.}
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/CVA.R
 \name{CVA.2class}
 \alias{CVA.2class}
-\title{Construct additional dimensions when the dimension of the canonical space is lower than the dimension of the biplot}
+\title{Construct additional dimensions when the dimension of the canonical space is smaller than the dimension of the biplot}
 \usage{
 \method{CVA}{`2class`}(bp, G, W, Mmat, low.dim, K, e.vects)
 }
@@ -13,24 +13,20 @@
 
 \item{W}{the within class sums of squares and cross products matrix.}
 
-\item{Mmat}{eigenvector matrix from CVA}
+\item{Mmat}{the eigenvector matrix from CVA.}
 
-\item{low.dim}{if the dimension of the canonical space is smaller than \code{dim.biplot}, the method to use to construct
-additional dimension(s). Currently two options are implemented: \code{sample.opt} maximises the sample predictivity
-of the individual samples in the biplot and \code{Bhattacharyya.dist} is based on the decomposition of the
-Bhattacharyya distance into a component for the sample means and a component for the dissimilarity
-between the sample covariance matrices.}
+\item{low.dim}{a character string indicating which method to use to construct additional dimension(s) if the dimension of the canonical space is smaller than \code{dim.biplot}. One of "\code{sample.opt}" (default) for maximising the sample predictivity of the individual samples in the biplot or \code{Bhattacharyya.dist} which is based on the decomposition of the Bhattacharyya distance into a component for the sample means and a component for the dissimilarity between the sample covariance matrices.}
 
-\item{K}{the dimension of the canonical space}
+\item{K}{the dimension of the canonical space.}
 
 \item{e.vects}{the vector indicating which canonical variates are plotted in the biplot, with default \code{1:dim.biplot}}
 }
 \value{
 A list with three components:
-\item{Mr}{pxr matrix for the transformation to the canonical space.}
-\item{Mrr}{rxp matrix for prediction from the canonical space.}
-\item{Lmat}{pxp matrix for transformation to the canonical space.}
+\item{Mr}{the first r dimensions of the solution to be plotted.}
+\item{Mrr}{the matrix used for prediction from the canonical space.}
+\item{Lmat}{the matrix for transformation to the canonical space.}
 }
 \description{
-Construct additional dimensions when the dimension of the canonical space is lower than the dimension of the biplot
+This function is used to add dimensions to the CVA biplot when the dimension of the canonical space \eqn{K} is smaller than the dimension of the biplot (\code{dim.biplot}). This function is already used in the CVA calculations, and will therefore not have to be used in isolation.
 }

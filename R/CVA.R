@@ -5,8 +5,7 @@
 #' This function appends the \code{biplot} object with elements resulting from performing CVA.
 #'
 #' @param bp an object of class \code{biplot} obtained from preceding function \code{biplot()}.
-#' @param classes a vector of the same length as the number of rows in the data matrix.
-#'                  with the class indicator for the samples.
+#' @param classes a vector of the same length as the number of rows in the data matrix with the class indicator for the samples.
 #' @param dim.biplot the dimension of the biplot. Only values \code{1}, \code{2} and \code{3} are accepted, with default \code{2}.
 #' @param e.vects the vector indicating which eigenvectors (canonical variates) should be plotted in the biplot, with default \code{1:dim.biplot}.
 #' @param weightedCVA a character string indicating which type of CVA to perform. One of "\code{weighted}" (default) for a weighted CVA to be performed (The centring matrix will be a diagonal matrix with the class sizes (\eqn{\mathbf{C} = \mathbf{N}}), "\code{unweightedCent}" for unweighted CVA to be performed (The centring matrix is the usual centring matrix (\eqn{\mathbf{C} = \mathbf{I}_{G} - G^{-1}\mathbf{1}_{G}\mathbf{1}_{G}'})) or "\code{unweightedI}" for unweighted CVA to be performed while retaining the weighted centroid (The centring matrix is an indicator matrix (\eqn{\mathbf{C} = \mathbf{I}_{G}})).
@@ -42,7 +41,7 @@
 #' \item{Cmat}{the centring matrix based on different choices of weighting described in arguments.}
 #' \item{Bmat}{the between class sums of squares and cross products matrix.}
 #' \item{Wmat}{the within class sums of squares and cross products matrix.}
-#' \item{Mrr}{the inverse of \eqn{\mathbf{M}=\mathbf{LV}}.}
+#' \item{Mrr}{the matrix used for prediction from the canonical space (the inverse of \eqn{\mathbf{M}=\mathbf{LV})}.}
 #' \item{Mr}{the first r dimensions of the solution to be plotted.}
 #' \item{Nmat}{the matrix with the class sizes on the diagonal.}
 #' \item{lambda.mat}{the matrix with the eigenvalues of \eqn{\mathbf{W}^{-1/2}\mathbf{BW}^{-1/2}} on the diagonal.}
@@ -173,24 +172,24 @@ CVA.biplot <- function(bp, classes=bp$classes, dim.biplot = c(2,1,3), e.vects = 
   bp
 }
 
-#' Construct additional dimensions when the dimension of the canonical space is lower than the dimension of the biplot
+#' Construct additional dimensions when the dimension of the canonical space is smaller than the dimension of the biplot
+#' 
+#' @description
+#' This function is used to add dimensions to the CVA biplot when the dimension of the canonical space \eqn{K} is smaller than the dimension of the biplot (\code{dim.biplot}). This function is already used in the CVA calculations, and will therefore not have to be used in isolation. 
+#' 
 #'
 #' @param bp an object of class \code{biplot}.
 #' @param G the indicator matrix defining membership of the classes.
 #' @param W the within class sums of squares and cross products matrix.
-#' @param Mmat eigenvector matrix from CVA
-#' @param low.dim if the dimension of the canonical space is smaller than \code{dim.biplot}, the method to use to construct
-#'                   additional dimension(s). Currently two options are implemented: \code{sample.opt} maximises the sample predictivity
-#'                   of the individual samples in the biplot and \code{Bhattacharyya.dist} is based on the decomposition of the
-#'                   Bhattacharyya distance into a component for the sample means and a component for the dissimilarity
-#'                   between the sample covariance matrices.
-#' @param K the dimension of the canonical space
+#' @param Mmat the eigenvector matrix from CVA.
+#' @param low.dim a character string indicating which method to use to construct additional dimension(s) if the dimension of the canonical space is smaller than \code{dim.biplot}. One of "\code{sample.opt}" (default) for maximising the sample predictivity of the individual samples in the biplot or \code{Bhattacharyya.dist} which is based on the decomposition of the Bhattacharyya distance into a component for the sample means and a component for the dissimilarity between the sample covariance matrices.
+#' @param K the dimension of the canonical space.
 #' @param e.vects the vector indicating which canonical variates are plotted in the biplot, with default \code{1:dim.biplot}
 #'
 #' @return A list with three components:
-#' \item{Mr}{pxr matrix for the transformation to the canonical space.}
-#' \item{Mrr}{rxp matrix for prediction from the canonical space.}
-#' \item{Lmat}{pxp matrix for transformation to the canonical space.}
+#' \item{Mr}{the first r dimensions of the solution to be plotted.}
+#' \item{Mrr}{the matrix used for prediction from the canonical space.}
+#' \item{Lmat}{the matrix for transformation to the canonical space.}
 CVA.2class <- function (bp, G, W, Mmat, low.dim, K, e.vects)
 {
   first.dims <- e.vects[1:K]
@@ -242,22 +241,23 @@ CVA.2class <- function (bp, G, W, Mmat, low.dim, K, e.vects)
 }
 
 # -------------------------------------------------------------------------------------------
-#' Analysis of Distance biplot method
+#' Use the Analysis of Distance (AoD) method to construct the biplot
+#' 
+#' @description
+#' This function appends the \code{biplot} object with elements resulting from using the AoD method.
 #'
 #' @param bp an object of class \code{biplot} obtained from preceding function \code{biplot()}. 
-#' @param Dmat nxn matrix of Euclidean embeddable distances between samples
-#' @param dist.func function to compute Euclidean embeddable distances between samples. The
-#'                  default NULL computes Euclidean distance.
-#' @param dim.biplot dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.
-#' @param e.vects e.vects which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.
-#' @param classes classes vector of the same length as the number of rows in the data matrix
-#'                  with the class indicator for the samples.
-#' @param weighted the default is "unweighted" where each class receives equal weight, alternatively "weighted" use class sizes as weights.
-#' @param show.class.means logical, indicating whether to plot the class means on the biplot.
-#' @param axes type of biplot axes, currently only regression axes are implemented
-#' @param ... more arguments to \code{dist.func}
+#' @param Dmat the matrix of Euclidean embeddable distances between samples.
+#' @param dist.func a character string indicating which distance function is used to compute the Euclidean embeddable distances between samples. One of \code{NULL} (default) which computes the Euclidean distance or other functions that can be used for the \code{dist()} function.
+#' @param dim.biplot the dimension of the biplot. Only values \code{1}, \code{2} and \code{3} are accepted, with default \code{2}.
+#' @param e.vects the vector indicating which eigenvectors (canonical variates) should be plotted in the biplot, with default \code{1:dim.biplot}.
+#' @param classes a vector of the same length as the number of rows in the data matrix with the class indicator for the samples.
+#' @param weighted a character string indicating the weighting of the classes. One of "\code{unweighted}" for each class to receive equal weighting or "\code{weighted}" for each class to receive their class sizes as weights.
+#' @param show.class.means a logical value indicating whether to plot the class means on the biplot.
+#' @param axes a character string indicating the type of biplot axes to be used in the biplot. Currently only "\code{regression}" axes are implemented.
+#' @param ... more arguments to \code{dist.func}.
 #'
-#' @return  Object of class biplot
+#' @return  Object of class \code{biplot}
 #'
 #' @usage AoD(bp, Dmat=NULL, dist.func="Euclidean", dim.biplot = c(2,1,3), 
 #' e.vects = 1:ncol(bp$X), classes=bp$classes, weighted = c("unweighted","weighted"), 
@@ -281,13 +281,13 @@ AoD <- function (bp, Dmat=NULL, dist.func="Euclidean",
   UseMethod("AoD")
 }
 
-#' AoD biplot
+#' Calculate elements for the Analysis of Distance (AoD) biplot
 #'
-#' @description Computes Analysis of Distance biplot
+#' @description This function is used to construct the AoD biplot
 #'
 #' @inheritParams AoD
 #'
-#' @return an object of class biplot.
+#' @return an object of class \code{biplot}.
 #' @export
 #'
 #' @examples

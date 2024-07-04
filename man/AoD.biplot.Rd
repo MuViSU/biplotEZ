@@ -2,7 +2,7 @@
 % Please edit documentation in R/CVA.R
 \name{AoD.biplot}
 \alias{AoD.biplot}
-\title{AoD biplot}
+\title{Calculate elements for the Analysis of Distance (AoD) biplot}
 \usage{
 \method{AoD}{biplot}(
   bp,
@@ -20,31 +20,29 @@
 \arguments{
 \item{bp}{an object of class \code{biplot} obtained from preceding function \code{biplot()}.}
 
-\item{Dmat}{nxn matrix of Euclidean embeddable distances between samples}
+\item{Dmat}{the matrix of Euclidean embeddable distances between samples.}
 
-\item{dist.func}{function to compute Euclidean embeddable distances between samples. The
-default NULL computes Euclidean distance.}
+\item{dist.func}{a character string indicating which distance function is used to compute the Euclidean embeddable distances between samples. One of \code{NULL} (default) which computes the Euclidean distance or other functions that can be used for the \code{dist()} function.}
 
-\item{dim.biplot}{dimension of the biplot. Only values 1, 2 and 3 are accepted, with default \code{2}.}
+\item{dim.biplot}{the dimension of the biplot. Only values \code{1}, \code{2} and \code{3} are accepted, with default \code{2}.}
 
-\item{e.vects}{e.vects which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.}
+\item{e.vects}{the vector indicating which eigenvectors (canonical variates) should be plotted in the biplot, with default \code{1:dim.biplot}.}
 
-\item{classes}{classes vector of the same length as the number of rows in the data matrix
-with the class indicator for the samples.}
+\item{classes}{a vector of the same length as the number of rows in the data matrix with the class indicator for the samples.}
 
-\item{weighted}{the default is "unweighted" where each class receives equal weight, alternatively "weighted" use class sizes as weights.}
+\item{weighted}{a character string indicating the weighting of the classes. One of "\code{unweighted}" for each class to receive equal weighting or "\code{weighted}" for each class to receive their class sizes as weights.}
 
-\item{show.class.means}{logical, indicating whether to plot the class means on the biplot.}
+\item{show.class.means}{a logical value indicating whether to plot the class means on the biplot.}
 
-\item{axes}{type of biplot axes, currently only regression axes are implemented}
+\item{axes}{a character string indicating the type of biplot axes to be used in the biplot. Currently only "\code{regression}" axes are implemented.}
 
-\item{...}{more arguments to \code{dist.func}}
+\item{...}{more arguments to \code{dist.func}.}
 }
 \value{
-an object of class biplot.
+an object of class \code{biplot}.
 }
 \description{
-Computes Analysis of Distance biplot
+This function is used to construct the AoD biplot
 }
 \examples{
 biplot(iris) |> AoD(classes = iris[,5]) |> plot()
