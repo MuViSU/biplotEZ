@@ -36,8 +36,8 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
   #aesthetics for samples
   if (is.null(x$samples)) x <- samples(x) 
   
-  # Aesthetics 
-  if (is.null(x$samples)) x <- samples(x)
+  if(zoom)
+    grDevices::dev.new()
 
   # Predict samples 
   if (!is.null(x$predict$samples)) 
@@ -288,6 +288,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
     arguments$zoom <- FALSE
     arguments$xlim <- c(a$x,b$x)[order(c(a$x,b$x))]
     arguments$ylim <- c(a$y,b$y)[order(c(a$y,b$y))]
+    grDevices::dev.off()
     do.call(plot.biplot,arguments)
   }
   
