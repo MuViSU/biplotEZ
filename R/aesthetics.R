@@ -119,14 +119,24 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
     sample.group.num <- g 
   else 
     sample.group.num <- length(which)
-  if(!is.null(which))
-    while (length(col) < sample.group.num) col <- c(col, col)
-  col <- as.vector(col[1:sample.group.num])
+  #if(!is.null(which))
+    
+  # Expand col to length g
+  col.len <- length(col)
+  col <- col[ifelse(1:g%%col.len==0,col.len,1:g%%col.len)]
+  if(is.null(col)){col <- rep(NA, g)}
   col <- grDevices::adjustcolor(col,opacity)
-  while (length(pch) < sample.group.num) pch <- c(pch, pch)
-  pch <- as.vector(pch[1:sample.group.num])
-  while (length(cex) < sample.group.num) cex <- c(cex, cex)
-  cex <- as.vector(cex[1:sample.group.num])
+
+  # Expand pch to length g
+  pch.len <- length(pch)
+  pch <- pch[ifelse(1:g%%pch.len==0,pch.len,1:g%%pch.len)]
+  if(is.null(pch)){pch <- rep("", g)}
+
+  # Expand cex to length g
+  cex.len <- length(cex)
+  cex <- cex[ifelse(1:g%%cex.len==0,cex.len,1:g%%cex.len)]
+  if(is.null(cex)){cex <- rep(0, g)}
+  
   if (label[1] == "ggrepel")
   {
      label <- label[1]
@@ -253,15 +263,20 @@ means <- function (bp,  which = NULL, col = NULL,
     if (max(which)<=length(bp$samples$col)) col <- bp$samples$col[which] else col <- bp$samples$col
     if (shade.darker) for (j in 1:length(col))  col[j] <- grDevices::colorRampPalette(c(col[j],"black"))(5)[2]
   }
-  while (length(col) < class.num) col <- c(col, col)
-  col <- as.vector(col[1:class.num])
-  if(opacity != 1) col <- grDevices::adjustcolor(col,opacity)
+  # Expand col to length g
+  col.len <- length(col)
+  col <- col[ifelse(1:g%%col.len==0,col.len,1:g%%col.len)]
+  if(is.null(col)){col <- rep(NA, g)}
+  if(!is.null(opacity))col <- grDevices::adjustcolor(col,opacity)
 
+  # Expand pch to length g
+  pch.len <- length(pch)
+  pch <- pch[ifelse(1:g%%pch.len==0,pch.len,1:g%%pch.len)]
+  if(is.null(pch)){pch <- rep("", g)}
 
-  while (length(pch) < class.num) pch <- c(pch, pch)
-  pch <- as.vector(pch[1:class.num])
-  while (length(cex) < class.num) cex <- c(cex, cex)
-  cex <- as.vector(cex[1:class.num])
+  # Expand cex to length g
+  cex.len <- length(cex)
+  cex <- cex[ifelse(1:g%%cex.len==0,cex.len,1:g%%cex.len)]
   if (label[1] == "ggrepel")
   {
     label <- label[1]
@@ -392,47 +407,86 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
     which <- which[which <= p]
     which <- which[which > 0]
     ax.num <- length(which)
-    while (length(col) < ax.num) col <- c(col, col)
-    col <- as.vector(col[1:ax.num])
-    while (length(lwd) < ax.num) lwd <- c(lwd, lwd)
-    lwd <- as.vector(lwd[1:ax.num])
-    while (length(lty) < ax.num) lty <- c(lty, lty)
-    lty <- as.vector(lty[1:ax.num])
+    
+    
+    col.len <- length(col)
+    col <- col[ifelse(1:ax.num%%col.len==0,col.len,1:ax.num%%col.len)]
+    if(is.null(col)){col <- rep(NA, ax.num)}
+    
+    lwd.len <- length(lwd)
+    lwd <- lwd[ifelse(1:ax.num%%lwd.len==0,lwd.len,1:ax.num%%lwd.len)]
+    if(is.null(lwd)){lwd <- rep(0, ax.num)}
+    
+    lty.len <- length(lty)
+    lty <- lty[ifelse(1:ax.num%%lty.len==0,lty.len,1:ax.num%%lty.len)]
+    if(is.null(lty)){lty <- rep(0, ax.num)}
     if (label.dir != "Orthog" & label.dir != "Hor" & label.dir != "Paral")
       stop("Incorrect specification of axis label direction")
-    while (length(label.col) < ax.num) label.col <- c(label.col, label.col)
-    label.col <- as.vector(label.col[1:ax.num])
-    while (length(label.cex) < ax.num) label.cex <- c(label.cex, label.cex)
-    label.cex <- as.vector(label.cex[1:ax.num])
-    while (length(label.line) < ax.num) label.line <- c(label.line, label.line)
-    label.line <- as.vector(label.line[1:ax.num])
-    while (length(ticks) < ax.num) ticks <- c(ticks, ticks)
-    ticks <- as.vector(ticks[1:ax.num])
-    while (length(tick.col) < ax.num) tick.col <- c(tick.col, tick.col)
-    tick.col <- as.vector(tick.col[1:ax.num])
-    while (length(tick.size) < ax.num) tick.size <- c(tick.size, tick.size)
-    tick.size <- as.vector(tick.size[1:ax.num])
-    while (length(tick.label) < ax.num) tick.label <- c(tick.label, tick.label)
-    tick.label <- as.vector(tick.label[1:ax.num])
-    while (length(tick.label.col) < ax.num) tick.label.col <- c(tick.label.col, tick.label.col)
-    tick.label.col <- as.vector(tick.label.col[1:ax.num])
-    while (length(tick.label.cex) < ax.num) tick.label.cex <- c(tick.label.cex, tick.label.cex)
-    tick.label.cex <- as.vector(tick.label.cex[1:ax.num])
-    while (length(tick.label.side) < ax.num) tick.label.side <- c(tick.label.side, tick.label.side)
-    tick.label.side <- as.vector(tick.label.side[1:ax.num])
-    while (length(predict.col) < ax.num) predict.col <- c(predict.col, predict.col)
-    predict.col <- as.vector(predict.col[1:ax.num])
-    while (length(predict.lwd) < ax.num) predict.lwd <- c(predict.lwd, predict.lwd)
-    predict.lwd <- as.vector(predict.lwd[1:ax.num])
-    while (length(predict.lty) < ax.num) predict.lty <- c(predict.lty, predict.lty)
-    predict.lty <- as.vector(predict.lty[1:ax.num])
-    ax.names <- ax.names[which]
-    while (length(ax.names) < p) ax.names <- c(ax.names, "")
-    ax.names <- as.vector(ax.names[1:ax.num])
-    while (length(orthogx) < p) orthogx <- c(orthogx, orthogx)
-    orthogx <- as.vector(orthogx[1:p])
-    while (length(orthogy) < p) orthogy <- c(orthogy, orthogy)
-    orthogy <- as.vector(orthogy[1:p])
+    
+    label.col.len <- length(label.col)
+    label.col <- label.col[ifelse(1:ax.num%%label.col.len==0,label.col.len,1:ax.num%%label.col.len)]
+    if(is.null(label.col)){label.col <- rep(0, ax.num)}
+    
+    label.cex.len <- length(label.cex)
+    label.cex <- label.cex[ifelse(1:ax.num%%label.cex.len==0,label.cex.len,1:ax.num%%label.cex.len)]
+    if(is.null(label.cex)){label.cex <- rep(0, ax.num)}
+    
+    label.line.len <- length(label.line)
+    label.line <- label.line[ifelse(1:ax.num%%label.line.len==0,label.line.len,1:ax.num%%label.line.len)]
+    if(is.null(label.line)){label.line <- rep(0, ax.num)}
+    
+    ticks.len <- length(ticks)
+    ticks <- ticks[ifelse(1:ax.num%%ticks.len==0,ticks.len,1:ax.num%%ticks.len)]
+    if(is.null(ticks)){ticks <- rep(0, ax.num)}
+    
+    tick.col.len <- length(tick.col)
+    tick.col <- tick.col[ifelse(1:ax.num%%tick.col.len==0,tick.col.len,1:ax.num%%tick.col.len)]
+    if(is.null(tick.col)){tick.col <- rep(0, ax.num)}
+    
+    tick.size.len <- length(tick.size)
+    tick.size <- tick.size[ifelse(1:ax.num%%tick.size.len==0,tick.size.len,1:ax.num%%tick.size.len)]
+    if(is.null(tick.size)){tick.size <- rep(0, ax.num)}
+    
+    tick.label.len <- length(tick.label)
+    tick.label <- tick.label[ifelse(1:ax.num%%tick.label.len==0,tick.label.len,1:ax.num%%tick.label.len)]
+    if(is.null(tick.label)){tick.label <- rep("", ax.num)}
+
+    tick.label.col.len <- length(tick.label.col)
+    tick.label.col <- tick.label.col[ifelse(1:ax.num%%tick.label.col.len==0,tick.label.col.len,1:ax.num%%tick.label.col.len)]
+    if(is.null(tick.label.col)){tick.label.col <- rep(0, ax.num)}
+
+    tick.label.cex.len <- length(tick.label.cex)
+    tick.label.cex <- tick.label.cex[ifelse(1:ax.num%%tick.label.cex.len==0,tick.label.cex.len,1:ax.num%%tick.label.cex.len)]
+    if(is.null(tick.label.cex)){tick.label.cex <- rep(0, ax.num)}
+
+    tick.label.side.len <- length(tick.label.side)
+    tick.label.side <- tick.label.side[ifelse(1:ax.num%%tick.label.side.len==0,tick.label.side.len,1:ax.num%%tick.label.side.len)]
+    if(is.null(tick.label.side)){tick.label.side <- rep(0, ax.num)}
+    
+    predict.col.len <- length(predict.col)
+    predict.col <- predict.col[ifelse(1:ax.num%%predict.col.len==0,predict.col.len,1:ax.num%%predict.col.len)]
+    if(is.null(predict.col)){predict.col <- rep(0, ax.num)}
+    
+    predict.lwd.len <- length(predict.lwd)
+    predict.lwd <- predict.lwd[ifelse(1:ax.num%%predict.lwd.len==0,predict.lwd.len,1:ax.num%%predict.lwd.len)]
+    if(is.null(predict.lwd)){predict.lwd <- rep(0, ax.num)}
+
+    predict.lty.len <- length(predict.lty)
+    predict.lty <- predict.lty[ifelse(1:ax.num%%predict.lty.len==0,predict.lty.len,1:ax.num%%predict.lty.len)]
+    if(is.null(predict.lty)){predict.lty <- rep(0, ax.num)}
+    
+    ax.names.len <- length(ax.names)
+    ax.names <- ax.names[ifelse(1:p%%ax.names.len==0,ax.names.len,1:p%%ax.names.len)]
+    if(is.null(ax.names)){ax.names <- rep("", p)}
+
+    orthogx.len <- length(orthogx)
+    orthogx <- orthogx[ifelse(1:p%%orthogx.len==0,orthogx.len,1:p%%orthogx.len)]
+    if(is.null(orthogx)){orthogx <- rep("", p)}
+    
+    orthogy.len <- length(orthogy)
+    orthogy <- orthogx[ifelse(1:p%%orthogy.len==0,orthogy.len,1:p%%orthogy.len)]
+    if(is.null(orthogy)){orthogy <- rep("", p)}
+
     bp$axes = list(which = which, col = col, lwd = lwd, lty = lty, label.dir = label.dir, label.col = label.col, label.cex = label.cex,
                    label.line = label.line, ticks = ticks, tick.col = tick.col, tick.size = tick.size, tick.label = tick.label,
                    tick.label.col = tick.label.col, tick.label.cex = tick.label.cex, tick.label.side=tick.label.side,
