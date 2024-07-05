@@ -451,7 +451,7 @@ plot1D <-  function(bp, exp.factor = 1.2,...)
       if(!is.null(bp$classify$classify.regions)) {
         if(bp$classify$classify.regions)
         {
-          a <- predict.regions1D(bp,usr)
+          a <- predict_regions1D(bp,usr)
           for(i in 1:nrow(a))
           {
             .prediction.regions.plot1D(a[i,], col=classify.aes$col[i],

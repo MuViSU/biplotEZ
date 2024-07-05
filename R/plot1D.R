@@ -367,7 +367,7 @@ plot_CA_1D <- function(bp, exp.factor=1.2, axis.predictivity=NULL, sample.predic
   if (is.null(bp$Z)) stop ("Add a biplot method before generating a plot")
   else Z <- bp$Z    
   
-  graphics::plot(NA,xlim=range(bp$rowcoor,bp$colcoor),ylim=0.5*c(-1,1), 
+  graphics::plot(NA,xlim=range(bp$rowcoor,bp$colcoor)*exp.factor,ylim=0.5*c(-1,1), 
                  axes=FALSE, ann=FALSE)
   graphics::abline(h = 0)
   #.samples.plot1D(bp)
