@@ -19,6 +19,8 @@
   x.vals <- Z[, 1]
   y.vals <- Z[, 2]
   invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
+  if(!any(invals))
+    return()
   which.samples <- rep(FALSE, n)
   
   #This is to plot the points outside the alphabag
@@ -147,16 +149,21 @@
   x.vals <- Z[, 1]
   y.vals <- Z[, 2]
   invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
-  Z <- Z[invals, ]
+  if(!any(invals))
+    return()
   ZZ <- Z[sample.aes$which,]
+
+  toetsers<-invals[sample.aes$which]
   if (sample.aes$label[1]=="ggrepel")
   {
-    for (j in 1:nrow(ggrepel.labs$coords))
-      graphics::text(ggrepel.labs$coords[j, 1], ggrepel.labs$coords[j, 2], labels = ggrepel.labs$coords[j,3],
+    for (j in 1:nrow(ggrepel.labs$coords)){
+      graphics::text(ggrepel.labs$coords[j, 1], ggrepel.labs$coords[j, 2], 
+                     labels = ggrepel.labs$coords[j,3],
                      cex = sample.aes$label.cex[ggrepel.labs$visible[j]],
                      col = sample.aes$label.col[ggrepel.labs$visible[j]])
+    }
     for (j in ggrepel.labs$textlines)
-    {
+    { 
       label.val <- rownames(ZZ)[j]
       label.xy <- ggrepel.labs$coords[match(label.val, ggrepel.labs$coords[,3]),1:2]
       graphics::lines (x=c(label.xy[1],ZZ[j,1]), y=c(label.xy[2],ZZ[j,2]), col=sample.aes$label.col[j])
@@ -166,18 +173,21 @@
   {
     Z.labels <- rownames(Z)[sample.aes$which]
     for (j in 1:length(sample.aes$label.side))
-    {  text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
+    { if(!toetsers[j])
+        next
+      text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
     if (sample.aes$label[j]) graphics::text(ZZ[j, 1], ZZ[j, 2], labels = Z.labels[j],
                                             cex = sample.aes$label.cex[j], col = sample.aes$label.col[j],
                                             pos = text.pos, offset = sample.aes$label.offset[j])
     }
   }
-  for (j in 1:length(sample.aes$which))
+  for (j in 1:length(sample.aes$which)){
+    if(!toetsers[j])
+      next
     graphics::points(x = Z[sample.aes$which[j], 1], y = Z[sample.aes$which[j], 2],
                      pch = sample.aes$pch[j], col = sample.aes$col[j], cex = sample.aes$cex[j])
+  }
 }
-
-
 
 #' Title
 #'

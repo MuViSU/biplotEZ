@@ -348,16 +348,15 @@ predict.regions <- function (x, bounds=graphics::par("usr"))
 
 
 
-#' Title
+#' Calculates the bounds of the classification regions for 1D plots
 #'
 #' @param x Vector of coordinates - class centers.
 #' @param bounds Bounds of the plotting frame
 #'
 #' @return Bounds for classification intervals
-#' @export
 #'
 #' @noRd
-predict.regions1D <- function(x, bounds = graphics::par("usr")) {
+predict_regions1D <- function(x, bounds = graphics::par("usr")) {
   tmp.Zmeans <- x$Zmeans
   tmp.borders <-
     (sapply(2:length(tmp.Zmeans), function(x)
