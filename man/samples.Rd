@@ -2,7 +2,7 @@
 % Please edit documentation in R/aesthetics.R
 \name{samples}
 \alias{samples}
-\title{Aesthetics for biplot samples}
+\title{Format aesthetics for the biplot samples}
 \usage{
 samples (bp,  which = 1:bp$g, col = ez.col, pch = 16, cex = 1,
 label = FALSE, label.name = NULL, label.col=NULL, label.cex = 0.75, 
@@ -13,69 +13,63 @@ connect.lwd = 1, opacity = 1)
 \arguments{
 \item{bp}{an object of class \code{biplot}.}
 
-\item{which}{vector of which groups of samples to display, with default \code{bp$g}.}
+\item{which}{a vector containing the groups or classes for which the samples should be displayed, with default \code{bp$g}.}
 
-\item{col}{sample colour, with default \code{blue}.}
+\item{col}{the colour(s) for the samples, with default \code{blue}.}
 
-\item{pch}{sample plotting character, with default \code{+}.}
+\item{pch}{the plotting character(s) for the samples, with default •.}
 
-\item{cex}{sample character expansion, with default \code{1}.}
+\item{cex}{the character expansion(s) for the samples, with default \code{1}.}
 
-\item{label}{logical (\code{TRUE}, \code{FALSE}), whether samples should be labelled, with default \code{FALSE}. Alternatively, specify \code{"ggrepel"} for non-overlapping placement of labels.}
+\item{label}{a logical value indicating whether the samples should be labelled, with default \code{FALSE}. Alternatively, specify \code{"ggrepel"} for non-overlapping placement of labels.}
 
-\item{label.name}{vector of length number of samples, with default
-\code{NULL}, \code{rownames(bp)} are used.}
+\item{label.name}{a vector of the same length as \code{which} with label names for the samples, with default \code{NULL}. If \code{NULL}, the \code{rownames(bp)} are used. Alternatively, a custom vector of length \code{n} should be used.}
 
-\item{label.col}{vector of length number of samples with the colour of the labels, defaulting to the
-colour of the sample points.}
+\item{label.col}{a vector of the same length as \code{which} with label colours for the samples, with default as the same colour of the sample points.}
 
-\item{label.cex}{label text expansion, with default \code{0.75}.}
+\item{label.cex}{a vector of the same length as \code{which} with label text expansions for the samples, with default \code{0.75}.}
 
-\item{label.side}{side of the plotting character where label appears, with default \code{bottom}. Note that unlike
-the argument \code{pos} in \code{text()}, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.}
+\item{label.side}{the side at which the label of the plotted point appears, with default \code{bottom}. Note that unlike the argument \code{pos} in \code{text()}, options are "\code{bottom}", "\code{left}", "\code{top}", "\code{right}" and not \code{1}, \code{2}, \code{3}, \code{4}.}
 
-\item{label.offset}{offset of the label from the data point. See ?text for a detailed explanation of the
-argument \code{offset}.}
+\item{label.offset}{the offset of the label from the plotted point. See \code{?text} for a detailed explanation of the argument \code{offset}.}
 
-\item{connected}{logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.}
+\item{connected}{a logical value indicating whether samples are connected in order of rows of the data matrix, with default \code{FALSE}.}
 
-\item{connect.col}{colour of the connecting line, with default \code{black}.}
+\item{connect.col}{the colour of the connecting line, with default \code{black}.}
 
-\item{connect.lty}{line type of the connecting line, with default \code{1}.}
+\item{connect.lty}{the line type of the connecting line, with default \code{1}.}
 
-\item{connect.lwd}{line width of the connecting line, with default \code{1}.}
+\item{connect.lwd}{the line width of the connecting line, with default \code{1}.}
 
-\item{opacity}{opacity of sample points, with default 1 (opaque).}
+\item{opacity}{the opacity level of the plotted points, with default \code{1} for an opaque point.}
 }
 \value{
-A list with the following components is available:
-\item{which}{which means to display.}
-\item{col}{colour of the samples.}
-\item{pch}{plotting character of the samples.}
-\item{cex}{expansion of the plotting character of the samples.}
-\item{label}{TRUE or FALSE, whether samples should be labelled, with default
-\code{FALSE}.}
-\item{label.name}{If \code{NULL}, the row names will be used, with default \code{NULL}. Alternatively, a vector of length \code{n} should be used.}
-\item{label.col}{colour of the label.}
-\item{label.cex}{expansion of the label.}
-\item{label.side}{side at which to plot the label of samples.}
-\item{label.offset}{offset of the label from the data point.}
-\item{connected}{TRUE or FALSE, whether samples should be connected in row order of X.}
-\item{connect.col}{colour of the connecting line.}
-\item{connect.lty}{line type of the connecting line.}
-\item{connect.lwd}{line width of the connecting line.}
-\item{opacity}{opacity of sample points, with default 1 (opaque).}
+The object of class \code{biplot} will be appended with a list called \code{samples} containing the following elements:
+\item{which}{a vector containing the groups or classes for which the samples (and means) are displayed.}
+\item{col}{the colour(s) of the samples.}
+\item{pch}{the plotting character(s) of the samples.}
+\item{cex}{the character expansion(s) of the plotting character(s) of the samples.}
+\item{label}{a logical value indicating whether samples are labelled.}
+\item{label.name}{the label names of the samples.}
+\item{label.col}{the label colours of the samples.}
+\item{label.cex}{the label text expansions of the samples.}
+\item{label.side}{the side at which the label of the plotted point appears..}
+\item{label.offset}{the offset of the label from the plotted point.}
+\item{connected}{a logical value indicating whether samples are connected in order of the rows of the data matrix.}
+\item{connect.col}{the colour of the connecting line.}
+\item{connect.lty}{the line type of the connecting line.}
+\item{connect.lwd}{the line width of the connecting line.}
+\item{opacity}{the opacity level of the plotted points.}
 }
 \description{
-This function allows formatting changes to samples.
+This function allows the user to format the aesthetics for the samples.
 }
 \details{
-The arguments \code{which}, \code{col}, \code{pch} and \code{cex} are based on the specification of \code{group.aes} or \code{classes}. If no groups
-are specified, a single colour, plotting character and / or character expansion is expected. If g groups are
-specified, vectors of length g is expected, or values are recycled to length g.
+The arguments \code{which}, \code{col}, \code{pch} and \code{cex} are based on the specification of \code{group.aes} or \code{classes}. If no groups are specified, a single colour, plotting character and / or character expansion is expected. If \eqn{g} groups are
+specified, vectors of length \eqn{g} is expected, or values are recycled to length \eqn{g}.
 
-The arguments \code{label}, \code{label.cex}, \code{label.side} and \code{label.offset} are based on the sample size n. A single value
-will be recycled n times or a vector of length n is expected.
+The arguments \code{label}, \code{label.cex}, \code{label.side} and \code{label.offset} are based on the sample size \eqn{n}. A single value
+will be recycled \eqn{n} times or a vector of length \eqn{n} is expected.
 }
 \examples{
 biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15, opacity=0.5) |> plot()
