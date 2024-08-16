@@ -186,24 +186,21 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
 }
 
 # ----------------------------------------------------------------------------------------------
-#' Aesthetics for biplot class / group means
+#' Format aesthetics for the class or group means
 #'
 #' @description
-#' This function allows formatting changes to class means or group means.
+#' This function allows the user to format the aesthetics for the class means or group means.
 #'
 #' @param bp an object of class \code{biplot}.
-#' @param which vector of which means to display, with default \code{bp$g}.
-#' @param col mean colour, with default to sample colour.
-#' @param pch mean plotting character, with default \code{o}.
-#' @param cex mean character expansion, with default \code{1}.
-#' @param label logical, whether means should be labelled or not, with default \code{TRUE}.
-#' @param label.col vector of length g with the colour of the labels, defaulting to the
-#'                  colour of the means.
-#' @param label.cex label text expansion, with default \code{0.75}.
-#' @param label.side side of the plotting character where label appears, with default \code{bottom}. Note that unlike
-#'                   the argument `pos` in `text()`, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
-#' @param label.offset offset of the label from the mean point. See ?text for a detailed explanation of the
-#'                     argument `offset`.
+#' @param which a vector containing the groups or classes for which the means should be displayed, with default \code{bp$g}.
+#' @param col the colour(s) for the means, with default as the colour of the samples.
+#' @param pch the plotting character(s) for the means, with default ■.
+#' @param cex the character expansion(s) for the means, with default \code{1}.
+#' @param label a logical value indicating whether the means should be labelled, with default \code{TRUE}.
+#' @param label.col a vector of the same length as \code{which} with label colours for the means, with default as the colour of the means.
+#' @param label.cex a vector of the same length as \code{which} with label text expansions for the means, with default \code{0.75}.
+#' @param label.side the side at which the label of the plotted point appears, with default \code{bottom}. Note that unlike the argument \code{pos} in \code{text()}, options are "\code{bottom}", "\code{left}", "\code{top}", "\code{right}" and not \code{1}, \code{2}, \code{3}, \code{4}.
+#' @param label.offset the offset of the label from the plotted point. See \code{?text} for a detailed explanation of the argument \code{offset}.
 #' @param opacity transparency of means.
 #' @param shade.darker automatically makes the colour of the means a darker shade than the default (or specified) colour
 #' 
