@@ -623,7 +623,6 @@
 .get.ggrepel.coords <- function(df)
 {
   pp <- ggplot2::ggplot (df, ggplot2::aes(df$x,df$y,label=df$z)) + ggplot2::geom_point() + ggrepel::geom_text_repel()
-  print (pp)
   xrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$x.range
   yrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$y.range
   grid::grid.force()

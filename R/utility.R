@@ -284,7 +284,6 @@ predict.regions <- function (x, bounds=graphics::par("usr"))
 { 
   Deets <- getintersects(x=x,bounds=bounds)
   Get_segments <- makelistmat(Deets)
-  print(Get_segments)
   TruePoints <- matrix(ncol=2)
   
   for(i in 1:(nrow(x)-1)){

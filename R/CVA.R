@@ -323,14 +323,17 @@ AoD.biplot <- function (bp, classes=bp$classes, dist.func=NULL, dist.func.cat=NU
   G <- indmat(classes)
   Nmat <- t(G) %*% G
   
-  for (j in 1:ncol(Xcat))
-   if (all(levels(Xcat[,j]) %in% levels(classes)) & all(levels(classes) %in% levels(Xcat[,j])))
-      if (all(classes == Xcat[,j]))
-       {  Xcat <- Xcat[,-j]
-          bp$Xcat <- Xcat
-          bp$p2 <- ncol(Xcat)
-          break
-       }
+  if (!is.null(Xcat))
+  {
+    for (j in 1:ncol(Xcat))
+      if (all(levels(Xcat[,j]) %in% levels(classes)) & all(levels(classes) %in% levels(Xcat[,j])))
+        if (all(classes == Xcat[,j]))
+        {  Xcat <- Xcat[,-j]
+        bp$Xcat <- Xcat
+        bp$p2 <- ncol(Xcat)
+        break
+        }
+  }
   
   if (is.null(dist.func) & !is.null(X)) dist.func <- stats::dist
   if (is.null(dist.func.cat) & !is.null(Xcat)) dist.func.cat <- extended.matching.coefficient
