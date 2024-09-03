@@ -193,24 +193,20 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
             {
               z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
                                ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
-              .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,x=x)
+              .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
               
             }
               } else { # Otherwise calibrate linear axes
               
               z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
                                ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
-              .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,x=x)
+              .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
               }}
             if (ax.aes$vectors) { # Draw vectors on the calibrated axes
               # this only draws vectors on top of the chosen calibrated axis 
-              if(inherits(x,"PCA")) .lin.axes.vector.plot(x$V.mat[,1:2],ax.aes)
+              if(inherits(x,"PCA")) .lin.axes.vector.plot(x$Lmat[,1:2],ax.aes)
             }
-        if (ax.aes$vectors) { # Draw vectors on the calibrated axes
-          # this only draws vectors on top of the chosen calibrated axis 
-          if(inherits(x,"PCA")) .lin.axes.vector.plot(x$V.mat[,1:2],ax.aes)
-          }
-      
+
       # Interpolate new axes 
       if(!is.null(x$newvariable)) { if(is.null(x$newaxes)) x <- newaxes(x) 
       
@@ -222,7 +218,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
         z.axes.new <- lapply(1:length(new.ax.aes$which), .calibrate.axis, 
                              x$newvariable, x$new.means, x$new.sd, x$new.ax.one.unit, new.ax.aes$which,
                              new.ax.aes$ticks, new.ax.aes$orthogx, new.ax.aes$orthogy)
-        .lin.axes.plot(z.axes.new, new.ax.aes, predict.mat, too.small, x=x, usr=usr)
+        .lin.axes.plot(z.axes.new, new.ax.aes, predict.mat, too.small, usr=usr, predict_which=x$predict$which)
       }
       }
       

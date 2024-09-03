@@ -469,7 +469,7 @@
 #' 
 #' @noRd
 .lin.axes.plot <- function(z.axes, ax.aes, predict.mat, 
-                           too.small, usr, x=x)
+                           too.small, usr, predict_which)
 {
   for (i in 1:length(ax.aes$which))
   {  ax.num <- ax.aes$which[i]
@@ -550,7 +550,7 @@
                           cex = ax.aes$tick.label.cex[i], usr=usr)
   
   
-  if(ax.num %in% x$predict$which)
+  if(ax.num %in% predict_which)
   {
     if (!is.null(predict.mat)) apply(cbind(predict.mat,y.vals[1]), 1, .predict.func, coef = lin.coef,col=ax.aes$predict.col,lwd=ax.aes$predict.lwd,lty=ax.aes$predict.lty)
   }
@@ -622,9 +622,10 @@
 #' @noRd
 .get.ggrepel.coords <- function(df)
 {
-  pp <- ggplot2::ggplot (df, ggplot2::aes(df$x,df$y,label=df$z)) + ggplot2::geom_point() + ggrepel::geom_text_repel()
+  pp <- ggplot2::ggplot (df, ggplot2::aes(x,y,label=z)) + ggplot2::geom_point() + ggrepel::geom_text_repel()
   xrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$x.range
   yrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$y.range
+  print(pp)
   grid::grid.force()
   kids <- grid::childNames(grid::grid.get("textrepeltree", grep=TRUE))
   textrepels <- grep("textrepelgrob", kids)

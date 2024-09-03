@@ -349,7 +349,8 @@ means <- function (bp,  which = NULL, col = NULL,
 #' Defaults to zero for each axis. Only used when the dimension of the biplot is two. 
 #' @param orthogy numeric vector of size p specifying the y-coordinate of the parallel transformation of each axis.
 #' Defaults to zero for each axis. Only used when the dimension of the biplot is two.
-#' @param vectors logical, whether calibrated axes should be displayed on the biplot
+#' @param vectors logical, whether vector representation should be displayed on the biplot. The argument is only 
+#'                relevant for PCA biplots.
 #' @param unit.circle logical, whether a unit circle should be displayed on the biplot
 #'
 #' @return A list with the following components is available:
@@ -516,37 +517,35 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
 #'
 control.alpha.bags <- function (g, g.names, alpha, which=NULL, col, lty, lwd, max, opacity)
 {
-  if (!all(is.numeric(which)))
-    which <- match(which, g.names, nomatch = 0)
+  if (!all(is.numeric(which))) which <- match(which, g.names, nomatch = 0)
   which <- which[which <= g]
   which <- which[which > 0]
 
-  if ((length(alpha) > 1) & (length(alpha) != length(which))){
+  ww <- length(which)
+  if ((length(alpha) > 1) & (length(alpha) != length(which)))
+  {
     temp.mat <- expand.grid(which, alpha)
     which <- temp.mat[,1]
     alpha <- temp.mat[,2]
   }
-  ww <- length(which)
-
   bag.num <- length(which)
-  while (length(alpha) < bag.num)
-    alpha <- c(alpha, alpha)
-  alpha <- as.vector(alpha[1:bag.num])
+
+  while (length(alpha) < bag.num) alpha <- c(alpha, alpha)
+  alpha <- alpha[1:bag.num]
   if (any(alpha < 0 | alpha > 0.99))
     stop(message = "alpha not to be negative or larger than 0.99")
 
-  
   if (is.null(col)) col <- ez.col[which]
-  while (length(col) < bag.num)
-    col <- c(col, col)
+  col <- na.omit(col)
+  while (length(col) < bag.num) col <- c(col, col)
   col <- col[1:bag.num]
-  while (length(lty) < bag.num)
-    lty <- rep(lty, each=ww)
+  while (length(lty) < bag.num) lty <- rep(lty, each=ww)
   lty <- lty[1:bag.num]
-  while (length(lwd) < bag.num)
-    lwd <- rep(lwd, each=ww)
+  while (length(lwd) < bag.num) lwd <- rep(lwd, each=ww)
   lwd <- lwd[1:bag.num]
   while (length(opacity) < bag.num) opacity <- c(opacity, opacity)
+  opacity <- opacity[1:bag.num]
+  
   list(which = which, alpha = alpha, col = col, lty = lty, lwd = lwd, max = max, opacity = opacity)
 }
 
@@ -573,21 +572,20 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   if (!all(is.numeric(which))) which <- match(which, g.names, nomatch = 0)
   which <- which[which <= g]
   which <- which[which > 0]
-  ww <- length(which)
 
+  ww <- length(which)
   if ((length(kappa) > 1) & (length(kappa) != length(which)))
   {
     temp.mat <- expand.grid(which, kappa)
     which <- temp.mat[,1]
     kappa <- temp.mat[,2]
   }
-  ww <- length(which)
-  
   ellipse.num <- length(which)
+  
   while (length(kappa) < ellipse.num) kappa <- c(kappa, kappa)
-  kappa <- as.vector(kappa[1:ellipse.num])
-
+  kappa <- kappa[1:ellipse.num]
   if (is.null(col)) col <- ez.col[which]
+  col <- na.omit(col)
   while (length(col) < ellipse.num) col <- c(col, col)
   col <- col[1:ellipse.num]
   while (length(lty) < ellipse.num) lty <- rep(lty, each=ww)
@@ -595,6 +593,7 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   while (length(lwd) < ellipse.num) lwd <- rep(lwd, each=ww)
   lwd <- as.vector(lwd[1:ellipse.num])
   while (length(opacity) < ellipse.num) opacity <- c(opacity, opacity)
+  opacity <- opacity[1:ellipse.num]
 
   list(which = which, kappa = kappa, col = col, lty = lty, lwd = lwd, opacity = opacity)
 }

@@ -762,7 +762,6 @@ interpolate <- function (bp, newdata=NULL,newvariable=NULL)
     bp$Xnew <- Xnew
     bp$Xnew.cat <- Xnew.cat
     bp$Znew <- Znew
-    
   }
   
   # New variables 
@@ -781,8 +780,10 @@ interpolate <- function (bp, newdata=NULL,newvariable=NULL)
     
     if (inherits(bp, "PCA"))
     {
-      SigmaMinOne <- ifelse(bp$Sigma.mat < 1e-10, 0, 1/bp$Sigma.mat)
-      br <- t(SigmaMinOne %*% t(bp$U.mat) %*% newvariable)
+      Sigma.mat <- diag(sqrt(bp$eigenvalues))
+      U.mat <- svd(bp$X%*%t(bp$X))$u[,1:length(bp$eigenvalues)]
+      SigmaMinOne <- ifelse(Sigma.mat < 1e-10, 0, 1/Sigma.mat)
+      br <- t(SigmaMinOne %*% t(U.mat) %*% newvariable)
       br <- br[,bp$e.vects,drop=FALSE]
       new.ax.one.unit <- 1/(diag(br %*% t(br))) * br
       bp$new.ax.one.unit <- new.ax.one.unit
