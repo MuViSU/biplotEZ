@@ -558,8 +558,12 @@
   }
 }
 
+.CLPs.plot <- function (coords, colvec, cexvec)
+{
+  text (x=coords[,1], y=coords[,2], labels=rownames(coords), col=colvec, cex=cexvec)
+}
 
-#' Title
+#' Vectors to represent variables
 #'
 #' @param Vr V matrix.
 #' @param ax.aes axes aesthetics
@@ -705,7 +709,6 @@ biplot.spline.axis <- function(j, X, Ytilde, means, sd, n.int, spline.control, d
   
   cat ("Calculating spline axis for variable", j, "\n")
   if(dmeth==1) stop("dmeth should be equal to zero or integer greater than 1 \n")  
-  print(Ytilde)
   Y <- scale(Ytilde,center=means,scale=sd)
   
   ytilde <- Ytilde[,j]

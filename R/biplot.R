@@ -626,42 +626,42 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
   
   if (!is.null(object$quality))
     if (!is.list(object$quality))
-      cat ("\nQuality of fit =", paste(round(object$quality*100,1),"%",sep=""), "\n")
+      cat ("\nQuality of fit in", object$dim.biplot, "dimension(s) =", paste(round(object$quality*100,1),"%",sep=""), "\n")
   else
   {
     cat("\n")
     for (i in 1:length(object$quality))
-      cat ("Quality of fit of", names(object$quality)[i], "=",
+      cat ("Quality of fit of", names(object$quality)[i], "in", object$dim.biplot, "dimension(s) =",
            paste(round(object$quality[[i]]*100,1),"%",sep=""), "\n")
   }
   if (!is.null(object$adequacy) & adequacy)
   {
-    cat ("Adequacy of variables:\n")
+    cat ("Adequacy of variables in", object$dim.biplot, "dimension(s):\n")
     print (object$adequacy)
   }
   if (!is.null(object$axis.predictivity) & axis.predictivity)
   {
-    cat ("Axis predictivity:\n")
+    cat ("Axis predictivity in", object$dim.biplot, "dimension(s):\n")
     print (object$axis.predictivity)
   }
   if (!is.null(object$sample.predictivity) & sample.predictivity)
   {
-    cat ("Sample predictivity:\n")
+    cat ("Sample predictivity in", object$dim.biplot, "dimension(s):\n")
     print (object$sample.predictivity)
   }
   if (!is.null(object$class.predictivity) & class.predictivity)
   {
-    cat ("Class predictivity:\n")
+    cat ("Class predictivity in", object$dim.biplot, "dimension(s):\n")
     print (object$class.predictivity)
   }
   if (!is.null(object$within.class.axis.predictivity) & within.class.axis.predictivity)
   {
-    cat ("Within class axis predictivity:\n")
+    cat ("Within class axis predictivity in", object$dim.biplot, "dimension(s):\n")
     print (object$within.class.axis.predictivity)
   }
   if (!is.null(object$within.class.sample.predictivity) & within.class.sample.predictivity)
   {
-    cat ("Within class sample predictivity:\n")
+    cat ("Within class sample predictivity in", object$dim.biplot, "dimension(s):\n")
     print (object$within.class.sample.predictivity)
   }
   

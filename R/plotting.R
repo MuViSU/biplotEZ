@@ -184,7 +184,8 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
             
             if(!is.null(x$PCOaxes)) { if(x$PCOaxes == "splines") # Only for PCO - if axes (type) is set to splines.  
             {
-              z.axes <- lapply(1:length(ax.aes$which), biplot.spline.axis, Z, Xhat, means=x$means, sd=x$sd, n.int=ax.aes$ticks, 
+              z.axes <- lapply(1:length(ax.aes$which), biplot.spline.axis, Z, x$raw.X, 
+                               means=x$means, sd=x$sd, n.int=ax.aes$ticks, 
                                spline.control=x$spline.control)
               .nonlin.axes.plot(z.axes,ax.aes,predict.mat,too.small, usr=usr,x=x)
               
@@ -247,7 +248,6 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
                       too.small, cex.vec, usr=usr,x$alpha.bag.outside,
                       x$alpha.bag.aes)}
 
-      
       # New samples 
       if (!is.null(x$Znew)) if (is.null(x$newsamples)) x <- newsamples(x)
       if (!is.null(x$Znew)) .newsamples.plot (x$Znew, x$newsamples, ggrepel.new, usr=usr)
@@ -257,6 +257,18 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
       {
         if (is.null(x$means.aes)) x <- means(x)
         .means.plot (x$Zmeans, x$means.aes, x$g.names, ggrepel.means,usr=usr)
+      }
+
+      # CLPs 
+      if (!is.null(x$CLP.coords)) 
+        {
+        if (is.null(x$CLP.aes)) x <- CLPs(x)
+        if  (!is.null(x$CLP.aes$which) & !inherits(x, "CA"))
+        {
+          for (i in 1:length(x$CLP.aes$which))
+            .CLPs.plot(x$CLP.coords[[x$CLP.aes$which[i]]], 
+                       x$CLP.aes$col[[i]], x$CLP.aes$cex[[i]])
+        }
       }
       
       # Alpha bags 

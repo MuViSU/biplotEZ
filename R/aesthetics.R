@@ -243,6 +243,7 @@ means <- function (bp,  which = NULL, col = NULL,
                      pch = 15, cex = 1, label = FALSE, label.col=NULL, label.cex = 0.75,
                      label.side = "bottom", label.offset = 0.5, opacity = 1, shade.darker = TRUE)
 {
+  bp$show.class.means <- TRUE
   if (is.null(bp$samples)) bp <- samples(bp)
   g <- bp$g
   
@@ -598,6 +599,75 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   list(which = which, kappa = kappa, col = col, lty = lty, lwd = lwd, opacity = opacity)
 }
 
+# ----------------------------------------------------------------------------------------------
+#' Aesthetics for category level points
+#'
+#' @description
+#' This function allows formatting changes to CLPs.
+#'
+#' @param bp an object of class \code{biplot}.
+#' @param which vector of which variables' CLPs to display, with default \code{ncol(Xcat)}.
+#' @param col list of CLP colours, with default \code{black}.
+#' @param cex list of CLP character expansions, with default \code{0.6}.
+#'
+#' @return A list with the following components is available:
+#' \item{which}{which variables' CLPs to display.}
+#' \item{col}{colour of the CLPs.}
+#' \item{cex}{expansion of the plotting character of the CLPs.}
+#'
+#' @usage
+#' CLPs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
+#' @aliases CLPs
+#'
+#' @export
+#'
+#' @examples 
+#' mtdf <- as.data.frame(mtcars)
+#' mtdf$cyl <- factor(mtdf$cyl)
+#' mtdf$vs <- factor(mtdf$vs)
+#' mtdf$am <- factor(mtdf$am)
+#' mtdf$gear <- factor(mtdf$gear)
+#' mtdf$carb <- factor(mtdf$carb)
+#' biplot(mtdf[,-11], scaled = TRUE) |> AoD(classes = mtdf[,11]) |> 
+#' CLPs(col = list(rep("olivedrab",3), rep("orange",2),
+#'                 rep("coral",2), rep("brown",3))) |> 
+#' plot()
+#' 
+CLPs <- function (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
+{
+  p2 <- ncol(bp$Xcat)
+  if(is.null(which) & length(col)==0) col <- ez.col
+  
+  if (!is.null(which))
+  {
+    if (!all(is.numeric(which))) which <- match(which, bp$colnames(bp$Xcat), nomatch = 0)
+    which <- which[which <= p2]
+    which <- which[which > 0]
+  }
+
+  # Expand col to length p2
+  if (!is.list(col)) col <- list(col)
+  while (length(col) < length(which)) col[[length(col)+1]] <- col[[1]]
+  for (j in 1:length(col))
+  {
+    col.len <- length(col[[j]])
+    num.lev <- nlevels(bp$Xcat[,j])
+    col[[j]] <- col[[j]][ifelse(1:num.lev%%col.len==0, col.len, 1:num.lev%%col.len)]
+  }
+
+  # Expand cex to length p2
+  if (!is.list(cex)) cex <- list(cex)
+  while (length(cex) < length(which)) cex[[length(cex)+1]] <- cex[[1]]
+  for (j in 1:length(cex))
+  {
+    cex.len <- length(cex[[j]])
+    num.lev <- nlevels(bp$Xcat[,j])
+    cex[[j]] <- cex[[j]][ifelse(1:num.lev%%cex.len==0, cex.len, 1:num.lev%%cex.len)]
+  }
+
+  bp$CLP.aes = list(which = which, col = col, cex = cex)
+  bp
+}
 # ----------------------------------------------------------------------------------------------
 #' Aesthetics for supplementary (new) biplot samples
 #'
