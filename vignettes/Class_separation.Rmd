@@ -4,6 +4,7 @@ output:
   rmarkdown::html_vignette:
     toc: true
     number_sections: true
+bibliography: references.bib
 vignette: >
   %\VignetteIndexEntry{Class separation}
   %\VignetteEngine{knitr::rmarkdown}
@@ -378,7 +379,8 @@ $$
   \end{bmatrix}
 $$
 
-    where $\mathbf{V}$ is the matrix of right singular vectors of $\mathbf{M}^{(2)}\mathbf{M}^{(2)'}$. 
+where where $\mathbf{V}$ is the matrix of right singular vectors of $\mathbf{M}^{(2)}\mathbf{M}^{(2)'}$.
+     
 
 ```{r}
 state.2group <- ifelse(state.division == "New England" | 
@@ -388,6 +390,7 @@ state.2group <- ifelse(state.division == "New England" |
                        "Coastal", "Central")
 biplot (state.x77) |> CVA (state.2group) |> legend.type(means=TRUE) |> plot()
 ```
+
 
 @leRouxLubbe2024 discuss an alternative method for obtaining additional dimensions. When assuming underlying normal distributions, the Bhattacharyya distance can be optimised. This method is specific to the two class case and cannot be utilised to find a third dimension in a 3D CVA biplot with three classes.
 

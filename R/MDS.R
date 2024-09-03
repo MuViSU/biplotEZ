@@ -161,7 +161,6 @@ PCO.biplot <- function (bp, Dmat=NULL, dist.func=NULL, dist.func.cat=NULL,
        Dmat <- sqrt(D.sq)
     }
   Dmat <- as.matrix(Dmat)
-
   dim.biplot <- dim.biplot[1]
   if (dim.biplot != 1 & dim.biplot != 2 & dim.biplot != 3) stop("Only 1D, 2D and 3D biplots")
   e.vects <- e.vects[1:dim.biplot]

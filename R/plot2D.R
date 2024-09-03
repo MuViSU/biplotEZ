@@ -558,8 +558,12 @@
   }
 }
 
+.CLPs.plot <- function (coords, colvec, cexvec)
+{
+  text (x=coords[,1], y=coords[,2], labels=rownames(coords), col=colvec, cex=cexvec)
+}
 
-#' Title
+#' Vectors to represent variables
 #'
 #' @param Vr V matrix.
 #' @param ax.aes axes aesthetics
@@ -619,7 +623,6 @@
 .get.ggrepel.coords <- function(df)
 {
   pp <- ggplot2::ggplot (df, ggplot2::aes(df$x,df$y,label=df$z)) + ggplot2::geom_point() + ggrepel::geom_text_repel()
-  print (pp)
   xrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$x.range
   yrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$y.range
   grid::grid.force()
@@ -705,7 +708,6 @@ biplot.spline.axis <- function(j, X, Ytilde, means, sd, n.int, spline.control, d
   
   cat ("Calculating spline axis for variable", j, "\n")
   if(dmeth==1) stop("dmeth should be equal to zero or integer greater than 1 \n")  
-  print(Ytilde)
   Y <- scale(Ytilde,center=means,scale=sd)
   
   ytilde <- Ytilde[,j]
