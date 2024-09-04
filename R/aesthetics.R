@@ -234,6 +234,7 @@ means <- function (bp,  which = NULL, col = NULL,
                      pch = 15, cex = 1, label = FALSE, label.col=NULL, label.cex = 0.75,
                      label.side = "bottom", label.offset = 0.5, opacity = 1, shade.darker = TRUE)
 {
+  bp$show.class.means <- TRUE
   if (is.null(bp$samples)) bp <- samples(bp)
   g <- bp$g
   
@@ -339,7 +340,8 @@ means <- function (bp,  which = NULL, col = NULL,
 #' Defaults to zero for each axis. Only used when the dimension of the biplot is two. 
 #' @param orthogy numeric vector of size p specifying the y-coordinate of the parallel transformation of each axis.
 #' Defaults to zero for each axis. Only used when the dimension of the biplot is two.
-#' @param vectors logical, whether calibrated axes should be displayed on the biplot
+#' @param vectors logical, whether vector representation should be displayed on the biplot. The argument is only 
+#'                relevant for PCA biplots.
 #' @param unit.circle logical, whether a unit circle should be displayed on the biplot
 #'
 #' @return A list with the following components is available:
@@ -506,37 +508,35 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
 #'
 control.alpha.bags <- function (g, g.names, alpha, which=NULL, col, lty, lwd, max, opacity)
 {
-  if (!all(is.numeric(which)))
-    which <- match(which, g.names, nomatch = 0)
+  if (!all(is.numeric(which))) which <- match(which, g.names, nomatch = 0)
   which <- which[which <= g]
   which <- which[which > 0]
 
-  if ((length(alpha) > 1) & (length(alpha) != length(which))){
+  ww <- length(which)
+  if ((length(alpha) > 1) & (length(alpha) != length(which)))
+  {
     temp.mat <- expand.grid(which, alpha)
     which <- temp.mat[,1]
     alpha <- temp.mat[,2]
   }
-  ww <- length(which)
-
   bag.num <- length(which)
-  while (length(alpha) < bag.num)
-    alpha <- c(alpha, alpha)
-  alpha <- as.vector(alpha[1:bag.num])
+
+  while (length(alpha) < bag.num) alpha <- c(alpha, alpha)
+  alpha <- alpha[1:bag.num]
   if (any(alpha < 0 | alpha > 0.99))
     stop(message = "alpha not to be negative or larger than 0.99")
 
-  
   if (is.null(col)) col <- ez.col[which]
-  while (length(col) < bag.num)
-    col <- c(col, col)
+  col <- na.omit(col)
+  while (length(col) < bag.num) col <- c(col, col)
   col <- col[1:bag.num]
-  while (length(lty) < bag.num)
-    lty <- rep(lty, each=ww)
+  while (length(lty) < bag.num) lty <- rep(lty, each=ww)
   lty <- lty[1:bag.num]
-  while (length(lwd) < bag.num)
-    lwd <- rep(lwd, each=ww)
+  while (length(lwd) < bag.num) lwd <- rep(lwd, each=ww)
   lwd <- lwd[1:bag.num]
   while (length(opacity) < bag.num) opacity <- c(opacity, opacity)
+  opacity <- opacity[1:bag.num]
+  
   list(which = which, alpha = alpha, col = col, lty = lty, lwd = lwd, max = max, opacity = opacity)
 }
 
@@ -563,21 +563,20 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   if (!all(is.numeric(which))) which <- match(which, g.names, nomatch = 0)
   which <- which[which <= g]
   which <- which[which > 0]
-  ww <- length(which)
 
+  ww <- length(which)
   if ((length(kappa) > 1) & (length(kappa) != length(which)))
   {
     temp.mat <- expand.grid(which, kappa)
     which <- temp.mat[,1]
     kappa <- temp.mat[,2]
   }
-  ww <- length(which)
-  
   ellipse.num <- length(which)
+  
   while (length(kappa) < ellipse.num) kappa <- c(kappa, kappa)
-  kappa <- as.vector(kappa[1:ellipse.num])
-
+  kappa <- kappa[1:ellipse.num]
   if (is.null(col)) col <- ez.col[which]
+  col <- na.omit(col)
   while (length(col) < ellipse.num) col <- c(col, col)
   col <- col[1:ellipse.num]
   while (length(lty) < ellipse.num) lty <- rep(lty, each=ww)
@@ -585,10 +584,80 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   while (length(lwd) < ellipse.num) lwd <- rep(lwd, each=ww)
   lwd <- as.vector(lwd[1:ellipse.num])
   while (length(opacity) < ellipse.num) opacity <- c(opacity, opacity)
+  opacity <- opacity[1:ellipse.num]
 
   list(which = which, kappa = kappa, col = col, lty = lty, lwd = lwd, opacity = opacity)
 }
 
+# ----------------------------------------------------------------------------------------------
+#' Aesthetics for category level points
+#'
+#' @description
+#' This function allows formatting changes to CLPs.
+#'
+#' @param bp an object of class \code{biplot}.
+#' @param which vector of which variables' CLPs to display, with default \code{ncol(Xcat)}.
+#' @param col list of CLP colours, with default \code{black}.
+#' @param cex list of CLP character expansions, with default \code{0.6}.
+#'
+#' @return A list with the following components is available:
+#' \item{which}{which variables' CLPs to display.}
+#' \item{col}{colour of the CLPs.}
+#' \item{cex}{expansion of the plotting character of the CLPs.}
+#'
+#' @usage
+#' CLPs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
+#' @aliases CLPs
+#'
+#' @export
+#'
+#' @examples 
+#' mtdf <- as.data.frame(mtcars)
+#' mtdf$cyl <- factor(mtdf$cyl)
+#' mtdf$vs <- factor(mtdf$vs)
+#' mtdf$am <- factor(mtdf$am)
+#' mtdf$gear <- factor(mtdf$gear)
+#' mtdf$carb <- factor(mtdf$carb)
+#' biplot(mtdf[,-11], scaled = TRUE) |> AoD(classes = mtdf[,11]) |> 
+#' CLPs(col = list(rep("olivedrab",3), rep("orange",2),
+#'                 rep("coral",2), rep("brown",3))) |> 
+#' plot()
+#' 
+CLPs <- function (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
+{
+  p2 <- ncol(bp$Xcat)
+  if(is.null(which) & length(col)==0) col <- ez.col
+  
+  if (!is.null(which))
+  {
+    if (!all(is.numeric(which))) which <- match(which, bp$colnames(bp$Xcat), nomatch = 0)
+    which <- which[which <= p2]
+    which <- which[which > 0]
+  }
+
+  # Expand col to length p2
+  if (!is.list(col)) col <- list(col)
+  while (length(col) < length(which)) col[[length(col)+1]] <- col[[1]]
+  for (j in 1:length(col))
+  {
+    col.len <- length(col[[j]])
+    num.lev <- nlevels(bp$Xcat[,j])
+    col[[j]] <- col[[j]][ifelse(1:num.lev%%col.len==0, col.len, 1:num.lev%%col.len)]
+  }
+
+  # Expand cex to length p2
+  if (!is.list(cex)) cex <- list(cex)
+  while (length(cex) < length(which)) cex[[length(cex)+1]] <- cex[[1]]
+  for (j in 1:length(cex))
+  {
+    cex.len <- length(cex[[j]])
+    num.lev <- nlevels(bp$Xcat[,j])
+    cex[[j]] <- cex[[j]][ifelse(1:num.lev%%cex.len==0, cex.len, 1:num.lev%%cex.len)]
+  }
+
+  bp$CLP.aes = list(which = which, col = col, cex = cex)
+  bp
+}
 # ----------------------------------------------------------------------------------------------
 #' Aesthetics for supplementary (new) biplot samples
 #'

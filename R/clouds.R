@@ -319,10 +319,10 @@ calc.concentration.ellipse <- function (X, kappa=2, covmat = NULL)
   xlim <- c(mid.vec[1] - dif, mid.vec[1] + dif)
   ylim <- c(mid.vec[2] - dif, mid.vec[2] + dif)
   svd.covmat <- svd(covmat)
-  a <- (0:6283)/1000
+  a <- (0:628)/100   # 2pi100 = 628.3185
   Y <- cbind(cos(a), sin(a))
   Y <- Y %*% diag(sqrt(svd.covmat$d)) %*% t(svd.covmat$v) * kappa
-  Y + matrix(rep(1, 6284), ncol = 1) %*% t(means)
+  Y + matrix(rep(1, 629), ncol = 1) %*% t(means)
 }
 
 # ----------------------------------------------------------------------------------------------

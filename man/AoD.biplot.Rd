@@ -7,8 +7,8 @@
 \method{AoD}{biplot}(
   bp,
   classes = bp$classes,
-  Dmat = NULL,
   dist.func = NULL,
+  dist.func.cat = NULL,
   dim.biplot = c(2, 1, 3),
   e.vects = 1:ncol(bp$X),
   weighted = c("unweighted", "weighted"),
@@ -22,9 +22,9 @@
 
 \item{classes}{a vector of the same length as the number of rows in the data matrix with the class indicator for the samples.}
 
-\item{Dmat}{the matrix of Euclidean embeddable distances between samples.}
-
 \item{dist.func}{a character string indicating which distance function is used to compute the Euclidean embeddable distances between samples. One of \code{NULL} (default) which computes the Euclidean distance or other functions that can be used for the \code{dist()} function.}
+
+\item{dist.func.cat}{a character string indicating which distance function is used to compute the Euclidean embeddable distances between samples. One of \code{NULL} (default) which computes the extended matching coefficient or other functions.}
 
 \item{dim.biplot}{the dimension of the biplot. Only values \code{1}, \code{2} and \code{3} are accepted, with default \code{2}.}
 

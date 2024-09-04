@@ -184,7 +184,8 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
             
             if(!is.null(x$PCOaxes)) { if(x$PCOaxes == "splines") # Only for PCO - if axes (type) is set to splines.  
             {
-              z.axes <- lapply(1:length(ax.aes$which), biplot.spline.axis, Z, Xhat, means=x$means, sd=x$sd, n.int=ax.aes$ticks, 
+              z.axes <- lapply(1:length(ax.aes$which), biplot.spline.axis, Z, x$raw.X, 
+                               means=x$means, sd=x$sd, n.int=ax.aes$ticks, 
                                spline.control=x$spline.control)
               .nonlin.axes.plot(z.axes,ax.aes,predict.mat,too.small, usr=usr,x=x)
               
@@ -192,24 +193,20 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
             {
               z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
                                ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
-              .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,x=x)
+              .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
               
             }
               } else { # Otherwise calibrate linear axes
               
               z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
                                ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
-              .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,x=x)
+              .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
               }}
             if (ax.aes$vectors) { # Draw vectors on the calibrated axes
               # this only draws vectors on top of the chosen calibrated axis 
-              if(inherits(x,"PCA")) .lin.axes.vector.plot(x$V.mat[,1:2],ax.aes)
+              if(inherits(x,"PCA")) .lin.axes.vector.plot(x$Lmat[,1:2],ax.aes)
             }
-        if (ax.aes$vectors) { # Draw vectors on the calibrated axes
-          # this only draws vectors on top of the chosen calibrated axis 
-          if(inherits(x,"PCA")) .lin.axes.vector.plot(x$V.mat[,1:2],ax.aes)
-          }
-      
+
       # Interpolate new axes 
       if(!is.null(x$newvariable)) { if(is.null(x$newaxes)) x <- newaxes(x) 
       
@@ -221,7 +218,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
         z.axes.new <- lapply(1:length(new.ax.aes$which), .calibrate.axis, 
                              x$newvariable, x$new.means, x$new.sd, x$new.ax.one.unit, new.ax.aes$which,
                              new.ax.aes$ticks, new.ax.aes$orthogx, new.ax.aes$orthogy)
-        .lin.axes.plot(z.axes.new, new.ax.aes, predict.mat, too.small, x=x, usr=usr)
+        .lin.axes.plot(z.axes.new, new.ax.aes, predict.mat, too.small, usr=usr, predict_which=x$predict$which)
       }
       }
       
@@ -247,7 +244,6 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
                       too.small, cex.vec, usr=usr,x$alpha.bag.outside,
                       x$alpha.bag.aes)}
 
-      
       # New samples 
       if (!is.null(x$Znew)) if (is.null(x$newsamples)) x <- newsamples(x)
       if (!is.null(x$Znew)) .newsamples.plot (x$Znew, x$newsamples, ggrepel.new, usr=usr)
@@ -257,6 +253,18 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
       {
         if (is.null(x$means.aes)) x <- means(x)
         .means.plot (x$Zmeans, x$means.aes, x$g.names, ggrepel.means,usr=usr)
+      }
+
+      # CLPs 
+      if (!is.null(x$CLP.coords)) 
+        {
+        if (is.null(x$CLP.aes)) x <- CLPs(x)
+        if  (!is.null(x$CLP.aes$which) & !inherits(x, "CA"))
+        {
+          for (i in 1:length(x$CLP.aes$which))
+            .CLPs.plot(x$CLP.coords[[x$CLP.aes$which[i]]], 
+                       x$CLP.aes$col[[i]], x$CLP.aes$cex[[i]])
+        }
       }
       
       # Alpha bags 

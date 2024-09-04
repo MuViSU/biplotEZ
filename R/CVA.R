@@ -247,8 +247,8 @@ CVAlowdim <- function (bp, G, W, Mmat, low.dim, K, e.vects)
 #'
 #' @param bp an object of class \code{biplot} obtained from preceding function \code{biplot()}. 
 #' @param classes a vector of the same length as the number of rows in the data matrix with the class indicator for the samples.
-#' @param Dmat the matrix of Euclidean embeddable distances between samples.
 #' @param dist.func a character string indicating which distance function is used to compute the Euclidean embeddable distances between samples. One of \code{NULL} (default) which computes the Euclidean distance or other functions that can be used for the \code{dist()} function.
+#' @param dist.func.cat a character string indicating which distance function is used to compute the Euclidean embeddable distances between samples. One of \code{NULL} (default) which computes the extended matching coefficient or other functions.
 #' @param dim.biplot the dimension of the biplot. Only values \code{1}, \code{2} and \code{3} are accepted, with default \code{2}.
 #' @param e.vects the vector indicating which eigenvectors (canonical variates) should be plotted in the biplot, with default \code{1:dim.biplot}.
 #' @param weighted a character string indicating the weighting of the classes. One of "\code{unweighted}" for each class to receive equal weighting or "\code{weighted}" for each class to receive their class sizes as weights.
@@ -258,7 +258,7 @@ CVAlowdim <- function (bp, G, W, Mmat, low.dim, K, e.vects)
 #'
 #' @return  Object of class \code{biplot}
 #'
-#' @usage AoD(bp, classes=bp$classes, Dmat=NULL, dist.func=NULL,
+#' @usage AoD(bp, classes=bp$classes, dist.func=NULL, dist.func.cat=NULL,
 #' dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), 
 #' weighted = c("unweighted","weighted"), show.class.means = TRUE, 
 #' axes = c("regression","splines"), ...)
@@ -272,7 +272,7 @@ CVAlowdim <- function (bp, G, W, Mmat, low.dim, K, e.vects)
 #' # create a CVA biplot
 #' biplot(iris[,1:4]) |> AoD(classes=iris[,5]) |> plot()
 #' 
-AoD <- function (bp, classes=bp$classes, Dmat=NULL, dist.func=NULL,
+AoD <- function (bp, classes=bp$classes, dist.func=NULL, dist.func.cat=NULL,
                  dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), 
                  weighted = c("unweighted","weighted"), show.class.means = TRUE, 
                  axes = c("regression","splines"), ...)
@@ -292,7 +292,7 @@ AoD <- function (bp, classes=bp$classes, Dmat=NULL, dist.func=NULL,
 #' @examples
 #' biplot(iris) |> AoD(classes = iris[,5]) |> plot()
 #'
-AoD.biplot <- function (bp, classes=bp$classes, Dmat=NULL, dist.func=NULL,
+AoD.biplot <- function (bp, classes=bp$classes, dist.func=NULL, dist.func.cat=NULL,
                         dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), 
                         weighted = c("unweighted","weighted"), show.class.means = TRUE, 
                         axes = c("regression","splines"), ...)
@@ -319,93 +319,138 @@ AoD.biplot <- function (bp, classes=bp$classes, Dmat=NULL, dist.func=NULL,
   }
   
   X <- bp$X
+  Xcat <- bp$Xcat
   G <- indmat(classes)
-  Xbar <- solve(t(G) %*% G) %*% t(G) %*% X
+  Nmat <- t(G) %*% G
   
-  if (is.null(dist.func)) dist.func <- stats::dist
-  theta.bar <- NULL
-  if (is.null(Dmat)) Dmat <- dist.func(Xbar) 
-  else theta.bar <- solve(t(G) %*% G) %*% t(G) %*% (-0.5*as.matrix(Dmat)^2) %*% G %*% solve(t(G) %*% G)
+  if (!is.null(Xcat))
+  {
+    for (j in 1:ncol(Xcat))
+      if (all(levels(Xcat[,j]) %in% levels(classes)) & all(levels(classes) %in% levels(Xcat[,j])))
+        if (all(classes == Xcat[,j]))
+        {  Xcat <- Xcat[,-j]
+        bp$Xcat <- Xcat
+        bp$p2 <- ncol(Xcat)
+        break
+        }
+  }
+  
+  if (is.null(dist.func) & !is.null(X)) dist.func <- stats::dist
+  if (is.null(dist.func.cat) & !is.null(Xcat)) dist.func.cat <- extended.matching.coefficient
+  D1 <- D2 <- NULL
+  if (!is.null(dist.func)) D1 <- dist.func(X, ...)
+  if (!is.null(dist.func.cat)) D2 <- dist.func.cat(Xcat, ...)
+  if (!is.null(D1)) D.sq <- D1^2 else D.sq <- NULL
+  if (!is.null(D2)) if (is.null(D.sq)) D.sq <- D2^2 else D.sq <- D.sq + D2^2
+  Dmat <- sqrt(D.sq)
+  D.bar <- solve(Nmat) %*% t(G) %*% (-0.5*as.matrix(Dmat)^2) %*% G %*% solve(Nmat)
 
   n <- bp$n
   p <- bp$p
+  p2 <- ncol(Xcat)
   J <- ncol(G)
   K <- min(p, J-1)
   
   if (weight=="unweighted") s.vec <- rep(1,J)/J
-  if (weight=="weighted") s.vec <- diag(t(G)%*%G)/n
+  if (weight=="weighted") s.vec <- diag(Nmat)/n
 
-  if (is.null(theta.bar)) DDmat <- -0.5 * as.matrix(Dmat)^2
   one <- matrix (1, nrow=1, ncol=J)
-  
   I.min.N <- diag(J) - s.vec %*% one
-  if (is.null(theta.bar)) B <- I.min.N %*% DDmat %*% I.min.N
-  else B <- I.min.N %*% theta.bar %*% I.min.N
+  B <- I.min.N %*% D.bar %*% I.min.N
   if (any(zapsmall(eigen(B)$values)<0)) warning ("Your distances are not Euclidean embeddable.")
   
   svd.out <- svd(B)
   Ybar <- svd.out$v %*% diag(sqrt(svd.out$d))
   Zmeans <- Ybar[,e.vects]
-
+  Ybar <- Ybar[,svd.out$d>sqrt(.Machine$double.eps)]
+  
   if (axes == "regression")
   {
+    Xbar <- solve(Nmat) %*% t(G) %*% X
     Mr <- solve(t(Zmeans) %*% Zmeans) %*% t(Zmeans) %*% Xbar
     bp$Lmat <- NULL
     bp$eigenvalues <- svd.out$d
     bp$ax.one.unit <- 1/(diag(t(Mr) %*% Mr)) * t(Mr)
     bp$Mr <- Mr
   }
+  else Xbar <- NULL
   if(axes == "splines") bp$spline.control <- biplot.spline.axis.control()
   bp$PCOaxes <- axes
 
-  ddist0 <- matrix(-0.5*apply(Ybar, 1, function(y) sum((y-rep(0,ncol(Ybar)))^2)), ncol=1)
-  Z <- matrix (nrow=n, ncol=dim.biplot)
-  if (is.null(theta.bar))
+  Delta <- matrix (0, nrow=J, ncol=J)
+  for (i in 1:(J-1))
+    for (j in (i+1):J)
+      Delta[i,j] <- -0.5*(D.bar[i,i]+D.bar[j,j]-2*D.bar[i,j])
+  Delta <- Delta + t(Delta)
+
+#  print(apply(Delta, 1, sum)/J)
+#  stop ("tot hier")
+ 
+  ddist0 <- matrix (-0.5*apply(Ybar, 1, function(y) sum((y-rep(0,ncol(Ybar)))^2)), ncol=1) 
+  new.point <- function (coords, coords.cat)
   {
-    for (i in 1:n)
-    {
-      mat <- rbind (X[i,], Xbar)
-      Dmat <- as.matrix(dist.func(mat, ...))
-      ddist.i <- matrix(-0.5*Dmat[1,-1]^2, ncol=1)
-      Z[i,] <- solve(t(Zmeans)%*%Zmeans) %*% t(Zmeans) %*% (I.min.N) %*% (ddist.i - ddist0)
-    }
-  }
-  else
-  {
-    # --- if the dist.func is not given,
-    #     first embed X:nxp in Euclidean space -> Ymat
-    #     Y2.bar is class means of Ymat
-    #     compute Euclidean distance between rows of Ymat and Y2.bar
-    DDmat.2 <- -0.5 * as.matrix(Dmat)^2
-    s2.vec <- matrix(rep(1,n)/n, ncol=1)
-    one.n <- matrix (1, nrow=1, ncol=n)
-    I.min.N.2 <- diag(n) - s2.vec %*% one.n
-    B2 <- I.min.N.2 %*% DDmat.2 %*% I.min.N.2
-    svd.out.2 <- svd(B2)
-    Ymat <- svd.out.2$v %*% diag(sqrt(svd.out.2$d))
-    Y2.bar <- solve(t(G) %*% G) %*% t(G) %*% Ymat
-    for (i in 1:n)
-    {
-      mat <- rbind (Ymat[i,], Y2.bar)
-      Dmat <- as.matrix(stats::dist(mat))
-      ddist.i <- matrix(-0.5*Dmat[1,-1]^2, ncol=1)
-      Z[i,] <- solve(t(Zmeans)%*%Zmeans) %*% t(Zmeans) %*% (I.min.N) %*% (ddist.i - ddist0)
-    }
+    m <- nrow(coords)
+    d1vec <- d2vec <- NULL
+    if (!is.null(dist.func)) d1vec <- as.matrix(dist.func(rbind(coords,X), ...))[-(1:m),1:m]
+    if (!is.null(dist.func.cat)) d2vec <- as.matrix(dist.func.cat(rbind(coords.cat,Xcat), ...))[-(1:m),1:m]
+    if (!is.null(d1vec)) dvec <- d1vec^2 else dvec <- NULL
+    if (!is.null(d2vec)) 
+      { if (is.null(dvec)) dvec <- d2vec^2 else dvec <- dvec + d2vec^2 }
+    dvec <- -0.5*dvec
+    delta.vec <- diag(D.bar)-2*solve(Nmat) %*% apply(dvec, 2, function(dd) tapply (dd, classes, sum))
+    solve(t(Ybar)%*%Ybar) %*% t(Ybar) %*% (delta.vec - matrix(apply(Delta, 1, sum)/J,ncol=1) %*% matrix(1, nrow=1, ncol=ncol(delta.vec)))
   }
   
-  YY <- Ybar[,-ncol(Ybar)]
-  Z2 <- PCOinterpolate(DDmat, dist.func, NULL, X, NULL, Xbar, NULL, YY, t(YY)%*%YY, n)
+  Z <- matrix (nrow=n, ncol=dim.biplot)
+  Z <- t(new.point(X, Xcat))[,e.vects]
 
-#  print (head(Z))
-#  print (head(Z2))
-#  stop ("tot hier")
-    
+  if (!is.null(Xcat))
+  {
+    CLPs <- vector("list", p2)
+    for (j in 1:p2)
+    {
+      CLPj <- NULL
+      for (tau in levels(factor(Xcat[,j])))
+      {
+        X.tau <- Xcat
+        X.tau[,j] <- tau
+        Y.tau <- t(new.point(X, X.tau))
+        CLPj <- rbind (CLPj, apply(Y.tau,2,mean))
+      }
+      rownames(CLPj) <- levels(factor(Xcat[,j]))
+      CLPs[[j]] <- CLPj
+    }
+    names(CLPs) <- colnames(Xcat)
+  }
+  else CLPs <- NULL
+  
+  if (!is.null(CLPs))
+  {
+    CLP.coords <- vector("list", length(CLPs))
+    my.list <- vector("list", ncol(Z))
+    for (h in 1:ncol(Z))
+      my.list[[h]] <- seq(from=min(Z[,h]), to=max(Z[,h]), len=20)
+    grid <- as.matrix(expand.grid(my.list))
+    for (h in 1:length(CLPs))
+    {
+      grid.mat <- cbind (grid, matrix (0, nrow=nrow(grid), ncol=ncol(CLPs[[h]])-2))
+      D.CLP <- as.matrix(stats::dist(rbind (CLPs[[h]], grid.mat)))[1:nrow(CLPs[[h]]),-(1:nrow(CLPs[[h]]))]
+      closest.level <- apply (D.CLP, 2, which.min)
+      CLP.coords[[h]] <- apply (grid, 2, function (x) tapply(x, closest.level, mean))
+      if (!is.matrix(CLP.coords[[h]])) CLP.coords[[h]] <- matrix (CLP.coords[[h]], nrow=1)
+      rownames(CLP.coords[[h]]) <- rownames(CLPs[[h]])[sort(unique(closest.level))]
+    }
+  }
+  else CLP.coords <- NULL
+  
   rownames(Z) <- rownames(X)
   bp$Z <- Z
   bp$Zmeans <- Zmeans
   bp$Xbar <- Xbar
   bp$Gmat <- G
   bp$Xmeans <- Xbar
+  bp$CLPs <- CLPs
+  bp$CLP.coords <- CLP.coords
   bp$e.vects <- e.vects
   bp$Mrr <- NULL
   bp$class.means <- show.class.means

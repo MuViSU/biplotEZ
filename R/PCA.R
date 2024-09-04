@@ -39,9 +39,6 @@
 #' \item{e.vects}{the vector indicating which principal components are plotted in the biplot.}
 #' \item{Vr}{the \code{1:dim.biplot} columns of \eqn{\mathbf{V}}.}
 #' \item{dim.biplot}{the dimension of the biplot.}
-#' \item{V.mat}{the matrix containing the right singular vectors of \eqn{\mathbf{X}}.}
-#' \item{Sigma.mat}{the matrix with the singular values of \eqn{\mathbf{X}} on the diagonal.}
-#' \item{U.mat}{the matrix containing the left singular vectors of \eqn{\mathbf{X}}.}
 #' \item{class.means}{a logical value indicating whether group means are plotted in the biplot.}
 #' \item{Zmeans}{the matrix of class mean coordinates that are plotted in the biplot.}
 #'
@@ -129,9 +126,6 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
   bp$e.vects <- e.vects
   bp$Vr <- Vr
   bp$dim.biplot <- dim.biplot
-  bp$V.mat <- V.mat
-  bp$Sigma.mat <- Sigma.mat
-  bp$U.mat <- U.mat
   if (bp$g == 1) bp$class.means <- FALSE else bp$class.means <- show.class.means
   if (bp$class.means)
   {

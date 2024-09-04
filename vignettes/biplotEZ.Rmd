@@ -182,8 +182,7 @@ out$sd
 
 # The functions `PCA()`, `plot()` and `legend.type()` 
 
-The first argument to the function `PCA()` is an object of class `biplot`, i.e. the output of the `biplot()` function. By default we c
-onstruct a 2D biplot (argument `dim.biplot = 2`) of the first two principal components (argument `e.vects = 1:2`). The `group.aes` 
+The first argument to the function `PCA()` is an object of class `biplot`, i.e. the output of the `biplot()` function. By default we construct a 2D biplot (argument `dim.biplot = 2`) of the first two principal components (argument `e.vects = 1:2`). The `group.aes` 
 argument, if not specified in the function `biplot()`, allows a grouping argument for the sample aesthetics. A PCA biplot of the 
 `state.x77` data with colouring according to `state.region` is obtained as follows:
 
@@ -351,7 +350,7 @@ biplot(gas.data, scaled = TRUE) |> PCA() |>
 # The function `means()`
 
 The function `means()` allow changing the aesthetics for group means specified by group.aes, when the argument 
-`show.group.means = TRUE` in the call to the function `PCA()`. The functionality of `means()` mirrors that of 
+`show.class.means = TRUE` in the call to the function `PCA()`. The functionality of `means()` mirrors that of 
 `samples()` and is discussed in detail in the vignette *Class separation* where class means are more prominent 
 than in PCA biplots.
 

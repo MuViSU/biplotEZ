@@ -197,8 +197,6 @@ minEucDist <- function(p1,p2) {
 #' @noRd
 TrueBoundary<-function(seg,original,points){
   n<-nrow(seg)
-  print("Awe")
-  print(n)
   midpoints<-matrix(nrow=(nrow(seg)/2),ncol=2)
   for(i in 1:(nrow(seg)/2)){
     lil<-seg[(2*i-1):(2*i),]
@@ -286,7 +284,6 @@ predict.regions <- function (x, bounds=graphics::par("usr"))
 { 
   Deets <- getintersects(x=x,bounds=bounds)
   Get_segments <- makelistmat(Deets)
-  print(Get_segments)
   TruePoints <- matrix(ncol=2)
   
   for(i in 1:(nrow(x)-1)){
