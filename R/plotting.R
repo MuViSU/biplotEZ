@@ -182,26 +182,29 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
             if (x$scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/x$sd)
             if (x$center) Xhat <- scale(Xhat, center=-1*x$means, scale=FALSE)
             
-            if(!is.null(x$PCOaxes)) { if(x$PCOaxes == "splines") # Only for PCO - if axes (type) is set to splines.  
-            {
-              z.axes <- lapply(1:length(ax.aes$which), biplot.spline.axis, Z, x$raw.X, 
+            if(!is.null(x$PCOaxes)) 
+              { if (x$PCOaxes == "splines") # Only for PCO - if axes (type) is set to splines.  
+                  {
+                    z.axes <- lapply(1:length(ax.aes$which), biplot.spline.axis, Z, x$raw.X, 
                                means=x$means, sd=x$sd, n.int=ax.aes$ticks, 
                                spline.control=x$spline.control)
-              .nonlin.axes.plot(z.axes,ax.aes,predict.mat,too.small, usr=usr,x=x)
+                    .nonlin.axes.plot(z.axes,ax.aes,predict.mat,too.small, usr=usr,x=x)
               
-            } else if(x$PCOaxes == "regression") # Only for PCO - if axes (type) is set to regression. 
-            {
-              z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
+                  } 
+                else if(x$PCOaxes == "regression") # Only for PCO - if axes (type) is set to regression. 
+                       {
+                         z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
+                                        ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
+                        .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
+                       }
+              } 
+            else 
+              { # Otherwise calibrate linear axes
+                z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
                                ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
-              .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
-              
+                .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
+              }
             }
-              } else { # Otherwise calibrate linear axes
-              
-              z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
-                               ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
-              .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
-              }}
             if (ax.aes$vectors) { # Draw vectors on the calibrated axes
               # this only draws vectors on top of the chosen calibrated axis 
               if(inherits(x,"PCA")) .lin.axes.vector.plot(x$Lmat[,1:2],ax.aes)

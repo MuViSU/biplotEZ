@@ -70,7 +70,8 @@ Defaults to zero for each axis. Only used when the dimension of the biplot is tw
 \item{orthogy}{numeric vector of size p specifying the y-coordinate of the parallel transformation of each axis.
 Defaults to zero for each axis. Only used when the dimension of the biplot is two.}
 
-\item{vectors}{logical, whether calibrated axes should be displayed on the biplot}
+\item{vectors}{logical, whether vector representation should be displayed on the biplot. The argument is only
+relevant for PCA biplots.}
 
 \item{unit.circle}{logical, whether a unit circle should be displayed on the biplot}
 }

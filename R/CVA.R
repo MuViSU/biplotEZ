@@ -112,6 +112,7 @@ CVA.biplot <- function(bp, classes=bp$classes, dim.biplot = c(2,1,3), e.vects = 
   B <- t(X_bar) %*% N %*% X_bar
   
   svd.W <- svd(W)
+  if(any(svd.W$d < 1e-10)) stop("Your within class covariance matrix is approaching singularity.")
   W_minhalf <- svd.W$u %*% diag(1/sqrt(svd.W$d)) %*% t(svd.W$v)
   if (weightedCVA == "weighted")
     Cmat <- N
@@ -334,7 +335,8 @@ AoD.biplot <- function (bp, classes=bp$classes, dist.func=NULL, dist.func.cat=NU
         break
         }
   }
-  
+  if (!is.null(bp$p2)) if (bp$p2 == 0) Xcat <- NULL
+
   if (is.null(dist.func) & !is.null(X)) dist.func <- stats::dist
   if (is.null(dist.func.cat) & !is.null(Xcat)) dist.func.cat <- extended.matching.coefficient
   D1 <- D2 <- NULL
@@ -344,7 +346,7 @@ AoD.biplot <- function (bp, classes=bp$classes, dist.func=NULL, dist.func.cat=NU
   if (!is.null(D2)) if (is.null(D.sq)) D.sq <- D2^2 else D.sq <- D.sq + D2^2
   Dmat <- sqrt(D.sq)
   D.bar <- solve(Nmat) %*% t(G) %*% (-0.5*as.matrix(Dmat)^2) %*% G %*% solve(Nmat)
-
+  
   n <- bp$n
   p <- bp$p
   p2 <- ncol(Xcat)
@@ -446,7 +448,7 @@ AoD.biplot <- function (bp, classes=bp$classes, dist.func=NULL, dist.func.cat=NU
   rownames(Z) <- rownames(X)
   bp$Z <- Z
   bp$Zmeans <- Zmeans
-  bp$Xbar <- Xbar
+  bp$Xcat <- Xcat
   bp$Gmat <- G
   bp$Xmeans <- Xbar
   bp$CLPs <- CLPs

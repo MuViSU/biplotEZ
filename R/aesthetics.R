@@ -536,7 +536,7 @@ control.alpha.bags <- function (g, g.names, alpha, which=NULL, col, lty, lwd, ma
     stop(message = "alpha not to be negative or larger than 0.99")
 
   if (is.null(col)) col <- ez.col[which]
-  col <- na.omit(col)
+  col <- stats::na.omit(col)
   while (length(col) < bag.num) col <- c(col, col)
   col <- col[1:bag.num]
   while (length(lty) < bag.num) lty <- rep(lty, each=ww)
@@ -585,7 +585,7 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   while (length(kappa) < ellipse.num) kappa <- c(kappa, kappa)
   kappa <- kappa[1:ellipse.num]
   if (is.null(col)) col <- ez.col[which]
-  col <- na.omit(col)
+  col <- stats::na.omit(col)
   while (length(col) < ellipse.num) col <- c(col, col)
   col <- col[1:ellipse.num]
   while (length(lty) < ellipse.num) lty <- rep(lty, each=ww)

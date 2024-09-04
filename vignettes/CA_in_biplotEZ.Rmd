@@ -235,6 +235,7 @@ biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Princ") |>
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
   samples(col=c("forestgreen","magenta"), pch=c(12,17), label.side=c("top","bottom")) |> legend.type(samples = TRUE) |> plot()
 ```
+
 ## Additional example
 
 Consider the South African Crime data set 2008, extracted from the South African police website (http://www.saps.gov.za/). @UB2011 page 312.
