@@ -2,7 +2,7 @@
 % Please edit documentation in R/aesthetics.R
 \name{means}
 \alias{means}
-\title{Aesthetics for biplot class / group means}
+\title{Format aesthetics for the class or group means}
 \usage{
 means (bp,  which = NULL, col = NULL, pch = 15, cex = 1, label = FALSE,
 label.col = NULL,label.cex = 0.75, label.side = "bottom", label.offset = 0.5,
@@ -11,26 +11,23 @@ opacity = 1, shade.darker = TRUE)
 \arguments{
 \item{bp}{an object of class \code{biplot}.}
 
-\item{which}{vector of which means to display, with default \code{bp$g}.}
+\item{which}{a vector containing the groups or classes for which the means should be displayed, with default \code{bp$g}.}
 
-\item{col}{mean colour, with default to sample colour.}
+\item{col}{the colour(s) for the means, with default as the colour of the samples.}
 
-\item{pch}{mean plotting character, with default \code{o}.}
+\item{pch}{the plotting character(s) for the means, with default ■.}
 
-\item{cex}{mean character expansion, with default \code{1}.}
+\item{cex}{the character expansion(s) for the means, with default \code{1}.}
 
-\item{label}{logical, whether means should be labelled or not, with default \code{TRUE}.}
+\item{label}{a logical value indicating whether the means should be labelled, with default \code{TRUE}.}
 
-\item{label.col}{vector of length g with the colour of the labels, defaulting to the
-colour of the means.}
+\item{label.col}{a vector of the same length as \code{which} with label colours for the means, with default as the colour of the means.}
 
-\item{label.cex}{label text expansion, with default \code{0.75}.}
+\item{label.cex}{a vector of the same length as \code{which} with label text expansions for the means, with default \code{0.75}.}
 
-\item{label.side}{side of the plotting character where label appears, with default \code{bottom}. Note that unlike
-the argument \code{pos} in \code{text()}, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.}
+\item{label.side}{the side at which the label of the plotted point appears, with default \code{bottom}. Note that unlike the argument \code{pos} in \code{text()}, options are "\code{bottom}", "\code{left}", "\code{top}", "\code{right}" and not \code{1}, \code{2}, \code{3}, \code{4}.}
 
-\item{label.offset}{offset of the label from the mean point. See ?text for a detailed explanation of the
-argument \code{offset}.}
+\item{label.offset}{the offset of the label from the plotted point. See \code{?text} for a detailed explanation of the argument \code{offset}.}
 
 \item{opacity}{transparency of means.}
 
@@ -50,7 +47,7 @@ A list with the following components is available:
 \item{opacity}{transparency of means}
 }
 \description{
-This function allows formatting changes to class means or group means.
+This function allows the user to format the aesthetics for the class means or group means.
 }
 \details{
 The number of classes or groups (defined by group.aes) is indicated as \code{g}. If an argument is not of length \code{g},

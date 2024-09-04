@@ -1,55 +1,49 @@
 # ----------------------------------------------------------------------------------------------
-#' Aesthetics for biplot samples
+#' Format aesthetics for the biplot samples
 #'
 #' @description
-#' This function allows formatting changes to samples.
+#' This function allows the user to format the aesthetics for the samples.
 #'
 #' @param bp an object of class \code{biplot}.
-#' @param which vector of which groups of samples to display, with default \code{bp$g}.
-#' @param col sample colour, with default \code{blue}.
-#' @param pch sample plotting character, with default \code{+}.
-#' @param cex sample character expansion, with default \code{1}.
-#' @param label logical (\code{TRUE}, \code{FALSE}), whether samples should be labelled, with default \code{FALSE}. Alternatively, specify \code{"ggrepel"} for non-overlapping placement of labels.
-#' @param label.name vector of length number of samples, with default 
-#'\code{NULL}, \code{rownames(bp)} are used.
-#' @param label.col vector of length number of samples with the colour of the labels, defaulting to the
-#'                  colour of the sample points.
-#' @param label.cex label text expansion, with default \code{0.75}.
-#' @param label.side side of the plotting character where label appears, with default \code{bottom}. Note that unlike
-#'                   the argument `pos` in `text()`, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
-#' @param label.offset offset of the label from the data point. See ?text for a detailed explanation of the
-#'                     argument `offset`.
-#' @param connected logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.
-#' @param connect.col colour of the connecting line, with default \code{black}.
-#' @param connect.lty line type of the connecting line, with default \code{1}.
-#' @param connect.lwd line width of the connecting line, with default \code{1}.
-#' @param opacity opacity of sample points, with default 1 (opaque).
+#' @param which a vector containing the groups or classes for which the samples should be displayed, with default \code{bp$g}.
+#' @param col the colour(s) for the samples, with default \code{blue}.
+#' @param pch the plotting character(s) for the samples, with default •.
+#' @param cex the character expansion(s) for the samples, with default \code{1}.
+#' @param label a logical value indicating whether the samples should be labelled, with default \code{FALSE}. Alternatively, specify \code{"ggrepel"} for non-overlapping placement of labels.
+#' @param label.name a vector of the same length as \code{which} with label names for the samples, with default \code{NULL}. If \code{NULL}, the \code{rownames(bp)} are used. Alternatively, a custom vector of length \code{n} should be used.
+#' @param label.col a vector of the same length as \code{which} with label colours for the samples, with default as the same colour of the sample points.
+#' @param label.cex a vector of the same length as \code{which} with label text expansions for the samples, with default \code{0.75}.
+#' @param label.side the side at which the label of the plotted point appears, with default \code{bottom}. Note that unlike the argument \code{pos} in \code{text()}, options are "\code{bottom}", "\code{left}", "\code{top}", "\code{right}" and not \code{1}, \code{2}, \code{3}, \code{4}.
+#' @param label.offset the offset of the label from the plotted point. See \code{?text} for a detailed explanation of the argument \code{offset}.
+#' @param connected a logical value indicating whether samples are connected in order of rows of the data matrix, with default \code{FALSE}.
+#' @param connect.col the colour of the connecting line, with default \code{black}.
+#' @param connect.lty the line type of the connecting line, with default \code{1}.
+#' @param connect.lwd the line width of the connecting line, with default \code{1}.
+#' @param opacity the opacity level of the plotted points, with default \code{1} for an opaque point.
 #'
 #' @details
-#' The arguments `which`, `col`, `pch` and `cex` are based on the specification of `group.aes` or `classes`. If no groups
-#' are specified, a single colour, plotting character and / or character expansion is expected. If g groups are
-#' specified, vectors of length g is expected, or values are recycled to length g.
+#' The arguments \code{which}, \code{col}, \code{pch} and \code{cex} are based on the specification of \code{group.aes} or \code{classes}. If no groups are specified, a single colour, plotting character and / or character expansion is expected. If \eqn{g} groups are
+#' specified, vectors of length \eqn{g} is expected, or values are recycled to length \eqn{g}.
+#' 
+#' The arguments \code{label}, \code{label.cex}, \code{label.side} and \code{label.offset} are based on the sample size \eqn{n}. A single value
+#' will be recycled \eqn{n} times or a vector of length \eqn{n} is expected.
 #'
-#' The arguments `label`, `label.cex`, `label.side` and `label.offset` are based on the sample size n. A single value
-#' will be recycled n times or a vector of length n is expected.
-#'
-#' @return A list with the following components is available:
-#' \item{which}{which means to display.}
-#' \item{col}{colour of the samples.}
-#' \item{pch}{plotting character of the samples.}
-#' \item{cex}{expansion of the plotting character of the samples.}
-#' \item{label}{TRUE or FALSE, whether samples should be labelled, with default 
-#' \code{FALSE}.}
-#' \item{label.name}{If \code{NULL}, the row names will be used, with default \code{NULL}. Alternatively, a vector of length \code{n} should be used.}
-#' \item{label.col}{colour of the label.}
-#' \item{label.cex}{expansion of the label.}
-#' \item{label.side}{side at which to plot the label of samples.}
-#' \item{label.offset}{offset of the label from the data point.}
-#' \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X.}
-#' \item{connect.col}{colour of the connecting line.}
-#' \item{connect.lty}{line type of the connecting line.}
-#' \item{connect.lwd}{line width of the connecting line.}
-#' \item{opacity}{opacity of sample points, with default 1 (opaque).}
+#' @return The object of class \code{biplot} will be appended with a list called \code{samples} containing the following elements:
+#' \item{which}{a vector containing the groups or classes for which the samples (and means) are displayed.}
+#' \item{col}{the colour(s) of the samples.}
+#' \item{pch}{the plotting character(s) of the samples.}
+#' \item{cex}{the character expansion(s) of the plotting character(s) of the samples.}
+#' \item{label}{a logical value indicating whether samples are labelled.}
+#' \item{label.name}{the label names of the samples.}
+#' \item{label.col}{the label colours of the samples.}
+#' \item{label.cex}{the label text expansions of the samples.}
+#' \item{label.side}{the side at which the label of the plotted point appears..}
+#' \item{label.offset}{the offset of the label from the plotted point.}
+#' \item{connected}{a logical value indicating whether samples are connected in order of the rows of the data matrix.}
+#' \item{connect.col}{the colour of the connecting line.}
+#' \item{connect.lty}{the line type of the connecting line.}
+#' \item{connect.lwd}{the line width of the connecting line.}
+#' \item{opacity}{the opacity level of the plotted points.}
 #'
 #' @usage
 #' samples (bp,  which = 1:bp$g, col = ez.col, pch = 16, cex = 1,
@@ -192,42 +186,39 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
 }
 
 # ----------------------------------------------------------------------------------------------
-#' Aesthetics for biplot class / group means
+#' Format aesthetics for the class or group means
 #'
 #' @description
-#' This function allows formatting changes to class means or group means.
+#' This function allows the user to format the aesthetics for the class means or group means.
 #'
 #' @param bp an object of class \code{biplot}.
-#' @param which vector of which means to display, with default \code{bp$g}.
-#' @param col mean colour, with default to sample colour.
-#' @param pch mean plotting character, with default \code{o}.
-#' @param cex mean character expansion, with default \code{1}.
-#' @param label logical, whether means should be labelled or not, with default \code{TRUE}.
-#' @param label.col vector of length g with the colour of the labels, defaulting to the
-#'                  colour of the means.
-#' @param label.cex label text expansion, with default \code{0.75}.
-#' @param label.side side of the plotting character where label appears, with default \code{bottom}. Note that unlike
-#'                   the argument `pos` in `text()`, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
-#' @param label.offset offset of the label from the mean point. See ?text for a detailed explanation of the
-#'                     argument `offset`.
+#' @param which a vector containing the groups or classes for which the means should be displayed, with default \code{bp$g}.
+#' @param col the colour(s) for the means, with default as the colour of the samples.
+#' @param pch the plotting character(s) for the means, with default ■.
+#' @param cex the character expansion(s) for the means, with default \code{1}.
+#' @param label a logical value indicating whether the means should be labelled, with default \code{TRUE}.
+#' @param label.col a vector of the same length as \code{which} with label colours for the means, with default as the colour of the means.
+#' @param label.cex a vector of the same length as \code{which} with label text expansions for the means, with default \code{0.75}.
+#' @param label.side the side at which the label of the plotted mean point appears, with default \code{bottom}. Note that unlike the argument \code{pos} in \code{text()}, options are "\code{bottom}", "\code{left}", "\code{top}", "\code{right}" and not \code{1}, \code{2}, \code{3}, \code{4}.
+#' @param label.offset the offset of the label from the plotted mean point. See \code{?text} for a detailed explanation of the argument \code{offset}.
 #' @param opacity transparency of means.
-#' @param shade.darker automatically makes the colour of the means a darker shade than the default (or specified) colour
+#' @param shade.darker a logical value indicating whether the colour of the mean points should be made a shade darker than the default or specified colour, with default \code{TRUE}.
 #' 
 #' @details
 #' The number of classes or groups (defined by group.aes) is indicated as \code{g}. If an argument is not of length \code{g},
 #' recycling is used.
 #'
-#' @return A list with the following components is available:
-#' \item{which}{which means to display.}
-#' \item{col}{colour of the means.}
-#' \item{pch}{plotting character of the means.}
-#' \item{cex}{expansion of the plotting character of the means.}
-#' \item{label}{logical, whether means should be labelled.}
-#' \item{label.col}{colour of the label.}
-#' \item{label.cex}{expansion of the label.}
-#' \item{label.side}{side at which to plot the label of means.}
-#' \item{label.offset}{offset of the label from the mean point.}
-#' \item{opacity}{transparency of means}
+#' @return The object of class \code{biplot} will be appended with a list called \code{means} containing the following elements:
+#' \item{which}{a vector containing the groups or classes for which the means are displayed.}
+#' \item{col}{the colour(s) of the means.}
+#' \item{pch}{the plotting character(s) of the means.}
+#' \item{cex}{the character expansion(s) of the plotting character(s) of the means.}
+#' \item{label}{a logical value indicating whether means are labelled.}
+#' \item{label.col}{the label colours of the means.}
+#' \item{label.cex}{the label text expansions of the samples.}
+#' \item{label.side}{the side at which the label of the plotted mean point appears.}
+#' \item{label.offset}{the offset of the label from the plotted mean point.}
+#' \item{opacity}{the opacity level of the plotted points.}
 #'
 #' @usage
 #' means (bp,  which = NULL, col = NULL, pch = 15, cex = 1, label = FALSE,
@@ -309,10 +300,10 @@ means <- function (bp,  which = NULL, col = NULL,
 }
 
 # ----------------------------------------------------------------------------------------------
-#' Aesthetics for biplot axes
+#' Format aesthetics for the biplot axes
 #'
 #' @description
-#' This function allows formatting changes to axes.
+#' This function allows the user to format the aesthetics for the biplot axes.
 #'
 #'
 #' @param bp an object of class \code{biplot}.
