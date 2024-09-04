@@ -49,9 +49,6 @@ An object of class PCA with the following elements:
 \item{e.vects}{the vector indicating which principal components are plotted in the biplot.}
 \item{Vr}{the \code{1:dim.biplot} columns of \eqn{\mathbf{V}}.}
 \item{dim.biplot}{the dimension of the biplot.}
-\item{V.mat}{the matrix containing the right singular vectors of \eqn{\mathbf{X}}.}
-\item{Sigma.mat}{the matrix with the singular values of \eqn{\mathbf{X}} on the diagonal.}
-\item{U.mat}{the matrix containing the left singular vectors of \eqn{\mathbf{X}}.}
 \item{class.means}{a logical value indicating whether group means are plotted in the biplot.}
 \item{Zmeans}{the matrix of class mean coordinates that are plotted in the biplot.}
 }
