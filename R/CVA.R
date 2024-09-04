@@ -456,6 +456,8 @@ AoD.biplot <- function (bp, classes=bp$classes, dist.func=NULL, dist.func.cat=NU
   bp$class.means <- show.class.means
   bp$dim.biplot <- dim.biplot
   
+  class(bp) <- append(class(bp),"CVA")
+  class(bp) <- append(class(bp),"AoD")
   bp
   
 }

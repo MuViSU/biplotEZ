@@ -83,6 +83,8 @@ regress.biplot <- function (bp, Z, group.aes=NULL, show.group.means = TRUE,
     bp$Zmeans <- Zmeans
   }
   
+  class(bp) <- append(class(bp),"PCA")
+  class(bp) <- append(class(bp),"regress")
   bp
 }
 

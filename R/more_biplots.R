@@ -94,6 +94,8 @@ classification.biplot <- function (bp, Pmat, dim.biplot = c(2, 1, 3), e.vects = 
   bp$e.vects <- e.vects
   bp$dim.biplot <- dim.biplot
 
+  class(bp) <- append(class(bp),"CVA")
+  class(bp) <- append(class(bp),"classify")
   bp
 }
 
