@@ -57,3 +57,6 @@ recycling is used.
 biplot(iris[,1:4]) |> PCA() |>
           means(col = "purple", pch = 15, cex = 2) |> plot()
 }
+\seealso{
+\code{\link[=biplot]{biplot()}}
+}

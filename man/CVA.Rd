@@ -69,3 +69,6 @@ biplot(iris[,1:4]) |> CVA(classes=iris[,5])
 biplot(iris[,1:4]) |> CVA(classes=iris[,5]) |> plot()
 
 }
+\seealso{
+\code{\link[=biplot]{biplot()}}
+}
