@@ -48,6 +48,8 @@
 #' \item{dim.biplot}{the dimension of the biplot.}
 #' \item{low.dim}{the method used to construct additional dimension(s).}
 #'
+#' @seealso [biplot()]
+#'
 #' @usage CVA(bp, classes=bp$classes, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 #'            weightedCVA = "weighted", show.class.means = TRUE,
 #'            low.dim = "sample.opt")
