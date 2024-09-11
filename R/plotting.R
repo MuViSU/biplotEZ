@@ -73,7 +73,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
   ggrepel.new <- ggrepel.means <- ggrepel.samples <- NULL
   if (do.ggrepel)
   {
-    out <- .get.ggrepel.coords(df)
+    out <- R.devices::suppressGraphics(.get.ggrepel.coords(df))
     if (n.newsamples>n.means) ggrepel.new <-list(coords = out$coords[out$visible>n.newsamples & out$visible<n.means+1,,drop=F],
                                                  visible = out$visible[out$visible>n.newsamples & out$visible<n.means+1]-n.means,
                                                  textlines = out$textlines[out$textlines>n.newsamples & out$textlines<n.means+1]-n.means)
@@ -107,7 +107,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
       if(is.null(xlim) & is.null(ylim)){
         xlim <- range(Z[, 1] * exp.factor)
         ylim <- range(Z[, 2] * exp.factor)
-    }
+      }
       
       # Start with empty plot
       plot(Z[, 1] * exp.factor, Z[, 2] * exp.factor, xlim = xlim, ylim = ylim,
@@ -131,7 +131,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
         }}
       
       # Density
-      if(!is.null(x$z.density)) .density.plot(x$z.density, x$density.style)
+      if(!is.null(x$z.density)) .density.plot(x$z.density, x$density.style,usr=usr)
       
       # Axes 
       # If x does not inherit object of class "CA" then and axes() is not called, create default aesthetics for axes. 

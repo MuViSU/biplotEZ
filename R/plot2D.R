@@ -647,12 +647,15 @@
 #' @param density.style 
 #'
 #' @noRd
-.density.plot <- function(Z.density, density.style) 
+.density.plot <- function(Z.density, density.style,usr=usr) 
 {
+  print(usr)
   levels.rect <- pretty(range(Z.density$z), n = density.style$cuts)
   col.use <- colorRampPalette(density.style$col)
   col.use <- col.use(length(levels.rect) - 1)
-  graphics::image(Z.density, breaks = levels.rect, col = col.use, add = TRUE)
+  graphics::image(Z.density, breaks = levels.rect, col = col.use, add = TRUE,
+                  xlim=c(usr[1],usr[2])*0.2,ylim=c(usr[3],usr[4])*0.2)
+  
   if (density.style$contours) 
     graphics::contour(Z.density, levels = levels.rect, col = density.style$contour.col, add = TRUE)
   list(levels.rect, col.use)
@@ -661,11 +664,11 @@
 
 #' Plot spline based axes on biplots
 #'
-#' @param j 
-#' @param X 
-#' @param Ytilde 
-#' @param means 
-#' @param sd 
+#' @param j Index of the axis to be calibrated in the data
+#' @param X Coordinates of the samples on the biplot space
+#' @param Ytilde Raw data used to construct the biplot
+#' @param means column means of the raw data
+#' @param sd Column standard deviations of the data
 #' @param n.int 
 #' @param spline.control 
 #' @param dmeth 
@@ -673,10 +676,9 @@
 #' 
 #' @useDynLib biplotEZ, .registration = TRUE
 #'
-#' @export
-#'
 #' @noRd
-biplot.spline.axis <- function(j, X, Ytilde, means, sd, n.int, spline.control, dmeth=0, ... )
+biplot.spline.axis <- function(j, X, Ytilde, means, sd, 
+                               n.int, spline.control, dmeth=0, ... )
 {
   n <- nrow(X)
   p <- ncol(X)
