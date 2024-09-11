@@ -2,7 +2,7 @@
 % Please edit documentation in R/aesthetics.R
 \name{axes}
 \alias{axes}
-\title{Aesthetics for biplot axes}
+\title{Format aesthetics for the biplot axes}
 \usage{
 axes(bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), lwd = 1, lty = 1,
 label.dir = "Orthog", label.col = col, label.cex = 0.75, label.line = 0.1, 
@@ -101,7 +101,7 @@ A list with the following components is available:
 \item{calibrated.axis}{whether to plot calibrated axis}
 }
 \description{
-This function allows formatting changes to axes.
+This function allows the user to format the aesthetics for the biplot axes.
 }
 \examples{
 biplot(iris[,1:4]) |> PCA() |> axes(col="purple") |> plot()

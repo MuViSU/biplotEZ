@@ -25,26 +25,26 @@ opacity = 1, shade.darker = TRUE)
 
 \item{label.cex}{a vector of the same length as \code{which} with label text expansions for the means, with default \code{0.75}.}
 
-\item{label.side}{the side at which the label of the plotted point appears, with default \code{bottom}. Note that unlike the argument \code{pos} in \code{text()}, options are "\code{bottom}", "\code{left}", "\code{top}", "\code{right}" and not \code{1}, \code{2}, \code{3}, \code{4}.}
+\item{label.side}{the side at which the label of the plotted mean point appears, with default \code{bottom}. Note that unlike the argument \code{pos} in \code{text()}, options are "\code{bottom}", "\code{left}", "\code{top}", "\code{right}" and not \code{1}, \code{2}, \code{3}, \code{4}.}
 
-\item{label.offset}{the offset of the label from the plotted point. See \code{?text} for a detailed explanation of the argument \code{offset}.}
+\item{label.offset}{the offset of the label from the plotted mean point. See \code{?text} for a detailed explanation of the argument \code{offset}.}
 
 \item{opacity}{transparency of means.}
 
-\item{shade.darker}{automatically makes the colour of the means a darker shade than the default (or specified) colour}
+\item{shade.darker}{a logical value indicating whether the colour of the mean points should be made a shade darker than the default or specified colour, with default \code{TRUE}.}
 }
 \value{
-A list with the following components is available:
-\item{which}{which means to display.}
-\item{col}{colour of the means.}
-\item{pch}{plotting character of the means.}
-\item{cex}{expansion of the plotting character of the means.}
-\item{label}{logical, whether means should be labelled.}
-\item{label.col}{colour of the label.}
-\item{label.cex}{expansion of the label.}
-\item{label.side}{side at which to plot the label of means.}
-\item{label.offset}{offset of the label from the mean point.}
-\item{opacity}{transparency of means}
+The object of class \code{biplot} will be appended with a list called \code{means} containing the following elements:
+\item{which}{a vector containing the groups or classes for which the means are displayed.}
+\item{col}{the colour(s) of the means.}
+\item{pch}{the plotting character(s) of the means.}
+\item{cex}{the character expansion(s) of the plotting character(s) of the means.}
+\item{label}{a logical value indicating whether means are labelled.}
+\item{label.col}{the label colours of the means.}
+\item{label.cex}{the label text expansions of the samples.}
+\item{label.side}{the side at which the label of the plotted mean point appears.}
+\item{label.offset}{the offset of the label from the plotted mean point.}
+\item{opacity}{the opacity level of the plotted points.}
 }
 \description{
 This function allows the user to format the aesthetics for the class means or group means.
