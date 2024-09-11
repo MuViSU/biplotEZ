@@ -14,91 +14,80 @@ orthogx = 0, orthogy = 0, vectors = FALSE, unit.circle=FALSE)
 \arguments{
 \item{bp}{an object of class \code{biplot}.}
 
-\item{X.names}{refers to the column names of \code{bp} to specify which axes to label.}
+\item{X.names}{a vector of column names of \code{bp} to specify which axes should be labelled.}
 
-\item{which}{integer-valued vector specifying which biplot axes are shown
-in a biplot. By default all p biplot axes are shown.}
+\item{which}{a vector containing the columns or variables for which the axes should be displayed, with default \code{1:p}.}
 
-\item{col}{vector of size p specifying colours of labels of biplot axes. The default is \code{grey(0.7)}.}
+\item{col}{the colour(s) for the axes, with default \code{grey(0.7)}. Alternatively, provide a vector of colours corresponding to \code{X.names}.}
 
-\item{lwd}{axis line width, with default \code{1}.}
+\item{lwd}{the line width(s) for the axes, with default \code{1}.}
 
-\item{lty}{axis line type, with default \code{1}.}
+\item{lty}{the line type(s) for the axes, with default \code{1}.}
 
-\item{label.dir}{One of "Orthog" (default), "Hor" or "Paral" specifying titles of
-axes to appear orthogonal to the side of the figure; always
-horizontally or always parallel to the side of the figure.}
+\item{label.dir}{a character string indicating the placement of the axis titles to the side of the figure. One of "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure (default) , "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure.}
 
-\item{label.col}{axis label colour, with default, \code{col}.}
+\item{label.col}{the colour(s) for the axis labels, with default, \code{col}.}
 
-\item{label.cex}{axis label expansion, with default \code{0.75}.}
+\item{label.cex}{the label expansion for the axis labels, with default \code{0.75}.}
 
-\item{label.line}{axis label written on which margin line, with default \code{0.1}.}
+\item{label.line}{the distance of the axis title from the side of the figure, with default \code{0.1}.}
 
-\item{label.offset}{A four-component numeric vector controlling the distance a
-biplot axis title is printed from the side of the figure. Sides are
-numbered 1 to 4 according to R conventions clockwise starting
-from the bottom horizontal side. Default is rep(0,4)}
+\item{label.offset}{a four-component numeric vector controlling the distances axis titles are displayed from the side of the figure, with default \code{rep(0,4)}. Sides are numbered \code{1} to \code{4} according to \code{R} conventions.}
 
-\item{ticks}{integer-valued vector of size equal to the number of biplot axes
-to control the number of tickmarks on each individual biplot
-axis. Default is 5 for each axis.}
+\item{ticks}{an integer-valued vector indicating the number of tickmarks for each axis, with default \code{5} for each axis.}
 
-\item{tick.col}{tick mark colour, with default \code{col}.}
+\item{tick.col}{the colour(s) for the tick marks, with default \code{col}.}
 
-\item{tick.size}{positive integer-valued vector with specifying tick mark sizes, with default \code{1}.}
+\item{tick.size}{a vector specifying the sizes of tick marks for each axis, with default \code{1} for each .}
 
-\item{tick.label}{logical, whether axes should be labelled or not, with default \code{TRUE}.}
+\item{tick.label}{a logical value indicating whether the axes should be labelled, with default \code{TRUE}.}
 
-\item{tick.label.side}{character vector specifying position of the tick label "below" or "above" the axis.}
+\item{tick.label.side}{a character string indicating the position of the tick label. One of "\code{below}" for the label to appear below the tick mark (default) or "\code{above}" for the label to appear above the tick mark.}
 
-\item{tick.label.col}{tick mark label colour, with default \code{tick.col}.}
+\item{tick.label.col}{the colour(s) for the tick mark labels, with default \code{tick.col}.}
 
-\item{tick.label.cex}{tick mark label expansion, with default \code{0.6}.}
+\item{tick.label.cex}{the label expansion for the tick mark labels, with default \code{0.6}.}
 
-\item{predict.col}{predicted samples colour, with default \code{col}.}
+\item{predict.col}{the colour(s) for the predicted samples, with default \code{col}.}
 
-\item{predict.lwd}{predicted samples line width, with default \code{lwd}.}
+\item{predict.lwd}{the line width(s) for the predicted samples, with default \code{lwd}.}
 
-\item{predict.lty}{predicted samples line type, with default \code{lty}.}
+\item{predict.lty}{the line type(s) for the predicted samples, with default \code{lty}.}
 
-\item{ax.names}{vector of size \code{p} containing user defined names for the variables.}
+\item{ax.names}{a vector of size \code{p} containing user defined titles for the axes.}
 
-\item{orthogx}{numeric vector of size p specifying the x-coordinate of the parallel transformation of each axis.
-Defaults to zero for each axis. Only used when the dimension of the biplot is two.}
+\item{orthogx}{a numeric vector of size \code{p} specifying the x-coordinate of the parallel transformation of each axis, with default \code{0} for each axis. This is only used when \code{dim.biplot = 2}.}
 
-\item{orthogy}{numeric vector of size p specifying the y-coordinate of the parallel transformation of each axis.
-Defaults to zero for each axis. Only used when the dimension of the biplot is two.}
+\item{orthogy}{a numeric vector of size \code{p} specifying the y-coordinate of the parallel transformation of each axis, with default \code{0} for each axis. This is only used when \code{dim.biplot = 2}.}
 
-\item{vectors}{logical, whether vector representation should be displayed on the biplot. The argument is only
-relevant for PCA biplots.}
+\item{vectors}{a logical value indicating whether vector representation (calibrated axes) should be displayed on the biplot. This is only used when a PCA biplot is produced.}
 
-\item{unit.circle}{logical, whether a unit circle should be displayed on the biplot}
+\item{unit.circle}{a logical value indicating whether a unit circle should be displayed on the biplot.}
 }
 \value{
-A list with the following components is available:
-\item{which}{vector of the columns displayed as axes.}
-\item{col}{vector of axis colours.}
-\item{lwd}{vector of axis line widths.}
-\item{lty}{vector of axis line types.}
-\item{label.dir}{direction of the axis labels.}
-\item{label.col}{vector of axis label colours.}
-\item{label.cex}{vector of axis labels expansions.}
-\item{label.line}{vector of axis label margin lines from axes.}
-\item{ticks}{vector representing the number of tick marks per axis.}
-\item{tick.col}{vector of tick mark colours.}
-\item{tick.size}{vector of tick mark sizes.}
-\item{tick.label}{vector of logical values indicating whether axes are labelled.}
-\item{tick.label.side}{vector specifying position of the tick label "below" or "above" the axis.}
-\item{tick.label.col}{vector of tick mark label colours.}
-\item{tick.label.cex}{vector of tick mark label expansions.}
-\item{predict.col}{vector of colours for the predicted samples.}
-\item{predict.lty}{vector of line types for the predicted samples.}
-\item{predict.lwd}{vector of line widths for the predicted samples.}
-\item{names}{vector of variable names defined by the user.}
-\item{orthogx}{vector of the horisontal translations for each axis.}
-\item{orthogy}{vector of the vertical translations for each axis.}
-\item{calibrated.axis}{whether to plot calibrated axis}
+The object of class \code{biplot} will be appended with a list called \code{axes} containing the following elements:
+\item{which}{a vector containing the columns for which the axes are displayed.}
+\item{col}{the colour(s) of the axes.}
+\item{lwd}{the line width(s) of the axes.}
+\item{lty}{the line type(s) of the axes.}
+\item{label.dir}{the placement of the axis titles to the side of the figure.}
+\item{label.col}{the colour(s) of the axis titles.}
+\item{label.cex}{the label expansion(s) of the axis titles.}
+\item{label.line}{the distance(s) of the axis titles from the side of the figure.}
+\item{ticks}{the number of tick marks per axis.}
+\item{tick.col}{the colour(s) of the tick marks.}
+\item{tick.size}{the size(s) of the tick marks.}
+\item{tick.label}{logical value(s) indicating whether axes are labelled.}
+\item{tick.label.side}{the position of the tick mark labels.}
+\item{tick.label.col}{the colour(s) of the tick mark labels.}
+\item{tick.label.cex}{the expansion(s) of the tick mark labels.}
+\item{predict.col}{the colour(s) of the predicted samples.}
+\item{predict.lty}{the line type(s) of the predicted samples.}
+\item{predict.lwd}{the line width(s) of the predicted samples.}
+\item{names}{the user defined axis titles.}
+\item{orthogx}{the horizontal translations for each axis.}
+\item{orthogy}{the vertical translations for each axis.}
+\item{vectors}{a logical value indicating whether calibrated axes are plotted.}
 }
 \description{
 This function allows the user to format the aesthetics for the biplot axes.
@@ -107,4 +96,7 @@ This function allows the user to format the aesthetics for the biplot axes.
 biplot(iris[,1:4]) |> PCA() |> axes(col="purple") |> plot()
 biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> axes() |> plot()
 
+}
+\seealso{
+\code{\link[=biplot]{biplot()}}
 }

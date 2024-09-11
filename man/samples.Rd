@@ -83,3 +83,6 @@ biplot(iris[,1:4]) |> PCA() |>
   samples(col="purple",pch=NA, opacity=0.5, label = "ggrepel") |> plot()
 
 }
+\seealso{
+\code{\link[=biplot]{biplot()}}
+}

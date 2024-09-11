@@ -2,27 +2,27 @@
 % Please edit documentation in R/aesthetics.R
 \name{CLPs}
 \alias{CLPs}
-\title{Aesthetics for category level points}
+\title{Format aesthetics for the category level points}
 \usage{
 CLPs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot}.}
 
-\item{which}{vector of which variables' CLPs to display, with default \code{ncol(Xcat)}.}
+\item{which}{a vector containing the columns or variables for which the CLPs should be displayed, with default \code{ncol(Xcat)}.}
 
-\item{col}{list of CLP colours, with default \code{black}.}
+\item{col}{the colour(s) for the CLPs, with default \code{black}.}
 
-\item{cex}{list of CLP character expansions, with default \code{0.6}.}
+\item{cex}{the character expansion(s) for the CLPs, with default \code{0.6}.}
 }
 \value{
-A list with the following components is available:
-\item{which}{which variables' CLPs to display.}
-\item{col}{colour of the CLPs.}
-\item{cex}{expansion of the plotting character of the CLPs.}
+The object of class \code{biplot} will be appended with a list called \code{CLP.aes} containing the following elements  A list with the following components is available:
+\item{which}{a vector containing the columns or variables for which the CLPs are displayed.}
+\item{col}{the colour(s) of the CLPs.}
+\item{cex}{the character expansion(s) of the plotting characters of the CLPs.}
 }
 \description{
-This function allows formatting changes to CLPs.
+This function allows the user to format the aesthetics for the category level points (CLPs).
 }
 \examples{
 mtdf <- as.data.frame(mtcars)
@@ -36,4 +36,7 @@ CLPs(col = list(rep("olivedrab",3), rep("orange",2),
                 rep("coral",2), rep("brown",3))) |> 
 plot()
 
+}
+\seealso{
+\code{\link[=biplot]{biplot()}}
 }
