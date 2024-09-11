@@ -307,12 +307,11 @@ means <- function (bp,  which = NULL, col = NULL,
 #'
 #'
 #' @param bp an object of class \code{biplot}.
-#' @param X.names refers to the column names of \code{bp} to specify which axes to label.
-#' @param which  integer-valued vector specifying which biplot axes are shown
-#' in a biplot. By default all p biplot axes are shown.
-#' @param col vector of size p specifying colours of labels of biplot axes. The default is \code{grey(0.7)}.
-#' @param lwd axis line width, with default \code{1}.
-#' @param lty axis line type, with default \code{1}.
+#' @param X.names a vector of column names of \code{bp} to specify which axes should be labeled.
+#' @param which  a vector containing the variables for which the axes should be displayed, with default \code{1:p}.
+#' @param col the colour(s) for the axes, with default \code{grey(0.7)}. Alternatively, provide a vector of colours corresponding to \code{X.names}.
+#' @param lwd the line width for the axes, with default \code{1}.
+#' @param lty the line type for the axes, with default \code{1}.
 #' @param label.dir One of "Orthog" (default), "Hor" or "Paral" specifying titles of
 #' axes to appear orthogonal to the side of the figure; always
 #' horizontally or always parallel to the side of the figure.
@@ -366,7 +365,7 @@ means <- function (bp,  which = NULL, col = NULL,
 #' \item{names}{vector of variable names defined by the user.}
 #' \item{orthogx}{vector of the horisontal translations for each axis.}
 #' \item{orthogy}{vector of the vertical translations for each axis.}
-#' \item{calibrated.axis}{whether to plot calibrated axis}
+#' \item{calibrated.axis}{whether to plot calibrated axis} #replace with vectors 
 #'
 #' @usage
 #' axes(bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), lwd = 1, lty = 1,
