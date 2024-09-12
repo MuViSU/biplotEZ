@@ -25,6 +25,8 @@
 #' \item{qual}{Quality of the approximation.}
 #' \item{lambda.val}{The computed lambda value if lambda-scaling is requested.}
 #'
+#' @seealso [biplot()]
+#'
 #' @usage CA(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant = "Princ", 
 #' lambda.scal = FALSE)
 #' @aliases CA
