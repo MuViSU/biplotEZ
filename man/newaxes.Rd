@@ -2,7 +2,7 @@
 % Please edit documentation in R/aesthetics.R
 \name{newaxes}
 \alias{newaxes}
-\title{Aesthetics for supplementary (new) biplot axes}
+\title{Format aesthetics for the supplementary (new) biplot axes}
 \usage{
 newaxes(bp, X.new.names=bp$var.names, which = 1:bp$num.vars, col = "orange", lwd = 1, 
 lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75, label.line = 0.1, 
@@ -11,11 +11,11 @@ tick.label.cex = 0.6, tick.label.side = "below", predict.col = col, predict.lwd 
 predict.lty = lty, ax.names = X.new.names, orthogx = 0, orthogy = 0)
 }
 \arguments{
-\item{bp}{object of class \code{biplot}}
+\item{bp}{an object of class \code{biplot}.}
 
-\item{X.new.names}{refers to the new column names of \code{bp} to specify which axes to label.}
+\item{X.new.names}{a vector of the new column names of \code{bp} to specify which axes should be labelled.}
 
-\item{which}{vector of new columns to be displayed in the biplot.}
+\item{which}{a vector containing the new columns or variables for which the axes should be displayed, with default \code{1:num.vars}.}
 
 \item{col}{the colour(s) for the axes, with default \code{grey(0.7)}. Alternatively, provide a vector of colours corresponding to \code{X.names}.}
 
@@ -58,12 +58,15 @@ predict.lty = lty, ax.names = X.new.names, orthogx = 0, orthogy = 0)
 \item{orthogy}{a numeric vector of size \code{p} specifying the y-coordinate of the parallel transformation of each axis, with default \code{0} for each axis. This is only used when \code{dim.biplot = 2}.}
 }
 \value{
-an object of class \code{biplot}
+The object of class \code{biplot} will be appended with a list called \code{newaxes} containing elements similar to that of \code{axes}.
 }
 \description{
-Aesthetics for supplementary (new) biplot axes
+This function allows the user to format the aesthetics for the supplementary (new) biplot axes.
 }
 \examples{
 biplot(data = iris[,1:2]) |> PCA() |> interpolate(newvariable = iris[3:4]) |> 
   newaxes(col="gold") |> plot()
+}
+\seealso{
+\code{\link{biplot}}, \code{\link{axes}}
 }

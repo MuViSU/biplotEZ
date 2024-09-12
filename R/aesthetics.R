@@ -600,7 +600,7 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' \item{col}{the colour(s) of the CLPs.}
 #' \item{cex}{the character expansion(s) of the plotting characters of the CLPs.}
 #'
-#' @seealso [biplot()]
+#' @seealso \code{\link{biplot}}, \code{\link{CA}}, \code{\link{AoD}}
 #' 
 #' @usage
 #' CLPs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
@@ -656,42 +656,41 @@ CLPs <- function (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
   bp
 }
 # ----------------------------------------------------------------------------------------------
-#' Aesthetics for supplementary (new) biplot samples
+#' Format aesthetics for the supplementary (new) biplot samples
 #'
 #' @description
 #' This function allows formatting changes to new samples.
 #'
 #' @param bp an object of class \code{biplot}.
-#' @param col new sample colour, with default \code{darkorange1}.
-#' @param pch new sample plotting character, with default \code{o}.
-#' @param cex new sample character expansion, with default \code{1}.
-#' @param label logical, whether samples should be labelled or not, with default \code{FALSE}.
-#' @param label.name names for the new samples
-#' @param label.col vector of length number of new samples with the colour of the labels, defaulting to the
-#'                  colour of the sample points.
-#' @param label.cex label text expansion, with default \code{0.75}.
-#' @param label.side side of the plotting character where label appears, with default \code{bottom}. Note that unlike
-#'                   the argument `pos` in `text()`, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
-#' @param label.offset offset of the label from the data point. See ?text for a detailed explanation of the
-#'                     argument `offset`.
-#' @param connected logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.
-#' @param connect.col colour of the connecting line, with default \code{black}.
-#' @param connect.lty line type of the connecting line, with default \code{1}.
-#' @param connect.lwd line width of the connecting line, with default \code{1}.
+#' @param col the colour(s) for the new samples, with default \code{darkorange1}.
+#' @param pch the plotting character(s) for the new samples, with default ○.
+#' @param cex the character expansion(s) for the new samples, with default \code{1}.
+#' @param label a logical value indicating whether new samples should be labelled or not, with default \code{FALSE}.
+#' @param label.name the label names for the new samples.
+#' @param label.col a vector of the same length as the number of new samples containing the colour(s) for the labels of the new samples, with default the colour of the sample points.
+#' @param label.cex the label text expansion(s) for the new samples, with default \code{0.75}.
+#' @param label.side the side at which the label of the plotted point appears, with default \code{bottom}. Note that unlike the argument \code{pos} in \code{text()}, options are "\code{bottom}", "\code{left}", "\code{top}","\code{right}" and not \code{1}, \code{2}, \code{3}, \code{4}.
+#' @param label.offset the offset of the label from the plotted point. See \code{?text} for a detailed explanation of the argument \code{offset}. 
+#' @param connected a logical value indicating whether samples are connected in order of rows of the data matrix, with default \code{FALSE}.
+#' @param connect.col the colour of the connecting line, with default \code{black}.
+#' @param connect.lty the line type of the connecting line, with default \code{1}.
+#' @param connect.lwd the line width of the connecting line, with default \code{1}.
 #'
-#' @return A list with the following components is available:
-#' \item{col}{colour of the samples.}
-#' \item{pch}{plotting character of the samples.}
-#' \item{cex}{expansion of the plotting character of the samples.}
-#' \item{label}{TRUE or FALSE, whether samples should be labelled.}
-#' \item{label.col}{colour of the label.}
-#' \item{label.cex}{expansion of the label.}
-#' \item{label.side}{side at which to plot the label of samples.}
-#' \item{label.offset}{offset of the label from the data point.}
-#' \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X.}
-#' \item{connect.col}{colour of the connecting line.}
-#' \item{connect.lty}{line type of the connecting line.}
-#' \item{connect.lwd}{line width of the connecting line.}
+#' @return The object of class \code{biplot} will be appended with a list called \code{newsamples} containing the following elements:
+#' \item{col}{the colour(s) of the new samples.}
+#' \item{pch}{the plotting character(s) of the new samples.}
+#' \item{cex}{the character expansion(s) of the plotting character(s) of the new samples.}
+#' \item{label}{a logical value indicating whether new samples are labelled.}
+#' \item{label.col}{the label colours of the new samples.}
+#' \item{label.cex}{the label text expansions of the new samples.}
+#' \item{label.side}{the side at which the label of the plotted point appears.}
+#' \item{label.offset}{the offset of the label from the plotted point.}
+#' \item{connected}{a logical value indicating whether new samples are connected.}
+#' \item{connect.col}{the colour of the connecting line.}
+#' \item{connect.lty}{the line type of the connecting line.}
+#' \item{connect.lwd}{the line width of the connecting line.}
+#'
+#' @seealso \link{biplot}, \link{samples}
 #'
 #' @usage
 #' newsamples (bp,  col = "darkorange1", pch = 1, cex = 1, label = FALSE,
@@ -759,15 +758,20 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
 }
 
 
-#' Aesthetics for supplementary (new) biplot axes
+#' Format aesthetics for the supplementary (new) biplot axes
+#' 
+#' @description 
+#' This function allows the user to format the aesthetics for the supplementary (new) biplot axes.
 #'
-#' @param bp object of class `biplot`
-#' @param X.new.names refers to the new column names of \code{bp} to specify which axes to label.
-#' @param which vector of new columns to be displayed in the biplot.
+#' @param bp an object of class \code{biplot}.
+#' @param X.new.names a vector of the new column names of \code{bp} to specify which axes should be labelled.
+#' @param which a vector containing the new columns or variables for which the axes should be displayed, with default \code{1:num.vars}.
 #' @inheritParams axes
 #'
-#' @return an object of class `biplot`
+#' @return The object of class \code{biplot} will be appended with a list called \code{newaxes} containing elements similar to that of \code{axes}.
 #' @export
+#'
+#' @seealso \code{\link{biplot}}, \code{\link{axes}}
 #'
 #' @usage
 #' newaxes(bp, X.new.names=bp$var.names, which = 1:bp$num.vars, col = "orange", lwd = 1, 

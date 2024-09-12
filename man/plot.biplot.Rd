@@ -18,27 +18,17 @@
 \arguments{
 \item{x}{An object of class \code{biplot}.}
 
-\item{exp.factor}{numeric value with default axes of the biplot. Larger values for zooming out and
-smaller values for zooming in with respect to sample points
-in the biplot display.}
+\item{exp.factor}{a numeric value with default axes of the biplot. Larger values are specified for zooming out with respect to sample points in the biplot display and smaller values are specified for zooming in with respect to sample points in the biplot display.}
 
-\item{axis.predictivity}{either logical or a numeric value between 0 and 1.
-If it is a numeric value, this value is used as threshold so that
-only axes with axis predictivity larger than the threshold is displayed.
-If \code{axis.predictivity = TRUE}, the axis color is 'diluted' in
-proportion with the axis predictivity.}
+\item{axis.predictivity}{either a logical or a numeric value between \code{0} and \code{1}. If it is a numeric value, this value is used as threshold so that only axes with axis predictivity larger than the threshold is displayed. If \code{axis.predictivity = TRUE}, the axis colour is 'diluted' in proportion with the axis predictivity.}
 
-\item{sample.predictivity}{either a logical or a numeric value between 0 and 1.
-If it is a numeric value, this value is used as threshold so that
-only samples with sample predictivity larger than the threshold is displayed.
-if \code{sample.predictivity = TRUE}, the sample size is shrinked in
-proportion with the sample predictivity.}
+\item{sample.predictivity}{either a logical or a numeric value between 0 and 1. If it is a numeric value, this value is used as threshold so that only samples with sample predictivity larger than the threshold is displayed. If \code{sample.predictivity = TRUE}, the sample size is shrinked in proportion with the sample predictivity.}
 
-\item{zoom}{logical, allowing the user to select an area to zoom into}
+\item{zoom}{a logical value allowing the user to select an area to zoom into.}
 
-\item{xlim}{horisontal limits of the plot}
+\item{xlim}{the horizontal limits of the plot.}
 
-\item{ylim}{vertical limits of the plot}
+\item{ylim}{the vertical limits of the plot.}
 
 \item{...}{additional arguments.}
 }
