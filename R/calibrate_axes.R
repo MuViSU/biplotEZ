@@ -1,10 +1,10 @@
-#' Calibrate spline axes for the biplot display
+#' Calibrate Biplot Axes
 #' 
 #' Convenience function to obtain the coordinates of the calibrated ticks marks on the biplot
 #' 
-#' @param x an object of class `biplot'
+#' @param x an object of class \code{biplot}
 #'
-#' @return A ordered list containing the coordinates of tick marks to plotted on the biplot
+#' @return A ordered list containing the coordinates the of tick marks to plotted on the biplot
 #' @export
 #'
 #' @examples

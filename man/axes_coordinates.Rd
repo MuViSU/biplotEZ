@@ -2,15 +2,15 @@
 % Please edit documentation in R/calibrate_axes.R
 \name{axes_coordinates}
 \alias{axes_coordinates}
-\title{Calibrate spline axes for the biplot display}
+\title{Calibrate Biplot Axes}
 \usage{
 axes_coordinates(x)
 }
 \arguments{
-\item{x}{an object of class `biplot'}
+\item{x}{an object of class \code{biplot}}
 }
 \value{
-A ordered list containing the coordinates of tick marks to plotted on the biplot
+A ordered list containing the coordinates the of tick marks to plotted on the biplot
 }
 \description{
 Convenience function to obtain the coordinates of the calibrated ticks marks on the biplot
