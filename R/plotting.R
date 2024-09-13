@@ -131,7 +131,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
         }}
       
       # Density
-      if(!is.null(x$z.density)) .density.plot(x$z.density, x$density.style,usr=usr)
+      if(!is.null(x$z.density)) .density.plot(x$z.density, x$density.style)
       
       # Axes 
       # If x does not inherit object of class "CA" then and axes() is not called, create default aesthetics for axes. 
@@ -314,11 +314,10 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
 #'
 #' @return an object of class \code{biplot}
 #' 
-#' @export
+#' @noRd
 #'
 #' @examples
 #' biplot(data = iris) |> PCA(dim.biplot = 3) |> plot3D()
-
 plot3D <- function(bp,
                     exp.factor = 1.2,...)
 {

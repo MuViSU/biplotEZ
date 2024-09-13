@@ -647,14 +647,13 @@
 #' @param density.style 
 #'
 #' @noRd
-.density.plot <- function(Z.density, density.style,usr=usr) 
+.density.plot <- function(Z.density, density.style) 
 {
-  print(usr)
+  
   levels.rect <- pretty(range(Z.density$z), n = density.style$cuts)
   col.use <- colorRampPalette(density.style$col)
   col.use <- col.use(length(levels.rect) - 1)
-  graphics::image(Z.density, breaks = levels.rect, col = col.use, add = TRUE,
-                  xlim=c(usr[1],usr[2])*0.2,ylim=c(usr[3],usr[4])*0.2)
+  graphics::image(Z.density, breaks = levels.rect, col = col.use, add = TRUE)
   
   if (density.style$contours) 
     graphics::contour(Z.density, levels = levels.rect, col = density.style$contour.col, add = TRUE)
@@ -662,17 +661,17 @@
 }
 
 
-#' Plot spline based axes on biplots
+#' calibrate spline based axes on biplots
 #'
 #' @param j Index of the axis to be calibrated in the data
 #' @param X Coordinates of the samples on the biplot space
 #' @param Ytilde Raw data used to construct the biplot
 #' @param means column means of the raw data
 #' @param sd Column standard deviations of the data
-#' @param n.int 
-#' @param spline.control 
-#' @param dmeth 
-#' @param ... 
+#' @param n.int the number of tick marks per axis
+#' @param spline.control control variables for optimisation. See biplotEZ:::biplot.spline.axis.control()
+#' @param dmeth Argument unused
+#' @param ... additional arguments
 #' 
 #' @useDynLib biplotEZ, .registration = TRUE
 #'
