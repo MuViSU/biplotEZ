@@ -42,6 +42,8 @@
 #' \item{class.means}{a logical value indicating whether group means are plotted in the biplot.}
 #' \item{Zmeans}{the matrix of class mean coordinates that are plotted in the biplot.}
 #'
+#' @seealso [biplot()]
+#'
 #' @usage PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
 #' group.aes = NULL, show.class.means = FALSE, correlation.biplot = FALSE)
 #' @aliases PCA

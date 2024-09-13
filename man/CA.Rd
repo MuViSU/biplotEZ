@@ -47,3 +47,6 @@ samples(col=c("magenta","purple"), pch=c(15,17), label.col="black") |> plot()
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
 samples(col=c("magenta","purple"), pch=c(15,17), label.col="black") |> plot()
 }
+\seealso{
+\code{\link[=biplot]{biplot()}}
+}

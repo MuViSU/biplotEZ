@@ -38,5 +38,5 @@ plot()
 
 }
 \seealso{
-\code{\link[=biplot]{biplot()}}
+\code{\link{biplot}}, \code{\link{CA}}, \code{\link{AoD}}
 }

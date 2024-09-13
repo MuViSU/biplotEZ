@@ -64,3 +64,6 @@ biplot(data = iris) |> PCA() |> plot()
 \references{
 Gabriel, K.R. (1971) The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.
 }
+\seealso{
+\code{\link[=biplot]{biplot()}}
+}
