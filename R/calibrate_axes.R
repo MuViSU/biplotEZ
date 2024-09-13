@@ -4,7 +4,7 @@
 #' 
 #' @param x an object of class \code{biplot}
 #'
-#' @return A ordered list containing the coordinates the of tick marks to plotted on the biplot
+#' @return An ordered list containing the coordinates the of tick marks to plotted on the biplot
 #' @export
 #'
 #' @examples
