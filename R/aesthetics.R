@@ -7,7 +7,7 @@
 #' @param bp an object of class \code{biplot}.
 #' @param which a vector containing the groups or classes for which the samples should be displayed, with default \code{bp$g}.
 #' @param col the colour(s) for the samples, with default \code{blue}.
-#' @param pch the plotting character(s) for the samples, with default •.
+#' @param pch the plotting character(s) for the samples, with default \code{16}.
 #' @param cex the character expansion(s) for the samples, with default \code{1}.
 #' @param label a logical value indicating whether the samples should be labelled, with default \code{FALSE}. Alternatively, specify \code{"ggrepel"} for non-overlapping placement of labels.
 #' @param label.name a vector of the same length as \code{which} with label names for the samples, with default \code{NULL}. If \code{NULL}, the \code{rownames(bp)} are used. Alternatively, a custom vector of length \code{n} should be used.
@@ -196,7 +196,7 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
 #' @param bp an object of class \code{biplot}.
 #' @param which a vector containing the groups or classes for which the means should be displayed, with default \code{bp$g}.
 #' @param col the colour(s) for the means, with default as the colour of the samples.
-#' @param pch the plotting character(s) for the means, with default ■.
+#' @param pch the plotting character(s) for the means, with default \code{15}.
 #' @param cex the character expansion(s) for the means, with default \code{1}.
 #' @param label a logical value indicating whether the means should be labelled, with default \code{TRUE}.
 #' @param label.col a vector of the same length as \code{which} with label colours for the means, with default as the colour of the means.
@@ -663,7 +663,7 @@ CLPs <- function (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
 #'
 #' @param bp an object of class \code{biplot}.
 #' @param col the colour(s) for the new samples, with default \code{darkorange1}.
-#' @param pch the plotting character(s) for the new samples, with default ○.
+#' @param pch the plotting character(s) for the new samples, with default \code{1}.
 #' @param cex the character expansion(s) for the new samples, with default \code{1}.
 #' @param label a logical value indicating whether new samples should be labelled or not, with default \code{FALSE}.
 #' @param label.name the label names for the new samples.

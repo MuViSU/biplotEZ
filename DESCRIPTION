@@ -17,8 +17,9 @@ Authors@R:
       person("Peter", "Manefeldt", , role="aut",
       comment = c(ORCID = "0000-0002-8604-843X")))
 Description: Provides users with an EZ-to-use platform for representing data
-             with biplots. Currently principal component analysis (PCA) and canonical variate
-             analysis (CVA) biplots are included. This is accompanied by various formatting
+             with biplots. Currently principal component analysis (PCA), canonical variate
+             analysis (CVA) and simple correspondence analysis (CA) biplots are included. 
+             This is accompanied by various formatting
              options for the samples and axes. Alpha-bags and concentration ellipses
              are included for visual enhancements and interpretation. For an extensive
              discussion on the topic, see Gower, J.C., Lubbe, S. and le Roux, N.J.
@@ -38,6 +39,7 @@ Suggests:
     grid,
     knitr,
     MASS,
+    R.devices,
     rgl,
     rmarkdown,
     testthat (>= 3.0.0)

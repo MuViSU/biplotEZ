@@ -17,7 +17,7 @@ connect.lwd = 1, opacity = 1)
 
 \item{col}{the colour(s) for the samples, with default \code{blue}.}
 
-\item{pch}{the plotting character(s) for the samples, with default •.}
+\item{pch}{the plotting character(s) for the samples, with default \code{16}.}
 
 \item{cex}{the character expansion(s) for the samples, with default \code{1}.}
 

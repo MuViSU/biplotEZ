@@ -10,7 +10,7 @@ axes_coordinates(x)
 \item{x}{an object of class \code{biplot}}
 }
 \value{
-A ordered list containing the coordinates the of tick marks to plotted on the biplot
+An ordered list containing the coordinates the of tick marks to plotted on the biplot
 }
 \description{
 Convenience function to obtain the coordinates of the calibrated ticks marks on the biplot

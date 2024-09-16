@@ -14,7 +14,7 @@ connect.lwd=1)
 
 \item{col}{the colour(s) for the new samples, with default \code{darkorange1}.}
 
-\item{pch}{the plotting character(s) for the new samples, with default ○.}
+\item{pch}{the plotting character(s) for the new samples, with default \code{1}.}
 
 \item{cex}{the character expansion(s) for the new samples, with default \code{1}.}
 

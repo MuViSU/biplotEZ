@@ -15,7 +15,7 @@ opacity = 1, shade.darker = TRUE)
 
 \item{col}{the colour(s) for the means, with default as the colour of the samples.}
 
-\item{pch}{the plotting character(s) for the means, with default ■.}
+\item{pch}{the plotting character(s) for the means, with default \code{15}.}
 
 \item{cex}{the character expansion(s) for the means, with default \code{1}.}
 
