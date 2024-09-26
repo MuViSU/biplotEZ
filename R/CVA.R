@@ -387,9 +387,6 @@ AoD.biplot <- function (bp, classes=bp$classes, dist.func=NULL, dist.func.cat=NU
       Delta[i,j] <- -0.5*(D.bar[i,i]+D.bar[j,j]-2*D.bar[i,j])
   Delta <- Delta + t(Delta)
 
-#  print(apply(Delta, 1, sum)/J)
-#  stop ("tot hier")
- 
   ddist0 <- matrix (-0.5*apply(Ybar, 1, function(y) sum((y-rep(0,ncol(Ybar)))^2)), ncol=1) 
   new.point <- function (coords, coords.cat)
   {
@@ -402,6 +399,7 @@ AoD.biplot <- function (bp, classes=bp$classes, dist.func=NULL, dist.func.cat=NU
       { if (is.null(dvec)) dvec <- d2vec^2 else dvec <- dvec + d2vec^2 }
     dvec <- -0.5*dvec
     delta.vec <- diag(D.bar)-2*solve(Nmat) %*% apply(dvec, 2, function(dd) tapply (dd, classes, sum))
+    delta.vec <- -0.5*delta.vec
     solve(t(Ybar)%*%Ybar) %*% t(Ybar) %*% (delta.vec - matrix(apply(Delta, 1, sum)/J,ncol=1) %*% matrix(1, nrow=1, ncol=ncol(delta.vec)))
   }
   

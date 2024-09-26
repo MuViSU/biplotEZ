@@ -175,7 +175,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
             if(!is.null(x$PCOaxes)) 
               { if (x$PCOaxes == "splines") # Only for PCO - if axes (type) is set to splines.  
                   {
-                    z.axes <- lapply(1:length(ax.aes$which), biplot.spline.axis, Z, x$raw.X, 
+                    z.axes <- lapply(1:length(ax.aes$which), biplot.spline.axis, Z, x$X, 
                                means=x$means, sd=x$sd, n.int=ax.aes$ticks, 
                                spline.control=x$spline.control)
                     .nonlin.axes.plot(z.axes,ax.aes,predict.mat,too.small, usr=usr,x=x)

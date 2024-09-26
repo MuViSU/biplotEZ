@@ -676,7 +676,7 @@
 #' @useDynLib biplotEZ, .registration = TRUE
 #'
 #' @noRd
-biplot.spline.axis <- function(j, X, Ytilde, means, sd, 
+biplot.spline.axis <- function(j, X, Y, means, sd, 
                                n.int, spline.control, dmeth=0, ... )
 {
   n <- nrow(X)
@@ -685,7 +685,7 @@ biplot.spline.axis <- function(j, X, Ytilde, means, sd,
     {  
       my.sample <- sample (1:n, size=103, replace=F)
       X <- X[my.sample,]
-      Ytilde <- Ytilde[my.sample,]
+      Y <- Y[my.sample,]
       n <- nrow(X)
     }
   
@@ -705,7 +705,7 @@ biplot.spline.axis <- function(j, X, Ytilde, means, sd,
   
   cat ("Calculating spline axis for variable", j, "\n")
   if(dmeth==1) stop("dmeth should be equal to zero or integer greater than 1 \n")  
-  Y <- scale(Ytilde,center=means,scale=sd)
+  Ytilde <- scale(scale(Y, center=FALSE, scale=1/sd), center=-1*means, scale=FALSE)
   
   ytilde <- Ytilde[,j]
   mutilde <- seq(from=min(ytilde),to=max(ytilde),length.out=nmu)
