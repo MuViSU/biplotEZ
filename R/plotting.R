@@ -105,6 +105,18 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
 
       usr <- graphics::par("usr")
 
+      # Category Level Regions - this should be plotted first. 
+      if (!is.null(x$CLPs))
+        if (!is.null(x$CLR.aes))
+        {
+          x <- CLRs(x)
+          a <- predict.regions(x$CLPs[[x$CLR.aes$which]],usr)
+          for(i in 1:length(a))
+          {
+            graphics::polygon(a[[i]],col=x$CLR.aes$col[i],border = NULL)
+          }
+        }
+
       # Classification Regions - this should be plotted first. 
       # if(!is.null(x$classify)) x <- classify(x)
       classify.aes <- x$classify$aes

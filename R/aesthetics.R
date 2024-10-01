@@ -591,7 +591,8 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' This function allows the user to format the aesthetics for the category level points (CLPs).
 #'
 #' @param bp an object of class \code{biplot}.
-#' @param which a vector containing the columns or variables for which the CLPs should be displayed, with default \code{ncol(Xcat)}.
+#' @param which a vector containing the columns or variables for which the CLPs should be displayed, 
+#'        with default \code{1:ncol(Xcat)}.
 #' @param col the colour(s) for the CLPs, with default \code{black}.
 #' @param cex the character expansion(s) for the CLPs, with default \code{0.6}.
 #'
@@ -603,7 +604,7 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' @seealso \code{\link{biplot}}, \code{\link{CA}}, \code{\link{AoD}}
 #' 
 #' @usage
-#' CLPs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
+#' CLRs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
 #' @aliases CLPs
 #'
 #' @export
@@ -653,6 +654,61 @@ CLPs <- function (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
   }
 
   bp$CLP.aes = list(which = which, col = col, cex = cex)
+  bp
+}
+# ----------------------------------------------------------------------------------------------
+#' Format aesthetics for the category level regions
+#'
+#' @description
+#' This function allows the user to format the aesthetics for the category level points (CLRs).
+#'
+#' @param bp an object of class \code{biplot}.
+#' @param which the column name or number for which the CLRs should be displayed, with default \code{1}. Only
+#'              one variable can be selected at a time.
+#' @param col the colours for the CLRs, with default \code{colorRampPalette(c("black","white"))}.
+#'
+#' @return The object of class \code{biplot} will be appended with a list called \code{CLP.aes} containing the following elements  A list with the following components is available:
+#' \item{which}{the variable number for which the CLRs are displayed.}
+#' \item{col}{the colours of the CLRs.}
+#'
+#' @seealso \code{\link{biplot}}, \code{\link{PCO}}, \code{\link{AoD}}
+#' 
+#' @usage
+#' CLRs (bp,  which = 1, col = "NULL"black")
+#' @aliases CLRs
+#'
+#' @export
+#'
+#' @examples 
+#' mtdf <- as.data.frame(mtcars)
+#' mtdf$cyl <- factor(mtdf$cyl)
+#' mtdf$vs <- factor(mtdf$vs)
+#' mtdf$am <- factor(mtdf$am)
+#' mtdf$gear <- factor(mtdf$gear)
+#' mtdf$carb <- factor(mtdf$carb)
+#' biplot(mtdf[,-11], scaled = TRUE) |> PCO(classes = mtdf[,11]) |> 
+#' CLRs(which = "gear", col = "coral") |> plot()
+#' 
+CLRs <- function (bp,  which = 1, col = "black")
+{
+  p2 <- ncol(bp$Xcat)
+  if (!is.null(bp$CLR.aes$col)) col <- bp$CLR.aes$col
+
+  if (!is.null(which))
+  {
+    if (!all(is.numeric(which))) which <- match(which, colnames(bp$Xcat), nomatch = 0)
+    which <- which[1]
+  }
+  
+  # Expand col to length p2
+  col.len <- length(col)
+  num.lev <- nlevels(bp$Xcat[,which])
+  if (col.len > 1) { col <- col[ifelse(1:num.lev%%col.len==0, col.len, 1:num.lev%%col.len)]
+                   }
+  else {  if (col.len==1) col <- colorRampPalette(c("white",col))(num.lev)
+          else col <- colorRampPalette(c("white","black"))(num.lev)
+  }
+  bp$CLR.aes = list(which = which, col = col)
   bp
 }
 # ----------------------------------------------------------------------------------------------
