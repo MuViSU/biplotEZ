@@ -674,7 +674,7 @@ CLPs <- function (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
 #' @seealso \code{\link{biplot}}, \code{\link{PCO}}, \code{\link{AoD}}
 #' 
 #' @usage
-#' CLRs (bp,  which = 1, col = "NULL"black")
+#' CLRs (bp,  which = 1, col = "black")
 #' @aliases CLRs
 #'
 #' @export

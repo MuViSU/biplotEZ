@@ -4,12 +4,13 @@
 \alias{CLPs}
 \title{Format aesthetics for the category level points}
 \usage{
-CLPs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
+CLRs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot}.}
 
-\item{which}{a vector containing the columns or variables for which the CLPs should be displayed, with default \code{ncol(Xcat)}.}
+\item{which}{a vector containing the columns or variables for which the CLPs should be displayed,
+with default \code{1:ncol(Xcat)}.}
 
 \item{col}{the colour(s) for the CLPs, with default \code{black}.}
 
