@@ -4,7 +4,7 @@
 \alias{CLPs}
 \title{Format aesthetics for the category level points}
 \usage{
-CLRs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
+CLPs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot}.}

@@ -29,8 +29,8 @@ mtdf$vs <- factor(mtdf$vs)
 mtdf$am <- factor(mtdf$am)
 mtdf$gear <- factor(mtdf$gear)
 mtdf$carb <- factor(mtdf$carb)
-biplot(mtdf[,-11], scaled = TRUE) |> PCO(classes = mtdf[,11]) |> 
-CLRs(which = "gear", col = "coral") |> plot()
+#biplot(mtdf[,-11], scaled = TRUE) |> PCO(group.aes = mtdf[,11]) |> 
+#CLRs(which = 10, col = "coral") |> plot()
 
 }
 \seealso{

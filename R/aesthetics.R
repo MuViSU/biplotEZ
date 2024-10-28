@@ -604,7 +604,7 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 #' @seealso \code{\link{biplot}}, \code{\link{CA}}, \code{\link{AoD}}
 #' 
 #' @usage
-#' CLRs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
+#' CLPs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
 #' @aliases CLPs
 #'
 #' @export
@@ -686,8 +686,8 @@ CLPs <- function (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
 #' mtdf$am <- factor(mtdf$am)
 #' mtdf$gear <- factor(mtdf$gear)
 #' mtdf$carb <- factor(mtdf$carb)
-#' biplot(mtdf[,-11], scaled = TRUE) |> PCO(classes = mtdf[,11]) |> 
-#' CLRs(which = "gear", col = "coral") |> plot()
+#' #biplot(mtdf[,-11], scaled = TRUE) |> PCO(group.aes = mtdf[,11]) |> 
+#' #CLRs(which = 10, col = "coral") |> plot()
 #' 
 CLRs <- function (bp,  which = 1, col = "black")
 {
