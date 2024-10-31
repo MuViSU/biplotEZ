@@ -767,7 +767,6 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
                         label.offset = 0.5, connected=FALSE, 
                         connect.col = "black", connect.lty = 1, connect.lwd = 1)
 { 
-  
   if(!is.null(label.name) | !is.null(label.col) | 
      any(label.side!="bottom") | any(label.offset !=0.5) | any(label.cex!=0.75))
     label<-TRUE

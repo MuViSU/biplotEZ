@@ -24,7 +24,8 @@ and columns in standard coordinates. \code{variant = "Stand"}, presents a biplot
 principal coordinates. \code{variant = "symmetric"}, presents a symmetric biplot with row and column standard coordinates scaled
 equally by the singular values.}
 
-\item{lambda.scal}{logical value to request lambda-scaling, default is \code{FALSE}.}
+\item{lambda.scal}{logical value to request lambda-scaling, default is \code{FALSE}. Controls stretching or shrinking of
+column and row distances.}
 }
 \value{
 an object of class CA, inherits from class biplot.

@@ -21,6 +21,10 @@ The object of class \code{biplot} will be appended with the following elements:
 \item{Xnew}{the matrix of the centered and scaled new numeric variables of new data.}
 \item{Xnew.cat}{the matrix of the categorical variables of new data.}
 \item{Znew}{the matrix of the coordinates of the new data in the biplot.}
+
+For an object of class \code{CA} the following additional elements will be appended:
+\item{newrowcoor}{the matrix of row coordinates of the new data in the biplot.}
+\item{newcolcoor}{the matrix of column coordinates of the new data in the biplot.}
 }
 \description{
 This function adds supplementary points and variables to the plot from a new data set.

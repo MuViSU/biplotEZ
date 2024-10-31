@@ -135,6 +135,30 @@
                  pos = text.pos, offset = sample.aes$label.offset)
 }
 
+#' newsamples CA plot
+#'
+#' @param newrowcoor new row coordinates
+#' @param newcolcoor new column coordinates
+#' @param newsamples newsamples aesthetics
+#'
+#' @noRd
+.newsamples.CA.plot <- function(newrowcoor, newcolcoor, newsamples)
+{
+  #first factor newrowcoor
+  graphics::points(x = newrowcoor[,1], y = newrowcoor[,2], pch = newsamples$pch[1],
+                   col = newsamples$col[1], cex = newsamples$cex[1])
+  text.pos <- match(newsamples$label.side[1], c("bottom", "left", "top", "right"))
+  graphics::text(x = newrowcoor[,1], y = newrowcoor[,2], labels = rownames(newrowcoor), 
+                 col = newsamples$col[1], cex = newsamples$label.cex[1],
+                 pos = text.pos, offset = newsamples$label.offset)
+  #second factor newcolcoor
+  graphics::points(x = newcolcoor[,1], y = newcolcoor[,2], pch = newsamples$pch[2],
+                   col = newsamples$col[2], cex = newsamples$cex[2])
+  text.pos <- match(newsamples$label.side[2], c("bottom", "left", "top", "right"))
+  graphics::text(x = newcolcoor[,1], y = newcolcoor[,2], labels = rownames(newcolcoor),
+                 col = newsamples$col[2], cex = newsamples$label.cex[2],
+                 pos = text.pos, offset = newsamples$label.offset)
+}
 #' Title
 #'
 #' @param Z 
