@@ -172,6 +172,8 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
           {.CA.plot(x$rowcoor, x$colcoor, x$group.aes, x$samples, x$r, x$c, x$g.names) 
           # New samples 
           if (!is.null(x$Znew)) .newsamples.CA.plot(x$newrowcoor, x$newcolcoor, x$newsamples)
+          # Legends 
+          if (!is.null(x$legend)) do.call(biplot.legend, list(bp=x, x$legend.arglist))
           } else{
           if(x$dim.biplot == 3) .CA.plot3d(x$rowcoor, x$colcoor, x$group.aes, x$samples, x$r, x$c, x$g.names, ...)
         }

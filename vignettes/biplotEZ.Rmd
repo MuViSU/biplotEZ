@@ -469,7 +469,7 @@ due to the orthogonality of the matrix $\mathbf{V}:p \times p$.
 
 ## Predictivities
 
-The predictivity provides a measure of who well the original values are recovered from the biplot. An element that is well represented will have a predictivity close to one, indicating that the sample or variable values from prediction is close to the observed values. If an element is poorly represented, the predicted values will be very different from the original values and the predictivity value will be close to zero.
+The predictivity provides a measure of how well the original values are recovered from the biplot. An element that is well represented will have a predictivity close to one, indicating that the sample or variable values from prediction is close to the observed values. If an element is poorly represented, the predicted values will be very different from the original values and the predictivity value will be close to zero.
 
 ### Axis predictivity
 
@@ -516,7 +516,7 @@ Comparing the plot with the `summary` output it is clear that the variables Popu
 
 
 ### Axes represented as vectors 
-If the user wishes to view the variables as arrows on the biplot to give information on the adequecy of the variables, this can be done with the `axes()` function, by setting `vectors = TRUE` and `unit.circle = TRUE`. The adequacy value is given by squared length of the arrow. 
+If the user wishes to view the variables as arrows on the biplot to give information on the adequacy of the variables, this can be done with the `axes()` function, by setting `vectors = TRUE` and `unit.circle = TRUE`. The adequacy value is given by squared length of the arrow. 
 
 ```{r}
 biplot(state.x77, scale = TRUE) |> PCA(group.aes = state.region) |>

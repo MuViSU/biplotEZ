@@ -544,7 +544,7 @@ biplot.legend <- function(bp, ...)
 
   
   if(inherits(bp,"CA") & bp$legend$samples)
-    do.call(graphics::legend,c(list("bottomleft",col=bp$samples$col[1:bp$g], pch=bp$samples$pch[1:bp$g],
+    do.call(graphics::legend,c(list("topright",col=bp$samples$col[1:bp$g], pch=bp$samples$pch[1:bp$g],
                                     legend=bp$g.names),legend.addition))
   
 }
@@ -755,6 +755,7 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
 #' 
 #' @examples
 #' biplot(data = iris[1:145,]) |> PCA() |> interpolate(newdata = iris[146:150,]) |> plot()
+#' biplot(HairEyeColor[,,2], center=F) |> CA(variant="Symmetric") |> interpolate(HairEyeColor[,,1]) |> plot()
 #'
 interpolate <- function (bp, newdata=NULL, newvariable=NULL)
 {
