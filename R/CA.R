@@ -39,10 +39,10 @@
 #' biplot(HairEyeColor[,,2], center = FALSE) |> CA() |> plot()
 #' # Creating a CA biplot with rows in standard coordinates:
 #' biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Stand") |> 
-#' samples(col=c("magenta","purple"), pch=c(15,17), label.col="black") |> plot()
+#' samples(col=c("magenta","purple"), pch = c(15,17), label.col = "black") |> plot()
 #' # Creating a CA biplot with rows and columns scaled equally:
 #' biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
-#' samples(col=c("magenta","purple"), pch=c(15,17), label.col="black") |> plot()
+#' samples(col = c("magenta","purple"), pch = c(15,17), label.col = "black") |> plot()
 
 CA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant = "Princ", lambda.scal = FALSE)
 {

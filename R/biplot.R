@@ -755,7 +755,8 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
 #' 
 #' @examples
 #' biplot(data = iris[1:145,]) |> PCA() |> interpolate(newdata = iris[146:150,]) |> plot()
-#' biplot(HairEyeColor[,,2], center=F) |> CA(variant="Symmetric") |> interpolate(HairEyeColor[,,1]) |> plot()
+#' biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
+#'      interpolate(newdata = HairEyeColor[,,1]) |> plot()
 #'
 interpolate <- function (bp, newdata=NULL, newvariable=NULL)
 {

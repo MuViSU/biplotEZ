@@ -43,10 +43,10 @@ This function produces a list of elements to be used for CA biplot construction 
 biplot(HairEyeColor[,,2], center = FALSE) |> CA() |> plot()
 # Creating a CA biplot with rows in standard coordinates:
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Stand") |> 
-samples(col=c("magenta","purple"), pch=c(15,17), label.col="black") |> plot()
+samples(col=c("magenta","purple"), pch = c(15,17), label.col = "black") |> plot()
 # Creating a CA biplot with rows and columns scaled equally:
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
-samples(col=c("magenta","purple"), pch=c(15,17), label.col="black") |> plot()
+samples(col = c("magenta","purple"), pch = c(15,17), label.col = "black") |> plot()
 }
 \seealso{
 \code{\link[=biplot]{biplot()}}
