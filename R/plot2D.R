@@ -655,6 +655,7 @@
 #' @noRd
 .density.plot <- function(Z.density, density.style) 
 {
+
   levels.rect <- pretty(range(Z.density$z), n = density.style$cuts)
   col.use <- colorRampPalette(density.style$col)
   col.use <- col.use(length(levels.rect) - 1)
@@ -662,6 +663,8 @@
   if (density.style$contours) 
     graphics::contour(Z.density, levels = levels.rect, col = density.style$contour.col, add = TRUE)
   list(levels.rect, col.use)
+
+
 }
 
 

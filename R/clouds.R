@@ -1,7 +1,8 @@
 #' Create a density in 2-dimensions 
 #'
 #' @param bp object of class `biplot`
-#' @param which which group.
+#' @param which which group to create a density; limited to only a single group at a time. 
+#'              If NULL, density drawn over all data points. 
 #' @param contours logical indicating whether contours are added to the density plot
 #' @param h vector of bandwidths for x and y directions, see \code{\link[MASS]{kde2d}}.
 #' @param n number of grid points in each direction. Can be scalar or a length-2 integer 
@@ -29,10 +30,24 @@ density2D <- function(bp,which = NULL,contours = F, h = NULL, n = 100,
                       col = c("green", "yellow", "red"), contour.col = "black", cuts = 50, cex = 0.6, 
                       tcl = -0.2, mgp = c(0, -0.25, 0), layout.heights = c(100, 10), legend.mar = c(2, 5, 0, 5))
 {
+  
   g <- bp$g
   g.names <- bp$g.names
-  if (is.null(which)) which <- 1:g
-  G <- indmat(bp$group.aes)
+  
+  # If which = NULL, draw density over all groups 
+  if (is.null(which))
+  {
+    which <- 1
+    G <- indmat(rep(1,bp$n)) 
+    print("Density plotted over all samples")
+  } else G <- indmat(bp$group.aes)
+  
+  if(length(which) > 1)
+  {
+    which <- which[1] 
+    print("Density drawn for the first group")
+  }  
+    
   
   density.style <- biplot.density.2D.control(g=g, g.names=g.names, which=which,
                                              contours=contours, h=h,
@@ -40,25 +55,23 @@ density2D <- function(bp,which = NULL,contours = F, h = NULL, n = 100,
                                              cuts=cuts, cex=cex,tcl=tcl,mgp=mgp,
                                              layout.heights = layout.heights,
                                              legend.mar=legend.mar)
-  if (!is.null(which)) 
-  { if (which == 0) 
-    mat <- bp$Z 
-  else 
-    mat <- bp$Z[G[, which] == 1, ]
+
+  mat <- bp$Z[G[, which] == 1, ]
+    
   x.range <- range(bp$Z[, 1])
   y.range <- range(bp$Z[, 2])
   width <- max(x.range[2] - x.range[1], y.range[2] - y.range[1])
   xlim <- mean(bp$Z[, 1]) + c(-1, 1) * 0.75 * width
   ylim <- mean(bp$Z[, 1]) + c(-1, 1) * 0.75 * width
   if (is.null(density.style$h)) z.density <- MASS::kde2d(mat[, 1], mat[, 2], n = density.style$n, lims = c(xlim, ylim))
-  else z.density <- MASS::kde2d(mat[, 1], mat[, 2], h = density.style$h, n = density.style$n, lims = c(xlim, ylim))
-  } else z.density <- NULL
+    else z.density <- MASS::kde2d(mat[, 1], mat[, 2], h = density.style$h, n = density.style$n, lims = c(xlim, ylim))
+    
   if(length(density.style$col)==1) density.style$col <- c("white",density.style$col)
+   
   bp$z.density <- z.density
   bp$density.style <- density.style
   bp
 }
-
 #' Creates a kernel density in 1-dimension 
 #'
 #' @param bp object of class `biplot`

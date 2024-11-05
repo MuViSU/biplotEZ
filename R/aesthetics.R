@@ -872,13 +872,14 @@ biplot.density.2D.control <- function(g, g.names, which, contours = F, h = NULL,
                                       tcl = -0.2, mgp = c(0, -0.25, 0), layout.heights = c(100, 10), legend.mar = c(2, 5, 0, 5)) 
 {
   if (!is.null(which))
-    if (which == "all") which <- 0
-  else if (!all(is.numeric(which))) which <- match(which, g.names, nomatch = 0)
+    if (!all(is.numeric(which))) which <- match(which, g.names, nomatch = 0)
   which <- which[which <= g]
   which <- which[which >= 0]
-  if (!is.null(which)) which <- which[1]
+  #if (!is.null(which)) which <- which[1]
   list(which = which, contours = contours, h = h, n = n, col = col, contour.col = contour.col,
        cuts = cuts, cex = cex, tcl = tcl, mgp = mgp, layout.heights = layout.heights, legend.mar = legend.mar)
+
+  
 }
 
 
