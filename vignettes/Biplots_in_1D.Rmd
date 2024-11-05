@@ -71,6 +71,17 @@ print(bp)
 ```
 
 
+# One-dimensional CA biplot
+Similarly for a CA 1d biplot, `dim.biplot = 1` is specified in the call to `CA()`.
+The one-dimensional biplot is constructed from the first columns of $\mathbf{U\Lambda^\gamma}$ and $&\mathbf{V\Lambda^{1-\gamma}}$. 
+
+Consider the `HairEyeColor` example again as discussed in `CA in biplotEZ`:
+
+```{r}
+biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Princ", 
+  dim.biplot=1, lambda.scal = T) |> plot()
+```
+
 # The function `interpolate()`
 
 `interpolate()` allows for new observations or axes to be added to the biplot.

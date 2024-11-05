@@ -122,11 +122,13 @@ rglwidget(my.plot)
 
 As with `PCA()`, three-dimensional CA biplots are obtained by specifying `dim.biplot = 3` in the call to `CA()`. Again, an interactive biplot will be drawn in a separate `rgl` window.
 
-Consider the `HairEyeColor` example again as discussed in `Ca in biplotEZ`:
+Consider the `HairEyeColor` example again as discussed in `CA in biplotEZ`:
 
 ```{r}
-biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric", dim.biplot = 3) |> 
-samples(col=c("darkred","forestgreen"), pch=c(15,17), label.col="black") |> plot()
+biplot(HairEyeColor[,,2], center = FALSE) |> 
+  CA(variant = "Symmetric", dim.biplot = 3) |>
+  samples(col=c("darkred","forestgreen"), pch=c(15,17), label.col="black") |>
+  plot()
 ```
 
 ```{r echo=FALSE}

@@ -19,7 +19,8 @@ and columns in standard coordinates. \code{variant = "Stand"}, presents a biplot
 principal coordinates. \code{variant = "symmetric"}, presents a symmetric biplot with row and column standard coordinates scaled
 equally by the singular values.}
 
-\item{lambda.scal}{logical value to request lambda-scaling, default is \code{FALSE}.}
+\item{lambda.scal}{logical value to request lambda-scaling, default is \code{FALSE}. Controls stretching or shrinking of
+column and row distances.}
 }
 \value{
 A list with the following components is available:
@@ -42,8 +43,11 @@ This function produces a list of elements to be used for CA biplot construction 
 biplot(HairEyeColor[,,2], center = FALSE) |> CA() |> plot()
 # Creating a CA biplot with rows in standard coordinates:
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Stand") |> 
-samples(col=c("magenta","purple"), pch=c(15,17), label.col="black") |> plot()
+samples(col=c("magenta","purple"), pch = c(15,17), label.col = "black") |> plot()
 # Creating a CA biplot with rows and columns scaled equally:
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
-samples(col=c("magenta","purple"), pch=c(15,17), label.col="black") |> plot()
+samples(col = c("magenta","purple"), pch = c(15,17), label.col = "black") |> plot()
+}
+\seealso{
+\code{\link[=biplot]{biplot()}}
 }

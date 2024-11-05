@@ -135,6 +135,30 @@
                  pos = text.pos, offset = sample.aes$label.offset)
 }
 
+#' newsamples CA plot
+#'
+#' @param newrowcoor new row coordinates
+#' @param newcolcoor new column coordinates
+#' @param newsamples newsamples aesthetics
+#'
+#' @noRd
+.newsamples.CA.plot <- function(newrowcoor, newcolcoor, newsamples)
+{
+  #first factor newrowcoor
+  graphics::points(x = newrowcoor[,1], y = newrowcoor[,2], pch = newsamples$pch[1],
+                   col = newsamples$col[1], cex = newsamples$cex[1])
+  text.pos <- match(newsamples$label.side[1], c("bottom", "left", "top", "right"))
+  graphics::text(x = newrowcoor[,1], y = newrowcoor[,2], labels = rownames(newrowcoor), 
+                 col = newsamples$col[1], cex = newsamples$label.cex[1],
+                 pos = text.pos, offset = newsamples$label.offset)
+  #second factor newcolcoor
+  graphics::points(x = newcolcoor[,1], y = newcolcoor[,2], pch = newsamples$pch[2],
+                   col = newsamples$col[2], cex = newsamples$cex[2])
+  text.pos <- match(newsamples$label.side[2], c("bottom", "left", "top", "right"))
+  graphics::text(x = newcolcoor[,1], y = newcolcoor[,2], labels = rownames(newcolcoor),
+                 col = newsamples$col[2], cex = newsamples$label.cex[2],
+                 pos = text.pos, offset = newsamples$label.offset)
+}
 #' Title
 #'
 #' @param Z 
@@ -473,69 +497,65 @@
 {
   for (i in 1:length(ax.aes$which))
   {  ax.num <- ax.aes$which[i]
-  if (!is.null(too.small)) if (ax.num %in% too.small) next
-  this.axis<-z.axes[[i]]
-  marker.mat <- this.axis$coords
-  marker.mat <- marker.mat[rev(order(marker.mat[, 3])), ]
-  x.vals <- marker.mat[, 1]
-  y.vals <- marker.mat[, 2]
+     if (!is.null(too.small)) if (ax.num %in% too.small) next
+     this.axis<-z.axes[[i]]
+     marker.mat <- this.axis$coords
+     marker.mat <- marker.mat[rev(order(marker.mat[, 3])), ]
+     x.vals <- marker.mat[, 1]
+     y.vals <- marker.mat[, 2]
   
-  lin.coef<-c(a=this.axis$a,b=this.axis$b)
-  if (is.null(this.axis$b))
-    graphics::abline(v = this.axis$v, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
-  else
-    graphics::abline(coef=lin.coef, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
-  
-  if (ax.aes$label.dir == "Hor") {  graphics::par(las = 1)
-    adjust <- c(0.5, 1, 0.5, 0)       }
-  if (ax.aes$label.dir == "Orthog") { graphics::par(las = 2)
-    adjust <- c(1, 1, 0, 0)         }
-  if (ax.aes$label.dir == "Paral") {  graphics::par(las = 0)
-    adjust <- c(0.5, 0.5, 0.5, 0.5) }
-  
-  h <- nrow(marker.mat)
-  if (is.null(this.axis$b))
-  { if (y.vals[1] < y.vals[h])
-    graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], adj = adjust[1], at = x.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+     lin.coef<-c(a=this.axis$a,b=this.axis$b)
+     if (is.null(this.axis$b))
+       graphics::abline(v = this.axis$v, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
+     else
+       graphics::abline(coef=lin.coef, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
+    if (ax.aes$label.dir == "Hor") {  graphics::par(las = 1)
+                                      adjust <- c(0.5, 1, 0.5, 0)       }
+    if (ax.aes$label.dir == "Orthog") { graphics::par(las = 2)
+                                        adjust <- c(1, 1, 0, 0)         }
+    if (ax.aes$label.dir == "Paral") {  graphics::par(las = 0)
+                                        adjust <- c(0.5, 0.5, 0.5, 0.5) }
+    h <- nrow(marker.mat)
+    if (is.null(this.axis$b))
+     { if (y.vals[1] < y.vals[h])
+         graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], adj = adjust[1], at = x.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+       else
+         graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], adj = adjust[3], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+     }
     else
-      graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], adj = adjust[3], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-  }
-  else
-  { y1.ster <- lin.coef[2] * usr[1] + lin.coef[1]
-  y2.ster <- lin.coef[2] * usr[2] + lin.coef[1]
-  x1.ster <- (usr[3] - lin.coef[1])/lin.coef[2]
-  x2.ster <- (usr[4] - lin.coef[1])/lin.coef[2]
-  if (lin.coef[2] == 0)
-  { if (x.vals[1] < x.vals[h])
-    graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], adj = adjust[2], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-    else
-      graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], adj = adjust[4], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-  }
-  if (lin.coef[2] > 0)
-  {  if (x.vals[1] < x.vals[h])
-    if (y1.ster <= usr[4] & y1.ster >= usr[3])
-      graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-    else
-      graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-    else if (y2.ster <= usr[4] & y2.ster >= usr[3])
-      graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-    else
-      graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-  }
-  if (lin.coef[2] < 0)
-  {  if (x.vals[1] < x.vals[h])
-    if (y1.ster <= usr[4] & y1.ster >= usr[3])
-      graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-    else
-      graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-    else if (y2.ster <= usr[4] & y2.ster >= usr[3])
-      graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-    else
-      graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-  }
-  
-  
-  }
+      { y1.ster <- lin.coef[2] * usr[1] + lin.coef[1]
+        y2.ster <- lin.coef[2] * usr[2] + lin.coef[1]
+        x1.ster <- (usr[3] - lin.coef[1])/lin.coef[2]
+        x2.ster <- (usr[4] - lin.coef[1])/lin.coef[2]
+        if (lin.coef[2] == 0)
+          { if (x.vals[1] < x.vals[h])
+              graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], adj = adjust[2], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+            else
+              graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], adj = adjust[4], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+          }
+        if (lin.coef[2] > 0)
+          {  if (x.vals[1] < x.vals[h])
+               if (y1.ster <= usr[4] & y1.ster >= usr[3])
+                 graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+               else
+                 graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+               else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+                      graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+                    else
+                      graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+          }
+        if (lin.coef[2] < 0)
+          {  if (x.vals[1] < x.vals[h])
+               if (y1.ster <= usr[4] & y1.ster >= usr[3])
+                 graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+               else
+                 graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+             else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+                    graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+                  else
+                    graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+          }
+     }
   
   invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
   std.markers <- marker.mat[invals, 3]
@@ -551,10 +571,9 @@
   
   
   if(ax.num %in% predict_which)
-  {
-    if (!is.null(predict.mat)) apply(cbind(predict.mat,y.vals[1]), 1, .predict.func, coef = lin.coef,col=ax.aes$predict.col,lwd=ax.aes$predict.lwd,lty=ax.aes$predict.lty)
-  }
-  
+    {
+      if (!is.null(predict.mat)) apply(cbind(predict.mat,y.vals[1]), 1, .predict.func, coef = lin.coef,col=ax.aes$predict.col,lwd=ax.aes$predict.lwd,lty=ax.aes$predict.lty)
+    }
   }
 }
 
@@ -612,9 +631,6 @@
                       col=grDevices::adjustcolor(ellipse.aes$col[i],ellipse.aes$opacity[i]))
 }
 
-
-
-
 #' Get coordinates from ggrepel
 #'
 #' @param df dataframe containing (x_coo, y_coo, marker)
@@ -622,7 +638,9 @@
 #' @noRd
 .get.ggrepel.coords <- function(df)
 {
-  pp <- ggplot2::ggplot (df, ggplot2::aes(x,y,label=z)) + ggplot2::geom_point() + ggrepel::geom_text_repel()
+  pp <- ggplot2::ggplot (df, ggplot2::aes(df$x,df$y,label=df$z)) + 
+           ggplot2::geom_point() + 
+           ggrepel::geom_text_repel()
   xrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$x.range
   yrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$y.range
   print(pp)
@@ -660,6 +678,7 @@
   col.use <- colorRampPalette(density.style$col)
   col.use <- col.use(length(levels.rect) - 1)
   graphics::image(Z.density, breaks = levels.rect, col = col.use, add = TRUE)
+  
   if (density.style$contours) 
     graphics::contour(Z.density, levels = levels.rect, col = density.style$contour.col, add = TRUE)
   list(levels.rect, col.use)
@@ -668,23 +687,23 @@
 }
 
 
-#' Plot spline based axes on biplots
+#' calibrate spline based axes on biplots
 #'
-#' @param j 
-#' @param X 
-#' @param Ytilde 
-#' @param means 
-#' @param sd 
-#' @param n.int 
-#' @param spline.control 
-#' @param dmeth 
-#' @param ... 
+#' @param j Index of the axis to be calibrated in the data
+#' @param X Coordinates of the samples on the biplot space
+#' @param Ytilde Raw data used to construct the biplot
+#' @param means column means of the raw data
+#' @param sd Column standard deviations of the data
+#' @param n.int the number of tick marks per axis
+#' @param spline.control control variables for optimisation. See biplotEZ:::biplot.spline.axis.control()
+#' @param dmeth Argument unused
+#' @param ... additional arguments
 #' 
 #' @useDynLib biplotEZ, .registration = TRUE
 #'
-#'
 #' @noRd
-biplot.spline.axis <- function(j, X, Ytilde, means, sd, n.int, spline.control, dmeth=0, ... )
+biplot.spline.axis <- function(j, X, Y, means, sd, 
+                               n.int, spline.control, dmeth=0, ... )
 {
   n <- nrow(X)
   p <- ncol(X)
@@ -692,7 +711,7 @@ biplot.spline.axis <- function(j, X, Ytilde, means, sd, n.int, spline.control, d
     {  
       my.sample <- sample (1:n, size=103, replace=F)
       X <- X[my.sample,]
-      Ytilde <- Ytilde[my.sample,]
+      Y <- Y[my.sample,]
       n <- nrow(X)
     }
   
@@ -712,7 +731,7 @@ biplot.spline.axis <- function(j, X, Ytilde, means, sd, n.int, spline.control, d
   
   cat ("Calculating spline axis for variable", j, "\n")
   if(dmeth==1) stop("dmeth should be equal to zero or integer greater than 1 \n")  
-  Y <- scale(Ytilde,center=means,scale=sd)
+  Ytilde <- scale(scale(Y, center=FALSE, scale=1/sd), center=-1*means, scale=FALSE)
   
   ytilde <- Ytilde[,j]
   mutilde <- seq(from=min(ytilde),to=max(ytilde),length.out=nmu)

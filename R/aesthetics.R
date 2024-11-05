@@ -7,7 +7,7 @@
 #' @param bp an object of class \code{biplot}.
 #' @param which a vector containing the groups or classes for which the samples should be displayed, with default \code{bp$g}.
 #' @param col the colour(s) for the samples, with default \code{blue}.
-#' @param pch the plotting character(s) for the samples, with default •.
+#' @param pch the plotting character(s) for the samples, with default \code{16}.
 #' @param cex the character expansion(s) for the samples, with default \code{1}.
 #' @param label a logical value indicating whether the samples should be labelled, with default \code{FALSE}. Alternatively, specify \code{"ggrepel"} for non-overlapping placement of labels.
 #' @param label.name a vector of the same length as \code{which} with label names for the samples, with default \code{NULL}. If \code{NULL}, the \code{rownames(bp)} are used. Alternatively, a custom vector of length \code{n} should be used.
@@ -44,6 +44,8 @@
 #' \item{connect.lty}{the line type of the connecting line.}
 #' \item{connect.lwd}{the line width of the connecting line.}
 #' \item{opacity}{the opacity level of the plotted points.}
+#'
+#' @seealso [biplot()]
 #'
 #' @usage
 #' samples (bp,  which = 1:bp$g, col = ez.col, pch = 16, cex = 1,
@@ -194,7 +196,7 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
 #' @param bp an object of class \code{biplot}.
 #' @param which a vector containing the groups or classes for which the means should be displayed, with default \code{bp$g}.
 #' @param col the colour(s) for the means, with default as the colour of the samples.
-#' @param pch the plotting character(s) for the means, with default ■.
+#' @param pch the plotting character(s) for the means, with default \code{15}.
 #' @param cex the character expansion(s) for the means, with default \code{1}.
 #' @param label a logical value indicating whether the means should be labelled, with default \code{TRUE}.
 #' @param label.col a vector of the same length as \code{which} with label colours for the means, with default as the colour of the means.
@@ -220,6 +222,8 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
 #' \item{label.offset}{the offset of the label from the plotted mean point.}
 #' \item{opacity}{the opacity level of the plotted points.}
 #'
+#' @seealso [biplot()]
+#' 
 #' @usage
 #' means (bp,  which = NULL, col = NULL, pch = 15, cex = 1, label = FALSE,
 #' label.col = NULL,label.cex = 0.75, label.side = "bottom", label.offset = 0.5,
@@ -307,66 +311,57 @@ means <- function (bp,  which = NULL, col = NULL,
 #'
 #'
 #' @param bp an object of class \code{biplot}.
-#' @param X.names refers to the column names of \code{bp} to specify which axes to label.
-#' @param which  integer-valued vector specifying which biplot axes are shown
-#' in a biplot. By default all p biplot axes are shown.
-#' @param col vector of size p specifying colours of labels of biplot axes. The default is \code{grey(0.7)}.
-#' @param lwd axis line width, with default \code{1}.
-#' @param lty axis line type, with default \code{1}.
-#' @param label.dir One of "Orthog" (default), "Hor" or "Paral" specifying titles of
-#' axes to appear orthogonal to the side of the figure; always
-#' horizontally or always parallel to the side of the figure.
-#' @param label.col axis label colour, with default, \code{col}.
-#' @param label.cex axis label expansion, with default \code{0.75}.
-#' @param label.line axis label written on which margin line, with default \code{0.1}.
-#' @param label.offset A four-component numeric vector controlling the distance a
-#' biplot axis title is printed from the side of the figure. Sides are
-#' numbered 1 to 4 according to R conventions clockwise starting
-#' from the bottom horizontal side. Default is rep(0,4)
-#' @param ticks integer-valued vector of size equal to the number of biplot axes
-#' to control the number of tickmarks on each individual biplot
-#' axis. Default is 5 for each axis.
-#' @param tick.col tick mark colour, with default \code{col}.
-#' @param tick.size positive integer-valued vector with specifying tick mark sizes, with default \code{1}.
-#' @param tick.label logical, whether axes should be labelled or not, with default \code{TRUE}.
-#' @param tick.label.side character vector specifying position of the tick label "below" or "above" the axis.
-#' @param tick.label.col tick mark label colour, with default \code{tick.col}.
-#' @param tick.label.cex tick mark label expansion, with default \code{0.6}.
-#' @param predict.col predicted samples colour, with default \code{col}.
-#' @param predict.lwd predicted samples line width, with default \code{lwd}.
-#' @param predict.lty predicted samples line type, with default \code{lty}.
-#' @param ax.names vector of size \code{p} containing user defined names for the variables.
-#' @param orthogx numeric vector of size p specifying the x-coordinate of the parallel transformation of each axis.
-#' Defaults to zero for each axis. Only used when the dimension of the biplot is two. 
-#' @param orthogy numeric vector of size p specifying the y-coordinate of the parallel transformation of each axis.
-#' Defaults to zero for each axis. Only used when the dimension of the biplot is two.
-#' @param vectors logical, whether vector representation should be displayed on the biplot. The argument is only 
-#'                relevant for PCA biplots.
-#' @param unit.circle logical, whether a unit circle should be displayed on the biplot
+#' @param X.names a vector of column names of \code{bp} to specify which axes should be labelled.
+#' @param which a vector containing the columns or variables for which the axes should be displayed, with default \code{1:p}.
+#' @param col the colour(s) for the axes, with default \code{grey(0.7)}. Alternatively, provide a vector of colours corresponding to \code{X.names}.
+#' @param lwd the line width(s) for the axes, with default \code{1}.
+#' @param lty the line type(s) for the axes, with default \code{1}.
+#' @param label.dir a character string indicating the placement of the axis titles to the side of the figure. One of "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure (default) , "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure.
+#' @param label.col the colour(s) for the axis labels, with default, \code{col}.
+#' @param label.cex the label expansion for the axis labels, with default \code{0.75}.
+#' @param label.line the distance of the axis title from the side of the figure, with default \code{0.1}.
+#' @param label.offset a four-component numeric vector controlling the distances axis titles are displayed from the side of the figure, with default \code{rep(0,4)}. Sides are numbered \code{1} to \code{4} according to \code{R} conventions.
+#' @param ticks an integer-valued vector indicating the number of tickmarks for each axis, with default \code{5} for each axis.
+#' @param tick.col the colour(s) for the tick marks, with default \code{col}.
+#' @param tick.size a vector specifying the sizes of tick marks for each axis, with default \code{1} for each .
+#' @param tick.label a logical value indicating whether the axes should be labelled, with default \code{TRUE}.
+#' @param tick.label.side a character string indicating the position of the tick label. One of "\code{below}" for the label to appear below the tick mark (default) or "\code{above}" for the label to appear above the tick mark.
+#' @param tick.label.col the colour(s) for the tick mark labels, with default \code{tick.col}.
+#' @param tick.label.cex the label expansion for the tick mark labels, with default \code{0.6}.
+#' @param predict.col the colour(s) for the predicted samples, with default \code{col}.
+#' @param predict.lwd the line width(s) for the predicted samples, with default \code{lwd}.
+#' @param predict.lty the line type(s) for the predicted samples, with default \code{lty}.
+#' @param ax.names a vector of size \code{p} containing user defined titles for the axes.
+#' @param orthogx a numeric vector of size \code{p} specifying the x-coordinate of the parallel transformation of each axis, with default \code{0} for each axis. This is only used when \code{dim.biplot = 2}. 
+#' @param orthogy a numeric vector of size \code{p} specifying the y-coordinate of the parallel transformation of each axis, with default \code{0} for each axis. This is only used when \code{dim.biplot = 2}.
+#' @param vectors a logical value indicating whether vector representation (calibrated axes) should be displayed on the biplot. This is only used when a PCA biplot is produced.
+#' @param unit.circle a logical value indicating whether a unit circle should be displayed on the biplot.
 #'
-#' @return A list with the following components is available:
-#' \item{which}{vector of the columns displayed as axes.}
-#' \item{col}{vector of axis colours.}
-#' \item{lwd}{vector of axis line widths.}
-#' \item{lty}{vector of axis line types.}
-#' \item{label.dir}{direction of the axis labels.}
-#' \item{label.col}{vector of axis label colours.}
-#' \item{label.cex}{vector of axis labels expansions.}
-#' \item{label.line}{vector of axis label margin lines from axes.}
-#' \item{ticks}{vector representing the number of tick marks per axis.}
-#' \item{tick.col}{vector of tick mark colours.}
-#' \item{tick.size}{vector of tick mark sizes.}
-#' \item{tick.label}{vector of logical values indicating whether axes are labelled.}
-#' \item{tick.label.side}{vector specifying position of the tick label "below" or "above" the axis.}
-#' \item{tick.label.col}{vector of tick mark label colours.}
-#' \item{tick.label.cex}{vector of tick mark label expansions.}
-#' \item{predict.col}{vector of colours for the predicted samples.}
-#' \item{predict.lty}{vector of line types for the predicted samples.}
-#' \item{predict.lwd}{vector of line widths for the predicted samples.}
-#' \item{names}{vector of variable names defined by the user.}
-#' \item{orthogx}{vector of the horisontal translations for each axis.}
-#' \item{orthogy}{vector of the vertical translations for each axis.}
-#' \item{calibrated.axis}{whether to plot calibrated axis}
+#' @return The object of class \code{biplot} will be appended with a list called \code{axes} containing the following elements:
+#' \item{which}{a vector containing the columns for which the axes are displayed.}
+#' \item{col}{the colour(s) of the axes.}
+#' \item{lwd}{the line width(s) of the axes.}
+#' \item{lty}{the line type(s) of the axes.}
+#' \item{label.dir}{the placement of the axis titles to the side of the figure.}
+#' \item{label.col}{the colour(s) of the axis titles.}
+#' \item{label.cex}{the label expansion(s) of the axis titles.}
+#' \item{label.line}{the distance(s) of the axis titles from the side of the figure.}
+#' \item{ticks}{the number of tick marks per axis.}
+#' \item{tick.col}{the colour(s) of the tick marks.}
+#' \item{tick.size}{the size(s) of the tick marks.}
+#' \item{tick.label}{logical value(s) indicating whether axes are labelled.}
+#' \item{tick.label.side}{the position of the tick mark labels.}
+#' \item{tick.label.col}{the colour(s) of the tick mark labels.}
+#' \item{tick.label.cex}{the expansion(s) of the tick mark labels.}
+#' \item{predict.col}{the colour(s) of the predicted samples.}
+#' \item{predict.lty}{the line type(s) of the predicted samples.}
+#' \item{predict.lwd}{the line width(s) of the predicted samples.}
+#' \item{names}{the user defined axis titles.}
+#' \item{orthogx}{the horizontal translations for each axis.}
+#' \item{orthogy}{the vertical translations for each axis.}
+#' \item{vectors}{a logical value indicating whether calibrated axes are plotted.}
+#' 
+#' @seealso [biplot()]
 #'
 #' @usage
 #' axes(bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), lwd = 1, lty = 1,
@@ -527,7 +522,7 @@ control.alpha.bags <- function (g, g.names, alpha, which=NULL, col, lty, lwd, ma
     stop(message = "alpha not to be negative or larger than 0.99")
 
   if (is.null(col)) col <- ez.col[which]
-  col <- na.omit(col)
+  col <- stats::na.omit(col)
   while (length(col) < bag.num) col <- c(col, col)
   col <- col[1:bag.num]
   while (length(lty) < bag.num) lty <- rep(lty, each=ww)
@@ -576,7 +571,7 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   while (length(kappa) < ellipse.num) kappa <- c(kappa, kappa)
   kappa <- kappa[1:ellipse.num]
   if (is.null(col)) col <- ez.col[which]
-  col <- na.omit(col)
+  col <- stats::na.omit(col)
   while (length(col) < ellipse.num) col <- c(col, col)
   col <- col[1:ellipse.num]
   while (length(lty) < ellipse.num) lty <- rep(lty, each=ww)
@@ -590,21 +585,24 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
 }
 
 # ----------------------------------------------------------------------------------------------
-#' Aesthetics for category level points
+#' Format aesthetics for the category level points
 #'
 #' @description
-#' This function allows formatting changes to CLPs.
+#' This function allows the user to format the aesthetics for the category level points (CLPs).
 #'
 #' @param bp an object of class \code{biplot}.
-#' @param which vector of which variables' CLPs to display, with default \code{ncol(Xcat)}.
-#' @param col list of CLP colours, with default \code{black}.
-#' @param cex list of CLP character expansions, with default \code{0.6}.
+#' @param which a vector containing the columns or variables for which the CLPs should be displayed, 
+#'        with default \code{1:ncol(Xcat)}.
+#' @param col the colour(s) for the CLPs, with default \code{black}.
+#' @param cex the character expansion(s) for the CLPs, with default \code{0.6}.
 #'
-#' @return A list with the following components is available:
-#' \item{which}{which variables' CLPs to display.}
-#' \item{col}{colour of the CLPs.}
-#' \item{cex}{expansion of the plotting character of the CLPs.}
+#' @return The object of class \code{biplot} will be appended with a list called \code{CLP.aes} containing the following elements  A list with the following components is available:
+#' \item{which}{a vector containing the columns or variables for which the CLPs are displayed.}
+#' \item{col}{the colour(s) of the CLPs.}
+#' \item{cex}{the character expansion(s) of the plotting characters of the CLPs.}
 #'
+#' @seealso \code{\link{biplot}}, \code{\link{CA}}, \code{\link{AoD}}
+#' 
 #' @usage
 #' CLPs (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
 #' @aliases CLPs
@@ -659,42 +657,96 @@ CLPs <- function (bp,  which = 1:ncol(bp$Xcat), col = "black", cex = 0.6)
   bp
 }
 # ----------------------------------------------------------------------------------------------
-#' Aesthetics for supplementary (new) biplot samples
+#' Format aesthetics for the category level regions
+#'
+#' @description
+#' This function allows the user to format the aesthetics for the category level points (CLRs).
+#'
+#' @param bp an object of class \code{biplot}.
+#' @param which the column name or number for which the CLRs should be displayed, with default \code{1}. Only
+#'              one variable can be selected at a time.
+#' @param col the colours for the CLRs, with default \code{colorRampPalette(c("black","white"))}.
+#'
+#' @return The object of class \code{biplot} will be appended with a list called \code{CLP.aes} containing the following elements  A list with the following components is available:
+#' \item{which}{the variable number for which the CLRs are displayed.}
+#' \item{col}{the colours of the CLRs.}
+#'
+#' @seealso \code{\link{biplot}}, \code{\link{PCO}}, \code{\link{AoD}}
+#' 
+#' @usage
+#' CLRs (bp,  which = 1, col = "black")
+#' @aliases CLRs
+#'
+#' @export
+#'
+#' @examples 
+#' mtdf <- as.data.frame(mtcars)
+#' mtdf$cyl <- factor(mtdf$cyl)
+#' mtdf$vs <- factor(mtdf$vs)
+#' mtdf$am <- factor(mtdf$am)
+#' mtdf$gear <- factor(mtdf$gear)
+#' mtdf$carb <- factor(mtdf$carb)
+#' #biplot(mtdf[,-11], scaled = TRUE) |> PCO(group.aes = mtdf[,11]) |> 
+#' #CLRs(which = 10, col = "coral") |> plot()
+#' 
+CLRs <- function (bp,  which = 1, col = "black")
+{
+  p2 <- ncol(bp$Xcat)
+  if (!is.null(bp$CLR.aes$col)) col <- bp$CLR.aes$col
+
+  if (!is.null(which))
+  {
+    if (!all(is.numeric(which))) which <- match(which, colnames(bp$Xcat), nomatch = 0)
+    which <- which[1]
+  }
+  
+  # Expand col to length p2
+  col.len <- length(col)
+  num.lev <- nlevels(bp$Xcat[,which])
+  if (col.len > 1) { col <- col[ifelse(1:num.lev%%col.len==0, col.len, 1:num.lev%%col.len)]
+                   }
+  else {  if (col.len==1) col <- colorRampPalette(c("white",col))(num.lev)
+          else col <- colorRampPalette(c("white","black"))(num.lev)
+  }
+  bp$CLR.aes = list(which = which, col = col)
+  bp
+}
+# ----------------------------------------------------------------------------------------------
+#' Format aesthetics for the supplementary (new) biplot samples
 #'
 #' @description
 #' This function allows formatting changes to new samples.
 #'
 #' @param bp an object of class \code{biplot}.
-#' @param col new sample colour, with default \code{darkorange1}.
-#' @param pch new sample plotting character, with default \code{o}.
-#' @param cex new sample character expansion, with default \code{1}.
-#' @param label logical, whether samples should be labelled or not, with default \code{FALSE}.
-#' @param label.name names for the new samples
-#' @param label.col vector of length number of new samples with the colour of the labels, defaulting to the
-#'                  colour of the sample points.
-#' @param label.cex label text expansion, with default \code{0.75}.
-#' @param label.side side of the plotting character where label appears, with default \code{bottom}. Note that unlike
-#'                   the argument `pos` in `text()`, options are "bottom", "left", "top", "right" and not 1, 2, 3, 4.
-#' @param label.offset offset of the label from the data point. See ?text for a detailed explanation of the
-#'                     argument `offset`.
-#' @param connected logical, whether samples are connected in order of rows of data matrix, with default \code{FALSE}.
-#' @param connect.col colour of the connecting line, with default \code{black}.
-#' @param connect.lty line type of the connecting line, with default \code{1}.
-#' @param connect.lwd line width of the connecting line, with default \code{1}.
+#' @param col the colour(s) for the new samples, with default \code{darkorange1}.
+#' @param pch the plotting character(s) for the new samples, with default \code{1}.
+#' @param cex the character expansion(s) for the new samples, with default \code{1}.
+#' @param label a logical value indicating whether new samples should be labelled or not, with default \code{FALSE}.
+#' @param label.name the label names for the new samples.
+#' @param label.col a vector of the same length as the number of new samples containing the colour(s) for the labels of the new samples, with default the colour of the sample points.
+#' @param label.cex the label text expansion(s) for the new samples, with default \code{0.75}.
+#' @param label.side the side at which the label of the plotted point appears, with default \code{bottom}. Note that unlike the argument \code{pos} in \code{text()}, options are "\code{bottom}", "\code{left}", "\code{top}","\code{right}" and not \code{1}, \code{2}, \code{3}, \code{4}.
+#' @param label.offset the offset of the label from the plotted point. See \code{?text} for a detailed explanation of the argument \code{offset}. 
+#' @param connected a logical value indicating whether samples are connected in order of rows of the data matrix, with default \code{FALSE}.
+#' @param connect.col the colour of the connecting line, with default \code{black}.
+#' @param connect.lty the line type of the connecting line, with default \code{1}.
+#' @param connect.lwd the line width of the connecting line, with default \code{1}.
 #'
-#' @return A list with the following components is available:
-#' \item{col}{colour of the samples.}
-#' \item{pch}{plotting character of the samples.}
-#' \item{cex}{expansion of the plotting character of the samples.}
-#' \item{label}{TRUE or FALSE, whether samples should be labelled.}
-#' \item{label.col}{colour of the label.}
-#' \item{label.cex}{expansion of the label.}
-#' \item{label.side}{side at which to plot the label of samples.}
-#' \item{label.offset}{offset of the label from the data point.}
-#' \item{connected}{TRUE or FALSE, whether samples should be connected in row order of X.}
-#' \item{connect.col}{colour of the connecting line.}
-#' \item{connect.lty}{line type of the connecting line.}
-#' \item{connect.lwd}{line width of the connecting line.}
+#' @return The object of class \code{biplot} will be appended with a list called \code{newsamples} containing the following elements:
+#' \item{col}{the colour(s) of the new samples.}
+#' \item{pch}{the plotting character(s) of the new samples.}
+#' \item{cex}{the character expansion(s) of the plotting character(s) of the new samples.}
+#' \item{label}{a logical value indicating whether new samples are labelled.}
+#' \item{label.col}{the label colours of the new samples.}
+#' \item{label.cex}{the label text expansions of the new samples.}
+#' \item{label.side}{the side at which the label of the plotted point appears.}
+#' \item{label.offset}{the offset of the label from the plotted point.}
+#' \item{connected}{a logical value indicating whether new samples are connected.}
+#' \item{connect.col}{the colour of the connecting line.}
+#' \item{connect.lty}{the line type of the connecting line.}
+#' \item{connect.lwd}{the line width of the connecting line.}
+#'
+#' @seealso \link{biplot}, \link{samples}
 #'
 #' @usage
 #' newsamples (bp,  col = "darkorange1", pch = 1, cex = 1, label = FALSE,
@@ -715,7 +767,6 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
                         label.offset = 0.5, connected=FALSE, 
                         connect.col = "black", connect.lty = 1, connect.lwd = 1)
 { 
-  
   if(!is.null(label.name) | !is.null(label.col) | 
      any(label.side!="bottom") | any(label.offset !=0.5) | any(label.cex!=0.75))
     label<-TRUE
@@ -762,15 +813,20 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
 }
 
 
-#' Aesthetics for supplementary (new) biplot axes
+#' Format aesthetics for the supplementary (new) biplot axes
+#' 
+#' @description 
+#' This function allows the user to format the aesthetics for the supplementary (new) biplot axes.
 #'
-#' @param bp object of class `biplot`
-#' @param X.new.names refers to the new column names of \code{bp} to specify which axes to label.
-#' @param which vector of new columns to be displayed in the biplot.
+#' @param bp an object of class \code{biplot}.
+#' @param X.new.names a vector of the new column names of \code{bp} to specify which axes should be labelled.
+#' @param which a vector containing the new columns or variables for which the axes should be displayed, with default \code{1:num.vars}.
 #' @inheritParams axes
 #'
-#' @return an object of class `biplot`
+#' @return The object of class \code{biplot} will be appended with a list called \code{newaxes} containing elements similar to that of \code{axes}.
 #' @export
+#'
+#' @seealso \code{\link{biplot}}, \code{\link{axes}}
 #'
 #' @usage
 #' newaxes(bp, X.new.names=bp$var.names, which = 1:bp$num.vars, col = "orange", lwd = 1, 

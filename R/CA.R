@@ -11,7 +11,8 @@
 #'  and columns in standard coordinates. \code{variant = "Stand"}, presents a biplot with rows in standard coordinates and columns in 
 #'  principal coordinates. \code{variant = "symmetric"}, presents a symmetric biplot with row and column standard coordinates scaled 
 #'  equally by the singular values. 
-#' @param lambda.scal logical value to request lambda-scaling, default is \code{FALSE}.
+#' @param lambda.scal logical value to request lambda-scaling, default is \code{FALSE}. Controls stretching or shrinking of
+#'  column and row distances.
 #'
 #' @return A list with the following components is available:
 #' \item{Z}{Combined data frame of the row and column coordinates.}
@@ -25,6 +26,8 @@
 #' \item{qual}{Quality of the approximation.}
 #' \item{lambda.val}{The computed lambda value if lambda-scaling is requested.}
 #'
+#' @seealso [biplot()]
+#'
 #' @usage CA(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant = "Princ", 
 #' lambda.scal = FALSE)
 #' @aliases CA
@@ -36,10 +39,10 @@
 #' biplot(HairEyeColor[,,2], center = FALSE) |> CA() |> plot()
 #' # Creating a CA biplot with rows in standard coordinates:
 #' biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Stand") |> 
-#' samples(col=c("magenta","purple"), pch=c(15,17), label.col="black") |> plot()
+#' samples(col=c("magenta","purple"), pch = c(15,17), label.col = "black") |> plot()
 #' # Creating a CA biplot with rows and columns scaled equally:
 #' biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
-#' samples(col=c("magenta","purple"), pch=c(15,17), label.col="black") |> plot()
+#' samples(col = c("magenta","purple"), pch = c(15,17), label.col = "black") |> plot()
 
 CA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant = "Princ", lambda.scal = FALSE)
 {
@@ -60,7 +63,6 @@ CA <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant = "Pri
 #'
 CA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant = "Princ", lambda.scal = FALSE)
 {
-  
   if (bp$center == TRUE) 
   {  warning (paste("Centering was not performed. Set biplot(center = FALSE) when performing CA()."))}
   if (bp$scale == TRUE) 
@@ -69,6 +71,9 @@ CA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant
   dim.biplot <- dim.biplot[1]
   if (dim.biplot != 1 & dim.biplot != 2 & dim.biplot != 3) stop("Only 1D, 2D and 3D biplots")
   e.vects <- e.vects[1:dim.biplot]
+  
+  if (is.na(match(variant, c("Stand", "Princ", "Symmetric")))) 
+    stop("variant must be one of: Stand, Princ or Symmetric \n")
   
   #standard CA method
   X <- bp$raw.X     #to ensure that unscaled and uncentered frequency table is used
@@ -88,8 +93,6 @@ CA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant
   
   svd.out <- svd(Smat)
   
-  bipl.qual <- sum((svd.out[[1]]^2)[e.vects[1:dim.biplot]])/sum((svd.out[[1]]^2))*100 
-
   if(variant == "Stand") gamma <- 0
   if(variant == "Princ") gamma <- 1
   if(variant == "Symmetric") gamma <- 0.5
@@ -100,15 +103,16 @@ CA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant
   rownames(rowcoor) <- rownames(X)
   rownames(colcoor) <- colnames(X)
   
-  lamb.val <- 1
+  lambda.val <- 1
+
   #UB page 24
   if (lambda.scal) {
-    lamb.4 <- r*sum(rowcoor*rowcoor)/(c*sum(colcoor*colcoor))
-    lamb.val <- sqrt(sqrt(lamb.4))
+    lamb.4 <- r*sum(colcoor*colcoor)/(c*sum(rowcoor*rowcoor))
+    lambda.val <- sqrt(sqrt(lamb.4))
   }
   
-  rowcoor = rowcoor*lamb.val
-  colcoor = colcoor/lamb.val
+  rowcoor = rowcoor*lambda.val
+  colcoor = colcoor/lambda.val
   
   #plotting: combine the samples for bp update
   Z <- rbind(rowcoor,colcoor)
@@ -126,15 +130,20 @@ CA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant
   bp$Z <- Z
   bp$r <- r
   bp$c <- c
+  bp$Dc <- Dc
+  bp$Rc <- Dr
+  bp$Dch <- Dch
+  bp$Drh <- Drh
   bp$rowcoor <- rowcoor         
   bp$colcoor <- colcoor
   bp$P <- P
   bp$Smat <- Smat
   bp$SVD <- svd.out
-  bp$qual <- bipl.qual
+  bp$e.vects <- e.vects
   bp$dim.biplot <- dim.biplot
-  bp$lambda.val <- lamb.val
+  bp$lambda.val <- lambda.val
+  bp$gamma <- gamma
 
-  class(bp) <- append("CA", class(bp))
+  class(bp) <- append(class(bp), "CA")
   bp
 }

@@ -337,6 +337,12 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
 #'                                       expressed as deviations from their class means.}
 #' \item{within.class.sample.predictivity}{the fit measure for each sample expressed as
 #'                                         deviation from its class mean.}
+#'
+#' For an object of class \code{CA}:
+#' \item{row.predictivity}{the fit measure for each row of the input matrix individual sample.}
+#' \item{col.predictivity}{the fit measure for each column of the input matrix individual sample.}
+#' \item{Xhat}{predicted matrix per row profile}
+#' 
 #' @export
 #'
 #' @examples
@@ -386,6 +392,57 @@ fit.measures <- function (bp)
                                            diag(Xwithin%*%solve(bp$Wmat)%*%t(Xwithin))
     names(bp$within.class.sample.predictivity) <- rownames(bp$X)
   }
+  if (inherits(bp, "CA"))
+  {
+    nc <- bp$c
+    nr <- bp$r
+    nm <- min(nc, nr)
+    
+    Sigma2 <- diag(bp$SVD[[1]])^2
+    quality <- sum((bp$SVD[[1]]^2)[bp$e.vects[1:bp$dim.biplot]])/sum((bp$SVD[[1]]^2))
+    bp$quality <- quality
+    
+    tempMat <- diag(diag(bp$SVD[[3]] %*% Sigma2 %*% t(bp$SVD[[3]])))
+    Weights <- diag(tempMat)/sum(Sigma2)
+    out.cols <- vector("list", nc)
+    out.Adeq <- vector("list", nc)
+    out.Xhat <- vector("list", nm)
+    
+    for (i in 1:nm) {
+      Jr <- matrix(0, nrow = nm, ncol = nm)
+      Jr[1:i, 1:i] <- diag(i)
+      out.cols[[i]] <- diag(diag(bp$SVD[[3]] %*% Sigma2 %*% Jr %*% t(bp$SVD[[3]]))) %*% solve(tempMat)
+      out.Adeq[[i]] <- diag(diag(bp$SVD[[3]] %*% Jr %*% t(bp$SVD[[3]])))
+      out.Xhat[[i]] <- bp$SVD[[2]] %*% diag(bp$SVD[[1]]) %*% Jr %*% t(bp$SVD[[3]])
+      dimnames(out.Xhat[[i]]) <- dimnames(bp$X)
+    }
+    
+    names(out.Xhat) <- c(paste("Dim", 1:nm, sep = " "))
+    bp$Xhat <- out.Xhat
+    
+    col.predictivities <- round(diag(out.cols[[1]]), digits = 4)
+    for (i in 2:nm) col.predictivities <- rbind(col.predictivities, round(diag(out.cols[[i]]), digits = 4))
+    dimnames(col.predictivities) <- list(paste("Dim", 1:nm, sep = " "), dimnames(bp$X)[[2]])
+    bp$col.predictivities <- col.predictivities
+    
+    adequacy <- round(diag(out.Adeq[[1]]), digits = 4)
+    for (i in 2:nm) adequacy <- rbind(adequacy, round(diag(out.Adeq[[i]]), digits = 4))
+    dimnames(adequacy) <- list(paste("Dim", 1:nm, sep = " "), dimnames(bp$X)[[2]])
+    bp$adequacy <- adequacy
+    
+    out.rows <- vector("list", nc)
+    for (i in 1:nm) {
+      Jr <- matrix(0, nrow = nm, ncol = nm)
+      Jr[1:i, 1:i] <- diag(i)
+      out.rows[[i]] <- diag(diag(bp$SVD[[2]] %*% Sigma2 %*% Jr %*% t(bp$SVD[[2]]))) %*% 
+        solve(diag(diag(bp$SVD[[2]] %*% Sigma2 %*% t(bp$SVD[[2]]))))
+    }
+    row.predictivities <- round(diag(out.rows[[1]]), digits = 4)
+    for (i in 2:nm) row.predictivities <- rbind(row.predictivities, round(diag(out.rows[[i]]), digits = 4))
+    dimnames(row.predictivities) <- list(paste("Dim", 1:nm, sep = " "), dimnames(bp$X)[[1]])
+    bp$row.predictivities <- row.predictivities
+  }
+  
   bp
 }
 # ---------------------------------------------------------------------------------------------
@@ -510,12 +567,18 @@ biplot.legend <- function(bp, ...)
 #' 
 print.biplot <- function (x, ...)
 {
+  if (!inherits(x, "CA"))
+  {
   cat ("Object of class biplot, based on", x$n, "samples and", ncol(x$raw.X), "variables.\n")
   if (!is.null(x$X)) if (ncol(x$X) > 1) cat (ncol(x$X), "numeric variables.\n") else cat (ncol(x$X), "numeric variable.\n")
   if (!is.null(x$Xcat)) if (ncol(x$Xcat) > 1) cat (ncol(x$Xcat), "categorical variables.\n") else cat (ncol(x$Xcat), "categorical variable.\n")
   if (!is.null(x$classes))
     cat (nlevels(x$classes), "classes:", levels(x$classes), "\n")
-
+  }
+  if(inherits(x,"CA"))
+  { #print statement is different for CA()
+    cat ("Object of class CA, based on", nrow(x$raw.X), "row levels and", ncol(x$raw.X), "column levels.\n")
+  }
   if (!is.null(x$na.action))
     cat ("\nThe following", length(x$na.action), "sample-rows where removed due to missing values\n", x$na.action, "\n")
 
@@ -557,24 +620,6 @@ print.biplot <- function (x, ...)
     cat (paste("Class mean predictions for classes ", 
                paste(x$g.names[x$predict$means],collapse=", "), ".\n", sep=""))
   }
-}
-
-#' Generic print function of objects of class CA
-#'
-#' @param x an object of class \code{CA}
-#' @param ... additional arguments
-#'
-#' @return no return value, called for side effects
-#' @export
-#' @exportS3Method biplotEZ::print
-#'
-#' @examples
-#' out <- biplot(HairEyeColor[,,1], center=FALSE) |> CA()
-#' out
-#' 
-print.CA <- function(x, ...)
-{
-  cat ("Object of class CA, based on", nrow(x$raw.X), "row levels and", ncol(x$raw.X), "column levels.\n")
 }
 
 # ----------------------------------------------------------------------------------------------
@@ -702,16 +747,24 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
 #' \item{Xnew.cat}{the matrix of the categorical variables of new data.}
 #' \item{Znew}{the matrix of the coordinates of the new data in the biplot.}
 #'
+#' For an object of class \code{CA} the following additional elements will be appended:
+#' \item{newrowcoor}{the matrix of row coordinates of the new data in the biplot.}
+#' \item{newcolcoor}{the matrix of column coordinates of the new data in the biplot.}
+#' 
 #' @export
-#'
+#' 
 #' @examples
 #' biplot(data = iris[1:145,]) |> PCA() |> interpolate(newdata = iris[146:150,]) |> plot()
+#' biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
+#'      interpolate(newdata = HairEyeColor[,,1]) |> plot()
 #'
-interpolate <- function (bp, newdata=NULL,newvariable=NULL)
+interpolate <- function (bp, newdata=NULL, newvariable=NULL)
 {
   # New samples 
   if(!is.null(newdata))
   {
+    if(!inherits(bp,"CA"))
+    {
     dim.mat<-dim(newdata)
     if(is.null(dim.mat)) stop("Not enough variables to interpolate.")
     if(ncol(newdata)<2) stop("Not enough variables to interpolate.")
@@ -758,13 +811,59 @@ interpolate <- function (bp, newdata=NULL,newvariable=NULL)
       Znew <- Ynew[,bp$e.vects]
     }
     
+    
     bp$Xnew.raw <- Xnew.raw
     bp$Xnew <- Xnew
     bp$Xnew.cat <- Xnew.cat
     bp$Znew <- Znew
   }
+    if(inherits(bp,"CA"))
+    {
+      if (!is.null(newdata)) 
+        if (!(((is.vector(newdata)) | (is.matrix(newdata))) & is.numeric(newdata))) 
+          stop("newdata must be a numeric vector or matrix. \n")
+      
+      if (!is.null(newdata)) {
+        
+        Xnew <- newdata/sum(newdata) # new correspondence matrix
+        Xnew.cat <- NULL
+        Xnew.raw <- Xnew
+        
+        if (is.vector(Xnew)) {
+          newDr <- diag(apply(Xnew, 1, sum))
+          newSmat <- sqrt(solve(newDr)) * (Xnew - newDr * bp$Dc) %*% bp$Dch
+        }
+        else {
+          newDr <- diag(apply(Xnew, 1, sum))
+          newDc <- diag(apply(Xnew, 2, sum))
+          newDrh <- sqrt(solve(newDr))
+          newDch <- sqrt(solve(newDc))
+          newEmat <- (newDr %*%matrix(1, nrow = nrow(Xnew), ncol = ncol(Xnew)) %*%  newDc)
+          newSmat <- newDrh%*%(Xnew-newEmat)%*%newDch
+        }
+      }
+      svd.out <- svd(newSmat)
+      
+      newrowcoor <- (svd.out[[2]]%*%(diag(svd.out[[1]])^bp$gamma))*bp$lambda.val
+      newcolcoor <- (svd.out[[3]]%*%(diag(svd.out[[1]])^(1-bp$gamma)))/bp$lambda.val
+      
+      rownames(newrowcoor) <- rownames(Xnew)
+      rownames(newcolcoor) <- colnames(Xnew)
+
+      #plotting: combine the samples for bp update
+      Znew <- rbind(newrowcoor,newcolcoor)
+      rownames(Znew) <- c(rownames(Xnew),colnames(Xnew))
+      
+      bp$Xnew.raw <- Xnew.raw
+      bp$newrowcoor <- newrowcoor
+      bp$newcolcoor <- newcolcoor
+      bp$Znew <- Znew
+    }
+}
   
   # New variables 
+  if(!inherits(bp,"CA"))
+  {
   if(!is.null(newvariable))
   {
     newvariable <- as.matrix(newvariable)
@@ -808,7 +907,7 @@ interpolate <- function (bp, newdata=NULL,newvariable=NULL)
       bp$new.means <- new.means 
       bp$new.sd <- new.sd
     }
-
+  }
   }
   
   bp

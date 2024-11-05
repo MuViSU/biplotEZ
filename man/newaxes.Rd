@@ -2,7 +2,7 @@
 % Please edit documentation in R/aesthetics.R
 \name{newaxes}
 \alias{newaxes}
-\title{Aesthetics for supplementary (new) biplot axes}
+\title{Format aesthetics for the supplementary (new) biplot axes}
 \usage{
 newaxes(bp, X.new.names=bp$var.names, which = 1:bp$num.vars, col = "orange", lwd = 1, 
 lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75, label.line = 0.1, 
@@ -11,65 +11,62 @@ tick.label.cex = 0.6, tick.label.side = "below", predict.col = col, predict.lwd 
 predict.lty = lty, ax.names = X.new.names, orthogx = 0, orthogy = 0)
 }
 \arguments{
-\item{bp}{object of class \code{biplot}}
+\item{bp}{an object of class \code{biplot}.}
 
-\item{X.new.names}{refers to the new column names of \code{bp} to specify which axes to label.}
+\item{X.new.names}{a vector of the new column names of \code{bp} to specify which axes should be labelled.}
 
-\item{which}{vector of new columns to be displayed in the biplot.}
+\item{which}{a vector containing the new columns or variables for which the axes should be displayed, with default \code{1:num.vars}.}
 
-\item{col}{vector of size p specifying colours of labels of biplot axes. The default is \code{grey(0.7)}.}
+\item{col}{the colour(s) for the axes, with default \code{grey(0.7)}. Alternatively, provide a vector of colours corresponding to \code{X.names}.}
 
-\item{lwd}{axis line width, with default \code{1}.}
+\item{lwd}{the line width(s) for the axes, with default \code{1}.}
 
-\item{lty}{axis line type, with default \code{1}.}
+\item{lty}{the line type(s) for the axes, with default \code{1}.}
 
-\item{label.dir}{One of "Orthog" (default), "Hor" or "Paral" specifying titles of
-axes to appear orthogonal to the side of the figure; always
-horizontally or always parallel to the side of the figure.}
+\item{label.dir}{a character string indicating the placement of the axis titles to the side of the figure. One of "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure (default) , "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure.}
 
-\item{label.col}{axis label colour, with default, \code{col}.}
+\item{label.col}{the colour(s) for the axis labels, with default, \code{col}.}
 
-\item{label.cex}{axis label expansion, with default \code{0.75}.}
+\item{label.cex}{the label expansion for the axis labels, with default \code{0.75}.}
 
-\item{label.line}{axis label written on which margin line, with default \code{0.1}.}
+\item{label.line}{the distance of the axis title from the side of the figure, with default \code{0.1}.}
 
-\item{ticks}{integer-valued vector of size equal to the number of biplot axes
-to control the number of tickmarks on each individual biplot
-axis. Default is 5 for each axis.}
+\item{ticks}{an integer-valued vector indicating the number of tickmarks for each axis, with default \code{5} for each axis.}
 
-\item{tick.col}{tick mark colour, with default \code{col}.}
+\item{tick.col}{the colour(s) for the tick marks, with default \code{col}.}
 
-\item{tick.size}{positive integer-valued vector with specifying tick mark sizes, with default \code{1}.}
+\item{tick.size}{a vector specifying the sizes of tick marks for each axis, with default \code{1} for each .}
 
-\item{tick.label}{logical, whether axes should be labelled or not, with default \code{TRUE}.}
+\item{tick.label}{a logical value indicating whether the axes should be labelled, with default \code{TRUE}.}
 
-\item{tick.label.col}{tick mark label colour, with default \code{tick.col}.}
+\item{tick.label.col}{the colour(s) for the tick mark labels, with default \code{tick.col}.}
 
-\item{tick.label.cex}{tick mark label expansion, with default \code{0.6}.}
+\item{tick.label.cex}{the label expansion for the tick mark labels, with default \code{0.6}.}
 
-\item{tick.label.side}{character vector specifying position of the tick label "below" or "above" the axis.}
+\item{tick.label.side}{a character string indicating the position of the tick label. One of "\code{below}" for the label to appear below the tick mark (default) or "\code{above}" for the label to appear above the tick mark.}
 
-\item{predict.col}{predicted samples colour, with default \code{col}.}
+\item{predict.col}{the colour(s) for the predicted samples, with default \code{col}.}
 
-\item{predict.lwd}{predicted samples line width, with default \code{lwd}.}
+\item{predict.lwd}{the line width(s) for the predicted samples, with default \code{lwd}.}
 
-\item{predict.lty}{predicted samples line type, with default \code{lty}.}
+\item{predict.lty}{the line type(s) for the predicted samples, with default \code{lty}.}
 
-\item{ax.names}{vector of size \code{p} containing user defined names for the variables.}
+\item{ax.names}{a vector of size \code{p} containing user defined titles for the axes.}
 
-\item{orthogx}{numeric vector of size p specifying the x-coordinate of the parallel transformation of each axis.
-Defaults to zero for each axis. Only used when the dimension of the biplot is two.}
+\item{orthogx}{a numeric vector of size \code{p} specifying the x-coordinate of the parallel transformation of each axis, with default \code{0} for each axis. This is only used when \code{dim.biplot = 2}.}
 
-\item{orthogy}{numeric vector of size p specifying the y-coordinate of the parallel transformation of each axis.
-Defaults to zero for each axis. Only used when the dimension of the biplot is two.}
+\item{orthogy}{a numeric vector of size \code{p} specifying the y-coordinate of the parallel transformation of each axis, with default \code{0} for each axis. This is only used when \code{dim.biplot = 2}.}
 }
 \value{
-an object of class \code{biplot}
+The object of class \code{biplot} will be appended with a list called \code{newaxes} containing elements similar to that of \code{axes}.
 }
 \description{
-Aesthetics for supplementary (new) biplot axes
+This function allows the user to format the aesthetics for the supplementary (new) biplot axes.
 }
 \examples{
 biplot(data = iris[,1:2]) |> PCA() |> interpolate(newvariable = iris[3:4]) |> 
   newaxes(col="gold") |> plot()
+}
+\seealso{
+\code{\link{biplot}}, \code{\link{axes}}
 }
