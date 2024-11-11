@@ -233,7 +233,6 @@ To construct the CA biplot for row standard coordinates:
 ```{r}
 ca.out <- biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Stand") |> 
   plot()
-ca.out$qual
 ```
 
 ## `Variant="Symmetric"`
@@ -243,7 +242,6 @@ To construct the symmetric CA map:
 ```{r}
 ca.out <- biplot(HairEyeColor[,,2], center = FALSE) |> 
   CA(variant = "Symmetric") |> plot()
-ca.out$qual
 ca.out$lambda.val
 ```
 
@@ -275,9 +273,9 @@ The function `interpolate()` accepts a matrix or data frame containing the sampl
 The function `newsamples()` operates similar to `samples()` and enables aesthetic changes to the new samples.
 
 ```{r}
-biplot(HairEyeColor[,,2], center=F) |> CA(variant="Symmetric") |> 
-  samples(pch=c(0,2)) |> interpolate(newdata=HairEyeColor[,,1]) |> 
-  newsamples(col=c("orange","purple"), pch=c(15,17)) |> plot()      
+biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
+  samples(pch = c(0,2)) |> interpolate(newdata = HairEyeColor[,,1]) |> 
+  newsamples(col = c("orange","purple"), pch = c(15,17)) |> plot()      
 ```
 
 
@@ -287,13 +285,14 @@ The `sample()` function should be utilised to specify the colours, plotting char
 
 ```{r}
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Princ") |> 
-  samples(col=c("cyan","purple"), pch=c(15,17), label.side=c("bottom","top"), 
-          label.cex=1) |> legend.type(samples = TRUE, new = TRUE) |> plot()
+  samples(col = c("cyan","purple"), pch = c(15,17), label.side = c("bottom","top"), 
+          label.cex = 1) |> legend.type(samples = TRUE, new = TRUE) |> plot()
 ```
 
 ```{r}
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
-  samples(col=c("forestgreen","magenta"), pch=c(12,17), label.side=c("top","bottom")) |>
+  samples(col = c("forestgreen","magenta"), pch = c(12,17), 
+          label.side = c("top","bottom")) |> 
   legend.type(samples = TRUE) |> plot()
 ```
 
@@ -323,7 +322,7 @@ SACrime
 ```{r}
 biplot(SACrime, center = FALSE) |> 
   CA(variant = "Symmetric", lambda.scal = TRUE) |> 
-  samples(col=c("cyan","purple"), pch=c(15,17), label.side=c("bottom","top")) |>
+  samples(col = c("cyan","purple"), pch = c(15,17), label.side = c("bottom","top")) |>
   legend.type(samples = TRUE, new = TRUE) |> plot()
 ```
 
