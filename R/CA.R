@@ -136,7 +136,7 @@ CA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant
   bp$Z <- Z
   bp$r <- r
   bp$c <- c
-  bp$Rc <- Dr
+  bp$Dr <- Dr
   bp$Dc <- Dc
   bp$Drh <- Drh
   bp$Dch <- Dch
