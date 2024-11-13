@@ -166,8 +166,8 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
   {
     label.col <- rep(NA, n)
     for (j in 1:g)
-      if (!is.na(match(j, which))) label.col[bp$group.aes==bp$g.names[j]] <- col[which==j]
-#    label.col <- stats::na.omit(label.col)
+      if (!is.na(match(j, which))) label.col[bp$group.aes==bp$g.names[j]] <- col[which==j][1]
+  #label.col <- stats::na.omit(label.col)
   }
   else
   {
