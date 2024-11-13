@@ -15,9 +15,6 @@ knitr::opts_chunk$set(
 
 # biplotEZ
 
-<!-- badges: start -->
-<!-- badges: end -->
-
 <img src="logo.png" align="right" width="150" /> 
 
 The goal of biplotEZ is to provide users an EZ-to-use platform for
