@@ -6,6 +6,9 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
+
+<img src="logo.png" align="left" width="150" />
+
 The goal of biplotEZ is to provide users an EZ-to-use platform for
 visually representing their data with biplots. Currently, this package
 includes principal component analysis (PCA) and canonical variate
