@@ -1,13 +1,11 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<img src="logo.png" align="right" width="150" />
 # biplotEZ
 
 <!-- badges: start -->
 <!-- badges: end -->
-
-
-<img src="logo.png" align="right" width="150" />
 
 The goal of biplotEZ is to provide users an EZ-to-use platform for
 visually representing their data with biplots. Currently, this package
