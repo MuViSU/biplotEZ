@@ -385,23 +385,17 @@ either <code>scale</code> or <code>center</code> is specified as
 <code class="sourceCode R"><span><span class="va">ca.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Stand"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ca.out</span><span class="op">$</span><span class="va">qual</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="variantsymmetric">
 <code>Variant="Symmetric"</code><a class="anchor" aria-label="anchor" href="#variantsymmetric"></a>
 </h3>
 <p>To construct the symmetric CA map:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ca.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ca.out</span><span class="op">$</span><span class="va">qual</span></span>
-<span><span class="co">#&gt; NULL</span></span></code></pre></div>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ca.out</span><span class="op">$</span><span class="va">lambda.val</span></span>
 <span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
 </div>
@@ -410,38 +404,38 @@ either <code>scale</code> or <code>center</code> is specified as
 </h3>
 <p>The <code>fit.mesaures()</code> function should be utilised to obtain
 the specific fit measures explained above.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ca.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/fit.measures.html">fit.measures</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Quality"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Quality"</span></span></code></pre></div>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ca.out</span><span class="op">$</span><span class="va">quality</span></span>
 <span><span class="co">#&gt; [1] 0.9833094</span></span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Adequacy"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Adequacy"</span></span></code></pre></div>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ca.out</span><span class="op">$</span><span class="va">adequacy</span></span>
 <span><span class="co">#&gt;        Brown   Blue  Hazel  Green</span></span>
 <span><span class="co">#&gt; Dim 1 0.3824 0.5745 0.0425 0.0006</span></span>
 <span><span class="co">#&gt; Dim 2 0.5892 0.6277 0.3904 0.3926</span></span>
 <span><span class="co">#&gt; Dim 3 0.6102 0.6358 0.8530 0.9010</span></span>
 <span><span class="co">#&gt; Dim 4 1.0000 1.0000 1.0000 1.0000</span></span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Row predictivities"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Row predictivities"</span></span></code></pre></div>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ca.out</span><span class="op">$</span><span class="va">row.predictivities</span></span>
 <span><span class="co">#&gt;        Black  Brown    Red  Blond</span></span>
 <span><span class="co">#&gt; Dim 1 0.6860 0.8630 0.4219 0.9974</span></span>
 <span><span class="co">#&gt; Dim 2 0.9932 0.9441 0.8508 0.9999</span></span>
 <span><span class="co">#&gt; Dim 3 1.0000 1.0000 1.0000 1.0000</span></span>
 <span><span class="co">#&gt; Dim 4 1.0000 1.0000 1.0000 1.0000</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Column predictivities"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "Column predictivities"</span></span></code></pre></div>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ca.out</span><span class="op">$</span><span class="va">col.predictivities</span></span>
 <span><span class="co">#&gt;        Brown   Blue  Hazel  Green</span></span>
 <span><span class="co">#&gt; Dim 1 0.9439 0.9898 0.4789 0.0113</span></span>
@@ -467,10 +461,10 @@ containing the subset of numerical variables.</p>
 <p>The function <code><a href="../reference/newsamples.html">newsamples()</a></code> operates similar to
 <code><a href="../reference/samples.html">samples()</a></code> and enables aesthetic changes to the new
 samples.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center<span class="op">=</span><span class="cn">F</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant<span class="op">=</span><span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/interpolate.html">interpolate</a></span><span class="op">(</span>newdata<span class="op">=</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/newsamples.html">newsamples</a></span><span class="op">(</span>col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"orange"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>      </span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/interpolate.html">interpolate</a></span><span class="op">(</span>newdata <span class="op">=</span> <span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/newsamples.html">newsamples</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"orange"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>      </span></code></pre></div>
 <p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 </div>
 <div class="section level3">
@@ -478,14 +472,15 @@ samples.</p>
 </h3>
 <p>The <code><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample()</a></code> function should be utilised to specify the
 colours, plotting characters and expansion of the samples.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Princ"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyan"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span>, label.side<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>,<span class="st">"top"</span><span class="op">)</span>, </span>
-<span>          label.cex<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyan"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span>, label.side <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>,<span class="st">"top"</span><span class="op">)</span>, </span>
+<span>          label.cex <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-14-1.png" width="672"><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-14-2.png" width="672"></p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"forestgreen"</span>,<span class="st">"magenta"</span><span class="op">)</span>, pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">17</span><span class="op">)</span>, label.side<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>,<span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"forestgreen"</span>,<span class="st">"magenta"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">17</span><span class="op">)</span>, </span>
+<span>          label.side <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>,<span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 </div>
@@ -495,7 +490,7 @@ colours, plotting characters and expansion of the samples.</p>
 <p>Consider the South African Crime data set 2008, extracted from the
 South African police website (<a href="http://www.saps.gov.za/" class="external-link uri">http://www.saps.gov.za/</a>). <span class="citation">Gower,
 Lubbe, and Roux (2011)</span> :312.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SACrime</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1235</span>,<span class="fl">432</span>,<span class="fl">1824</span>,<span class="fl">1322</span>,<span class="fl">573</span>,<span class="fl">588</span>,<span class="fl">624</span>,<span class="fl">169</span>,<span class="fl">629</span>,<span class="fl">34479</span>,<span class="fl">16833</span>,<span class="fl">46993</span>,<span class="fl">30606</span>,<span class="fl">13670</span>,</span>
 <span>              <span class="fl">16849</span>,<span class="fl">15861</span>,<span class="fl">9898</span>,<span class="fl">24915</span>,<span class="fl">2160</span>,<span class="fl">939</span>,<span class="fl">5257</span>,<span class="fl">4946</span>,<span class="fl">722</span>,<span class="fl">1271</span>,<span class="fl">881</span>,<span class="fl">775</span>,<span class="fl">1844</span>,<span class="fl">5946</span>,</span>
 <span>              <span class="fl">4418</span>,<span class="fl">15117</span>,<span class="fl">10258</span>,<span class="fl">5401</span>,<span class="fl">4273</span>,<span class="fl">4987</span>,<span class="fl">1956</span>,<span class="fl">10639</span>,<span class="fl">29508</span>,<span class="fl">15705</span>,<span class="fl">62703</span>,<span class="fl">37203</span>,</span>
@@ -534,10 +529,10 @@ Lubbe, and Roux (2011)</span> :312.</p>
 <span><span class="co">#&gt;      NWst 3017  5528</span></span>
 <span><span class="co">#&gt;      NCpe 1020  1175</span></span>
 <span><span class="co">#&gt;      WCpe 4000 14555</span></span></code></pre></div>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">SACrime</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span>, lambda.scal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyan"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span>, label.side<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>,<span class="st">"top"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyan"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span>, label.side <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>,<span class="st">"top"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-17-1.png" width="672"><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-17-2.png" width="672"></p>
 </div>
