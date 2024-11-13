@@ -3,6 +3,8 @@
 
 # biplotEZ
 
+<img src="logo.png" align="right" width="150" />
+
 <!-- badges: start -->
 <!-- badges: end -->
 
