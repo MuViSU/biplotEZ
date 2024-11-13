@@ -34,7 +34,7 @@ frequency table. Numerous variants of CA are available for the
 application to diverse problems, the interested reader is referred to:
 @UB2011, @BehLombardo2014.
 
-In the <a href="https://cran.rstudio.com/web/packages/biplotEZ/vignettes/biplotEZ.html" target="_blank">biplotEZ vignette</a> focus will be places on three *EZ*-to-use versions based on the Pearson residuals (@UB2011 :300).
+In this vignette, focus will be placed on three *EZ*-to-use versions based on the Pearson residuals (@UB2011 :300).
 
 Now, the two-way frequency table is also referred to as the data matrix:
 $\mathbf{X}:r\times c$. This data matrix is different from the
@@ -187,12 +187,12 @@ The return value is `lambda.val`.
 
 `quality`, `adequacy`, `row.predictivities` and `column.predictivities` are available for CA biplots. 
 
-As explained in the <a href="https://cran.rstudio.com/web/packages/biplotEZ/vignettes/biplotEZ.html" target="_blank">biplotEZ vignette</a>, the quality of the biplot is measured by the ratio of the variance explained (sum of the squared singular values of the utilised ($M$) components) and the total variance (sum of all squared singular values ($p$)).
+As explained in the biplotEZ vignette, the quality of the biplot is measured by the ratio of the variance explained (sum of the squared singular values of the utilised ($M$) components) and the total variance (sum of all squared singular values ($p$)).
 
 $$
 \frac{\sum_{m=1}^{M}\lambda_m^2}{\sum_{m=1}^{p}\lambda_m^2}
 $$
-The `adequacy` refers to the representation of the variables. In `CA()` the factor variable represented in the columns is treated as the variables and is calculated as explained in the <a href="https://cran.rstudio.com/web/packages/biplotEZ/vignettes/biplotEZ.html" target="_blank">biplotEZ vignette</a>:
+The `adequacy` refers to the representation of the variables. In `CA()` the factor variable represented in the columns is treated as the variables and is calculated as explained in the biplotEZ vignette:
 
 $$
  \frac{diag(\mathbf{V}_r\mathbf{V}_r')}{diag(\mathbf{VV}')}= diag(\mathbf{V}_r\mathbf{V}_r')
