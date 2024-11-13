@@ -22,7 +22,7 @@ display representations of the variables on which the samples are measured."><me
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biplotEZ</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1</span>
       </span>
     </div>
 
@@ -89,27 +89,27 @@ display representations of the variables on which the samples are measured.</p>
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>data</dt>
-<dd><p>a dataframe or matrix containing all variables the user wants to analyse.</p></dd>
+<dd><p>a data frame or numeric matrix containing all variables the user wants to analyse.</p></dd>
 
 
 <dt>classes</dt>
-<dd><p>vector identifying class membership.</p></dd>
+<dd><p>a vector identifying class membership.</p></dd>
 
 
 <dt>group.aes</dt>
-<dd><p>vector identifying groups for aesthetic formatting.</p></dd>
+<dd><p>a vector identifying groups for aesthetic formatting.</p></dd>
 
 
 <dt>center</dt>
-<dd><p>logical, indicating whether <code>data</code> should be column centered, with default <code>TRUE</code>.</p></dd>
+<dd><p>a logical value indicating whether <code>data</code> should be column centered, with default <code>TRUE</code>.</p></dd>
 
 
 <dt>scaled</dt>
-<dd><p>logical, indicating whether <code>data</code> should be standardized to unit column variances, with default <code>FALSE</code>.</p></dd>
+<dd><p>a logical value indicating whether <code>data</code> should be standardised to unit column variances, with default <code>FALSE</code>.</p></dd>
 
 
 <dt>Title</dt>
-<dd><p>title of the biplot to be rendered, enter text in "  ".</p></dd>
+<dd><p>the title of the biplot to be rendered, enter text in "  ".</p></dd>
 
 </dl></div>
     <div id="value">
@@ -118,38 +118,94 @@ display representations of the variables on which the samples are measured.</p>
 
 <p>A list with the following components is available:</p>
 <dl><dt>X</dt>
-<dd><p>matrix of the centered and scaled numeric variables.</p></dd>
+<dd><p>the matrix of the centered and scaled numeric variables.</p></dd>
 
 <dt>Xcat</dt>
-<dd><p>data frame of the categorical variables.</p></dd>
+<dd><p>the data frame of the categorical variables.</p></dd>
 
 <dt>raw.X</dt>
-<dd><p>original data.</p></dd>
+<dd><p>the original data.</p></dd>
+
+<dt>classes</dt>
+<dd><p>the vector of category levels for the class variable. This is to be used for <code>colour</code>, <code>pch</code> and <code>cex</code> specifications.</p></dd>
+
+<dt>na.action</dt>
+<dd><p>the vector of observations that have been removed.</p></dd>
 
 <dt>center</dt>
-<dd><p>TRUE or FALSE, whether X is centered.</p></dd>
+<dd><p>a logical value indicating whether \(\mathbf{X}\) is centered.</p></dd>
 
 <dt>scaled</dt>
-<dd><p>TRUE or FALSE, wether X is scaled.</p></dd>
+<dd><p>a logical value indicating whether \(\mathbf{X}\) is scaled.</p></dd>
 
 <dt>means</dt>
-<dd><p>vector of means for each numeric variable.</p></dd>
+<dd><p>the vector of means for each numeric variable.</p></dd>
 
 <dt>sd</dt>
-<dd><p>vector of standard deviations for each numeric variable.</p></dd>
+<dd><p>the vector of standard deviations for each numeric variable.</p></dd>
+
+<dt>n</dt>
+<dd><p>the number of observations.</p></dd>
+
+<dt>p</dt>
+<dd><p>the number of variables.</p></dd>
 
 <dt>group.aes</dt>
-<dd><p>vector of category levels for the grouping variable. This is to be used for colour, pch and cex specifications.</p></dd>
+<dd><p>the vector of category levels for the grouping variable. This is to be used for <code>colour</code>, <code>pch</code> and <code>cex</code> specifications.</p></dd>
+
+<dt>g.names</dt>
+<dd><p>the descriptive names to be used for group labels.</p></dd>
+
+<dt>g</dt>
+<dd><p>the number of groups.</p></dd>
 
 <dt>Title</dt>
-<dd><p>title of the biplot to be rendered</p></dd>
+<dd><p>the title of the biplot rendered</p></dd>
 
 </dl></div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>This function is the entry-level function in <code>biplotEZ</code> to construct a biplot display.
+It initialises an object of class <code>biplot</code> which can then be piped to various other functions
+to build up the biplot display.</p>
+    </div>
+    <div id="useful-links">
+    <h2>Useful links</h2>
+    
+
+
+<p>The biplot display can be built up in four broad steps depending on the needs for the display.
+Firstly, choose an appropriate method to construct the display;
+Secondly, change the aesthetics of the display;
+Thirdly, append the display with supplementary features such as axes, samples and means;
+Finally, superimpose shapes, characters or elements onto the display.</p>
+<p><strong>1. Different types of biplots:</strong></p><ul><li><p><code><a href="PCA.html">PCA()</a></code>: Principal Component Analysis biplot of various dimensions</p></li>
+<li><p><code><a href="CVA.html">CVA()</a></code>: Canonical Variate Analysis biplot</p></li>
+<li><p><code><a href="PCO.html">PCO()</a></code>: Principal Coordinate Analysis biplot</p></li>
+<li><p><code><a href="CA.html">CA()</a></code>: Correspondence Analysis biplot</p></li>
+<li><p><code><a href="regress.html">regress()</a></code>: Regression biplot method</p></li>
+</ul><p><strong>2. Customise the biplot display with aesthetic functions:</strong></p><ul><li><p><code><a href="samples.html">samples()</a></code>: Change the formatting of sample points on the biplot display</p></li>
+<li><p><code><a href="axes.html">axes()</a></code>: Change the formatting of the biplot axes</p></li>
+</ul><p><strong>3. Supplement the existing biplot with additional axes, samples and group means:</strong></p><ul><li><p><code><a href="newsamples.html">newsamples()</a></code>: Add and change formatting of additional samples</p></li>
+<li><p><code><a href="newaxes.html">newaxes()</a></code>: Add and change formatting of additional axes</p></li>
+<li><p><code><a href="means.html">means()</a></code>: Insert class means to the display, and format appropriately</p></li>
+</ul><p><strong>4. Append the biplot display:</strong></p><ul><li><p><code><a href="alpha.bags.html">alpha.bags()</a></code>: Add \(\alpha\)-bags</p></li>
+<li><p><code><a href="ellipses.html">ellipses()</a></code>: Add ellipses</p></li>
+<li><p><code><a href="density2D.html">density2D()</a></code>: Add 2D density regions</p></li>
+</ul><p><strong>Other useful links:</strong></p><ul><li><p><code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code></p></li>
+<li><p><code><a href="fit.measures.html">fit.measures()</a></code></p></li>
+<li><p><code><a href="legend.type.html">legend.type()</a></code></p></li>
+<li><p><code><a href="interpolate.html">interpolate()</a></code></p></li>
+<li><p><code><a href="prediction.html">prediction()</a></code></p></li>
+<li><p><code><a href="classify.html">classify()</a></code></p></li>
+<li><p><code><a href="reflect.html">reflect()</a></code></p></li>
+<li><p><code><a href="rotate.html">rotate()</a></code></p></li>
+</ul></div>
     <div id="references">
     <h2>References</h2>
-    <p>Gabriel, K.R. (1971) The biplot graphic display of matrices with application to principal component analysis. <em>Biometrika.</em> 58(3):453–467.<br><br>
-Gower, J., Gardner-Lubbe, S. &amp; Le Roux, N. (2011, ISBN: 978-0-470-01255-0) <em>Understanding Biplots.</em> Chichester, England: John Wiley &amp; Sons Ltd.<br><br>
-Gower, J.C. &amp; Hand, D.J.(1996, ISBN: 0-412-71630-5) <em>Biplots.</em> London: Chapman &amp; Hall.</p>
+    <p>Gabriel, K.R. (1971) The biplot graphic display of matrices with application to principal component analysis. <em>Biometrika.</em> 58(3):453–467.</p>
+<p>Gower, J., Gardner-Lubbe, S. &amp; Le Roux, N. (2011, ISBN: 978-0-470-01255-0) <em>Understanding Biplots.</em> Chichester, England: John Wiley &amp; Sons Ltd.</p>
+<p>Gower, J.C. &amp; Hand, D.J.(1996, ISBN: 0-412-71630-5) <em>Biplots.</em> London: Chapman &amp; Hall.</p>
     </div>
 
     <div id="ref-examples">
@@ -161,6 +217,7 @@ Gower, J.C. &amp; Hand, D.J.(1996, ISBN: 0-412-71630-5) <em>Biplots.</em> London
 <span class="r-in"><span><span class="co"># create a PCA biplot</span></span></span>
 <span class="r-in"><span><span class="fu">biplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="biplot-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>

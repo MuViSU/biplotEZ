@@ -31,6 +31,7 @@ This function adds supplementary points and variables to the plot from a new dat
 }
 \examples{
 biplot(data = iris[1:145,]) |> PCA() |> interpolate(newdata = iris[146:150,]) |> plot()
-biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> interpolate(newdata = HairEyeColor[,,1]) |> plot()
+biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
+     interpolate(newdata = HairEyeColor[,,1]) |> plot()
 
 }

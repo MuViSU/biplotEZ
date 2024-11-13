@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biplotEZ</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1</span>
       </span>
     </div>
 
@@ -379,7 +379,7 @@ argument <code>data</code> now takes the value of an object of class
 </h2>
 <p>The first argument to the function <code><a href="../reference/PCA.html">PCA()</a></code> is an object of
 class <code>biplot</code>, i.e. the output of the <code><a href="../reference/biplot.html">biplot()</a></code>
-function. By default we c onstruct a 2D biplot (argument
+function. By default we construct a 2D biplot (argument
 <code>dim.biplot = 2</code>) of the first two principal components
 (argument <code>e.vects = 1:2</code>). The <code>group.aes</code>
 argument, if not specified in the function <code><a href="../reference/biplot.html">biplot()</a></code>, allows
@@ -491,7 +491,11 @@ the levels themselves:</p>
 <span>                   <span class="st">"green"</span>, <span class="st">"salmon"</span>, <span class="st">"magenta"</span>, <span class="st">"black"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>           which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"West North Central"</span>, <span class="st">"West South Central"</span>, <span class="st">"East South Central"</span>, </span>
 <span>                     <span class="st">"East North Central"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning in label.col[bp$group.aes == bp$g.names[j]] &lt;- col[which == j]: number</span></span>
+<span><span class="co">#&gt; of items to replace is not a multiple of replacement length</span></span>
+<span><span class="co">#&gt; Warning in label.col[bp$group.aes == bp$g.names[j]] &lt;- col[which == j]: number</span></span>
+<span><span class="co">#&gt; of items to replace is not a multiple of replacement length</span></span></code></pre></div>
 <p><img src="biplotEZ_files/figure-html/unnamed-chunk-18-1.png" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-18-2.png" width="672"></p>
 <p>Note that since four regions are selected, the colour (and other
 aesthetics) is applied to these regions in the order they are specified
@@ -573,7 +577,7 @@ package to place the labels.</p>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `y` instead.</span></span>
 <span><span class="co">#&gt; Warning: Use of `df$z` is discouraged.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `z` instead.</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-21-1.png" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-21-2.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
 <p>Additionally, the user can add customised label names to the samples
 in the biplot. To do this, <code>label</code> must be set to
 <code>TRUE</code> (or <code>"ggrepel"</code>) and
@@ -604,7 +608,7 @@ we represent the years as sample points in a PCA biplot.</p>
 </h2>
 <p>The function <code><a href="../reference/means.html">means()</a></code> allow changing the aesthetics for
 group means specified by group.aes, when the argument
-<code>show.group.means = TRUE</code> in the call to the function
+<code>show.class.means = TRUE</code> in the call to the function
 <code><a href="../reference/PCA.html">PCA()</a></code>. The functionality of <code><a href="../reference/means.html">means()</a></code> mirrors
 that of <code><a href="../reference/samples.html">samples()</a></code> and is discussed in detail in the
 vignette <em>Class separation</em> where class means are more prominent
@@ -751,7 +755,7 @@ diag(\mathbf{V}_r\mathbf{V}_r')
 <div class="section level3">
 <h3 id="predictivities">Predictivities<a class="anchor" aria-label="anchor" href="#predictivities"></a>
 </h3>
-<p>The predictivity provides a measure of who well the original values
+<p>The predictivity provides a measure of how well the original values
 are recovered from the biplot. An element that is well represented will
 have a predictivity close to one, indicating that the sample or variable
 values from prediction is close to the observed values. If an element is
@@ -787,18 +791,18 @@ displayed with the <code><a href="https://rdrr.io/r/base/summary.html" class="ex
 <span><span class="co">#&gt; Object of class biplot, based on 50 samples and 8 variables.</span></span>
 <span><span class="co">#&gt; 8 numeric variables.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Quality of fit = 65.4% </span></span>
-<span><span class="co">#&gt; Adequacy of variables:</span></span>
+<span><span class="co">#&gt; Quality of fit in 2 dimension(s) = 65.4% </span></span>
+<span><span class="co">#&gt; Adequacy of variables in 2 dimension(s):</span></span>
 <span><span class="co">#&gt; Population     Income Illiteracy   Life Exp     Murder    HS Grad      Frost </span></span>
 <span><span class="co">#&gt;  0.1848016  0.3586383  0.2215201  0.1760908  0.2915819  0.2696184  0.1513317 </span></span>
 <span><span class="co">#&gt;       Area </span></span>
 <span><span class="co">#&gt;  0.3464170 </span></span>
-<span><span class="co">#&gt; Axis predictivity:</span></span>
+<span><span class="co">#&gt; Axis predictivity in 2 dimension(s):</span></span>
 <span><span class="co">#&gt; Population     Income Illiteracy   Life Exp     Murder    HS Grad      Frost </span></span>
 <span><span class="co">#&gt;  0.3330216  0.7609185  0.7917091  0.6206172  0.8640485  0.7947530  0.4982299 </span></span>
 <span><span class="co">#&gt;       Area </span></span>
 <span><span class="co">#&gt;  0.5675169 </span></span>
-<span><span class="co">#&gt; Sample predictivity:</span></span>
+<span><span class="co">#&gt; Sample predictivity in 2 dimension(s):</span></span>
 <span><span class="co">#&gt;        Alabama         Alaska        Arizona       Arkansas     California </span></span>
 <span><span class="co">#&gt;     0.95126856     0.61373919     0.26327256     0.86308539     0.57062754 </span></span>
 <span><span class="co">#&gt;       Colorado    Connecticut       Delaware        Florida        Georgia </span></span>
@@ -834,8 +838,8 @@ set to <code>TRUE</code>.</p>
 <span><span class="co">#&gt; Object of class biplot, based on 50 samples and 8 variables.</span></span>
 <span><span class="co">#&gt; 8 numeric variables.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Quality of fit = 65.4% </span></span>
-<span><span class="co">#&gt; Axis predictivity:</span></span>
+<span><span class="co">#&gt; Quality of fit in 2 dimension(s) = 65.4% </span></span>
+<span><span class="co">#&gt; Axis predictivity in 2 dimension(s):</span></span>
 <span><span class="co">#&gt; Population     Income Illiteracy   Life Exp     Murder    HS Grad      Frost </span></span>
 <span><span class="co">#&gt;  0.3330216  0.7609185  0.7917091  0.6206172  0.8640485  0.7947530  0.4982299 </span></span>
 <span><span class="co">#&gt;       Area </span></span>
@@ -860,6 +864,20 @@ as well represented as those located towards the bottom right. This is
 typically the case where samples nearly orthogonal to the PCA plane are
 projected close to the origin and due to their orthogonality, very
 poorly represented.</p>
+</div>
+<div class="section level4">
+<h4 id="axes-represented-as-vectors">Axes represented as vectors<a class="anchor" aria-label="anchor" href="#axes-represented-as-vectors"></a>
+</h4>
+<p>If the user wishes to view the variables as arrows on the biplot to
+give information on the adequacy of the variables, this can be done with
+the <code><a href="../reference/axes.html">axes()</a></code> function, by setting <code>vectors = TRUE</code>
+and <code>unit.circle = TRUE</code>. The adequacy value is given by
+squared length of the arrow.</p>
+<div class="sourceCode" id="cb51"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/axes.html">axes</a></span> <span class="op">(</span>vectors <span class="op">=</span> <span class="cn">TRUE</span>,unit.circle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fit.measures.html">fit.measures</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span> <span class="op">(</span><span class="op">)</span> </span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-32-1.png" width="672"></p>
 </div>
 </div>
 </div>

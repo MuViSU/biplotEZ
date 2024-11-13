@@ -1,6 +1,8 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+<img src="logo.png" align="right" width="150" />
+
 # biplotEZ
 
 <!-- badges: start -->
@@ -12,6 +14,7 @@ includes principal component analysis (PCA) and canonical variate
 analysis (CVA) biplots. This is accompanied by various formatting
 options for the samples and axes. Alpha-bags and concentration ellipses
 are included for visual enhancements and interpretation.
+
 
 ## Installation
 

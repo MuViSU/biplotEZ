@@ -27,13 +27,19 @@ A list with the following components is available:
 \item{Z}{Combined data frame of the row and column coordinates.}
 \item{r}{Numer of levels in the row factor.}
 \item{c}{Numer of levels in the column factor.}
+\item{Dr}{Diagonal matrix of row profiles.}
+\item{Dc}{Diagonal matrix of column profiles.}
+\item{Drh}{Weighted row profiles.}
+\item{Dch}{Weighted column profiles.}
 \item{rowcoor}{Row coordinates based on the selected \code{variant}.}
 \item{colcoor}{Column coordinates based on the selected \code{variant}.}
-\item{P}{Correspondence Matrix}
+\item{P}{Correspondence Matrix.}
 \item{Smat}{Standardised Pearson residuals.}
 \item{SVD}{Singular value decomposition solution: \code{d, u, v}.}
-\item{qual}{Quality of the approximation.}
+\item{e.vects}{Depending on what was specified in \code{CA} argument.}
+\item{dim.biplot}{The dimension of the biplot.}
 \item{lambda.val}{The computed lambda value if lambda-scaling is requested.}
+\item{gamma}{Contribution of the singular values, based on the CA variant.}
 }
 \description{
 This function produces a list of elements to be used for CA biplot construction by approximation of the Pearson residuals.

@@ -34,7 +34,7 @@ frequency table. Numerous variants of CA are available for the
 application to diverse problems, the interested reader is referred to:
 @UB2011, @BehLombardo2014.
 
-In `biplotEZ` focus will be places on three *EZ*-to-use versions based on the Pearson residuals (@UB2011: Page 300).
+In the <a href="https://cran.rstudio.com/web/packages/biplotEZ/vignettes/biplotEZ.html" target="_blank">biplotEZ vignette</a> focus will be places on three *EZ*-to-use versions based on the Pearson residuals (@UB2011 :300).
 
 Now, the two-way frequency table is also referred to as the data matrix:
 $\mathbf{X}:r\times c$. This data matrix is different from the
@@ -109,7 +109,8 @@ $$
 The return value for the Standardised pearson residuals is `Smat` and the singular value decomposition, `SVD`.
 
 ```{r}
-Smat <- sqrt(solve(Dr))%*%(P-(Dr %*%matrix(1, nrow = nrow(X), ncol = ncol(X)) %*%  Dc))%*%sqrt(solve(Dc))
+Smat <- sqrt(solve(Dr))%*%(P-(Dr %*%matrix(1, nrow = nrow(X), 
+    ncol = ncol(X)) %*%  Dc))%*%sqrt(solve(Dc))
 svd.out <- svd(Smat)
 svd.out
 ```
@@ -167,7 +168,7 @@ colcoor <- svd.out[[3]]%*%(diag(svd.out[[1]])^(1-gamma))
 
 ## Lambda scaling
 
-As presented in @UB2011 page 24, when constructing a biplot representing the rows of a coordinate matrix $\mathbf{A}$ and $\mathbf{B}^\prime$. Take note that the inner product is invariant when $\mathbf{A}$ and $\mathbf{B}$ are scaled inversely by $\lambda$. 
+As presented in @UB2011 :24, when constructing a biplot representing the rows of a coordinate matrix $\mathbf{A}$ and $\mathbf{B}^\prime$. Take note that the inner product is invariant when $\mathbf{A}$ and $\mathbf{B}$ are scaled inversely by $\lambda$. 
 
 $$
 \mathbf{AB} = (\lambda\mathbf{A})(\mathbf{B}/\lambda)
@@ -179,19 +180,19 @@ $$
 $$
 
 The default setting is to not apply lambda-scaling (i.e. $\lambda=1$).
+
 The return value is `lambda.val`.
 
 ## Measures of fit
 
-`quality`, `adequacy`, `row.predictivities` and `column.predictivities' are available for CA biplots. 
+`quality`, `adequacy`, `row.predictivities` and `column.predictivities` are available for CA biplots. 
 
-
-As explained in `biplotEZ`, the quality of the biplot is measured by the ratio of the variance explained (sum of the squared singular values of the utilised ($M$) components) and the total variance (sum of all squared singular values ($p$)).
+As explained in the <a href="https://cran.rstudio.com/web/packages/biplotEZ/vignettes/biplotEZ.html" target="_blank">biplotEZ vignette</a>, the quality of the biplot is measured by the ratio of the variance explained (sum of the squared singular values of the utilised ($M$) components) and the total variance (sum of all squared singular values ($p$)).
 
 $$
 \frac{\sum_{m=1}^{M}\lambda_m^2}{\sum_{m=1}^{p}\lambda_m^2}
 $$
-The `adequacy` refers to the representation of the variables. In `CA()` the factor variable represented in the columns is treated as the variables and is calculated as explained in `biplotEZ`:
+The `adequacy` refers to the representation of the variables. In `CA()` the factor variable represented in the columns is treated as the variables and is calculated as explained in the <a href="https://cran.rstudio.com/web/packages/biplotEZ/vignettes/biplotEZ.html" target="_blank">biplotEZ vignette</a>:
 
 $$
  \frac{diag(\mathbf{V}_r\mathbf{V}_r')}{diag(\mathbf{VV}')}= diag(\mathbf{V}_r\mathbf{V}_r')
@@ -200,14 +201,14 @@ $$
 
 The predictivities provide a measure of how well the original values are recovered from the biplot. An element that is well represented will have a predictivity close to one, indicating that the row or column variable values from prediction is close to the observed values. If an element is poorly represented, the predicted values will be very different from the original values and the predictivity value will be close to zero.
 
-The `row.predictivities` are calculated as follows (@UB2011: Page 299):
+The `row.predictivities` are calculated as follows (@UB2011 :299):
 
 $$
 diag(\mathbf{U}\mathbf{\Sigma}\mathbf{J}\mathbf{\Sigma}\mathbf{U}')[diag(\mathbf{U}\mathbf{\Sigma}\mathbf{\Sigma}\mathbf{U}')]^{-1}\\
 =diag(\mathbf{U}\mathbf{\Sigma}^2\mathbf{J}\mathbf{U}')[diag(\mathbf{U}\mathbf{\Sigma^2}\mathbf{U}')]^{-1}
 $$
 
-The `col.predictivities` are calculated as follows (@UB2011: Page 299):
+The `col.predictivities` are calculated as follows (@UB2011 :299):
 
 $$
 diag(\mathbf{V}\mathbf{\Sigma}^2\mathbf{J}\mathbf{V}')[diag(\mathbf{V}\mathbf{\Sigma^2}\mathbf{V}')]^{-1}
@@ -232,7 +233,6 @@ To construct the CA biplot for row standard coordinates:
 ```{r}
 ca.out <- biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Stand") |> 
   plot()
-ca.out$qual
 ```
 
 ## `Variant="Symmetric"`
@@ -242,7 +242,6 @@ To construct the symmetric CA map:
 ```{r}
 ca.out <- biplot(HairEyeColor[,,2], center = FALSE) |> 
   CA(variant = "Symmetric") |> plot()
-ca.out$qual
 ca.out$lambda.val
 ```
 
@@ -274,9 +273,9 @@ The function `interpolate()` accepts a matrix or data frame containing the sampl
 The function `newsamples()` operates similar to `samples()` and enables aesthetic changes to the new samples.
 
 ```{r}
-biplot(HairEyeColor[,,2], center=F) |> CA(variant="Symmetric") |> 
-  samples(pch=c(0,2)) |> interpolate(newdata=HairEyeColor[,,1]) |> 
-  newsamples(col=c("orange","purple"), pch=c(15,17)) |> plot()      
+biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
+  samples(pch = c(0,2)) |> interpolate(newdata = HairEyeColor[,,1]) |> 
+  newsamples(col = c("orange","purple"), pch = c(15,17)) |> plot()      
 ```
 
 
@@ -286,19 +285,20 @@ The `sample()` function should be utilised to specify the colours, plotting char
 
 ```{r}
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Princ") |> 
-  samples(col=c("cyan","purple"), pch=c(15,17), label.side=c("bottom","top"), 
-          label.cex=1) |> legend.type(samples = TRUE, new = TRUE) |> plot()
+  samples(col = c("cyan","purple"), pch = c(15,17), label.side = c("bottom","top"), 
+          label.cex = 1) |> legend.type(samples = TRUE, new = TRUE) |> plot()
 ```
 
 ```{r}
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
-  samples(col=c("forestgreen","magenta"), pch=c(12,17), label.side=c("top","bottom")) |>
+  samples(col = c("forestgreen","magenta"), pch = c(12,17), 
+          label.side = c("top","bottom")) |> 
   legend.type(samples = TRUE) |> plot()
 ```
 
 ## Additional example
 
-Consider the South African Crime data set 2008, extracted from the South African police website (http://www.saps.gov.za/). @UB2011 page 312.
+Consider the South African Crime data set 2008, extracted from the South African police website (http://www.saps.gov.za/). @UB2011 :312.
 
 ```{r}
 SACrime <- matrix(c(1235,432,1824,1322,573,588,624,169,629,34479,16833,46993,30606,13670,
@@ -322,7 +322,7 @@ SACrime
 ```{r}
 biplot(SACrime, center = FALSE) |> 
   CA(variant = "Symmetric", lambda.scal = TRUE) |> 
-  samples(col=c("cyan","purple"), pch=c(15,17), label.side=c("bottom","top")) |>
+  samples(col = c("cyan","purple"), pch = c(15,17), label.side = c("bottom","top")) |>
   legend.type(samples = TRUE, new = TRUE) |> plot()
 ```
 

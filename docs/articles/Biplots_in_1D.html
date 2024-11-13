@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">biplotEZ</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1</span>
       </span>
     </div>
 
@@ -103,6 +103,7 @@
 
     
     
+<p><img src="../reference/figures/logo.png" alt="alt text" style="width:10%; height:auto;" class="center"></p>
 <p>This vignette illustrates how to create one-dimensional biplot. The
 biplotEZ vignette demonstrates many functions of the functions in the
 package. The vignette will serve as a supplement to the biplotEZ
@@ -112,6 +113,10 @@ vignette.</p>
 </h2>
 <p>One-dimensional PCA biplots are obtained by specifying
 <code>dim.biplot = 1</code> in the call to <code><a href="../reference/PCA.html">PCA()</a></code>.</p>
+<p>The one-dimensional representation of the data is displayed by the
+colour points on the top horizontal line. The accompanying calibrated
+variable axes are displayed as horizontal lines below. The variable name
+is displayed on the side to which the variable increases.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>  <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
@@ -137,7 +142,7 @@ displayed above the scatter line using <code><a href="../reference/classify.html
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">bp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CVA.html">CVA</a></span><span class="op">(</span>classes <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/classify.html">classify</a></span><span class="op">(</span>borders <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">|&gt;</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/classify.html">classify</a></span><span class="op">(</span>borders <span class="op">=</span> <span class="cn">TRUE</span>,opacity <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">|&gt;</span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
 <p>The <code><a href="https://rdrr.io/r/base/print.html" class="external-link">print()</a></code> function provides the misclassification
 rate, as well as the confusion matrix, of the CVA classifier applied to
@@ -160,8 +165,26 @@ the training data.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="adding-new-samples">Adding new samples<a class="anchor" aria-label="anchor" href="#adding-new-samples"></a>
+<h2 id="one-dimensional-ca-biplot">One-dimensional CA biplot<a class="anchor" aria-label="anchor" href="#one-dimensional-ca-biplot"></a>
 </h2>
+<p>Similarly for a CA 1d biplot, <code>dim.biplot = 1</code> is
+specified in the call to <code><a href="../reference/CA.html">CA()</a></code>. The one-dimensional biplot
+is constructed from the first columns of <span class="math inline">\(\mathbf{U\Lambda^\gamma}\)</span> and <span class="math inline">\(&amp;\mathbf{V\Lambda^{1-\gamma}}\)</span>.</p>
+<p>Consider the <code>HairEyeColor</code> example again as discussed in
+<code>CA in biplotEZ</code>:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Princ"</span>, </span>
+<span>  dim.biplot<span class="op">=</span><span class="fl">1</span>, lambda.scal <span class="op">=</span> <span class="cn">T</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+</div>
+<div class="section level2">
+<h2 id="the-function-interpolate">The function <code>interpolate()</code><a class="anchor" aria-label="anchor" href="#the-function-interpolate"></a>
+</h2>
+<p><code><a href="../reference/interpolate.html">interpolate()</a></code> allows for new observations or axes to be
+added to the biplot.</p>
+<div class="section level3">
+<h3 id="the-function-newsamples">The function <code>newsamples()</code><a class="anchor" aria-label="anchor" href="#the-function-newsamples"></a>
+</h3>
 <p>The process of adding new samples to the biplot, called interpolation
 utilises the functions <code><a href="../reference/interpolate.html">interpolate()</a></code> and
 <code><a href="../reference/newsamples.html">newsamples()</a></code>. These functions work in the same way as in
@@ -171,14 +194,14 @@ specify a matrix or data frame containing the new samples to be
 interpolated. The function <code><a href="../reference/newsamples.html">newsamples()</a></code> operates the same
 way as <code><a href="../reference/samples.html">samples()</a></code> in that the user can specify the
 aesthetics of the interpolated samples.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">50</span>,<span class="fl">101</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span><span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>dim.biplot <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/interpolate.html">interpolate</a></span><span class="op">(</span>newdata <span class="op">=</span> <span class="va">iris</span><span class="op">[</span><span class="fl">51</span><span class="op">:</span><span class="fl">100</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/newsamples.html">newsamples</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"purple"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 </div>
-<div class="section level2">
-<h2 id="adding-new-variables">Adding new variables<a class="anchor" aria-label="anchor" href="#adding-new-variables"></a>
-</h2>
+<div class="section level3">
+<h3 id="the-function-newaxes">The function <code>newaxes()</code><a class="anchor" aria-label="anchor" href="#the-function-newaxes"></a>
+</h3>
 <p>To interpolate new variables to the biplot, the function
 <code><a href="../reference/interpolate.html">interpolate()</a></code> and <code><a href="../reference/newaxes.html">newaxes()</a></code> are called. The
 function <code><a href="../reference/interpolate.html">interpolate()</a></code> accepts the argument
@@ -187,15 +210,19 @@ number of rows in the data specified in <code><a href="../reference/biplot.html"
 the new variables to be interpolated. The function
 <code><a href="../reference/newaxes.html">newaxes()</a></code> allows the user to specify the aesthetics of the
 interpolated variables.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">]</span><span class="op">)</span><span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>dim.biplot <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/interpolate.html">interpolate</a></span><span class="op">(</span>newvariable <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">4</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/newaxes.html">newaxes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"darkred"</span>,X.new.names <span class="op">=</span> <span class="st">"Petal.Width"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+</div>
 </div>
 <div class="section level2">
-<h2 id="predicting-samples">Predicting samples<a class="anchor" aria-label="anchor" href="#predicting-samples"></a>
+<h2 id="the-function-prediction">The function <code>prediction()</code><a class="anchor" aria-label="anchor" href="#the-function-prediction"></a>
 </h2>
+<div class="section level3">
+<h3 id="predicting-samples">Predicting Samples<a class="anchor" aria-label="anchor" href="#predicting-samples"></a>
+</h3>
 <p>To add the prediction of samples on the biplot, the
 <code><a href="../reference/prediction.html">prediction()</a></code> function is used. The
 <code>predict.samples</code> argument takes in a vector indicating
@@ -204,16 +231,16 @@ indicating to predict all samples. In the example below, the predictions
 for samples 100 to 150 are shown. The aesthetics for the display of the
 predictions are arguments in the <code><a href="../reference/axes.html">axes()</a></code> function:
 <code>predict.col</code> and <code>predict.lwd</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span>,show.class.means <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span>,predict.col <span class="op">=</span> <span class="st">"darkred"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span>predict.samples<span class="op">=</span><span class="fl">100</span><span class="op">:</span><span class="fl">150</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 </div>
-<div class="section level2">
-<h2 id="predicting-group-means">Predicting group means<a class="anchor" aria-label="anchor" href="#predicting-group-means"></a>
-</h2>
+<div class="section level3">
+<h3 id="predicting-group-means">Predicting Group Means<a class="anchor" aria-label="anchor" href="#predicting-group-means"></a>
+</h3>
 <p>Similarly, to add the prediction of group means, the function
 <code><a href="../reference/prediction.html">prediction()</a></code> is used. The argument
 <code>predict.means</code> takes in a vector specifying which group
@@ -221,12 +248,13 @@ means to predict. In the example below, only the first group means is
 predicted. Important to note that the argument
 <code>show.class.means</code> must be set to TRUE in the
 <code><a href="../reference/PCA.html">PCA()</a></code> function.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">iris</span><span class="op">$</span><span class="va">Species</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span>,show.class.means <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span>,predict.col <span class="op">=</span> <span class="st">"darkred"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span>,predict.col <span class="op">=</span> <span class="st">"darkred"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/means.html">means</a></span><span class="op">(</span>label<span class="op">=</span><span class="cn">TRUE</span>,which<span class="op">=</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/prediction.html">prediction</a></span><span class="op">(</span>predict.means <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+</div>
 </div>
 <div class="section level2">
 <h2 id="ellipses-and-alpha-bags">Ellipses and Alpha bags<a class="anchor" aria-label="anchor" href="#ellipses-and-alpha-bags"></a>
@@ -236,49 +264,117 @@ function which works in the same way as a 2d biplot. In one dimension
 concentration ellipses are simply a confidence interval. The
 concentration interval is indicated using rectangles spanning the range
 of the interval.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/ellipses.html">ellipses</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Computing 1.96 -ellipse for setosa </span></span>
 <span><span class="co">#&gt; Computing 1.96 -ellipse for versicolor </span></span>
 <span><span class="co">#&gt; Computing 1.96 -ellipse for virginica</span></span></code></pre></div>
-<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 <p>The one-dimensional representation of an Alpha bag will simply be an
 empirical interval. The empirical interval is indicated using rectangles
 spanning the range of the interval.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/alpha.bags.html">alpha.bags</a></span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.7</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Computing 0.7 -bag for setosa </span></span>
 <span><span class="co">#&gt; Computing 0.7 -bag for versicolor </span></span>
 <span><span class="co">#&gt; Computing 0.7 -bag for virginica</span></span></code></pre></div>
-<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
-</div>
-<div class="section level2">
-<h2 id="group-densities">Group Densities<a class="anchor" aria-label="anchor" href="#group-densities"></a>
-</h2>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/density1D.html">density1D</a></span><span class="op">(</span>which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
 </div>
 <div class="section level2">
-<h2 id="legend">Legend<a class="anchor" aria-label="anchor" href="#legend"></a>
+<h2 id="the-function-density1d">The function <code>density1D()</code><a class="anchor" aria-label="anchor" href="#the-function-density1d"></a>
 </h2>
+<p>Overlapping points make the distribution of points on the scatter
+line difficult to identify. <code><a href="../reference/density1D.html">density1D()</a></code> uses kernel density
+estimation (KDE), which adds a density plot to the one-dimensional
+biplot.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CVA.html">CVA</a></span><span class="op">(</span>classes  <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span>, show.class.means <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/density1D.html">density1D</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>opacity<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">|&gt;</span> <span class="fu"><a href="../reference/classify.html">classify</a></span><span class="op">(</span>borders <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">|&gt;</span> <span class="fu"><a href="../reference/alpha.bags.html">alpha.bags</a></span><span class="op">(</span><span class="op">)</span><span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>,means <span class="op">=</span> <span class="cn">TRUE</span>, bags <span class="op">=</span> <span class="cn">TRUE</span>, ellipses <span class="op">=</span> <span class="cn">TRUE</span>,new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>dim.biplot <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/density1D.html">density1D</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<p>This KDE may be too smooth to display the distribution of the data.
+By changing the parameters of the KDE, we are able to address this
+issue. The bandwidth and kernel used in <code><a href="../reference/density1D.html">density1D()</a></code> are
+controlled by the arguments <code>h=</code> and <code>kernel=</code>,
+respectively. The bandwidth <code>h</code> can take any positive value,
+see <code><a href="https://rdrr.io/r/stats/density.html" class="external-link">?stats::density</a></code> for more detail. <code>kernel</code>
+can take on any kernel supported by <code><a href="https://rdrr.io/r/stats/density.html" class="external-link">stats::density()</a></code>.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>dim.biplot <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">'black'</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/density1D.html">density1D</a></span><span class="op">(</span>h <span class="op">=</span> <span class="fl">0.5</span> ,kernel <span class="op">=</span> <span class="st">"triangular"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
+<p>The high concentration of observations in the right of the plot now
+becomes evident. To further explore the distributions of the
+observations, we may want to explore the density of groupings in the
+data. To do this, simply specify the <code>group.aes=</code> argument in
+<code><a href="../reference/PCA.html">PCA()</a></code>. Here the density of the three species of iris is
+displayed.</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/density1D.html">density1D</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<p>To only display the density of certain groups, use the
+<code>which=</code> argument in <code><a href="../reference/density1D.html">density1D()</a></code>.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/density1D.html">density1D</a></span><span class="op">(</span>which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-16-1.png" width="672"></p>
+</div>
+<div class="section level2">
+<h2 id="the-function-legend-type">The function <code>legend.type()</code><a class="anchor" aria-label="anchor" href="#the-function-legend-type"></a>
+</h2>
+<p><code>legend.type</code> adds a legend to the plot. A separate legend
+is created for each of the elements by setting each of
+<code>samples</code>, <code>means</code>, <code>bags</code> and
+<code>ellipses</code> equal to <code>TRUE</code>. Here, we add a legend
+for the samples.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes  <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span>, show.class.means <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/density1D.html">density1D</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>opacity<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">|&gt;</span> <span class="fu"><a href="../reference/alpha.bags.html">alpha.bags</a></span><span class="op">(</span><span class="op">)</span><span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Computing 0.95 -bag for setosa </span></span>
 <span><span class="co">#&gt; Computing 0.95 -bag for versicolor </span></span>
 <span><span class="co">#&gt; Computing 0.95 -bag for virginica</span></span></code></pre></div>
-<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-13-1.png" width="672"><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-13-2.png" width="672"></p>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
+<p>If other legends are added, they will overlap with the elements of
+the plot as displayed below.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes  <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span>, show.class.means <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/density1D.html">density1D</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>opacity<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">|&gt;</span> <span class="fu"><a href="../reference/alpha.bags.html">alpha.bags</a></span><span class="op">(</span><span class="op">)</span><span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>,means <span class="op">=</span> <span class="cn">TRUE</span>, bags <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Computing 0.95 -bag for setosa </span></span>
+<span><span class="co">#&gt; Computing 0.95 -bag for versicolor </span></span>
+<span><span class="co">#&gt; Computing 0.95 -bag for virginica</span></span></code></pre></div>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
+<p>By specifying <code>new=TRUE</code>, the legends will be displayed on
+a new plot.</p>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes  <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span>, show.class.means <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/density1D.html">density1D</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>opacity<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">|&gt;</span> <span class="fu"><a href="../reference/alpha.bags.html">alpha.bags</a></span><span class="op">(</span><span class="op">)</span><span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>,means <span class="op">=</span> <span class="cn">TRUE</span>, bags <span class="op">=</span> <span class="cn">TRUE</span>, new<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Computing 0.95 -bag for setosa </span></span>
+<span><span class="co">#&gt; Computing 0.95 -bag for versicolor </span></span>
+<span><span class="co">#&gt; Computing 0.95 -bag for virginica</span></span></code></pre></div>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-19-1.png" width="672"><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-19-2.png" width="672"></p>
+<p>For the CVA biplot <code>legend.type</code> also displays a legend
+for classification regions if `</p>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">bp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CVA.html">CVA</a></span><span class="op">(</span>classes  <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span>, show.class.means <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/classify.html">classify</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/density1D.html">density1D</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>opacity<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span><span class="op">|&gt;</span> <span class="fu"><a href="../reference/alpha.bags.html">alpha.bags</a></span><span class="op">(</span><span class="op">)</span><span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>,means <span class="op">=</span> <span class="cn">TRUE</span>, bags <span class="op">=</span> <span class="cn">TRUE</span>, regions <span class="op">=</span> <span class="cn">TRUE</span>, new<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span> <span class="co">#</span></span>
+<span><span class="co">#&gt; Computing 0.95 -bag for setosa </span></span>
+<span><span class="co">#&gt; Computing 0.95 -bag for versicolor </span></span>
+<span><span class="co">#&gt; Computing 0.95 -bag for virginica</span></span></code></pre></div>
+<p><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-20-1.png" width="672"><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-20-2.png" width="672"><img src="Biplots_in_1D_files/figure-html/unnamed-chunk-20-3.png" width="672"></p>
 </div>
 <div class="section level2">
-<h2 id="fit-measures">Fit measures<a class="anchor" aria-label="anchor" href="#fit-measures"></a>
+<h2 id="the-function-fit-measures">The function <code>fit.measures()</code><a class="anchor" aria-label="anchor" href="#the-function-fit-measures"></a>
 </h2>
 <p><code><a href="../reference/fit.measures.html">fit.measures()</a></code> calculates measures of fit for the
 biplot. Passing a biplot object which has been piped to
@@ -289,21 +385,21 @@ biplot. Passing a biplot object which has been piped to
 Predictivity.</li>
 <li>For each sample: Sample Predictivity</li>
 </ul>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">a</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span>,dim.biplot <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/fit.measures.html">fit.measures</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">a</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Object of class biplot, based on 150 samples and 5 variables.</span></span>
 <span><span class="co">#&gt; 4 numeric variables.</span></span>
 <span><span class="co">#&gt; 1 categorical variable.</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Quality of fit = 92.5% </span></span>
-<span><span class="co">#&gt; Adequacy of variables:</span></span>
+<span><span class="co">#&gt; Quality of fit in 1 dimension(s) = 92.5% </span></span>
+<span><span class="co">#&gt; Adequacy of variables in 1 dimension(s):</span></span>
 <span><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></span>
 <span><span class="co">#&gt;  0.130600269  0.007144055  0.733884527  0.128371149 </span></span>
-<span><span class="co">#&gt; Axis predictivity:</span></span>
+<span><span class="co">#&gt; Axis predictivity in 1 dimension(s):</span></span>
 <span><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></span>
 <span><span class="co">#&gt;    0.8053299    0.1590003    0.9957524    0.9342141 </span></span>
-<span><span class="co">#&gt; Sample predictivity:</span></span>
+<span><span class="co">#&gt; Sample predictivity in 1 dimension(s):</span></span>
 <span><span class="co">#&gt;            1            2            3            4            5            6 </span></span>
 <span><span class="co">#&gt; 0.9859320755 0.9885358364 0.9974032622 0.9858701194 0.9843168833 0.8999107868 </span></span>
 <span><span class="co">#&gt;            7            8            9           10           11           12 </span></span>

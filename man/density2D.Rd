@@ -23,7 +23,8 @@ density2D(
 \arguments{
 \item{bp}{object of class \code{biplot}}
 
-\item{which}{which group.}
+\item{which}{which group to create a density; limited to only a single group at a time.
+If NULL, density drawn over all data points.}
 
 \item{contours}{logical indicating whether contours are added to the density plot}
 

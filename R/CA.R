@@ -18,13 +18,19 @@
 #' \item{Z}{Combined data frame of the row and column coordinates.}
 #' \item{r}{Numer of levels in the row factor.}
 #' \item{c}{Numer of levels in the column factor.}
+#' \item{Dr}{Diagonal matrix of row profiles.}
+#' \item{Dc}{Diagonal matrix of column profiles.}
+#' \item{Drh}{Weighted row profiles.}
+#' \item{Dch}{Weighted column profiles.}
 #' \item{rowcoor}{Row coordinates based on the selected \code{variant}.}
 #' \item{colcoor}{Column coordinates based on the selected \code{variant}.}
-#' \item{P}{Correspondence Matrix}
+#' \item{P}{Correspondence Matrix.}
 #' \item{Smat}{Standardised Pearson residuals.}
 #' \item{SVD}{Singular value decomposition solution: \code{d, u, v}.}
-#' \item{qual}{Quality of the approximation.}
+#' \item{e.vects}{Depending on what was specified in \code{CA} argument.}
+#' \item{dim.biplot}{The dimension of the biplot.}
 #' \item{lambda.val}{The computed lambda value if lambda-scaling is requested.}
+#' \item{gamma}{Contribution of the singular values, based on the CA variant.}
 #'
 #' @seealso [biplot()]
 #'
@@ -130,10 +136,10 @@ CA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant
   bp$Z <- Z
   bp$r <- r
   bp$c <- c
+  bp$Dr <- Dr
   bp$Dc <- Dc
-  bp$Rc <- Dr
-  bp$Dch <- Dch
   bp$Drh <- Drh
+  bp$Dch <- Dch
   bp$rowcoor <- rowcoor         
   bp$colcoor <- colcoor
   bp$P <- P

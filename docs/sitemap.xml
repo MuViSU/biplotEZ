@@ -28,6 +28,9 @@
     <loc>/articles/MDS.html</loc>
   </url>
   <url>
+    <loc>/authors 2.html</loc>
+  </url>
+  <url>
     <loc>/authors.html</loc>
   </url>
   <url>
@@ -50,6 +53,9 @@
   </url>
   <url>
     <loc>/reference/axes.html</loc>
+  </url>
+  <url>
+    <loc>/reference/axes_coordinates.html</loc>
   </url>
   <url>
     <loc>/reference/biplot.html</loc>
@@ -76,6 +82,12 @@
     <loc>/reference/classify.html</loc>
   </url>
   <url>
+    <loc>/reference/CLPs.html</loc>
+  </url>
+  <url>
+    <loc>/reference/CLRs.html</loc>
+  </url>
+  <url>
     <loc>/reference/CVA.biplot.html</loc>
   </url>
   <url>
@@ -92,6 +104,9 @@
   </url>
   <url>
     <loc>/reference/ellipses.html</loc>
+  </url>
+  <url>
+    <loc>/reference/extended.matching.coefficient.html</loc>
   </url>
   <url>
     <loc>/reference/fit.measures.html</loc>

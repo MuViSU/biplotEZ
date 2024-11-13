@@ -109,7 +109,9 @@ biplot(data = iris) |> PCA() |> plot()
 
 }
 \references{
-Gabriel, K.R. (1971) The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
-Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.\if{html}{\out{<br>}}\if{html}{\out{<br>}}
+Gabriel, K.R. (1971) The biplot graphic display of matrices with application to principal component analysis. \emph{Biometrika.} 58(3):453–467.
+
+Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.
+
 Gower, J.C. & Hand, D.J.(1996, ISBN: 0-412-71630-5) \emph{Biplots.} London: Chapman & Hall.
 }

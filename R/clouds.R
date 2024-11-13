@@ -153,7 +153,7 @@ density1D <- function(bp,which = NULL, h = "nrd0", kernel="gaussian",
 #' \item{lwd}{vector of line widths for the \eqn{\alpha}-bags.}
 #'
 #' @references
-#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
+#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.
 #'
 #' @export
 #' @usage alpha.bags(bp, alpha = 0.95, which = NULL, col = ez.col[which], lty = 1,
