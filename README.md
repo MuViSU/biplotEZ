@@ -7,7 +7,7 @@
 <!-- badges: end -->
 
 
-<img src="logo.png" align="left" width="150" />
+<img src="logo.png" align="right" width="150" />
 
 The goal of biplotEZ is to provide users an EZ-to-use platform for
 visually representing their data with biplots. Currently, this package
@@ -16,8 +16,6 @@ analysis (CVA) biplots. This is accompanied by various formatting
 options for the samples and axes. Alpha-bags and concentration ellipses
 are included for visual enhancements and interpretation.
 
-<!-- badges: start -->
-<!-- badges: end -->
 
 ## Installation
 
