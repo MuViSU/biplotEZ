@@ -6,6 +6,7 @@
 #' @param axis.predictivity either a logical or a numeric value between \code{0} and \code{1}. If it is a numeric value, this value is used as threshold so that only axes with axis predictivity larger than the threshold is displayed. If \code{axis.predictivity = TRUE}, the axis colour is 'diluted' in proportion with the axis predictivity.
 #' @param sample.predictivity either a logical or a numeric value between 0 and 1. If it is a numeric value, this value is used as threshold so that only samples with sample predictivity larger than the threshold is displayed. If \code{sample.predictivity = TRUE}, the sample size is shrinked in proportion with the sample predictivity.
 #' @param zoom a logical value allowing the user to select an area to zoom into.
+#' @param add a logical value allowing the user to add the biplot to a current plot. If \code{add = TRUE} the argument \code{zoom} is inactive.
 #' @param xlim the horizontal limits of the plot.
 #' @param ylim the vertical limits of the plot.
 #' @param ... additional arguments.
@@ -17,7 +18,7 @@
 #' @examples
 #' biplot (iris[,1:4]) |> PCA() |> plot()
 plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predictivity=NULL,
-                        zoom=FALSE, xlim = NULL, ylim = NULL, ...)
+                        zoom = FALSE, add = FALSE, xlim = NULL, ylim = NULL, ...)
 {
   #----- See all the internal functions in utility_2D.R
   if (is.null(x$Z)) stop ("Add a biplot method before generating a plot")
@@ -25,7 +26,8 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
 
   #aesthetics for samples
   if (is.null(x$samples)) x <- samples(x) 
-  
+
+  if (add) zoom <- FALSE  
   if(zoom)
     grDevices::dev.new()
 
@@ -100,6 +102,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
       }
       
       # Start with empty plot
+      if (!add)
       plot(Z[, 1] * exp.factor, Z[, 2] * exp.factor, xlim = xlim, ylim = ylim,
            xaxt = "n", yaxt = "n", xlab = "", ylab = "", type = "n", xaxs = "i", yaxs = "i", asp = 1)
 

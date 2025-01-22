@@ -10,6 +10,7 @@
   axis.predictivity = NULL,
   sample.predictivity = NULL,
   zoom = FALSE,
+  add = FALSE,
   xlim = NULL,
   ylim = NULL,
   ...
@@ -25,6 +26,8 @@
 \item{sample.predictivity}{either a logical or a numeric value between 0 and 1. If it is a numeric value, this value is used as threshold so that only samples with sample predictivity larger than the threshold is displayed. If \code{sample.predictivity = TRUE}, the sample size is shrinked in proportion with the sample predictivity.}
 
 \item{zoom}{a logical value allowing the user to select an area to zoom into.}
+
+\item{add}{a logical value allowing the user to add the biplot to a current plot. If \code{add = TRUE} the argument \code{zoom} is inactive.}
 
 \item{xlim}{the horizontal limits of the plot.}
 
