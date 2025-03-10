@@ -3,11 +3,11 @@ pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   biplotEZ: biplotEZ.html
-  biplotEZ_enhancements: biplotEZ_enhancements.html
-  Biplots_in_1D: Biplots_in_1D.html
-  Biplots_in_3D: Biplots_in_3D.html
-  CA_in_biplotEZ: CA_in_biplotEZ.html
-  Class_separation: Class_separation.html
+  Biplots in 1D: Biplots_in_1D.html
+  Biplots in 3D: Biplots_in_3D.html
+  biplotEZ enhancements: biplotEZ_enhancements.html
+  Class separation: Class_separation.html
+  CA in biplotEZ: CA_in_biplotEZ.html
   MDS: MDS.html
 last_built: 2024-11-13T11:42Z
 
