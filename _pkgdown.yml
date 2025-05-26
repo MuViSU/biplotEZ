@@ -1,0 +1,17 @@
+template:
+  bootstrap: 5
+navbar:
+ components:
+   articles:
+    text: Articles
+    menu:
+    - text: biplotEZ
+      href: articles/biplotEZ.html
+    - text: biplotEZ enhancements
+      href: articles/biplotEZ_enhancements.html
+    - text: One dimensional biplots
+      href: articles/Biplots_in_1D.html
+    - text: Two dimensional biplots
+      href: articles/Biplots_in_2D.html
+    - text: Three dimensional biplots
+      href: articles/Biplots_in_3D.html
