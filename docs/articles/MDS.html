@@ -4,101 +4,70 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>MDS • biplotEZ</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="MDS">
-<meta property="og:description" content="biplotEZ">
-<meta property="og:image" content="/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="MDS">
 </head>
-<body data-spy="scroll" data-target="#toc">
-    
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">biplotEZ</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1</span>
-      </span>
-    </div>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../articles/biplotEZ.html">Get started</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/biplotEZ_enhancements.html">biplotEZ enhancements</a>
-    </li>
-    <li>
-      <a href="../articles/Biplots_in_1D.html">Biplots in 1D</a>
-    </li>
-    <li>
-      <a href="../articles/Biplots_in_3D.html">Biplots in 3D</a>
-    </li>
-    <li>
-      <a href="../articles/CA_in_biplotEZ.html">CA in biplotEZ</a>
-    </li>
-    <li>
-      <a href="../articles/Class_separation.html">Class separation</a>
-    </li>
-    <li>
-      <a href="../articles/MDS.html">MDS</a>
-    </li>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
+    <a class="navbar-brand me-2" href="../index.html">biplotEZ</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../articles/biplotEZ.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/biplotEZ.html">biplotEZ</a></li>
+    <li><a class="dropdown-item" href="../articles/biplotEZ_enhancements.html">biplotEZ enhancements</a></li>
+    <li><a class="dropdown-item" href="../articles/Biplots_in_1D.html">One dimensional biplots</a></li>
+    <li><a class="dropdown-item" href="../articles/Biplots_in_2D.html">Two dimensional biplots</a></li>
+    <li><a class="dropdown-item" href="../articles/Biplots_in_3D.html">Three dimensional biplots</a></li>
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+      </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>MDS</h1>
+
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+      <img src="../logo.png" class="logo" alt=""><h1>MDS</h1>
             
       
-      
-      <div class="hidden name"><code>MDS.Rmd</code></div>
 
+      <div class="d-none name"><code>MDS.Rmd</code></div>
     </div>
 
     
@@ -119,14 +88,15 @@
 <h2 id="what-is-mds">What is MDS<a class="anchor" aria-label="anchor" href="#what-is-mds"></a>
 </h2>
 <p>In general, multidimensional scaling deals with constructing a low
-dimensional map of <span class="math inline">\(n\)</span> samples such
-that the Euclidean distances between the samples match a given set of
-dissimilarities <span class="math inline">\(\mathbf{\Delta}:n \times
-n\)</span> as closely as possible. Here the focus is on Principal
-Coordinate Analysis (PCO), an approach based on the singular value
-decomposition of a matrix. However, the regression biplot provides a
-general structure for fitting any 2D map of samples with biplot
-axes.</p>
+dimensional map of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
+samples such that the Euclidean distances between the samples match a
+given set of dissimilarities
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝚫</mi><mo>:</mo><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">\mathbf{\Delta}:n \times n</annotation></semantics></math>
+as closely as possible. Here the focus is on Principal Coordinate
+Analysis (PCO), an approach based on the singular value decomposition of
+a matrix. However, the regression biplot provides a general structure
+for fitting any 2D map of samples with biplot axes.</p>
 </div>
 <div class="section level2">
 <h2 id="regression-biplot">Regression biplot<a class="anchor" aria-label="anchor" href="#regression-biplot"></a>
@@ -136,18 +106,23 @@ class <code>biplot</code>. The call to the function <code>biplot</code>
 should contain the data set that will be used to construct the biplot
 axes. The second argument <code>Z</code> contains the coordinates of the
 samples in the MDS map. By default linear regression axes will be fitted
-to the plot. If <span class="math inline">\(\mathbf{X}\)</span> denote
-the data matrix, the directions of the biplot axes are found by solving
-the regression equation</p>
-<p><span class="math display">\[
+to the plot. If
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐗</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>
+denote the data matrix, the directions of the biplot axes are found by
+solving the regression equation</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐗</mi><mo>=</mo><mrow><mi>𝐙</mi><mi>𝐇</mi></mrow><mi>′</mi><mo>+</mo><mi>𝐄</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \mathbf{X} = \mathbf{ZH}' + \mathbf{E}.
-\]</span> The matrix <span class="math inline">\(\mathbf{H}'=(\mathbf{Z'Z})^{-1}\mathbf{Z'X}\)</span>
+</annotation></semantics></math> The matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐇</mi><mi>′</mi><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi>𝐙</mi><mi mathvariant="bold">′</mi><mi>𝐙</mi></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mn>1</mn></mrow></msup><mrow><mi>𝐙</mi><mi mathvariant="bold">′</mi><mi>𝐗</mi></mrow></mrow><annotation encoding="application/x-tex">\mathbf{H}'=(\mathbf{Z'Z})^{-1}\mathbf{Z'X}</annotation></semantics></math>
 and calibration of the axes proceed analogous to equation (2) in the
-biplotEZ vignette. The coordinates of the marker <span class="math inline">\(/mu\)</span> on biplot axis <span class="math inline">\(j\)</span> is given as follows</p>
-<p><span class="math display">\[
-p_{\mu}
-=  \frac{\mu}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}\mathbf{h}_{(j)}.
-\]</span></p>
+biplotEZ vignette. The coordinates of the marker
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>/</mi><mi>m</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">/mu</annotation></semantics></math>
+on biplot axis
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>
+is given as follows</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>μ</mi></msub><mo>=</mo><mfrac><mi>μ</mi><mrow><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mi>′</mi><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow></mfrac><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
+p_{\mu} =  \frac{\mu}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}\mathbf{h}_{(j)}.
+</annotation></semantics></math></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/regress.html">regress</a></span><span class="op">(</span>Z <span class="op">=</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/sammon.html" class="external-link">sammon</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">rock</span><span class="op">)</span>, method<span class="op">=</span><span class="st">"manhattan"</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">points</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -158,11 +133,15 @@ p_{\mu}
 <span><span class="co">#&gt; stress after  30 iters: 0.01078, magic = 0.500</span></span></code></pre></div>
 <p><img src="MDS_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
 <p>More flexibility is provided by approximating the biplot axes using
-B-splines. A calibrated trajectory represented in a matrix <span class="math inline">\(\mathbf{H}:m \times 2\)</span> snakes through the
-samples points <span class="math inline">\(\mathbf{Z}\)</span> such that
-the marker on the trajectory which is closest to a particular sample
-gives the predicted value of that sample for the particular variable. To
-retain smoothness of the trajectory <span class="math inline">\(\mathbf{H}\)</span>, B-splines are used.</p>
+B-splines. A calibrated trajectory represented in a matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐇</mi><mo>:</mo><mi>m</mi><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\mathbf{H}:m \times 2</annotation></semantics></math>
+snakes through the samples points
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐙</mi><annotation encoding="application/x-tex">\mathbf{Z}</annotation></semantics></math>
+such that the marker on the trajectory which is closest to a particular
+sample gives the predicted value of that sample for the particular
+variable. To retain smoothness of the trajectory
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐇</mi><annotation encoding="application/x-tex">\mathbf{H}</annotation></semantics></math>,
+B-splines are used.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/regress.html">regress</a></span><span class="op">(</span>Z <span class="op">=</span> <span class="fu">MASS</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/MASS/man/sammon.html" class="external-link">sammon</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/stats/dist.html" class="external-link">dist</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">rock</span><span class="op">)</span>, method<span class="op">=</span><span class="st">"manhattan"</span><span class="op">)</span><span class="op">)</span><span class="op">$</span><span class="va">points</span>,</span>
@@ -181,36 +160,54 @@ retain smoothness of the trajectory <span class="math inline">\(\mathbf{H}\)</sp
 <div class="section level2">
 <h2 id="principal-coordinate-analysis-pco-biplots">Principal Coordinate Analysis (PCO) biplots<a class="anchor" aria-label="anchor" href="#principal-coordinate-analysis-pco-biplots"></a>
 </h2>
-<p>Let <span class="math inline">\(\mathbf{\tilde\Delta}\)</span> be the
-<span class="math inline">\(n \times n\)</span> matrix containing the
-values <span class="math inline">\(-\frac{1}{2}\delta_{ij}^2\)</span>
-where <span class="math inline">\(\delta_{ij}\)</span> represent the
-dissimilarity between objects <span class="math inline">\(i\)</span> and
-<span class="math inline">\(j\)</span>. If it is possible to find a set
-of coordinates <span class="math inline">\(\mathbf{Y}:n\times m\)</span>
-where typically <span class="math inline">\(m = n-1\)</span> such that
-the Euclidean distances between the rows of <span class="math inline">\(\mathbf{Y}\)</span> exactly match the
-dissimilarities <span class="math inline">\(\delta_{ij}\)</span>, the
-dissimilarity is known as a Euclidean embeddable distance metric. <span class="citation">J. C. Gower (1982)</span> shows that if the distances
-<span class="math inline">\(\delta_{ij}\)</span> are Euclidean
-embeddable, then</p>
-<p><span class="math display">\[
-(\mathbf{I}-\mathbf{1s}')\mathbf{\tilde\Delta}
-(\mathbf{I}-\mathbf{s1}')
-\]</span></p>
+<p>Let
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>𝚫</mi><mo accent="true">̃</mo></mover><annotation encoding="application/x-tex">\mathbf{\tilde\Delta}</annotation></semantics></math>
+be the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math>
+matrix containing the values
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>−</mi><mfrac><mn>1</mn><mn>2</mn></mfrac><msubsup><mi>δ</mi><mrow><mi>i</mi><mi>j</mi></mrow><mn>2</mn></msubsup></mrow><annotation encoding="application/x-tex">-\frac{1}{2}\delta_{ij}^2</annotation></semantics></math>
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>δ</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">\delta_{ij}</annotation></semantics></math>
+represent the dissimilarity between objects
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>i</mi><annotation encoding="application/x-tex">i</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>.
+If it is possible to find a set of coordinates
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐘</mi><mo>:</mo><mi>n</mi><mo>×</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">\mathbf{Y}:n\times m</annotation></semantics></math>
+where typically
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">m = n-1</annotation></semantics></math>
+such that the Euclidean distances between the rows of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐘</mi><annotation encoding="application/x-tex">\mathbf{Y}</annotation></semantics></math>
+exactly match the dissimilarities
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>δ</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">\delta_{ij}</annotation></semantics></math>,
+the dissimilarity is known as a Euclidean embeddable distance metric.
+<span class="citation">J. C. Gower (1982)</span> shows that if the
+distances
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>δ</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">\delta_{ij}</annotation></semantics></math>
+are Euclidean embeddable, then</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐈</mi><mo>−</mo><mrow><mn>𝟏</mn><mi>𝐬</mi></mrow><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mover><mi>𝚫</mi><mo accent="true">̃</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐈</mi><mo>−</mo><mrow><mi>𝐬</mi><mn>𝟏</mn></mrow><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+(\mathbf{I}-\mathbf{1s}')\mathbf{\tilde\Delta} (\mathbf{I}-\mathbf{s1}')
+</annotation></semantics></math></p>
 <p>is positive semi-definite.</p>
-<p>The Euclidean representation of the samples is obtained as <span class="math inline">\(\mathbf{Y=V\Lambda}^{\frac{1}{2}}\)</span> where
-<span class="math inline">\((\mathbf{I}-\mathbf{1s}')\mathbf{\tilde\Delta}
-(\mathbf{I}-\mathbf{s1}') = \mathbf{V \Lambda V'}\)</span>.
-Since the coordinates in <span class="math inline">\(\mathbf{Y}\)</span>
-is already referred to their principal axes with <span class="math inline">\(\mathbf{Y'Y=\Lambda}\)</span>, the
-representation of the samples in a 2D biplot is obtained from the first
-two columns of <span class="math inline">\(\mathbf{Y}\)</span>.</p>
+<p>The Euclidean representation of the samples is obtained as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mi>𝐘</mi><mo mathvariant="bold">=</mo><mi>𝐕</mi><mi>𝚲</mi></mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></msup><annotation encoding="application/x-tex">\mathbf{Y=V\Lambda}^{\frac{1}{2}}</annotation></semantics></math>
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐈</mi><mo>−</mo><mrow><mn>𝟏</mn><mi>𝐬</mi></mrow><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mover><mi>𝚫</mi><mo accent="true">̃</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐈</mi><mo>−</mo><mrow><mi>𝐬</mi><mn>𝟏</mn></mrow><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mi>𝐕</mi><mi>𝚲</mi><mi>𝐕</mi><mi mathvariant="bold">′</mi></mrow></mrow><annotation encoding="application/x-tex">(\mathbf{I}-\mathbf{1s}')\mathbf{\tilde\Delta} (\mathbf{I}-\mathbf{s1}') = \mathbf{V \Lambda V'}</annotation></semantics></math>.
+Since the coordinates in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐘</mi><annotation encoding="application/x-tex">\mathbf{Y}</annotation></semantics></math>
+is already referred to their principal axes with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐘</mi><mi mathvariant="bold">′</mi><mi>𝐘</mi><mo mathvariant="bold">=</mo><mi>𝚲</mi></mrow><annotation encoding="application/x-tex">\mathbf{Y'Y=\Lambda}</annotation></semantics></math>,
+the representation of the samples in a 2D biplot is obtained from the
+first two columns of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐘</mi><annotation encoding="application/x-tex">\mathbf{Y}</annotation></semantics></math>.</p>
 <p>In addition to the exact biplot axis representations discussed in
 <span class="citation">J. C. Gower, Lubbe, and Roux (2011)</span>
 approximate axes can be obtained. Linear axes are fitted with the
-regression method. The variables in the data matrix <span class="math inline">\(\mathbf{X}:n \times p\)</span> can be represented
-as biplot axes in the PCO biplot with the sample points <span class="math inline">\(\mathbf{Z=V\Lambda}^{\frac{1}{2}}\mathbf{J}_2\)</span>
+regression method. The variables in the data matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐗</mi><mo>:</mo><mi>n</mi><mo>×</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">\mathbf{X}:n \times p</annotation></semantics></math>
+can be represented as biplot axes in the PCO biplot with the sample
+points
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mi>𝐙</mi><mo mathvariant="bold">=</mo><mi>𝐕</mi><mi>𝚲</mi></mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></msup><msub><mi>𝐉</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{Z=V\Lambda}^{\frac{1}{2}}\mathbf{J}_2</annotation></semantics></math>
 according to the regression method discussed in section 2 above.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCO.html">PCO</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -227,17 +224,20 @@ more flexibility. This is achieved by setting the argument
 <span><span class="co">#&gt; Calculating spline axis for variable 4</span></span></code></pre>
 <p>By default the distance metric used for the analysis is Euclidean
 distance. The user can also specify the distance matrix
-<code>Dmat</code> as an <span class="math inline">\(n \times n\)</span>
+<code>Dmat</code> as an
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math>
 matrix of a <code>dist</code> object. As illustration of a metric that
 is Euclidean embeddable, the Clark’s distance</p>
-<p><span class="math display">\[
-\delta_{ij}^2 =
-\sum_{k=1}^{p}\left(\frac{x_{ik}-x_{jk}}{x_{ik}+x_{jk}}\right)^2
-\]</span></p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>δ</mi><mrow><mi>i</mi><mi>j</mi></mrow><mn>2</mn></msubsup><mo>=</mo><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>p</mi></munderover><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><msub><mi>x</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo>−</mo><msub><mi>x</mi><mrow><mi>j</mi><mi>k</mi></mrow></msub></mrow><mrow><msub><mi>x</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo>+</mo><msub><mi>x</mi><mrow><mi>j</mi><mi>k</mi></mrow></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">
+\delta_{ij}^2 = \sum_{k=1}^{p}\left(\frac{x_{ik}-x_{jk}}{x_{ik}+x_{jk}}\right)^2
+</annotation></semantics></math></p>
 <p>as defined by <span class="citation">John C. Gower and Ngouenet
 (2005)</span> is calculated below and used for constructing a PCO
 biplot. Note that the metric is only defined for strictly positive
-values, so that the data is scaled to values between <span class="math inline">\(1\)</span> and <span class="math inline">\(2\)</span>.</p>
+values, so that the data is scaled to values between
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math>.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Clark.dist</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span><span class="op">)</span></span>
 <span><span class="op">{</span></span>
@@ -267,10 +267,9 @@ function computing a Euclidean embeddable <code>dist</code> object.</p>
 <span><span class="co">#&gt; {</span></span>
 <span><span class="co">#&gt;     sqrt(stats::dist(X, method = "manhattan"))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x00000189c1c11450&gt;</span></span>
-<span><span class="co">#&gt; &lt;environment: namespace:biplotEZ&gt;</span></span></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCO.html">PCO</a></span><span class="op">(</span>dist.func <span class="op">=</span> <span class="va">sqrtManhattan</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span><span class="co">#&gt; &lt;bytecode: 0x000001d368a2b108&gt;</span></span>
+<span><span class="co">#&gt; &lt;environment: namespace:biplotEZ&gt;</span></span>
+<span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCO.html">PCO</a></span><span class="op">(</span>dist.func <span class="op">=</span> <span class="va">sqrtManhattan</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="MDS_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 </div>
 <div class="section level2">
@@ -292,35 +291,26 @@ Analysis</em> 94 (2): 344–65.
 </div>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by Sugnet Lubbe, Niël le Roux, Johané Nienkemper-Swanepoel, Raeesa Ganey, Ruan Buys, Zoë-Mae Adams, Peter Manefeldt.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by Sugnet Lubbe, Niël le Roux, Johané Nienkemper-Swanepoel, Raeesa Ganey, Ruan Buys, Zoë-Mae Adams, Peter Manefeldt.</p>
 </div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
-  
 
 
-  
+
 
   </body>
 </html>
