@@ -1,8 +1,6 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-<img src="logo.png" align="right" width="150" />
-
 # biplotEZ
 
 <!-- badges: start -->
