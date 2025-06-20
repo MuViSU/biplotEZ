@@ -20,6 +20,7 @@
 plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predictivity=NULL,
                         zoom = FALSE, add = FALSE, xlim = NULL, ylim = NULL, ...)
 {
+  
   #----- See all the internal functions in utility_2D.R
   if (is.null(x$Z)) stop ("Add a biplot method before generating a plot")
     else Z <- x$Z
