@@ -15,8 +15,6 @@ knitr::opts_chunk$set(
 
 # biplotEZ
 
-<img src="logo.png" align="right" width="150" /> 
-
 The goal of biplotEZ is to provide users an EZ-to-use platform for
 visually representing their data with biplots. Currently, this package
 includes principal component analysis (PCA) and canonical variate

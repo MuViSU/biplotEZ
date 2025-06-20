@@ -4,101 +4,72 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>biplotEZ enhancements • biplotEZ</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="biplotEZ enhancements">
-<meta property="og:description" content="biplotEZ">
-<meta property="og:image" content="/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="biplotEZ enhancements">
 </head>
-<body data-spy="scroll" data-target="#toc">
-    
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">biplotEZ</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.1</span>
-      </span>
-    </div>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../articles/biplotEZ.html">Get started</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/biplotEZ_enhancements.html">biplotEZ enhancements</a>
-    </li>
-    <li>
-      <a href="../articles/Biplots_in_1D.html">Biplots in 1D</a>
-    </li>
-    <li>
-      <a href="../articles/Biplots_in_3D.html">Biplots in 3D</a>
-    </li>
-    <li>
-      <a href="../articles/CA_in_biplotEZ.html">CA in biplotEZ</a>
-    </li>
-    <li>
-      <a href="../articles/Class_separation.html">Class separation</a>
-    </li>
-    <li>
-      <a href="../articles/MDS.html">MDS</a>
-    </li>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
+    <a class="navbar-brand me-2" href="../index.html">biplotEZ</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../articles/biplotEZ.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="active nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/biplotEZ.html">biplotEZ</a></li>
+    <li><a class="dropdown-item" href="../articles/biplotEZ_enhancements.html">biplotEZ enhancements</a></li>
+    <li><a class="dropdown-item" href="../articles/MDS.html">Multi-dimensional scaling</a></li>
+    <li><a class="dropdown-item" href="../articles/Class_separation.html">Biplots for separating classes</a></li>
+    <li><a class="dropdown-item" href="../articles/CA_in_biplotEZ.html">Categorical biplots</a></li>
+    <li><a class="dropdown-item" href="../articles/Biplots_in_1D.html">One dimensional biplots</a></li>
+    <li><a class="dropdown-item" href="../articles/Biplots_in_3D.html">Three dimensional biplots</a></li>
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+      </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>biplotEZ enhancements</h1>
+
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+      <img src="../logo.png" class="logo" alt=""><h1>biplotEZ enhancements</h1>
             
       
-      
-      <div class="hidden name"><code>biplotEZ_enhancements.Rmd</code></div>
 
+      <div class="d-none name"><code>biplotEZ_enhancements.Rmd</code></div>
     </div>
 
     
@@ -123,25 +94,37 @@ the relationships and dimensions within the data.</p>
 <div class="section level2">
 <h2 id="the-function-alpha-bags">The function <code>alpha.bags()</code><a class="anchor" aria-label="anchor" href="#the-function-alpha-bags"></a>
 </h2>
-<p>An <span class="math inline">\(\alpha\)</span>-bag encloses the <span class="math inline">\(\alpha100\%\)</span> inner data points in a cloud
-of points. It is based on the concept of halfspace location depth as
-defined by <span class="citation">Tukey (1975)</span>. <span class="citation">Rousseeuw, Ruts, and Tukey (1999)</span> generalised a
-boxplot to a two-dimensional bagplot where the box is replaced by a bag
-containing the inner <span class="math inline">\(50\%\)</span> of the
-observations. <span class="citation">Gower, Lubbe, and Roux
-(2011)</span> replaces the <span class="math inline">\(50\%\)</span>-bag
-contour by a general <span class="math inline">\(\alpha100\%\)</span>
-contour referred to as an <span class="math inline">\(\alpha\)</span>-bag.</p>
+<p>An
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bag
+encloses the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mn>100</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">\alpha100\%</annotation></semantics></math>
+inner data points in a cloud of points. It is based on the concept of
+halfspace location depth as defined by <span class="citation">Tukey
+(1975)</span>. <span class="citation">Rousseeuw, Ruts, and Tukey
+(1999)</span> generalised a boxplot to a two-dimensional bagplot where
+the box is replaced by a bag containing the inner
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>50</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">50\%</annotation></semantics></math>
+of the observations. <span class="citation">Gower, Lubbe, and Roux
+(2011)</span> replaces the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>50</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">50\%</annotation></semantics></math>-bag
+contour by a general
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mn>100</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">\alpha100\%</annotation></semantics></math>
+contour referred to as an
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bag.</p>
 <p>When the number of samples in the biplot is larger, it becomes
 difficult to isolate individual observations. Often, when a grouping
 variable is present, the interest is not so much in the individual
 samples, but rather in the location and spread of the groups. In the
-plot below, we enclose each century’s number of sunspots by a <span class="math inline">\(95\%\)</span>-bag where the months are used as 12
-different variables for each year (sample point). Note that the legend
-displays the <span class="math inline">\(\alpha\)</span>-bags while
-<code>samples = FALSE</code> is left at the default. Both can be
-displayed, but since the <span class="math inline">\(\alpha\)</span>-bags’ colour defaults to the
-colour of the sample points, both are not necessary here.</p>
+plot below, we enclose each century’s number of sunspots by a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>95</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">95\%</annotation></semantics></math>-bag
+where the months are used as 12 different variables for each year
+(sample point). Note that the legend displays the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bags
+while <code>samples = FALSE</code> is left at the default. Both can be
+displayed, but since the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bags’
+colour defaults to the colour of the sample points, both are not
+necessary here.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">sunspots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span> <span class="op">(</span><span class="va">sunspot.month</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="op">(</span><span class="fl">264</span><span class="op">*</span><span class="fl">12</span><span class="op">)</span><span class="op">]</span>, ncol <span class="op">=</span> <span class="fl">12</span>, byrow <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">years</span> <span class="op">&lt;-</span> <span class="fl">1749</span><span class="op">:</span><span class="fl">2012</span></span>
@@ -158,15 +141,20 @@ colour of the sample points, both are not necessary here.</p>
 <span><span class="co">#&gt; Computing 0.95 -bag for 20-th </span></span>
 <span><span class="co">#&gt; Computing 0.95 -bag for 21-st</span></span></code></pre></div>
 <p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
-<p>By default one <span class="math inline">\(95\%\)</span>-bag is
-constructed for each group. In general, the <code><a href="../reference/alpha.bags.html">alpha.bags()</a></code>
+<p>By default one
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>95</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">95\%</annotation></semantics></math>-bag
+is constructed for each group. In general, the <code><a href="../reference/alpha.bags.html">alpha.bags()</a></code>
 function accepts an object of class biplot as first argument. The next
 argument <code>alpha</code> can be specified as a single value, or to
-construct a series of <span class="math inline">\(\alpha\)</span>-bags
+construct a series of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bags
 for a group, <code>alpha</code> can be a vector argument. The argument
-<code>which</code> specifies the groups to be fitted with <span class="math inline">\(\alpha\)</span>-bags. By default the
-<code>opacity</code> argument is set to <span class="math inline">\(0.25\)</span>, but by setting
-<code>opacity = 0</code> removes the fill of the <span class="math inline">\(\alpha\)</span>-bags.</p>
+<code>which</code> specifies the groups to be fitted with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bags.
+By default the <code>opacity</code> argument is set to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.25</mn><annotation encoding="application/x-tex">0.25</annotation></semantics></math>,
+but by setting <code>opacity = 0</code> removes the fill of the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bags.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">sunspots</span>, group.aes<span class="op">=</span><span class="va">century</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>        <span class="fu"><a href="../reference/axes.html">axes</a></span> <span class="op">(</span>label.dir <span class="op">=</span> <span class="st">"Hor"</span>, label.line <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -185,10 +173,14 @@ argument and similarly the <code>lty</code> and or <code>lwd</code>
 arguments. Since we are mostly interested in the location and overlap of
 the clouds of points we can remove the indivdiual samples by setting
 <code>samples (which = NULL)</code>. The default colours will still be
-used for the <span class="math inline">\(\alpha\)</span>-bags and we
-chose to specify different line types for different <span class="math inline">\(\alpha\)</span> values. Here the
-<code>opacity</code> is set to <span class="math inline">\(0.05\)</span>
-which plots a lighter shade inside the <span class="math inline">\(\alpha\)</span>-bags.</p>
+used for the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bags
+and we chose to specify different line types for different
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>
+values. Here the <code>opacity</code> is set to
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0.05</mn><annotation encoding="application/x-tex">0.05</annotation></semantics></math>
+which plots a lighter shade inside the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bags.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">sunspots</span>, group.aes<span class="op">=</span><span class="va">century</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>        <span class="fu"><a href="../reference/axes.html">axes</a></span> <span class="op">(</span>label.dir <span class="op">=</span> <span class="st">"Hor"</span>, label.line <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -208,14 +200,18 @@ which plots a lighter shade inside the <span class="math inline">\(\alpha\)</spa
 <span><span class="co">#&gt; Computing 0.99 -bag for 20-th </span></span>
 <span><span class="co">#&gt; Computing 0.99 -bag for 21-st</span></span></code></pre></div>
 <p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-4-1.png" width="672"><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-4-2.png" width="672"></p>
-<p>For a completely custom combination of <span class="math inline">\(\alpha\)</span>-bags, we do not rely on any
-recycling and specify each of the arguments <code>alpha</code>,
-<code>which</code>, <code>col</code>, <code>lty</code>, <code>lwd</code>
-as a vector. Since the calculation of halfspace location depth is very
-computationally intensive, a random sample of size 2500 is chosen for
-each group to construct the <span class="math inline">\(\alpha\)</span>-bag. This sample size can be
-changed with the argument <code>max</code>. Setting
-<code>trace = FALSE</code> will suppress the message “Computing <span class="math inline">\(\alpha\)</span>” -bag for groupX.”</p>
+<p>For a completely custom combination of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bags,
+we do not rely on any recycling and specify each of the arguments
+<code>alpha</code>, <code>which</code>, <code>col</code>,
+<code>lty</code>, <code>lwd</code> as a vector. Since the calculation of
+halfspace location depth is very computationally intensive, a random
+sample of size 2500 is chosen for each group to construct the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bag.
+This sample size can be changed with the argument <code>max</code>.
+Setting <code>trace = FALSE</code> will suppress the message “Computing
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>”
+-bag for groupX.”</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">sunspots</span>, group.aes<span class="op">=</span><span class="va">century</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>        <span class="fu"><a href="../reference/axes.html">axes</a></span> <span class="op">(</span>label.dir <span class="op">=</span> <span class="st">"Hor"</span>, label.line <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -234,12 +230,14 @@ changed with the argument <code>max</code>. Setting
 <span><span class="co">#&gt; Computing 0.7 -bag for 20-th</span></span></code></pre></div>
 <p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 <p>The function <code>alpha.bags</code> provides the option to only plot
-the samples that sit outside the <span class="math inline">\(\alpha\)</span>-bags. This is done by setting the
-argument <code>outlying=TRUE</code>. Note the <code>which</code>
-argument may be overwritten when <code>outlying</code> is set to
-<code>TRUE</code>. This happens in particular when <code>which</code> in
-the <code><a href="../reference/samples.html">samples()</a></code> function differs from the <code>which</code>
-in the <code>alpha_bags()</code> function.</p>
+the samples that sit outside the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bags.
+This is done by setting the argument <code>outlying=TRUE</code>. Note
+the <code>which</code> argument may be overwritten when
+<code>outlying</code> is set to <code>TRUE</code>. This happens in
+particular when <code>which</code> in the <code><a href="../reference/samples.html">samples()</a></code>
+function differs from the <code>which</code> in the
+<code>alpha_bags()</code> function.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">sunspots</span>, group.aes<span class="op">=</span><span class="va">century</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>        <span class="fu"><a href="../reference/alpha.bags.html">alpha.bags</a></span> <span class="op">(</span>col   <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"brown"</span>, <span class="st">"red"</span>, <span class="st">"gold"</span>,<span class="st">"deepskyblue2"</span><span class="op">)</span>,</span>
@@ -253,28 +251,48 @@ in the <code>alpha_bags()</code> function.</p>
 <div class="section level2">
 <h2 id="the-function-ellipses">The function <code>ellipses()</code><a class="anchor" aria-label="anchor" href="#the-function-ellipses"></a>
 </h2>
-<p>If we observe a random sample from a <span class="math inline">\(p\)</span>-variate normal distribution with <span class="math inline">\(\bar{\mathbf{x}}\)</span> and <span class="math inline">\(\mathbf{S}\)</span> the usual unbaised estimates
-of the mean vector and covariance matrix, then</p>
-<p><span class="math display">\[
-(\mathbf{x} - \bar{\mathbf{x}})' \mathbf{S}^{-1} (\mathbf{x} -
-\bar{\mathbf{x}}) = \kappa^2
-\]</span></p>
-<p>traces an ellipsoid in <span class="math inline">\(p\)</span>
-dimensions. For <span class="math inline">\(p=2\)</span>, choosing <span class="math inline">\(\kappa =
-{(\chi^{2}_{2,1-\alpha})}^{\frac{1}{2}}\)</span> where <span class="math inline">\(\chi^{2}_{2,1-\alpha}\)</span> denotes the <span class="math inline">\((1-\alpha)100\)</span>-th percentage point of the
-<span class="math inline">\(\chi^2_2\)</span> distribution results in an
-ellipse covering approximately <span class="math inline">\(100\alpha\%\)</span> of the configuration of
-two-dimensional points. With default arguments <code>df = 2</code> and
-<code>alpha = 0.95</code>, the value of <span class="math inline">\(\kappa\)</span> is <span class="math inline">\(2.447747\)</span> and the ellipse function
-constructs an ellipse that would enclose approximately <span class="math inline">\(95\%\)</span> of the observations from a bivariate
-normal distribution. The argument <code>kappa</code> can be specified
-directly, and will take precedence over the specification of
-<code>alpha</code>. The other arguments of the <code><a href="../reference/ellipses.html">ellipses()</a></code>
-function operates identically to the corresponding arguments of the
-function <code><a href="../reference/alpha.bags.html">alpha.bags()</a></code>. Using <span class="math inline">\(\alpha\)</span>-bags, rather than ellipses is
-recommended in general, since the construction of the ellipses are based
-on the underlying assumption of a random sample observed from a normal
-distribution.</p>
+<p>If we observe a random sample from a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-variate
+normal distribution with
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>𝐱</mi><mo accent="true">‾</mo></mover><annotation encoding="application/x-tex">\bar{\mathbf{x}}</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐒</mi><annotation encoding="application/x-tex">\mathbf{S}</annotation></semantics></math>
+the usual unbaised estimates of the mean vector and covariance matrix,
+then</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo>−</mo><mover><mi>𝐱</mi><mo accent="true">‾</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mi>′</mi><msup><mi>𝐒</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo>−</mo><mover><mi>𝐱</mi><mo accent="true">‾</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mi>κ</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">
+(\mathbf{x} - \bar{\mathbf{x}})' \mathbf{S}^{-1} (\mathbf{x} - \bar{\mathbf{x}}) = \kappa^2
+</annotation></semantics></math></p>
+<p>traces an ellipsoid in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
+dimensions. For
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">p=2</annotation></semantics></math>,
+choosing
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>κ</mi><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mi>χ</mi><mrow><mn>2</mn><mo>,</mo><mn>1</mn><mo>−</mo><mi>α</mi></mrow><mn>2</mn></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></msup></mrow><annotation encoding="application/x-tex">\kappa = {(\chi^{2}_{2,1-\alpha})}^{\frac{1}{2}}</annotation></semantics></math>
+where
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>χ</mi><mrow><mn>2</mn><mo>,</mo><mn>1</mn><mo>−</mo><mi>α</mi></mrow><mn>2</mn></msubsup><annotation encoding="application/x-tex">\chi^{2}_{2,1-\alpha}</annotation></semantics></math>
+denotes the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow><mn>100</mn></mrow><annotation encoding="application/x-tex">(1-\alpha)100</annotation></semantics></math>-th
+percentage point of the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>χ</mi><mn>2</mn><mn>2</mn></msubsup><annotation encoding="application/x-tex">\chi^2_2</annotation></semantics></math>
+distribution results in an ellipse covering approximately
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>100</mn><mi>α</mi><mi>%</mi></mrow><annotation encoding="application/x-tex">100\alpha\%</annotation></semantics></math>
+of the configuration of two-dimensional points. With default arguments
+<code>df = 2</code> and <code>alpha = 0.95</code>, the value of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>κ</mi><annotation encoding="application/x-tex">\kappa</annotation></semantics></math>
+is
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2.447747</mn><annotation encoding="application/x-tex">2.447747</annotation></semantics></math>
+and the ellipse function constructs an ellipse that would enclose
+approximately
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>95</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">95\%</annotation></semantics></math>
+of the observations from a bivariate normal distribution. The argument
+<code>kappa</code> can be specified directly, and will take precedence
+over the specification of <code>alpha</code>. The other arguments of the
+<code><a href="../reference/ellipses.html">ellipses()</a></code> function operates identically to the
+corresponding arguments of the function <code><a href="../reference/alpha.bags.html">alpha.bags()</a></code>. Using
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bags,
+rather than ellipses is recommended in general, since the construction
+of the ellipses are based on the underlying assumption of a random
+sample observed from a normal distribution.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">sunspots</span>, group.aes<span class="op">=</span><span class="va">century</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>        <span class="fu"><a href="../reference/axes.html">axes</a></span> <span class="op">(</span>label.dir <span class="op">=</span> <span class="st">"Hor"</span>, label.line <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">10</span><span class="op">)</span>, <span class="fl">0.8</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -340,19 +358,27 @@ all samples form under one group.</p>
 <code>newsamples()</code> and <code>newaxes()</code><a class="anchor" aria-label="anchor" href="#the-functions-interpolate-with-newsamples-and-newaxes"></a>
 </h2>
 <p>The process of interpolation is described by <span class="citation">Gower and Hand (1996)</span> as the process of finding
-the coordinates of a <span class="math inline">\(p\)</span>-dimensional
+the coordinates of a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-dimensional
 sample in the lower dimensional biplot space. For PCA we showed in
 section 1 in the biplotEZ vignette that the sample points are
-represented by <span class="math inline">\(\mathbf{G}=\mathbf{UDJ}_2\)</span> which can be
-written as <span class="math inline">\(\mathbf{G}=\mathbf{UDV'VJ}_2=\mathbf{XVJ}_2\)</span>.
-Finding the position of a new sample <span class="math inline">\(\mathbf{x}^*:p \times 1\)</span> make use of the
-same transformation so that the 2D coordinates is given by <span class="math inline">\({\mathbf{z}^*}':2 \times 1
-={\mathbf{x}^*}' \mathbf{VJ}_2\)</span>. Similarly, the position of
-a new variable <span class="math inline">\(\mathbf{x}^*:n \times
-1\)</span> is added using a regression method that assumes that <span class="math inline">\(\mathbf{x}^*\)</span> is approximately a linear
-function <span class="math inline">\(\mathbf{x}^* =
-\mathbf{XV}_r\mathbf{b}_r\)</span> with solution <span class="math inline">\(\hat{\mathbf{b}}_r :r \times 1 =
-(\mathbf{V}'_r\mathbf{X}'\mathbf{XV}_r)^{-1}\mathbf{V}_r\mathbf{X}'\mathbf{x}^*\)</span>.</p>
+represented by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐆</mi><mo>=</mo><msub><mrow><mi>𝐔</mi><mi>𝐃</mi><mi>𝐉</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UDJ}_2</annotation></semantics></math>
+which can be written as
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐆</mi><mo>=</mo><msub><mrow><mi>𝐔</mi><mi>𝐃</mi><mi>𝐕</mi><mi mathvariant="bold">′</mi><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub><mo>=</mo><msub><mrow><mi>𝐗</mi><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UDV'VJ}_2=\mathbf{XVJ}_2</annotation></semantics></math>.
+Finding the position of a new sample
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝐱</mi><mo>*</mo></msup><mo>:</mo><mi>p</mi><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}^*:p \times 1</annotation></semantics></math>
+make use of the same transformation so that the 2D coordinates is given
+by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝐳</mi><mo>*</mo></msup><mi>′</mi><mo>:</mo><mn>2</mn><mo>×</mo><mn>1</mn><mo>=</mo><msup><mi>𝐱</mi><mo>*</mo></msup><mi>′</mi><msub><mrow><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">{\mathbf{z}^*}':2 \times 1 ={\mathbf{x}^*}' \mathbf{VJ}_2</annotation></semantics></math>.
+Similarly, the position of a new variable
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝐱</mi><mo>*</mo></msup><mo>:</mo><mi>n</mi><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}^*:n \times 1</annotation></semantics></math>
+is added using a regression method that assumes that
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>𝐱</mi><mo>*</mo></msup><annotation encoding="application/x-tex">\mathbf{x}^*</annotation></semantics></math>
+is approximately a linear function
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝐱</mi><mo>*</mo></msup><mo>=</mo><msub><mrow><mi>𝐗</mi><mi>𝐕</mi></mrow><mi>r</mi></msub><msub><mi>𝐛</mi><mi>r</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{x}^* = \mathbf{XV}_r\mathbf{b}_r</annotation></semantics></math>
+with solution
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>𝐛</mi><mo accent="true">̂</mo></mover><mi>r</mi></msub><mo>:</mo><mi>r</mi><mo>×</mo><mn>1</mn><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐕</mi><msub><mi>′</mi><mi>r</mi></msub><mi>𝐗</mi><mi>′</mi><msub><mrow><mi>𝐗</mi><mi>𝐕</mi></mrow><mi>r</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mn>1</mn></mrow></msup><msub><mi>𝐕</mi><mi>r</mi></msub><mi>𝐗</mi><mi>′</mi><msup><mi>𝐱</mi><mo>*</mo></msup></mrow><annotation encoding="application/x-tex">\hat{\mathbf{b}}_r :r \times 1 = (\mathbf{V}'_r\mathbf{X}'\mathbf{XV}_r)^{-1}\mathbf{V}_r\mathbf{X}'\mathbf{x}^*</annotation></semantics></math>.</p>
 <p>Adding samples and variables to the plot is facilitated by the
 function <code><a href="../reference/interpolate.html">interpolate()</a></code>. Note that the samples and variables
 to be interpolated did not contribute to the construction of the biplot.
@@ -368,9 +394,11 @@ containing the subset of numerical variables. Similarly, the argument
 <code>newvariable</code> containing the new variables to be interpolated
 needs to have the same number of samples in the data sent to
 <code><a href="../reference/biplot.html">biplot()</a></code>.</p>
-<p>Suppose we construct a PCA biplot of the first <span class="math inline">\(40\)</span> samples in the data set
-<code>rock</code> and then <span class="math inline">\(8\)</span> new
-samples is to be interpolated the call will be:</p>
+<p>Suppose we construct a PCA biplot of the first
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>40</mn><annotation encoding="application/x-tex">40</annotation></semantics></math>
+samples in the data set <code>rock</code> and then
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>8</mn><annotation encoding="application/x-tex">8</annotation></semantics></math>
+new samples is to be interpolated the call will be:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/interpolate.html">interpolate</a></span> <span class="op">(</span>newdata<span class="op">=</span><span class="va">rock</span><span class="op">[</span><span class="fl">41</span><span class="op">:</span><span class="fl">48</span>,<span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
@@ -589,35 +617,26 @@ with s (4th Edition).</em> New York: Springer.
 </div>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by Sugnet Lubbe, Niël le Roux, Johané Nienkemper-Swanepoel, Raeesa Ganey, Ruan Buys, Zoë-Mae Adams, Peter Manefeldt.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by Sugnet Lubbe, Niël le Roux, Johané Nienkemper-Swanepoel, Raeesa Ganey, Ruan Buys, Zoë-Mae Adams, Peter Manefeldt.</p>
 </div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
-  
 
 
-  
+
 
   </body>
 </html>
