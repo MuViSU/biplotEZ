@@ -35,6 +35,9 @@
 #' dist[7] <- 0.4
 #' bp |> translate_axes(delta = 0.2, distances=dist) |> plot()
 translate_axes<-function(bp, delta=0,swop=FALSE,distances=NULL){
+  if (!requireNamespace("cluster", quietly = TRUE)) {
+     stop("Package 'cluster' is required for this function. Please install it.", call. = FALSE)
+   }
   p<-bp$p
   m<-bp$ax.one.unit[,2]/bp$ax.one.unit[,1] #slopes of the axes
   thetas<-atan(m)                         #angles of the axes

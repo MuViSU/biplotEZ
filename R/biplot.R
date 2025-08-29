@@ -1015,6 +1015,9 @@ prediction <- function (bp, predict.samples=NULL,predict.means=NULL,which=1:bp$p
 #'   classify(col=c("red","blue","orange"),opacity=0.1) |> plot()
 classify <- function(bp, classify.regions = TRUE, col=ez.col, opacity=0.4, borders = FALSE)
 {
+  if (!requireNamespace("caret", quietly = TRUE)) {
+   stop("Package 'caret' is required for this function. Please install it.", call. = FALSE)
+  }
   if (inherits(bp, "CVA"))
   {
     while (length(col) < bp$g) col <- c(col, col)

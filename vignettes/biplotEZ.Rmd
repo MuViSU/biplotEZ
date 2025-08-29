@@ -26,6 +26,16 @@ library(biplotEZ)
 
 The package \pkg{biplotEZ} provides users with an *EZ*-to-use way of constructing multi-dimensional scatter plots of their data. The simplest form of a biplot is the principal component analysis (PCA) biplot which will be used for illustration in this vignette.
 
+Read more ...
+
+* `vignette("Biplots_in_1D")` for 1-dimensional biplots
+* `vignette("Biplots_in_3D")` for 3-dimensional biplots
+* `vignette("biplotEZ_enhancements")` for alpha-bags, ellipses, densities, interpolation, prediction, reflection, rotation, zoom and axes translation
+* `vignette("Class_sepeartion")` for grouped data
+* `vignette("CA_in_biplotEZ")` for correspondence analysis
+* `vignette("MDS")` for multidimensional scaling biplots
+
+
 # What is a PCA biplot
 Consider a data matrix $\mathbf{X}^{*}:n \times p$ containing data on $n$ objects and $p$ variables. To produce a 2D biplot, we need to optimally approximate $\mathbf{X} = (\mathbf{I}_n-\frac{1}{n}\mathbf{11}')\mathbf{X}^{*}$ (typically of rank $p$ with $p<n$) with a rank $2$ matrix. In terms of the least squares error, we want to
 

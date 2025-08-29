@@ -66,6 +66,9 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
   ggrepel.new <- ggrepel.means <- ggrepel.samples <- NULL
   if (do.ggrepel)
   {
+    if (!requireNamespace("R.devices", quietly = TRUE)) {
+       stop("Package 'R.devices' is required for this function. Please install it.", call. = FALSE)
+    }
     out <- R.devices::suppressGraphics(.get.ggrepel.coords(df))
     if (n.newsamples>n.means) ggrepel.new <-list(coords = out$coords[out$visible>n.newsamples & out$visible<n.means+1,,drop=F],
                                                  visible = out$visible[out$visible>n.newsamples & out$visible<n.means+1]-n.means,
@@ -333,6 +336,9 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
 plot3D <- function(bp,
                     exp.factor = 1.2,...)
 {
+  if (!requireNamespace("rgl", quietly = TRUE)) {
+     stop("Package 'ggplot2' is required for this function. Please install it.", call. = FALSE)
+   }
   
   if (is.null(bp$Z)) stop ("Add a biplot method before generating a plot")
   else Z <- bp$Z

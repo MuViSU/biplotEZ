@@ -42,7 +42,6 @@ Suggests:
     R.devices,
     rgl,
     rmarkdown,
-    testthat (>= 3.0.0)
 Imports: 
     graphics,
     grDevices,

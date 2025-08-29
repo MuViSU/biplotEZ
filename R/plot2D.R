@@ -638,6 +638,15 @@
 #' @noRd
 .get.ggrepel.coords <- function(df)
 {
+  if (!requireNamespace("ggplot2", quietly = TRUE)) {
+    stop("Package 'ggplot2' is required for this function. Please install it.", call. = FALSE)
+   }
+  if (!requireNamespace("ggrepel", quietly = TRUE)) {
+     stop("Package 'ggrepel' is required for this function. Please install it.", call. = FALSE)
+   }
+  if (!requireNamespace("grid", quietly = TRUE)) {
+     stop("Package 'grid' is required for this function. Please install it.", call. = FALSE)
+   }
   pp <- ggplot2::ggplot (df, ggplot2::aes(df$x,df$y,label=df$z)) + 
            ggplot2::geom_point() + 
            ggrepel::geom_text_repel()
