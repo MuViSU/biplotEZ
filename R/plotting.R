@@ -125,7 +125,6 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
         }
 
       # Classification Regions - this should be plotted first. 
-      # if(!is.null(x$classify)) x <- classify(x)
       classify.aes <- x$classify$aes
       
       if(!is.null(x$classify$classify.regions)) {
@@ -188,15 +187,6 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
       {
         if (length(ax.aes$which) > 0)
           {
-          if (!is.null(x$Lmat))
-              if (nrow(x$Lmat) == ncol(x$Lmat)) 
-                Xhat <- x$Z %*% solve(x$Lmat)[x$e.vects,]
-              else Xhat <- x$X
-            else
-              Xhat <- x$X
-            if (x$scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/x$sd)
-            if (x$center) Xhat <- scale(Xhat, center=-1*x$means, scale=FALSE)
-            
             if(!is.null(x$PCOaxes)) 
               { if (x$PCOaxes == "splines") # Only for PCO - if axes (type) is set to splines.  
                   {
@@ -208,15 +198,17 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
                   } 
                 else if(x$PCOaxes == "regression") # Only for PCO - if axes (type) is set to regression. 
                        {
-                         z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
-                                        ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
+                         z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, x$X, x$means, 
+                                          x$sd, x$ax.one.unit, ax.aes$which, ax.aes$ticks, 
+                                          ax.aes$orthogx, ax.aes$orthogy)
                         .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
                        }
               } 
             else 
               { # Otherwise calibrate linear axes
-                z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
-                               ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
+                z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, x$X, x$means, x$sd, 
+                                 x$ax.one.unit, ax.aes$which, ax.aes$ticks, 
+                                 ax.aes$orthogx, ax.aes$orthogy)
                 .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
               }
             }
@@ -233,13 +225,56 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
       if (length(new.ax.aes$which) > 0)
       {
         
-        z.axes.new <- lapply(1:length(new.ax.aes$which), .calibrate.axis, 
-                             x$newvariable, x$new.means, x$new.sd, x$new.ax.one.unit, new.ax.aes$which,
+        z.axes.new <- lapply(1:length(new.ax.aes$which), .calibrate.axis, x$newvariable, 
+                             x$new.means, x$new.sd, x$new.ax.one.unit, new.ax.aes$which,
                              new.ax.aes$ticks, new.ax.aes$orthogx, new.ax.aes$orthogy)
-        .lin.axes.plot(z.axes.new, new.ax.aes, predict.mat, too.small, usr=usr, predict_which=x$predict$which)
+        .lin.axes.plot(z.axes.new, new.ax.aes, predict.mat, too.small, usr=usr, 
+                       predict_which=x$predict$which)
       }
       }
-      
+        
+      # Nominal and ordinal axes
+      if(inherits(x,"catPCA"))
+      {
+        if (sum(x$ax.type == "nominal") > 0)
+        {
+          nom.one.unit <- x$all.ax.one.unit[x$ax.type$ax.type == "nominal",,drop = FALSE]
+          if (is.null(x$nom.axes)) x <- nom.axes(x)
+          
+          z.axes <- lapply(1:length(x$nom.axes$which), .calibrate.cat.axis, 
+                           nom.one.unit, x$nom.axes$which, x$nom.axes$orthogx, 
+                           x$nom.axes$orthogy, x$nom.levels)
+          .nom.axes.plot(z.axes, x$nom.axes, predict.mat, too.small,
+                         usr = usr, predict_which = x$predict$which)
+        }
+
+        if (sum(x$ax.type == "ordinal") > 0)
+        {
+          ord.one.unit <- x$all.ax.one.unit[x$ax.type$ax.type == "ordinal",,drop = FALSE]
+          if (is.null(x$ord.axes)) x <- ord.axes(x)
+          for (j in 1:length(x$ord.levels))
+          {
+            current.markers <- x$ord.levels[[j]]
+            i <- 1
+            while (i < length(current.markers) - 1)
+            {
+              if (abs(current.markers[i]-current.markers[i+1]) < 1.5*.Machine$double.eps)
+              {
+                names(current.markers[i]) <- paste(names(current.markers[i]),
+                                                   names(current.markers[i+1]), sep="*")
+                current.markers <- current.markers[-(i+1)]
+              }
+              else i <- i + 1
+            }
+            x$ord.levels[[j]] <- current.markers
+          }
+          z.axes <- lapply(1:length(x$ord.axes$which), .calibrate.cat.axis,  
+                           ord.one.unit, x$ord.axes$which, x$ord.axes$orthogx, 
+                           x$ord.axes$orthogy, x$ord.levels)
+          .ord.axes.plot(z.axes, x$ord.axes, predict.mat, too.small,
+                         usr = usr,predict_which = x$predict$which)
+        }
+      }
       
       # Fit measures 
       too.small <- NULL
@@ -418,7 +453,9 @@ if(!inherits(bp,"CA")){
   
   }
   
-
+  # Nominal and ordinal axes
+  if(inherits(bp,"catPCA")) stop ("catPCA not implemented for 3D biplots")
+    
   # Bags 
   
   
@@ -529,6 +566,9 @@ plot1D <-  function(bp, exp.factor = 1.2,...)
       .lin.axes.plot1D(z.axes.new, new.ax.aes, too.small, usr=usr)
     }
     }
+
+    # Nominal and ordinal axes
+    if(inherits(bp,"catPCA")) stop ("catPCA not implemented for 1D biplots")
 
     # Predictions of points with lines down to the axes.
     if (!is.null(predict.mat)){

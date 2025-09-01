@@ -40,8 +40,9 @@ Suggests:
     knitr,
     MASS,
     R.devices,
+    RColorBrewer,
     rgl,
-    rmarkdown,
+    rmarkdown
 Imports: 
     graphics,
     grDevices,

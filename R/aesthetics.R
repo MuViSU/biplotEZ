@@ -488,6 +488,419 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
 }
 
 # ----------------------------------------------------------------------------------------------
+#' Format aesthetics for the nominal biplot axes
+#'
+#' @description
+#' This function allows the user to format the aesthetics for the nominal biplot axes.
+#'
+#'
+#' @param bp an object of class \code{biplot}.
+#' @param X.names a vector of column names of \code{bp} to specify which axes should be labelled.
+#' @param which a vector containing the columns or variables for which the axes should be displayed, with default \code{1:p}.
+#' @param col a list with each component the colour(s) for the levels of that axis.
+#' @param lwd the line width(s) for the axes, with default \code{1}.
+#' @param lty the line type(s) for the axes, with default \code{1}.
+#' @param label.dir a character string indicating the placement of the axis titles to the side of the figure. One of "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure (default) , "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure.
+#' @param label.col the colour(s) for the axis labels, with default, \code{col}.
+#' @param label.cex the label expansion for the axis labels, with default \code{0.75}.
+#' @param label.line the distance of the axis title from the side of the figure, with default \code{0.1}.
+#' @param label.offset a four-component numeric vector controlling the distances axis titles are displayed from the side of the figure, with default \code{rep(0,4)}. Sides are numbered \code{1} to \code{4} according to \code{R} conventions.
+#' @param ticks an integer-valued vector indicating the number of tickmarks for each axis, with default \code{5} for each axis.
+#' @param tick.col the colour(s) for the tick marks, with default \code{col}.
+#' @param tick.size a vector specifying the sizes of tick marks for each axis, with default \code{1} for each .
+#' @param tick.label a logical value indicating whether the axes should be labelled, with default \code{TRUE}.
+#' @param tick.label.side a character string indicating the position of the tick label. One of "\code{below}" for the label to appear below the tick mark (default) or "\code{above}" for the label to appear above the tick mark.
+#' @param tick.label.col the colour(s) for the tick mark labels, with default \code{tick.col}.
+#' @param tick.label.cex the label expansion for the tick mark labels, with default \code{0.6}.
+#' @param predict.col the colour(s) for the predicted samples, with default \code{col}.
+#' @param predict.lwd the line width(s) for the predicted samples, with default \code{lwd}.
+#' @param predict.lty the line type(s) for the predicted samples, with default \code{lty}.
+#' @param ax.names a vector of size \code{p} containing user defined titles for the axes.
+#' @param orthogx a numeric vector of size \code{p} specifying the x-coordinate of the parallel transformation of each axis, with default \code{0} for each axis. This is only used when \code{dim.biplot = 2}. 
+#' @param orthogy a numeric vector of size \code{p} specifying the y-coordinate of the parallel transformation of each axis, with default \code{0} for each axis. This is only used when \code{dim.biplot = 2}.
+#'
+#' @return The object of class \code{biplot} will be appended with a list called \code{axes} containing the following elements:
+#' \item{which}{a vector containing the columns for which the axes are displayed.}
+#' \item{col}{the colour(s) of the axes.}
+#' \item{lwd}{the line width(s) of the axes.}
+#' \item{lty}{the line type(s) of the axes.}
+#' \item{label.dir}{the placement of the axis titles to the side of the figure.}
+#' \item{label.col}{the colour(s) of the axis titles.}
+#' \item{label.cex}{the label expansion(s) of the axis titles.}
+#' \item{label.line}{the distance(s) of the axis titles from the side of the figure.}
+#' \item{ticks}{the number of tick marks per axis.}
+#' \item{tick.col}{the colour(s) of the tick marks.}
+#' \item{tick.size}{the size(s) of the tick marks.}
+#' \item{tick.label}{logical value(s) indicating whether axes are labelled.}
+#' \item{tick.label.side}{the position of the tick mark labels.}
+#' \item{tick.label.col}{the colour(s) of the tick mark labels.}
+#' \item{tick.label.cex}{the expansion(s) of the tick mark labels.}
+#' \item{predict.col}{the colour(s) of the predicted samples.}
+#' \item{predict.lty}{the line type(s) of the predicted samples.}
+#' \item{predict.lwd}{the line width(s) of the predicted samples.}
+#' \item{names}{the user defined axis titles.}
+#' \item{orthogx}{the horizontal translations for each axis.}
+#' \item{orthogy}{the vertical translations for each axis.}
+#' \item{vectors}{a logical value indicating whether calibrated axes are plotted.}
+#' 
+#' @seealso [biplot()]
+#'
+#' @usage
+#' nom.axes(bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal"], 
+#'          which =1:sum(bp$ax.type$ax.type=="nominal"), col = grey(0.7), lwd = 1, 
+#'          lty = 1, label.dir = "Orthog", label.col = "black", label.cex = 0.75, 
+#'          label.line = 0.1, label.offset=rep(0,4), ticks = 5, tick.col = "black", 
+#'          tick.size = 1, tick.label = TRUE, tick.label.side = "below", 
+#'          tick.label.col = tick.col, tick.label.cex = 0.6, predict.col = col, 
+#'          predict.lwd = lwd, predict.lty = lty, ax.names = X.names, 
+#'          orthogx = 0, orthogy = 0)
+#' @aliases nom.axes
+#'
+#' @export
+#'
+#' @examples
+#' biplot(iris) |> CatPCA() |> nom.axes(col=c("blue","magenta","gold")) |> plot()
+#'
+nom.axes <- function (bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal"], 
+                      which =1:sum(bp$ax.type$ax.type=="nominal"), col = grey(0.7), lwd = 1, 
+                      lty = 1, label.dir = "Orthog", label.col = "black", 
+                      label.cex = 0.75, 
+                      label.line = 0.1, label.offset=rep(0,4), ticks = 5, tick.col = "black", 
+                      tick.size = 1, tick.label = TRUE, tick.label.side = "below",
+                      tick.label.col = tick.col, tick.label.cex = 0.6,
+                      predict.col = col, predict.lwd = lwd, predict.lty = lty, ax.names = X.names,
+                      orthogx = 0, orthogy = 0)
+{
+  if (!requireNamespace("RColorBrewer", quietly = TRUE)) {
+   stop("Package 'RColorBrewer' is required for this function. Please install it.", call. = FALSE)
+  }
+  
+  p <- sum(bp$ax.type$ax.type=="nominal")
+  num.levels.vec <- bp$ax.type$num.levels[bp$ax.type$ax.type == "nominal"]
+  if (!is.null(p))
+  {
+    if (!all(is.numeric(which))) which <- match(which, X.names, nomatch = 0)
+    which <- which[which <= p]
+    which <- which[which > 0]
+    ax.num <- length(which)
+    
+    if (is.null(col))
+      col <- c(RColorBrewer::brewer.pal(12,"Set3")[-2], RColorBrewer::brewer.pal(7,"Dark2"))
+    if (!is.list(col))
+    {
+      temp <- vector ("list", ax.num)
+      for (j in 1:ax.num) temp[[j]] <- col
+      col <- temp
+    }
+    if (length(col) < ax.num)
+    {
+      temp <- vector ("list", ax.num)
+      col.length <- length(col)
+      j <- 0
+      while (j < ax.num)
+      {  for (k in 1:col.length) if (k+j<ax.num) temp[[k+1]] <- col[[k]]
+         j <- j + col.length
+      }
+      col <- temp
+    }
+    if (length(col) > ax.num)
+    {
+      temp <- vector ("list", ax.num)
+      for (j in 1:ax.num) temp[[j]] <- col[[j]]
+      col <- temp
+    }
+    num.levels <- num.levels.vec[which]
+    
+    for (j in 1:ax.num)
+      col[[j]] <- col[[j]][ifelse (1:num.levels %% length(col[[j]]) == 0, length(col[[j]]), 
+                                                                          1:num.levels %% length(col[[j]]))]
+
+    lwd.len <- length(lwd)
+    lwd <- lwd[ifelse(1:ax.num%%lwd.len==0,lwd.len,1:ax.num%%lwd.len)]
+    if(is.null(lwd)){lwd <- rep(0, ax.num)}
+    
+    lty.len <- length(lty)
+    lty <- lty[ifelse(1:ax.num%%lty.len==0,lty.len,1:ax.num%%lty.len)]
+    if(is.null(lty)){lty <- rep(0, ax.num)}
+    if (label.dir != "Orthog" & label.dir != "Hor" & label.dir != "Paral")
+      stop("Incorrect specification of axis label direction")
+    
+    label.col.len <- length(label.col)
+    label.col <- label.col[ifelse(1:ax.num%%label.col.len==0,label.col.len,1:ax.num%%label.col.len)]
+    if(is.null(label.col)){label.col <- rep(0, ax.num)}
+    
+    label.cex.len <- length(label.cex)
+    label.cex <- label.cex[ifelse(1:ax.num%%label.cex.len==0,label.cex.len,1:ax.num%%label.cex.len)]
+    if(is.null(label.cex)){label.cex <- rep(0, ax.num)}
+    
+    label.line.len <- length(label.line)
+    label.line <- label.line[ifelse(1:ax.num%%label.line.len==0,label.line.len,1:ax.num%%label.line.len)]
+    if(is.null(label.line)){label.line <- rep(0, ax.num)}
+    
+    ticks.len <- length(ticks)
+    ticks <- ticks[ifelse(1:ax.num%%ticks.len==0,ticks.len,1:ax.num%%ticks.len)]
+    if(is.null(ticks)){ticks <- rep(0, ax.num)}
+    
+    tick.col.len <- length(tick.col)
+    tick.col <- tick.col[ifelse(1:ax.num%%tick.col.len==0,tick.col.len,1:ax.num%%tick.col.len)]
+    if(is.null(tick.col)){tick.col <- rep(0, ax.num)}
+    
+    tick.size.len <- length(tick.size)
+    tick.size <- tick.size[ifelse(1:ax.num%%tick.size.len==0,tick.size.len,1:ax.num%%tick.size.len)]
+    if(is.null(tick.size)){tick.size <- rep(0, ax.num)}
+    
+    tick.label.len <- length(tick.label)
+    tick.label <- tick.label[ifelse(1:ax.num%%tick.label.len==0,tick.label.len,1:ax.num%%tick.label.len)]
+    if(is.null(tick.label)){tick.label <- rep("", ax.num)}
+    
+    tick.label.col.len <- length(tick.label.col)
+    tick.label.col <- tick.label.col[ifelse(1:ax.num%%tick.label.col.len==0,tick.label.col.len,1:ax.num%%tick.label.col.len)]
+    if(is.null(tick.label.col)){tick.label.col <- rep(0, ax.num)}
+    
+    tick.label.cex.len <- length(tick.label.cex)
+    tick.label.cex <- tick.label.cex[ifelse(1:ax.num%%tick.label.cex.len==0,tick.label.cex.len,1:ax.num%%tick.label.cex.len)]
+    if(is.null(tick.label.cex)){tick.label.cex <- rep(0, ax.num)}
+    
+    tick.label.side.len <- length(tick.label.side)
+    tick.label.side <- tick.label.side[ifelse(1:ax.num%%tick.label.side.len==0,tick.label.side.len,1:ax.num%%tick.label.side.len)]
+    if(is.null(tick.label.side)){tick.label.side <- rep(0, ax.num)}
+    
+    predict.col.len <- length(predict.col)
+    predict.col <- predict.col[ifelse(1:ax.num%%predict.col.len==0,predict.col.len,1:ax.num%%predict.col.len)]
+    if(is.null(predict.col)){predict.col <- rep(0, ax.num)}
+    
+    predict.lwd.len <- length(predict.lwd)
+    predict.lwd <- predict.lwd[ifelse(1:ax.num%%predict.lwd.len==0,predict.lwd.len,1:ax.num%%predict.lwd.len)]
+    if(is.null(predict.lwd)){predict.lwd <- rep(0, ax.num)}
+    
+    predict.lty.len <- length(predict.lty)
+    predict.lty <- predict.lty[ifelse(1:ax.num%%predict.lty.len==0,predict.lty.len,1:ax.num%%predict.lty.len)]
+    if(is.null(predict.lty)){predict.lty <- rep(0, ax.num)}
+    
+    ax.names.len <- length(ax.names)
+    ax.names <- ax.names[ifelse(1:p%%ax.names.len==0,ax.names.len,1:p%%ax.names.len)]
+    if(is.null(ax.names)){ax.names <- rep("", p)}
+    
+    orthogx.len <- length(orthogx)
+    orthogx <- orthogx[ifelse(1:p%%orthogx.len==0,orthogx.len,1:p%%orthogx.len)]
+    if(is.null(orthogx)){orthogx <- rep("", p)}
+    
+    orthogy.len <- length(orthogy)
+    orthogy <- orthogx[ifelse(1:p%%orthogy.len==0,orthogy.len,1:p%%orthogy.len)]
+    if(is.null(orthogy)){orthogy <- rep("", p)}
+    
+    bp$nom.axes = list(which = which, col = col, lwd = lwd, lty = lty, label.dir = label.dir, 
+                       label.col = label.col, label.cex = label.cex, label.line = label.line, 
+                       ticks = ticks, tick.col = tick.col, tick.size = tick.size, 
+                       tick.label = tick.label, tick.label.col = tick.label.col, 
+                       tick.label.cex = tick.label.cex, tick.label.side=tick.label.side,
+                       predict.col = predict.col, predict.lty = predict.lty, 
+                       predict.lwd = predict.lwd, names = ax.names, orthogx = orthogx, 
+                       orthogy = orthogy)
+    
+  }
+  else bp$nom.axes <- list(which = NULL)
+  bp
+}
+
+# ----------------------------------------------------------------------------------------------
+#' Format aesthetics for the ordinal biplot axes
+#'
+#' @description
+#' This function allows the user to format the aesthetics for the ordinal biplot axes.
+#'
+#'
+#' @param bp an object of class \code{biplot}.
+#' @param X.names a vector of column names of \code{bp} to specify which axes should be labelled.
+#' @param which a vector containing the columns or variables for which the axes should be displayed, with default \code{1:p}.
+#' @param col the colour(s) for the axes, with default \code{grey(0.7)}. Alternatively, provide a vector of colours corresponding to \code{X.names}.
+#' @param lwd.factor a numeric value for increasing line width for each consecutive level
+#' @param reverse logical indicator to switch the narrow to wide calibration on the axis
+#' @param lwd the line width(s) for the axes, with default \code{1}.
+#' @param lty the line type(s) for the axes, with default \code{1}.
+#' @param label.dir a character string indicating the placement of the axis titles to the side of the figure. One of "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure (default) , "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure.
+#' @param label.col the colour(s) for the axis labels, with default, \code{col}.
+#' @param label.cex the label expansion for the axis labels, with default \code{0.75}.
+#' @param label.line the distance of the axis title from the side of the figure, with default \code{0.1}.
+#' @param label.offset a four-component numeric vector controlling the distances axis titles are displayed from the side of the figure, with default \code{rep(0,4)}. Sides are numbered \code{1} to \code{4} according to \code{R} conventions.
+#' @param ticks an integer-valued vector indicating the number of tickmarks for each axis, with default \code{5} for each axis.
+#' @param tick.col the colour(s) for the tick marks, with default \code{col}.
+#' @param tick.size a vector specifying the sizes of tick marks for each axis, with default \code{1} for each .
+#' @param tick.label a logical value indicating whether the axes should be labelled, with default \code{TRUE}.
+#' @param tick.label.side a character string indicating the position of the tick label. One of "\code{below}" for the label to appear below the tick mark (default) or "\code{above}" for the label to appear above the tick mark.
+#' @param tick.label.col the colour(s) for the tick mark labels, with default \code{tick.col}.
+#' @param tick.label.cex the label expansion for the tick mark labels, with default \code{0.6}.
+#' @param predict.col the colour(s) for the predicted samples, with default \code{col}.
+#' @param predict.lwd the line width(s) for the predicted samples, with default \code{lwd}.
+#' @param predict.lty the line type(s) for the predicted samples, with default \code{lty}.
+#' @param ax.names a vector of size \code{p} containing user defined titles for the axes.
+#' @param orthogx a numeric vector of size \code{p} specifying the x-coordinate of the parallel transformation of each axis, with default \code{0} for each axis. This is only used when \code{dim.biplot = 2}. 
+#' @param orthogy a numeric vector of size \code{p} specifying the y-coordinate of the parallel transformation of each axis, with default \code{0} for each axis. This is only used when \code{dim.biplot = 2}.
+#'
+#' @return The object of class \code{biplot} will be appended with a list called \code{axes} containing the following elements:
+#' \item{which}{a vector containing the columns for which the axes are displayed.}
+#' \item{col}{the colour(s) of the axes.}
+#' \item{lwd.factor}{the factor with which to increase the line width for each level.}
+#' \item{reverse}{whether the axis goes narrow to wide or vice versa.}
+#' \item{lwd}{the line width(s) of the axes.}
+#' \item{lty}{the line type(s) of the axes.}
+#' \item{label.dir}{the placement of the axis titles to the side of the figure.}
+#' \item{label.col}{the colour(s) of the axis titles.}
+#' \item{label.cex}{the label expansion(s) of the axis titles.}
+#' \item{label.line}{the distance(s) of the axis titles from the side of the figure.}
+#' \item{ticks}{the number of tick marks per axis.}
+#' \item{tick.col}{the colour(s) of the tick marks.}
+#' \item{tick.size}{the size(s) of the tick marks.}
+#' \item{tick.label}{logical value(s) indicating whether axes are labelled.}
+#' \item{tick.label.side}{the position of the tick mark labels.}
+#' \item{tick.label.col}{the colour(s) of the tick mark labels.}
+#' \item{tick.label.cex}{the expansion(s) of the tick mark labels.}
+#' \item{predict.col}{the colour(s) of the predicted samples.}
+#' \item{predict.lty}{the line type(s) of the predicted samples.}
+#' \item{predict.lwd}{the line width(s) of the predicted samples.}
+#' \item{names}{the user defined axis titles.}
+#' \item{orthogx}{the horizontal translations for each axis.}
+#' \item{orthogy}{the vertical translations for each axis.}
+#' \item{vectors}{a logical value indicating whether calibrated axes are plotted.}
+#' 
+#' @usage
+#' ord.axes(bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="ordinal"], 
+#'          which =1:sum(bp$ax.type$ax.type=="ordinal"), col = grey(0.7), 
+#'          reverse = rep(FALSE, sum(bp$ax.type$ax.type=="ordinal")), lwd.factor = 1.5, 
+#'          lwd = 1, lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75, 
+#'          label.line = 0.1, label.offset=rep(0,4), ticks = 5, tick.col = col, 
+#'          tick.size = 1, tick.label = TRUE, tick.label.side = "below", 
+#'          tick.label.col = tick.col, tick.label.cex = 0.6, 
+#'          predict.col = col, predict.lwd = lwd, predict.lty = lty, ax.names = X.names, 
+#'          orthogx = 0, orthogy = 0)
+#' @aliases ord.axes
+#'
+#' @export
+#'
+#' @examples
+#' biplot(iris) |> CatPCA(cat.type = "ord") |> ord.axes(col="purple") |> plot()
+#'
+ord.axes <- function (bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="ordinal"], 
+                      which =1:sum(bp$ax.type$ax.type=="ordinal"), col = grey(0.7), 
+                      reverse = rep(FALSE, sum(bp$ax.type$ax.type=="ordinal")), lwd.factor = 1.5, 
+                      lwd = 1, lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75, 
+                      label.line = 0.1, label.offset=rep(0,4), ticks = 5, tick.col = col, 
+                      tick.size = 1, tick.label = TRUE, tick.label.side = "below",
+                      tick.label.col = tick.col, tick.label.cex = 0.6,
+                      predict.col = col, predict.lwd = lwd, predict.lty = lty, ax.names = X.names,
+                      orthogx = 0, orthogy = 0)
+{
+  p <- sum(bp$ax.type$ax.type=="ordinal")
+  num.levels.vec <- bp$ax.type$num.levels[bp$ax.type$ax.type == "ordinal"]
+  if (!is.null(p))
+  {
+    if (!all(is.numeric(which))) which <- match(which, X.names, nomatch = 0)
+    which <- which[which <= p]
+    which <- which[which > 0]
+    ax.num <- length(which)
+    
+    col.len <- length(col)
+    col <- col[ifelse(1:ax.num%%col.len==0,col.len,1:ax.num%%col.len)]
+    if(is.null(col)){col <- rep(0, ax.num)}
+    
+    lwdf.len <- length(lwd.factor)
+    lwd.factor <- lwd.factor[ifelse(1:ax.num%%lwdf.len==0,lwdf.len,1:ax.num%%lwdf.len)]
+    if(is.null(lwd.factor)){lwd.factor <- rep(0, ax.num)}
+    
+    lwd.len <- length(lwd)
+    lwd <- lwd[ifelse(1:ax.num%%lwd.len==0,lwd.len,1:ax.num%%lwd.len)]
+    if(is.null(lwd)){lwd <- rep(0, ax.num)}
+    
+    rev.len <- length(reverse)
+    reverse <- reverse[ifelse(1:ax.num%%rev.len==0,rev.len,1:ax.num%%rev.len)]
+    if(is.null(reverse)){reverse <- rep(FALSE, ax.num)}
+
+    lty.len <- length(lty)
+    lty <- lty[ifelse(1:ax.num%%lty.len==0,lty.len,1:ax.num%%lty.len)]
+    if(is.null(lty)){lty <- rep(0, ax.num)}
+    if (label.dir != "Orthog" & label.dir != "Hor" & label.dir != "Paral")
+      stop("Incorrect specification of axis label direction")
+    
+    label.col.len <- length(label.col)
+    label.col <- label.col[ifelse(1:ax.num%%label.col.len==0,label.col.len,1:ax.num%%label.col.len)]
+    if(is.null(label.col)){label.col <- rep(0, ax.num)}
+    
+    label.cex.len <- length(label.cex)
+    label.cex <- label.cex[ifelse(1:ax.num%%label.cex.len==0,label.cex.len,1:ax.num%%label.cex.len)]
+    if(is.null(label.cex)){label.cex <- rep(0, ax.num)}
+    
+    label.line.len <- length(label.line)
+    label.line <- label.line[ifelse(1:ax.num%%label.line.len==0,label.line.len,1:ax.num%%label.line.len)]
+    if(is.null(label.line)){label.line <- rep(0, ax.num)}
+    
+    ticks.len <- length(ticks)
+    ticks <- ticks[ifelse(1:ax.num%%ticks.len==0,ticks.len,1:ax.num%%ticks.len)]
+    if(is.null(ticks)){ticks <- rep(0, ax.num)}
+    
+    tick.col.len <- length(tick.col)
+    tick.col <- tick.col[ifelse(1:ax.num%%tick.col.len==0,tick.col.len,1:ax.num%%tick.col.len)]
+    if(is.null(tick.col)){tick.col <- rep(0, ax.num)}
+    
+    tick.size.len <- length(tick.size)
+    tick.size <- tick.size[ifelse(1:ax.num%%tick.size.len==0,tick.size.len,1:ax.num%%tick.size.len)]
+    if(is.null(tick.size)){tick.size <- rep(0, ax.num)}
+    
+    tick.label.len <- length(tick.label)
+    tick.label <- tick.label[ifelse(1:ax.num%%tick.label.len==0,tick.label.len,1:ax.num%%tick.label.len)]
+    if(is.null(tick.label)){tick.label <- rep("", ax.num)}
+    
+    tick.label.col.len <- length(tick.label.col)
+    tick.label.col <- tick.label.col[ifelse(1:ax.num%%tick.label.col.len==0,tick.label.col.len,1:ax.num%%tick.label.col.len)]
+    if(is.null(tick.label.col)){tick.label.col <- rep(0, ax.num)}
+    
+    tick.label.cex.len <- length(tick.label.cex)
+    tick.label.cex <- tick.label.cex[ifelse(1:ax.num%%tick.label.cex.len==0,tick.label.cex.len,1:ax.num%%tick.label.cex.len)]
+    if(is.null(tick.label.cex)){tick.label.cex <- rep(0, ax.num)}
+    
+    tick.label.side.len <- length(tick.label.side)
+    tick.label.side <- tick.label.side[ifelse(1:ax.num%%tick.label.side.len==0,tick.label.side.len,1:ax.num%%tick.label.side.len)]
+    if(is.null(tick.label.side)){tick.label.side <- rep(0, ax.num)}
+    
+    predict.col.len <- length(predict.col)
+    predict.col <- predict.col[ifelse(1:ax.num%%predict.col.len==0,predict.col.len,1:ax.num%%predict.col.len)]
+    if(is.null(predict.col)){predict.col <- rep(0, ax.num)}
+    
+    predict.lwd.len <- length(predict.lwd)
+    predict.lwd <- predict.lwd[ifelse(1:ax.num%%predict.lwd.len==0,predict.lwd.len,1:ax.num%%predict.lwd.len)]
+    if(is.null(predict.lwd)){predict.lwd <- rep(0, ax.num)}
+    
+    predict.lty.len <- length(predict.lty)
+    predict.lty <- predict.lty[ifelse(1:ax.num%%predict.lty.len==0,predict.lty.len,1:ax.num%%predict.lty.len)]
+    if(is.null(predict.lty)){predict.lty <- rep(0, ax.num)}
+    
+    ax.names.len <- length(ax.names)
+    ax.names <- ax.names[ifelse(1:p%%ax.names.len==0,ax.names.len,1:p%%ax.names.len)]
+    if(is.null(ax.names)){ax.names <- rep("", p)}
+    
+    orthogx.len <- length(orthogx)
+    orthogx <- orthogx[ifelse(1:p%%orthogx.len==0,orthogx.len,1:p%%orthogx.len)]
+    if(is.null(orthogx)){orthogx <- rep("", p)}
+    
+    orthogy.len <- length(orthogy)
+    orthogy <- orthogx[ifelse(1:p%%orthogy.len==0,orthogy.len,1:p%%orthogy.len)]
+    if(is.null(orthogy)){orthogy <- rep("", p)}
+    
+    bp$ord.axes = list(which = which, col = col, lwd.factor = lwd.factor, reverse = reverse, 
+                       lwd = lwd, lty = lty, label.dir = label.dir, 
+                       label.col = label.col, label.cex = label.cex, label.line = label.line, 
+                       ticks = ticks, tick.col = tick.col, tick.size = tick.size, 
+                       tick.label = tick.label, tick.label.col = tick.label.col, 
+                       tick.label.cex = tick.label.cex, tick.label.side=tick.label.side,
+                       predict.col = predict.col, predict.lty = predict.lty, 
+                       predict.lwd = predict.lwd, names = ax.names, orthogx = orthogx, 
+                       orthogy = orthogy)
+    
+  }
+  else bp$ord.axes <- list(which = NULL)
+  bp
+}
+
+# ----------------------------------------------------------------------------------------------
 #' Aesthetics for alpha-bags
 #'
 #' @param g number of groups. Numeric

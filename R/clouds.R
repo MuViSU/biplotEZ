@@ -567,6 +567,7 @@ calc.alpha.bags <- function (x, y, aa=0.95, na.rm = TRUE, approx.limit = 2500, p
   }
   xydata <- if (missing(y)) x
   else cbind(x, y)
+  if (all(!is.na(apply(xydata,2,stats::sd))))
   if (any(apply(xydata,2,stats::sd)<1e-15))
   {
     xy <- apply(xydata, 2, mean)

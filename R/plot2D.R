@@ -352,6 +352,61 @@
 
 
 
+
+#----------
+#' .calibrate.cat.axis
+#'
+#' @param j Index of axis to calibrate
+#' @param axes.rows 
+#' @param ax.which 
+#' @param ax.orthogxvec 
+#' @param ax.orthogyvec 
+#' @param markers
+#'
+#' @noRd
+.calibrate.cat.axis <- function (j, axes.rows, ax.which, ax.orthogxvec, ax.orthogyvec,
+                                 markers)
+{
+  ax.num <- ax.which[j]
+  ax.direction <- axes.rows[ax.num,]
+  r <- ncol(axes.rows)
+  ax.orthog <- rbind(ax.orthogxvec, ax.orthogyvec)
+  if (nrow(ax.orthog) < r)    ax.orthog <- rbind(ax.orthog, 0)
+  if (nrow(axes.rows) > 1)    phi.vec <- diag(1 / diag(axes.rows %*% t(axes.rows))) %*% axes.rows %*% ax.orthog[, ax.num]
+  else  phi.vec <- (1 / (axes.rows %*% t(axes.rows))) %*% axes.rows %*% ax.orthog[, ax.num]
+
+  std.range <- range(markers[[ax.num]])
+  std.ax.tick.label.min <-  min(markers[[ax.num]]) - (std.range[2] - std.range[1])
+  std.ax.tick.label.max <-  max(markers[[ax.num]]) + (std.range[2] - std.range[1])
+  axis.vals <- c(std.ax.tick.label.min, markers[[ax.num]], std.ax.tick.label.max)
+
+  number.points <- length(axis.vals)
+  axis.points <- matrix(0, nrow = number.points, ncol = r)
+  for (i in 1:r)
+    axis.points[, i] <-  ax.orthog[i, ax.num] + (axis.vals - phi.vec[ax.num]) * ax.direction[i]
+  rownames(axis.points)  <- c("", names(markers[[ax.num]]), "")
+
+  #slope = delta y / delta x of two datapoints
+  slope <- (axis.points[1, 2] - axis.points[2, 2]) / (axis.points[1, 1] - axis.points[2, 1])
+  #if slope is infinite then all x-values are same
+  v <- NULL
+  if (is.na(slope))
+  {  v <- axis.points[1, 1]
+     slope = NULL
+  }
+  else if (abs(slope) == Inf)
+       {  v <- axis.points[1, 1]
+          slope = NULL
+       }
+  
+  #y=mx+c... c=y-mx
+  intercept <- axis.points[1, 2] - slope * axis.points[1, 1]
+  
+  retvals <- list(coords = axis.points, a = intercept, b = slope, v = v)
+  return(retvals)
+}
+
+
 #' Insert tick marks and label - called by .marker.func
 #'
 #' @param x x-coo of tick
@@ -366,14 +421,14 @@
 #' @param offset REMOVE
 #' @param label.col color of label
 #' @param cex Bigness of label
-#' @param label_pos 1 for above -1 for below
+#' @param label.pos 1 for above -1 for below
 #'
 #' @return inserts tick marks and label to plot
 #' @noRd
 .marker.label <- function(x, y, grad, marker.val, 
                              expand = 1, col, label.on.off, 
                              label.col, cex,
-                             label_pos=-1,usr)
+                             label.pos=-1,usr)
 {
   
   #get fraction of plot width and expand
@@ -382,14 +437,14 @@
   if (grad == "v"){
     graphics::lines(rep(x, 2), c(y - d, y + d), col = col)
     if (label.on.off == 1) 
-      graphics::text(x, y - label_pos(d+2.5*mm), label = marker.val,
+      graphics::text(x, y - label.pos(d+2.5*mm), label = marker.val,
                      col = label.col, 
                      cex = cex)
   }
   if (grad == "h"){
     graphics::lines(c(x - d, x + d), rep(y, 2), col = col)
     if (label.on.off == 1) 
-      graphics::text(x - label_pos*(d+2.5*mm), y, label = marker.val, 
+      graphics::text(x - label.pos*(d+2.5*mm), y, label = marker.val, 
                      col = label.col, cex = cex,
                      srt=90)
   }
@@ -406,14 +461,14 @@
     
     if (label.on.off == 1){
       if(grad>0)
-        graphics::text(x+label_pos*(2.5*x_shift+b), 
-                       y+label_pos*(2.5*y_shift+a), 
+        graphics::text(x+label.pos*(2.5*x_shift+b), 
+                       y+label.pos*(2.5*y_shift+a), 
                        label = marker.val, 
                        col = label.col,
                        cex = cex,srt=180+(90+atan(grad)*180/pi))
       
       if(grad<0)
-        graphics::text(x-label_pos*(2.5*x_shift+b), y-label_pos*(2.5*y_shift+a), 
+        graphics::text(x-label.pos*(2.5*x_shift+b), y-label.pos*(2.5*y_shift+a), 
                        label = marker.val, 
                        col = label.col,
                        cex = cex,srt=(90+atan(grad)*180/pi))
@@ -439,20 +494,17 @@
 #' @return prints markers to plot
 #' @noRd
 .marker.func <- function(vec, coef, col, tick.size, 
-                         label_pos, label.col, cex,
+                         label.pos, label.col, cex,
                          usr)
 {
 
-  if(label_pos=="below")
-    label_pos<--1
-  if(label_pos=="above")
-    label_pos<- 1
+  if(label.pos=="below")     label.pos<--1
+  if(label.pos=="above")    label.pos<- 1
   
-
   ## vec = [x_coo, y_coo, marker val, show]
   ## coef = [intercept, slope]
-  x <- vec[1]
-  y <- vec[2]
+  x <- as.numeric(vec[1])
+  y <- as.numeric(vec[2])
   marker.val <- vec[3]
   label.on.off <- vec[4]
   if (is.na(coef[2]))
@@ -460,20 +512,20 @@
                      expand = tick.size, col = col, 
                      label.on.off = label.on.off, 
                      label.col = label.col, 
-                     cex = cex,usr=usr, label_pos=label_pos)
+                     cex = cex,usr=usr, label.pos=label.pos)
   
   else if (coef[2] == 0) # line is verticle
     .marker.label(x, y, grad = "v", marker.val, 
                      expand = tick.size, col = col, 
                      label.on.off = label.on.off,
                      label.col = label.col,
-                     cex = cex, usr=usr,label_pos=label_pos)
+                     cex = cex, usr=usr,label.pos=label.pos)
   else
     .marker.label(x, y, grad = -1/coef[2], marker.val, 
                      expand = tick.size, col = col, 
                      label.on.off = label.on.off, 
                      label.col = label.col, 
-                     cex = cex, usr=usr,label_pos=label_pos)
+                     cex = cex, usr=usr,label.pos=label.pos)
 }
 
 
@@ -503,60 +555,90 @@
      marker.mat <- marker.mat[rev(order(marker.mat[, 3])), ]
      x.vals <- marker.mat[, 1]
      y.vals <- marker.mat[, 2]
+     k <- nrow(marker.mat)
   
-     lin.coef<-c(a=this.axis$a,b=this.axis$b)
      if (is.null(this.axis$b))
        graphics::abline(v = this.axis$v, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
      else
-       graphics::abline(coef=lin.coef, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
-    if (ax.aes$label.dir == "Hor") {  graphics::par(las = 1)
-                                      adjust <- c(0.5, 1, 0.5, 0)       }
-    if (ax.aes$label.dir == "Orthog") { graphics::par(las = 2)
-                                        adjust <- c(1, 1, 0, 0)         }
-    if (ax.aes$label.dir == "Paral") {  graphics::par(las = 0)
-                                        adjust <- c(0.5, 0.5, 0.5, 0.5) }
-    h <- nrow(marker.mat)
-    if (is.null(this.axis$b))
-     { if (y.vals[1] < y.vals[h])
-         graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], adj = adjust[1], at = x.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+       graphics::abline(coef=c(this.axis$a, this.axis$b), col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
+     if (ax.aes$label.dir == "Hor") 
+     {  graphics::par(las = 1)
+       adjust <- c(0.5, 1, 0.5, 0)       
+     }
+     if (ax.aes$label.dir == "Orthog") 
+     {  graphics::par(las = 2)
+       adjust <- c(1, 1, 0, 0)         
+     }
+     if (ax.aes$label.dir == "Paral") 
+     {  graphics::par(las = 0)
+       adjust <- c(0.5, 0.5, 0.5, 0.5) 
+     }
+     
+     if (is.null(this.axis$b))
+     {  if (y.vals[1] < y.vals[k])
+          graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], 
+                       adj = adjust[1], at = x.vals[1], col = ax.aes$label.col[i], 
+                       cex = ax.aes$label.cex[i])
        else
-         graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], adj = adjust[3], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+         graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], 
+                         adj = adjust[3], at = y.vals[1], col = ax.aes$label.col[i], 
+                         cex = ax.aes$label.cex[i])
      }
-    else
-      { y1.ster <- lin.coef[2] * usr[1] + lin.coef[1]
-        y2.ster <- lin.coef[2] * usr[2] + lin.coef[1]
-        x1.ster <- (usr[3] - lin.coef[1])/lin.coef[2]
-        x2.ster <- (usr[4] - lin.coef[1])/lin.coef[2]
-        if (lin.coef[2] == 0)
-          { if (x.vals[1] < x.vals[h])
-              graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], adj = adjust[2], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-            else
-              graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], adj = adjust[4], at = y.vals[1], col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
+     else
+     {  y1.ster <- this.axis$b * usr[1] + this.axis$a
+        y2.ster <- this.axis$b * usr[2] + this.axis$a
+        x1.ster <- (usr[3] - this.axis$a)/this.axis$b
+        x2.ster <- (usr[4] - this.axis$a)/this.axis$b
+        if (this.axis$b == 0)
+        { if (x.vals[1] < x.vals[k])
+            graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], 
+                            adj = adjust[2], at = y.vals[1], col = ax.aes$label.col[i], 
+                            cex = ax.aes$label.cex[i])
+          else
+            graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], 
+                            adj = adjust[4], at = y.vals[1], col = ax.aes$label.col[i], 
+                            cex = ax.aes$label.cex[i])
+        }
+        if (this.axis$b > 0)
+         {  if (x.vals[1] < x.vals[k])
+              if (y1.ster <= usr[4] & y1.ster >= usr[3])
+                graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], 
+                                adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], 
+                                cex = ax.aes$label.cex[i])
+              else
+                graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], 
+                                adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], 
+                                cex = ax.aes$label.cex[i])
+            else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+                   graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], 
+                                   adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], 
+                                   cex = ax.aes$label.cex[i])
+                 else
+                   graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], 
+                                   adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], 
+                                   cex = ax.aes$label.cex[i])
           }
-        if (lin.coef[2] > 0)
-          {  if (x.vals[1] < x.vals[h])
-               if (y1.ster <= usr[4] & y1.ster >= usr[3])
-                 graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-               else
-                 graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-               else if (y2.ster <= usr[4] & y2.ster >= usr[3])
-                      graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-                    else
-                      graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-          }
-        if (lin.coef[2] < 0)
-          {  if (x.vals[1] < x.vals[h])
-               if (y1.ster <= usr[4] & y1.ster >= usr[3])
-                 graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-               else
-                 graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-             else if (y2.ster <= usr[4] & y2.ster >= usr[3])
-                    graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-                  else
-                    graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], cex = ax.aes$label.cex[i])
-          }
-     }
-  
+        if (this.axis$b < 0)
+        {  if (x.vals[1] < x.vals[k])
+             if (y1.ster <= usr[4] & y1.ster >= usr[3])
+               graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], 
+                               adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], 
+                               cex = ax.aes$label.cex[i])
+             else
+               graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], 
+                               adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], 
+                               cex = ax.aes$label.cex[i])
+           else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+                  graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], 
+                                  adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], 
+                                  cex = ax.aes$label.cex[i])
+                else
+                  graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], 
+                                  adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], 
+                                  cex = ax.aes$label.cex[i])
+         }
+      }
+     
   invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
   std.markers <- marker.mat[invals, 3]
   if (is.numeric(std.markers)) std.markers <- zapsmall(std.markers)
@@ -565,15 +647,305 @@
   if (ax.aes$tick.label[i]) label.on.off <- rep(1, sum(invals))  else label.on.off <- rep(0, sum(invals))
   if (!ax.aes$tick.label[i]) label.on.off[c(1, length(label.on.off))] <- 1
   if(sum(invals)>0) apply(data.frame(x.vals, y.vals, std.markers, label.on.off), 1, .marker.func,
-                          coef = lin.coef, col = ax.aes$tick.col[i], tick.size = ax.aes$tick.size[i],
-                          label.col = ax.aes$tick.label.col[i], label_pos=ax.aes$tick.label.side[i],
+                          coef = c(this.axis$a, this.axis$b), col = ax.aes$tick.col[i], tick.size = ax.aes$tick.size[i],
+                          label.col = ax.aes$tick.label.col[i], label.pos=ax.aes$tick.label.side[i],
                           cex = ax.aes$tick.label.cex[i], usr=usr)
   
   
   if(ax.num %in% predict_which)
     {
-      if (!is.null(predict.mat)) apply(cbind(predict.mat,y.vals[1]), 1, .predict.func, coef = lin.coef,col=ax.aes$predict.col,lwd=ax.aes$predict.lwd,lty=ax.aes$predict.lty)
+      if (!is.null(predict.mat)) apply(cbind(predict.mat,y.vals[1]), 1, .predict.func, coef = c(this.axis$a, this.axis$b),
+                                       col=ax.aes$predict.col,lwd=ax.aes$predict.lwd,lty=ax.aes$predict.lty)
     }
+  }
+}
+
+#' Plot linear nominal axes on biplots
+#'
+#' @param z.axes list containing all the info to draw axis. see below
+#' @param ax.aes Axis aestetics
+#' @param predict.mat Xhat
+#' @param too.small cutoff: predictivity smaller than cutoff not plotted
+#' @param usr plot dim
+#'
+#' z.axes:    List containing following components for each axis:
+#' $coords:   Tick mark coordinates
+#' $a $b $v:  Intercept, slope, vertical
+#' 
+#' @noRd
+.nom.axes.plot <- function(z.axes, ax.aes, predict.mat, too.small, usr, predict_which)
+{
+  for (i in 1:length(ax.aes$which))
+  {  ax.num <- ax.aes$which[i]
+     if (!is.null(too.small)) if (ax.num %in% too.small) next
+     this.axis <- z.axes[[i]]
+     marker.mat <- this.axis$coords
+     marker.mat <- marker.mat[order(marker.mat[, 1]), ]
+  
+     ends.mat <- c(usr[1], NA)
+     k <- nrow(marker.mat)
+     for (j in 2:nrow(marker.mat))
+       ends.mat <- rbind (ends.mat, (marker.mat[j,1:2] + marker.mat[j-1,1:2])/2)
+     ends.mat <- rbind (ends.mat, c(usr[2],NA))
+     x.vals <- marker.mat[, 1]
+     y.vals <- marker.mat[, 2]
+     
+     if (ends.mat[1,1] < ends.mat[2,1]) ends.mat[2,] <- ends.mat[1,]
+     ends.mat <- ends.mat[-1,]
+     if (ends.mat[k,1] > ends.mat[k-1,1]) ends.mat[k-1,] <- ends.mat[k,]
+     ends.mat <- ends.mat[-k,]
+
+     if (is.null(this.axis$b))
+     {
+       ends.mat[1,1] <- ends.mat[nrow(ends.mat),1] <- 0
+       ends.mat[1,2] <- usr[3]
+       ends.mat[nrow(ends.mat),2] <- usr[4]
+       # graphics::abline(v = this.axis$v, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
+     }
+     else
+     {
+       ends.mat[1,2] <- this.axis$a + ends.mat[1,1]*this.axis$b
+       ends.mat[nrow(ends.mat),2] <- this.axis$a + ends.mat[nrow(ends.mat),1]*this.axis$b
+     }
+     
+     if (ax.aes$label.dir == "Hor") 
+     {  graphics::par(las = 1)
+        adjust <- c(0.5, 1, 0.5, 0)       
+     }
+     if (ax.aes$label.dir == "Orthog") 
+     {  graphics::par(las = 2)
+        adjust <- c(1, 1, 0, 0)         
+     }
+     if (ax.aes$label.dir == "Paral") 
+     {  graphics::par(las = 0)
+        adjust <- c(0.5, 0.5, 0.5, 0.5) 
+     }
+     
+     if (is.null(this.axis$b))
+     {  if (y.vals[1] < y.vals[k])
+          graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], 
+                          adj = adjust[1], at = x.vals[1], col = ax.aes$label.col[i], 
+                          cex = ax.aes$label.cex[i])
+        else
+          graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], 
+                          adj = adjust[3], at = y.vals[1], col = ax.aes$label.col[i], 
+                          cex = ax.aes$label.cex[i])
+     }
+     else
+     {  y1.ster <- this.axis$b * usr[1] + this.axis$a
+        y2.ster <- this.axis$b * usr[2] + this.axis$a
+        x1.ster <- (usr[3] - this.axis$a)/this.axis$b
+        x2.ster <- (usr[4] - this.axis$a)/this.axis$b
+        if (this.axis$b == 0)
+        { if (x.vals[1] < x.vals[k])
+              graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], 
+                              adj = adjust[2], at = y.vals[1], col = ax.aes$label.col[i], 
+                              cex = ax.aes$label.cex[i])
+          else
+            graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], 
+                            adj = adjust[4], at = y.vals[1], col = ax.aes$label.col[i], 
+                            cex = ax.aes$label.cex[i])
+        }
+        if (this.axis$b > 0)
+        {  if (x.vals[1] < x.vals[k])
+             if (y1.ster <= usr[4] & y1.ster >= usr[3])
+               graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], 
+                               adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], 
+                               cex = ax.aes$label.cex[i])
+             else
+               graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], 
+                               adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], 
+                               cex = ax.aes$label.cex[i])
+           else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+                  graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], 
+                                  adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], 
+                                  cex = ax.aes$label.cex[i])
+                else
+                   graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], 
+                                   adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], 
+                                   cex = ax.aes$label.cex[i])
+        }
+    if (this.axis$b < 0)
+    {  if (x.vals[1] < x.vals[k])
+         if (y1.ster <= usr[4] & y1.ster >= usr[3])
+           graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], 
+                           adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], 
+                           cex = ax.aes$label.cex[i])
+         else
+           graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], 
+                           adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], 
+                           cex = ax.aes$label.cex[i])
+       else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+              graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], 
+                              adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], 
+                              cex = ax.aes$label.cex[i])
+            else
+              graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], 
+                              adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], 
+                              cex = ax.aes$label.cex[i])
+    }
+  }
+  for (j in 2:nrow(ends.mat))
+  {
+     graphics::lines (x = ends.mat[(-1:0)+j, 1], y = ends.mat[(-1:0)+j, 2],
+                      col = ax.aes$col[[i]][j-1], lwd = 2*ax.aes$lwd[i], lty=ax.aes$lty[i])
+    .marker.func (vec = c(marker.mat[j,], rownames(marker.mat)[j], 1), 
+                  coef = c(this.axis$a, this.axis$b), col = ax.aes$tick.col,
+                  tick.size = 0, label.pos = ax.aes$tick.label.side, label.col = ax.aes$tick.label.col, 
+                  cex = ax.aes$tick.label.cex, usr = usr)
+  }
+
+    if(ax.num %in% predict_which)
+    {
+      if (!is.null(predict.mat)) apply(cbind(predict.mat,y.vals[1]), 1, .predict.func, 
+                                       coef = c(this.axis$a, this.axis$b), col=ax.aes$predict.col,
+                                       lwd=ax.aes$predict.lwd,lty=ax.aes$predict.lty)
+    }
+  }
+}
+
+#' Plot linear ordinal axes on biplots
+#'
+#' @param z.axes list containing all the info to draw axis. see below
+#' @param ax.aes Axis aestetics
+#' @param predict.mat Xhat
+#' @param too.small cutoff: predictivity smaller than cutoff not plotted
+#' @param usr plot dim
+#'
+#' z.axes:    List containing following components for each axis:
+#' $coords:   Tick mark coordinates
+#' $a $b $v:  Intercept, slope, vertical
+#' 
+#' @noRd
+.ord.axes.plot <- function(z.axes, ax.aes, predict.mat, too.small, usr, predict_which)
+{
+  for (i in 1:length(ax.aes$which))
+  {  ax.num <- ax.aes$which[i]
+     if (!is.null(too.small)) if (ax.num %in% too.small) next
+     this.axis <- z.axes[[i]]
+     marker.mat <- this.axis$coords
+     marker.mat <- marker.mat[order(marker.mat[, 1]), ]
+  
+     ends.mat <- c(usr[1], NA)
+     k <- nrow(marker.mat)
+     for (j in 2:nrow(marker.mat))
+       ends.mat <- rbind (ends.mat, (marker.mat[j,1:2] + marker.mat[j-1,1:2])/2)
+     ends.mat <- rbind (ends.mat, c(usr[2],NA))
+     x.vals <- marker.mat[, 1]
+     y.vals <- marker.mat[, 2]
+  
+     if (ends.mat[1,1] < ends.mat[2,1]) ends.mat[2,] <- ends.mat[1,]
+     ends.mat <- ends.mat[-1,]
+     if (ends.mat[k,1] > ends.mat[k-1,1]) ends.mat[k-1,] <- ends.mat[k,]
+     ends.mat <- ends.mat[-k,]
+  
+     if (is.null(this.axis$b))
+     {
+       ends.mat[1,1] <- ends.mat[nrow(ends.mat),1] <- 0
+       ends.mat[1,2] <- usr[3]
+       ends.mat[nrow(ends.mat),2] <- usr[4]
+     }
+     else
+     {
+       ends.mat[1,2] <- this.axis$a + ends.mat[1,1]*this.axis$b
+       ends.mat[nrow(ends.mat),2] <- this.axis$a + ends.mat[nrow(ends.mat),1]*this.axis$b
+     }
+  
+     if (ax.aes$label.dir == "Hor") 
+     {  graphics::par(las = 1)
+        adjust <- c(0.5, 1, 0.5, 0)       
+     }
+     if (ax.aes$label.dir == "Orthog") 
+     {  graphics::par(las = 2)
+        adjust <- c(1, 1, 0, 0)         
+     }
+     if (ax.aes$label.dir == "Paral") 
+     {  graphics::par(las = 0)
+        adjust <- c(0.5, 0.5, 0.5, 0.5) 
+     }
+  
+     if (is.null(this.axis$b))
+     {  if (y.vals[1] < y.vals[k])
+          graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], 
+                          adj = adjust[1], at = x.vals[1], col = ax.aes$label.col[i], 
+                          cex = ax.aes$label.cex[i])
+        else
+          graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], 
+                          adj = adjust[3], at = y.vals[1], col = ax.aes$label.col[i], 
+                          cex = ax.aes$label.cex[i])
+     }
+     else
+       {  y1.ster <- this.axis$b * usr[1] + this.axis$a
+          y2.ster <- this.axis$b * usr[2] + this.axis$a
+          x1.ster <- (usr[3] - this.axis$a)/this.axis$b
+          x2.ster <- (usr[4] - this.axis$a)/this.axis$b
+          if (this.axis$b == 0)
+          { if (x.vals[1] < x.vals[k])
+              graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], 
+                              adj = adjust[2], at = y.vals[1], col = ax.aes$label.col[i], 
+                              cex = ax.aes$label.cex[i])
+            else
+              graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], 
+                              adj = adjust[4], at = y.vals[1], col = ax.aes$label.col[i], 
+                              cex = ax.aes$label.cex[i])
+          }
+          if (this.axis$b > 0)
+          {  if (x.vals[1] < x.vals[k])
+               if (y1.ster <= usr[4] & y1.ster >= usr[3])
+                 graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], 
+                                 adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], 
+                                 cex = ax.aes$label.cex[i])
+               else
+                 graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], 
+                                 adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], 
+                                 cex = ax.aes$label.cex[i])
+             else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+                    graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], 
+                                    adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], 
+                                    cex = ax.aes$label.cex[i])
+                  else
+                    graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], 
+                                    adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], 
+                                    cex = ax.aes$label.cex[i])
+          }
+          if (this.axis$b < 0)
+          {  if (x.vals[1] < x.vals[k])
+               if (y1.ster <= usr[4] & y1.ster >= usr[3])
+                 graphics::mtext(text = ax.aes$names[i], side = 2, line = ax.aes$label.line[i], 
+                                 adj = adjust[2], at = y1.ster, col = ax.aes$label.col[i], 
+                                 cex = ax.aes$label.cex[i])
+               else
+                 graphics::mtext(text = ax.aes$names[i], side = 3, line = ax.aes$label.line[i], 
+                                 adj = adjust[3], at = x2.ster, col = ax.aes$label.col[i], 
+                                 cex = ax.aes$label.cex[i])
+             else if (y2.ster <= usr[4] & y2.ster >= usr[3])
+                    graphics::mtext(text = ax.aes$names[i], side = 4, line = ax.aes$label.line[i], 
+                                    adj = adjust[4], at = y2.ster, col = ax.aes$label.col[i], 
+                                    cex = ax.aes$label.cex[i])
+                  else
+                    graphics::mtext(text = ax.aes$names[i], side = 1, line = ax.aes$label.line[i], 
+                                    adj = adjust[1], at = x1.ster, col = ax.aes$label.col[i], 
+                                    cex = ax.aes$label.cex[i])
+          }
+       }
+  if (ax.aes$reverse[i]) lwd.vec <- (nrow(ends.mat)-1):1 else lwd.vec <- 1:(nrow(ends.mat)-1)
+  lwd.vec <- lwd.vec * ax.aes$lwd.factor[i]
+  for (j in 2:nrow(ends.mat))
+  {
+    graphics::lines (x = ends.mat[(-1:0)+j, 1], y = ends.mat[(-1:0)+j, 2],
+                     col = ax.aes$col[i], lwd = lwd.vec[j-1], lty=ax.aes$lty[i])
+    .marker.func (vec = c(marker.mat[j,], rownames(marker.mat)[j], 1), 
+                  coef = c(this.axis$a, this.axis$b), col = ax.aes$tick.col,
+                  tick.size = 0, label.pos = ax.aes$tick.label.side, label.col = ax.aes$tick.label.col, 
+                  cex = ax.aes$tick.label.cex, usr = usr)
+  }
+  
+  if(ax.num %in% predict_which)
+  {
+    if (!is.null(predict.mat)) apply(cbind(predict.mat,y.vals[1]), 1, .predict.func, 
+                                     coef = c(this.axis$a, this.axis$b), col=ax.aes$predict.col,
+                                     lwd=ax.aes$predict.lwd,lty=ax.aes$predict.lty)
+  }
   }
 }
 
@@ -959,7 +1331,7 @@ biplot.spline.axis <- function(j, X, Y, means, sd,
           coef = coef.mat[j, ],
           col = ax.style$tick.col[i],
           tick.size = ax.style$tick.size[i],
-          label_pos = ax.style$tick.label.side[i],
+          label.pos = ax.style$tick.label.side[i],
           #pos = ax.style$tick.label.pos[i],
           #offset = ax.style$tick.label.offset[i],
           label.col = ax.style$tick.label.col[i],
