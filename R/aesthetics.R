@@ -547,7 +547,7 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
 #'
 #' @usage
 #' nom.axes(bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal"], 
-#'          which =1:sum(bp$ax.type$ax.type=="nominal"), col = grey(0.7), lwd = 1, 
+#'          which =1:sum(bp$ax.type$ax.type=="nominal"), col = NULL, lwd = 1, 
 #'          lty = 1, label.dir = "Orthog", label.col = "black", label.cex = 0.75, 
 #'          label.line = 0.1, label.offset=rep(0,4), ticks = 5, tick.col = "black", 
 #'          tick.size = 1, tick.label = TRUE, tick.label.side = "below", 
@@ -562,7 +562,7 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
 #' biplot(iris) |> CatPCA() |> nom.axes(col=c("blue","magenta","gold")) |> plot()
 #'
 nom.axes <- function (bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal"], 
-                      which =1:sum(bp$ax.type$ax.type=="nominal"), col = grey(0.7), lwd = 1, 
+                      which =1:sum(bp$ax.type$ax.type=="nominal"), col = NULL, lwd = 1, 
                       lty = 1, label.dir = "Orthog", label.col = "black", 
                       label.cex = 0.75, 
                       label.line = 0.1, label.offset=rep(0,4), ticks = 5, tick.col = "black", 
@@ -583,7 +583,7 @@ nom.axes <- function (bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal
     which <- which[which <= p]
     which <- which[which > 0]
     ax.num <- length(which)
-    
+
     if (is.null(col))
       col <- c(RColorBrewer::brewer.pal(12,"Set3")[-2], RColorBrewer::brewer.pal(7,"Dark2"))
     if (!is.list(col))
@@ -612,8 +612,8 @@ nom.axes <- function (bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal
     num.levels <- num.levels.vec[which]
     
     for (j in 1:ax.num)
-      col[[j]] <- col[[j]][ifelse (1:num.levels %% length(col[[j]]) == 0, length(col[[j]]), 
-                                                                          1:num.levels %% length(col[[j]]))]
+      col[[j]] <- col[[j]][ifelse (1:num.levels[j] %% length(col[[j]]) == 0, length(col[[j]]), 
+                                                                          1:num.levels[j] %% length(col[[j]]))]
 
     lwd.len <- length(lwd)
     lwd <- lwd[ifelse(1:ax.num%%lwd.len==0,lwd.len,1:ax.num%%lwd.len)]

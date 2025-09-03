@@ -791,7 +791,7 @@
                       col = ax.aes$col[[i]][j-1], lwd = 2*ax.aes$lwd[i], lty=ax.aes$lty[i])
     .marker.func (vec = c(marker.mat[j,], rownames(marker.mat)[j], 1), 
                   coef = c(this.axis$a, this.axis$b), col = ax.aes$tick.col,
-                  tick.size = 0, label.pos = ax.aes$tick.label.side, label.col = ax.aes$tick.label.col, 
+                  tick.size = 0, label.pos = ax.aes$tick.label.side[i], label.col = ax.aes$tick.label.col, 
                   cex = ax.aes$tick.label.cex, usr = usr)
   }
 
@@ -936,7 +936,7 @@
                      col = ax.aes$col[i], lwd = lwd.vec[j-1], lty=ax.aes$lty[i])
     .marker.func (vec = c(marker.mat[j,], rownames(marker.mat)[j], 1), 
                   coef = c(this.axis$a, this.axis$b), col = ax.aes$tick.col,
-                  tick.size = 0, label.pos = ax.aes$tick.label.side, label.col = ax.aes$tick.label.col, 
+                  tick.size = 0, label.pos = ax.aes$tick.label.side[i], label.col = ax.aes$tick.label.col, 
                   cex = ax.aes$tick.label.cex, usr = usr)
   }
   

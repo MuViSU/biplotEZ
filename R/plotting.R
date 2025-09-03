@@ -240,7 +240,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
         {
           nom.one.unit <- x$all.ax.one.unit[x$ax.type$ax.type == "nominal",,drop = FALSE]
           if (is.null(x$nom.axes)) x <- nom.axes(x)
-          
+
           z.axes <- lapply(1:length(x$nom.axes$which), .calibrate.cat.axis, 
                            nom.one.unit, x$nom.axes$which, x$nom.axes$orthogx, 
                            x$nom.axes$orthogy, x$nom.levels)
