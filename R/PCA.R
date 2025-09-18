@@ -14,6 +14,7 @@
 #'                           optimally approximated in the biplot. If \code{TRUE}, the correlations between
 #'                           variables are optimally approximated by the cosine of the angles between
 #'                           axes. Default is \code{FALSE}.
+#' ... additional arguments.
 #'
 #' @return An object of class PCA with the following elements:
 #' \item{X}{the matrix of the centered and scaled numeric variables.}
@@ -44,8 +45,9 @@
 #'
 #' @seealso [biplot()]
 #'
-#' @usage PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-#' group.aes = NULL, show.class.means = FALSE, correlation.biplot = FALSE)
+#' @usage PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), 
+#'            group.aes=NULL, show.class.means = FALSE,
+#'            correlation.biplot=FALSE, ...)
 #' @aliases PCA
 #'
 #' @export
@@ -58,8 +60,9 @@
 #' # create a PCA biplot
 #' biplot(data = iris) |> PCA() |> plot()
 #' 
-PCA <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=NULL, show.class.means = FALSE,
-                 correlation.biplot=FALSE)
+PCA <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), 
+                 group.aes=NULL, show.class.means = FALSE,
+                 correlation.biplot=FALSE, ...)
 {
   UseMethod("PCA")
 }
@@ -79,7 +82,7 @@ PCA <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=
 #' biplot(data = iris) |> PCA() |> plot()
 #'
 PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), group.aes=NULL,
-                        show.class.means = FALSE, correlation.biplot=FALSE)
+                        show.class.means = FALSE, correlation.biplot=FALSE, ...)
 {
   
   dim.biplot <- dim.biplot[1]
@@ -105,13 +108,14 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
   Lmat <- svd.out$v
   Vr <- svd.out$v[, e.vects, drop = FALSE]
 
-  if (correlation.biplot)
-  {
-
-    if (dim.biplot>1) lambda.r <- diag(svd(t(X) %*% X)$d[1:dim.biplot])
-    else lambda.r <- matrix(svd(t(X) %*% X)$d, nrow=1, ncol=1)
+  if (correlation.biplot) {
+    svals <- svd(t(X) %*% X)$d
+    if (dim.biplot > 1) 
+      lambda.r <- diag(svals[1:dim.biplot])
+    else lambda.r <- matrix(svals, nrow = 1, ncol = 1)
+    if (any(diag(lambda.r) < 1e-14)) stop (paste("Your data is of rank <", dim.biplot))
     Z <- sqrt(n - 1) * X %*% Vr %*% sqrt(solve(lambda.r))
-    Lmat <- sqrt(n-1) * Lmat %*% sqrt(solve(diag(svd(t(X) %*% X)$d)))
+    Lmat <- sqrt(n - 1) * Lmat %*% diag(sqrt(ifelse(svals < 1e-14, 0, 1/svals)))
   }
   else { Z <- X %*% Vr }
   rownames(Z) <- rownames(X)

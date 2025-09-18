@@ -10,7 +10,8 @@
   e.vects = 1:ncol(bp$X),
   group.aes = NULL,
   show.class.means = FALSE,
-  correlation.biplot = FALSE
+  correlation.biplot = FALSE,
+  ...
 )
 }
 \arguments{
@@ -28,7 +29,8 @@ for differentiated aesthetics for samples.}
 \item{correlation.biplot}{a logical value. If \code{FALSE}, the distances between sample points are
 optimally approximated in the biplot. If \code{TRUE}, the correlations between
 variables are optimally approximated by the cosine of the angles between
-axes. Default is \code{FALSE}.}
+axes. Default is \code{FALSE}.
+... additional arguments.}
 }
 \value{
 an object of class \code{PCA}, inherits from class \code{biplot}.

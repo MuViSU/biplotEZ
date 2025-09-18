@@ -5,7 +5,7 @@
 \title{Format aesthetics for the nominal biplot axes}
 \usage{
 nom.axes(bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal"], 
-         which =1:sum(bp$ax.type$ax.type=="nominal"), col = grey(0.7), lwd = 1, 
+         which =1:sum(bp$ax.type$ax.type=="nominal"), col = NULL, lwd = 1, 
          lty = 1, label.dir = "Orthog", label.col = "black", label.cex = 0.75, 
          label.line = 0.1, label.offset=rep(0,4), ticks = 5, tick.col = "black", 
          tick.size = 1, tick.label = TRUE, tick.label.side = "below", 
