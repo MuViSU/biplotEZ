@@ -194,7 +194,8 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
 #' This function allows the user to format the aesthetics for the class means or group means.
 #'
 #' @param bp an object of class \code{biplot}.
-#' @param which a vector containing the groups or classes for which the means should be displayed, with default \code{bp$g}.
+#' @param which a vector containing the groups or classes for which the means should be displayed, with default 
+#'              the \code{which} argument of samples.
 #' @param col the colour(s) for the means, with default as the colour of the samples.
 #' @param pch the plotting character(s) for the means, with default \code{15}.
 #' @param cex the character expansion(s) for the means, with default \code{1}.
@@ -225,7 +226,7 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
 #' @seealso [biplot()]
 #' 
 #' @usage
-#' means (bp,  which = NULL, col = NULL, pch = 15, cex = 1, label = FALSE,
+#' means (bp,  which =  bp$samples$which, col = NULL, pch = 15, cex = 1, label = FALSE,
 #' label.col = NULL,label.cex = 0.75, label.side = "bottom", label.offset = 0.5,
 #' opacity = 1, shade.darker = TRUE)
 #' @aliases means
@@ -234,11 +235,10 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
 #'
 #' @examples biplot(iris[,1:4]) |> PCA() |>
 #'           means(col = "purple", pch = 15, cex = 2) |> plot()
-means <- function (bp,  which = NULL, col = NULL,
+means <- function (bp,  which = bp$samples$which, col = NULL,
                      pch = 15, cex = 1, label = FALSE, label.col=NULL, label.cex = 0.75,
                      label.side = "bottom", label.offset = 0.5, opacity = 1, shade.darker = TRUE)
 {
-  bp$show.class.means <- TRUE
   if (is.null(bp$samples)) bp <- samples(bp)
   g <- bp$g
   
@@ -250,10 +250,9 @@ means <- function (bp,  which = NULL, col = NULL,
     which <- which[which <= g]
     which <- which[which > 0]
   }
-  else if (!is.null(bp$samples$which)) which <- bp$samples$which else which <- 1:g
   class.num <- length(which)
 
-
+  if (!is.null(which))
   if (is.null(col))
   {
     if (max(which)<=length(bp$samples$col)) col <- bp$samples$col[which] else col <- bp$samples$col
@@ -1184,12 +1183,47 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
      any(label.side!="bottom") | any(label.offset !=0.5) | any(label.cex!=0.75))
     label<-TRUE
   nn <- nrow(bp$Xnew)
-  while (length(col) < nn) col <- c(col, col)
-  col <- as.vector(col[1:nn])
-  while (length(pch) < nn) pch <- c(pch, pch)
-  pch <- as.vector(pch[1:nn])
-  while (length(cex) < nn) cex <- c(cex, cex)
-  cex <- as.vector(cex[1:nn])
+  gg <- bp$new.g
+
+  if (length(col)==1)
+    col <- rep(col, nn)
+  else
+  {
+    col.len <- length(col)
+    col <- col[ifelse(1:gg%%col.len==0,col.len,1:gg%%col.len)]
+    if(is.null(col)){col <- rep(NA, gg)}
+    new.col <- rep(NA, nn)
+    for (j in 1:bp$new.g)
+      new.col[bp$new.group.aes == bp$new.g.names[j]] <- col[j]
+    col <- new.col
+  }
+
+  if (length(pch)==1)
+    pch <- rep(pch, nn)
+  else
+  {
+    pch.len <- length(pch)
+    pch <- pch[ifelse(1:gg%%pch.len==0,pch.len,1:gg%%pch.len)]
+    if(is.null(pch)){pch <- rep(NA, gg)}
+    new.pch <- rep(NA, nn)
+    for (j in 1:bp$new.g)
+      new.pch[bp$new.group.aes == bp$new.g.names[j]] <- pch[j]
+    pch <- new.pch
+  }
+  
+  if (length(cex)==1)
+    cex <- rep(cex, nn)
+  else
+  {
+    cex.len <- length(cex)
+    cex <- cex[ifelse(1:gg%%cex.len==0,cex.len,1:gg%%cex.len)]
+    if(is.null(cex)){cex <- rep(NA, gg)}
+    new.cex <- rep(NA, nn)
+    for (j in 1:bp$new.g)
+      new.cex[bp$new.group.aes == bp$new.g.names[j]] <- cex[j]
+    cex <- new.cex
+  }
+
   if (label[1] == "ggrepel")
   {
     label <- label[1]

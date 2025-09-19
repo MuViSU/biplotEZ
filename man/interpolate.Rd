@@ -4,7 +4,7 @@
 \alias{interpolate}
 \title{Interpolate supplementary points and variables to add to the biplot}
 \usage{
-interpolate(bp, newdata = NULL, newvariable = NULL)
+interpolate(bp, newdata = NULL, newvariable = NULL, new.group.aes = NULL)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot} obtained from preceding function \code{biplot()}.}
@@ -14,6 +14,8 @@ containing supplementary data points to be added onto the biplot.}
 
 \item{newvariable}{a new data set, similar in structure to the data set supplied to \code{biplot()}
 containing supplementary variables to be added onto the biplot.}
+
+\item{new.group.aes}{aesthetics for the new samples}
 }
 \value{
 The object of class \code{biplot} will be appended with the following elements:
@@ -21,6 +23,7 @@ The object of class \code{biplot} will be appended with the following elements:
 \item{Xnew}{the matrix of the centered and scaled new numeric variables of new data.}
 \item{Xnew.cat}{the matrix of the categorical variables of new data.}
 \item{Znew}{the matrix of the coordinates of the new data in the biplot.}
+\item{new.group.aes}{aeshetics for the new samples}
 
 For an object of class \code{CA} the following additional elements will be appended:
 \item{newrowcoor}{the matrix of row coordinates of the new data in the biplot.}

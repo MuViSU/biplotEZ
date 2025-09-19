@@ -23,8 +23,9 @@ for differentiated aesthetics for samples.}
 \item{correlation.biplot}{a logical value. If \code{FALSE}, the distances between sample points are
 optimally approximated in the biplot. If \code{TRUE}, the correlations between
 variables are optimally approximated by the cosine of the angles between
-axes. Default is \code{FALSE}.
-... additional arguments.}
+axes. Default is \code{FALSE}.}
+
+\item{...}{additional arguments.}
 }
 \value{
 An object of class PCA with the following elements:

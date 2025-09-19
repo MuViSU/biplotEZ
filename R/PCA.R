@@ -14,7 +14,7 @@
 #'                           optimally approximated in the biplot. If \code{TRUE}, the correlations between
 #'                           variables are optimally approximated by the cosine of the angles between
 #'                           axes. Default is \code{FALSE}.
-#' ... additional arguments.
+#' @param ... additional arguments.
 #'
 #' @return An object of class PCA with the following elements:
 #' \item{X}{the matrix of the centered and scaled numeric variables.}
@@ -115,7 +115,8 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
     else lambda.r <- matrix(svals, nrow = 1, ncol = 1)
     if (any(diag(lambda.r) < 1e-14)) stop (paste("Your data is of rank <", dim.biplot))
     Z <- sqrt(n - 1) * X %*% Vr %*% sqrt(solve(lambda.r))
-    Lmat <- sqrt(n - 1) * Lmat %*% diag(sqrt(ifelse(svals < 1e-14, 0, 1/svals)))
+    if (n > p) Lmat <- sqrt(n - 1) * Lmat %*% diag(sqrt(ifelse(svals < 1e-14, 0, 1/svals)))
+    else Lmat <- sqrt(n - 1) * Lmat %*% diag(sqrt(ifelse(svals < 1e-14, 0, 1/svals)))[1:n,1:n]
   }
   else { Z <- X %*% Vr }
   rownames(Z) <- rownames(X)

@@ -742,12 +742,14 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
 #'                containing supplementary data points to be added onto the biplot.
 #' @param newvariable a new data set, similar in structure to the data set supplied to \code{biplot()}
 #'                containing supplementary variables to be added onto the biplot.
+#' @param new.group.aes aesthetics for the new samples
 #'
 #' @return The object of class \code{biplot} will be appended with the following elements:
 #' \item{Xnew.raw}{the new data.}
 #' \item{Xnew}{the matrix of the centered and scaled new numeric variables of new data.}
 #' \item{Xnew.cat}{the matrix of the categorical variables of new data.}
 #' \item{Znew}{the matrix of the coordinates of the new data in the biplot.}
+#' \item{new.group.aes}{aeshetics for the new samples}
 #'
 #' For an object of class \code{CA} the following additional elements will be appended:
 #' \item{newrowcoor}{the matrix of row coordinates of the new data in the biplot.}
@@ -760,7 +762,8 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
 #' biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
 #'      interpolate(newdata = HairEyeColor[,,1]) |> plot()
 #'
-interpolate <- function (bp, newdata=NULL, newvariable=NULL)
+interpolate <- function (bp, newdata=NULL, newvariable=NULL, 
+                         new.group.aes = NULL)
 {
   # New samples 
   if(!is.null(newdata))
@@ -813,7 +816,19 @@ interpolate <- function (bp, newdata=NULL, newvariable=NULL)
       Znew <- Ynew[,bp$e.vects]
     }
     
-    
+    if (!is.null(new.group.aes)) 
+    { 
+      bp$new.group.aes <- factor(new.group.aes)
+      bp$new.g.names <-levels(factor(new.group.aes))
+      bp$new.g <- length(bp$new.g.names)
+    }
+    else
+    {
+      bp$new.group.aes <- factor(rep(1, nrow(Xnew)))
+      bp$new.g.names <-levels(bp$new.group.aes)
+      bp$new.g <- length(bp$new.g.names)
+    }
+
     bp$Xnew.raw <- Xnew.raw
     bp$Xnew <- Xnew
     bp$Xnew.cat <- Xnew.cat

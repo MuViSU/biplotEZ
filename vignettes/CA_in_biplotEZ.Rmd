@@ -273,9 +273,9 @@ The function `interpolate()` accepts a matrix or data frame containing the sampl
 The function `newsamples()` operates similar to `samples()` and enables aesthetic changes to the new samples.
 
 ```{r}
-biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
-  samples(pch = c(0,2)) |> interpolate(newdata = HairEyeColor[,,1]) |> 
-  newsamples(col = c("orange","purple"), pch = c(15,17)) |> plot()      
+#biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
+#  samples(pch = c(0,2)) |> interpolate(newdata = HairEyeColor[,,1]) |> 
+#  newsamples(col = c("orange","purple"), pch = c(15,17)) |> plot()      
 ```
 
 
