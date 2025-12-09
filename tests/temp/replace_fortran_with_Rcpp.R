@@ -35,7 +35,7 @@ biplot.spline.axis <- function(j, X, Y, means, sd,
   itmax <- spline.control$itmax
   ftol <- spline.control$ftol
   
-  cat("Calculating spline axis for variable", j, "using optim\n")
+  cat("Calculating spline axis for variable", j)
   
   if(dmeth==1) stop("dmeth should be equal to zero or integer greater than 1 \n")  
   
@@ -69,13 +69,13 @@ biplot.spline.axis <- function(j, X, Y, means, sd,
   const2 <- sum(X^2) / (n*p)
   
   # ========================================
-  # The Fortran call has been replaced by the following R function
-  # ========================================
-  
+  #The Fortran call has been replaced by the following R function
+  #Note: We can add the fortran function here and make it optional using if-else which uses opti or fortrnran. 
+  #=========================================
   optimtouse <- function(Bvec) {
     timetemp <- proc.time()[3]
     
-    # Use R's optim (single-stage)
+    # Use R's optim 
     obj_fn <- function(bvec) {
       alfunc_rcpp(bvec, X, y, M, mu, lambda, const1, const2, u, v)
     }
@@ -99,7 +99,41 @@ biplot.spline.axis <- function(j, X, Y, means, sd,
       iter = result$counts['function'],
       TimeTaken = proc.time()[3] - timetemp
     )
+    #==========================================
+    #Note (Iportant):
+    #To align with the Fortran code, we should uncomment the following code (and comment out the upper part of the code that corresponds to the code below):
+    #==========================================
+    # Stage 1
+    # result1 <- optim(
+    #   par = Bvec,
+    #   fn = obj_fn,
+    #   method = "Nelder-Mead",
+    #   control = list(maxit = itmax, reltol = ftol, trace = 0)
+    # )
+    # # Stage 2 starting from Stage 1 result
+    # result2 <- optim(
+    #   par = result1$par,
+    #   fn = obj_fn,
+    #   method = "Nelder-Mead",
+    #   control = list(maxit = itmax, reltol = ftol, trace = 0)
+    # )
+      
+    # if(result2$convergence > 0) {
+    #   if(result2$convergence == 1) {
+    #     warning("Maximum iterations reached. Increase itmax.\n")
+    #   }
+    # }
     
+  
+    
+    # aa <- list(
+    #   BestValue = result2$value,
+    #   BestSolution = result2$par,
+    #   ConvergenceCode = result2$convergence,
+    #   iter1 = result1$counts['function'],
+    #   iter = result2$counts['function'],
+    #   TimeTaken = proc.time()[3] - timetemp
+    # )
     aa
   }
   
@@ -189,7 +223,7 @@ biplot.spline.axis <- function(j, X, Y, means, sd,
 
 set.seed(123)
 
-n <- 80
+n <- 180
 p <- 2 
 
 
@@ -205,11 +239,12 @@ sd <- apply(Y, 2, sd)
 
 X <- Y[, 1:2] + matrix(rnorm(n * p, 0, 0.3), ncol = p)
 
-
+u <- 3
+v <- 2
 spline.control <- list(
-  tau = 0.01, nmu = 10, u = 3, v = 0, lambda = 0.1,
+  tau = 0.01, nmu = 10, u = u, v = v, lambda = 0.1,
   smallsigma = 0.1, bigsigma = 1.0, gamma = 3, bigsigmaactivate = 2,
-  eps = 1e-6, tiny = 1e-4, itmax = 500, ftol = 1e-4
+  eps = 1e-6, tiny = 1e-4, itmax = 1000, ftol = 1e-4
 )
 
 j <- 1
@@ -222,8 +257,7 @@ M <- scale(M, scale=FALSE, center=M[which.min(abs(mu)),])
 const1 <- sum(y^2)
 const2 <- sum(X^2) / (n*p)
 lambda <- 0.1
-u <- 3
-v <- 0
+
 
 # Test Bvec
 Bvec_test <- rnorm((u+v)*p)
@@ -283,3 +317,6 @@ for(j in 1:n_vars) {
 
 legend("topright", legend = paste("Variable", 1:n_vars),
        col = colors, lwd = 2, cex = 0.8)
+
+
+
