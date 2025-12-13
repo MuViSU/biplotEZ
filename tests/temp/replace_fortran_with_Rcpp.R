@@ -69,71 +69,42 @@ biplot.spline.axis <- function(j, X, Y, means, sd,
   const2 <- sum(X^2) / (n*p)
   
   # ========================================
-  #The Fortran call has been replaced by the following R function
-  #Note: We can add the fortran function here and make it optional using if-else which uses opti or fortrnran. 
+  #The Fortran call has been replaced by the following Rcpp function
   #=========================================
   optimtouse <- function(Bvec) {
     timetemp <- proc.time()[3]
     
-    # Use R's optim 
-    obj_fn <- function(bvec) {
-      alfunc_rcpp(bvec, X, y, M, mu, lambda, const1, const2, u, v)
-    }
-    
-    result <- optim(
-      par = Bvec,
-      fn = obj_fn,
-      method = "Nelder-Mead",
-      control = list(maxit = itmax, reltol = ftol, trace = 0)
+    # Use Rcpp optimize_spline function
+    returned_data <- optimize_spline(
+      BVEC = Bvec, 
+      X = X, 
+      Y = y, 
+      M = M, 
+      MU = mu,
+      LAMBDA = lambda, 
+      CONST1 = const1, 
+      CONST2 = const2,
+      U = u, 
+      V = v, 
+      TAU = tau, 
+      FTOL = ftol, 
+      TINY = tiny, 
+      ITMAX = itmax
     )
     
-    if(result$convergence > 0) {
-      cat("  Warning: convergence =", result$convergence, "\n")
+    if(returned_data$ERRO > 0) {
+      cat("  Warning: Error code =", returned_data$ERRO, "\n")
     }
     
     aa <- list(
-      BestValue = result$value,
-      BestSolution = result$par,
-      ConvergenceCode = result$convergence,
-      iter1 = NA,
-      iter = result$counts['function'],
+      BestValue = returned_data$LOSS,
+      BestSolution = returned_data$BVEC,
+      ConvergenceCode = returned_data$ERRO,
+      iter1 = returned_data$ITER1,
+      iter = returned_data$ITER,
       TimeTaken = proc.time()[3] - timetemp
     )
-    #==========================================
-    #Note (Iportant):
-    #To align with the Fortran code, we should uncomment the following code (and comment out the upper part of the code that corresponds to the code below):
-    #==========================================
-    # Stage 1
-    # result1 <- optim(
-    #   par = Bvec,
-    #   fn = obj_fn,
-    #   method = "Nelder-Mead",
-    #   control = list(maxit = itmax, reltol = ftol, trace = 0)
-    # )
-    # # Stage 2 starting from Stage 1 result
-    # result2 <- optim(
-    #   par = result1$par,
-    #   fn = obj_fn,
-    #   method = "Nelder-Mead",
-    #   control = list(maxit = itmax, reltol = ftol, trace = 0)
-    # )
-      
-    # if(result2$convergence > 0) {
-    #   if(result2$convergence == 1) {
-    #     warning("Maximum iterations reached. Increase itmax.\n")
-    #   }
-    # }
     
-  
-    
-    # aa <- list(
-    #   BestValue = result2$value,
-    #   BestSolution = result2$par,
-    #   ConvergenceCode = result2$convergence,
-    #   iter1 = result1$counts['function'],
-    #   iter = result2$counts['function'],
-    #   TimeTaken = proc.time()[3] - timetemp
-    # )
     aa
   }
   
