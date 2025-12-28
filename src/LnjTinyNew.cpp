@@ -2,117 +2,73 @@
 #include <cmath>
 using namespace Rcpp;
 
-// ========== UTILITY FUNCTIONS ==========
+// Khaled: differences with fortran:
+//Optimize alfunc by computing Z directly from BVEC and combining loops
 
-
-NumericMatrix matm(NumericMatrix A, NumericMatrix B) {
-  int a1 = A.nrow();
-  int a2b1 = A.ncol();
-  int b2 = B.ncol();
-  
-  NumericMatrix OUT(a1, b2);
-  
-  for(int j = 0; j < b2; j++) {
-    for(int i = 0; i < a1; i++) {
-      OUT(i, j) = 0.0;
-      for(int k = 0; k < a2b1; k++) {
-        OUT(i, j) += A(i, k) * B(k, j);
-      }
-    }
-  }
-  
-  return OUT;
-}
-
-//The following function is very time-consuming; there may be a better alternative.
-IntegerVector exind(NumericMatrix Z, NumericMatrix X) {
-  int n = X.nrow();
-  int p = X.ncol();
-  int nmu = Z.nrow();
-  
-  IntegerVector IND(n);
-  
-  for(int i = 0; i < n; i++) {
-    IND[i] = 0;
-    double rmin = 1.0e9;
-    
-    for(int j = 0; j < nmu; j++) {
-      double temp1 = 0.0;
-      for(int k = 0; k < p; k++) {
-        double diff = X(i, k) - Z(j, k);
-        temp1 += diff * diff;
-      }
-      
-      if(temp1 < rmin) {
-        rmin = temp1;
-        IND[i] = j;
-      }
-    }
-  }
-  
-  return IND;
-}
-
+//- Eliminated intermediate B matrix creation by computing Z = M %*% B directly from BVEC vector
+//- Combined three separate loops (exind, prediction, loss calculation) into single pass
+//- Removed fortran-unused utility functions matm() and exind()
+//- Reduces memory allocations and improves cache locality
+//- Maintains identical mathematical behavior with better performance
 
 // [[Rcpp::export]]
 double alfunc(NumericVector BVEC,
-                   NumericMatrix X,
-                   NumericVector Y,
-                   NumericMatrix M,
-                   NumericVector MU,
-                   double LAMBDA,
-                   double CONST1,
-                   double CONST2,
-                   int U, int V) {
+              NumericMatrix X,
+              NumericVector Y,
+              NumericMatrix M,
+              NumericVector MU,
+              double LAMBDA,
+              double CONST1,
+              double CONST2,
+              int U, int V) {
   // to remain consistent with the paper, we should set const1 = 1 and lambda = 0.
   int n = X.nrow();
   int p = X.ncol();
   int nmu = MU.length();
+  int uv = U + V;
   
-  // CRITICAL FIX: Reshape BVEC to match FORTRAN's column-major storage
-  // FORTRAN stores matrix as: column 1, then column 2, etc.
-  // This matches R's matrix(bvec, nrow=U+V, ncol=p)
+  // Compute Z = M %*% B directly from BVEC without creating B
+  NumericMatrix Z(nmu, p);
   
-  NumericMatrix B(U + V, p);
-  
-  // Fill B column by column (FORTRAN/R style)
-  int idx = 0;
   for(int j = 0; j < p; j++) {
-    for(int i = 0; i < (U + V); i++) {
-      B(i, j) = BVEC[idx];
-      idx++;
+    int bvec_offset = j * uv;  // Starting index in BVEC for column j
+    for(int i = 0; i < nmu; i++) {
+      Z(i, j) = 0.0;
+      for(int k = 0; k < uv; k++) {
+        Z(i, j) += M(i, k) * BVEC[bvec_offset + k];
+      }
     }
   }
   
-  // Alternative (more concise):
-  // for(int i = 0; i < (U + V); i++) {
-  //   for(int j = 0; j < p; j++) {
-  //     B(i, j) = BVEC[i + j * (U + V)];
-  //   }
-  // }
-  
-  // Z = M %*% B
-  NumericMatrix Z = matm(M, B);
-  
-  // Get indices
-  IntegerVector IND = exind(Z, X);
-  
-  // Get predictions
-  NumericVector PRED(n);
-  for(int i = 0; i < n; i++) {
-    PRED[i] = MU[IND[i]];
-  }
-  
-  // Calculate loss term
+  // Combined loop: find nearest index, get prediction, and calculate loss
   double temp1 = 0.0;
+  
   for(int i = 0; i < n; i++) {
-    double diff = Y[i] - PRED[i];
+    int closest_idx = 0;
+    double rmin = 1.0e9;
+    
+    // Find closest Z row to X row i
+    for(int j = 0; j < nmu; j++) {
+      double temp_dist = 0.0;
+      for(int k = 0; k < p; k++) {
+        double diff = X(i, k) - Z(j, k);
+        temp_dist += diff * diff;
+      }
+      
+      if(temp_dist < rmin) {
+        rmin = temp_dist;
+        closest_idx = j;
+      }
+    }
+    
+    // Calculate loss immediately using the closest index
+    double diff = Y[i] - MU[closest_idx];
     temp1 += diff * diff;
   }
   
   double loss = temp1 / CONST1;
   
-  // Add penalty term if lambda > 0: 
+  // Add penalty term if lambda > 0
   if(LAMBDA > 0.0 && nmu > 2) {
     double temp2 = 0.0;
     for(int j = 0; j < p; j++) {
@@ -127,11 +83,7 @@ double alfunc(NumericVector BVEC,
   return loss;
 }
 
-// Khaled: There is substantial redundancy between `alfunc` and `exind`. 
-// Combining them could improve computational performance.
-
-
-
+//Khaled:
 // ========== SIMPLEX SETUP ==========
 NumericMatrix varset(NumericVector BVEC, int U, int V, int P, double TAU) {
   int andim = (U + V) * P;
@@ -166,12 +118,20 @@ NumericMatrix varset(NumericVector BVEC, int U, int V, int P, double TAU) {
 }
 
 // ========== SIMPLEX OPERATIONS ==========
-
-double amotry(NumericMatrix& PMAT, NumericVector& YVEK, 
-                   NumericVector& PSUM, int IHI, double FAC,
-                   NumericMatrix X, NumericVector Y, NumericMatrix M,
-                   NumericVector MU, double LAMBDA, 
-                   double CONST1, double CONST2, int U, int V) {
+double amotry(NumericMatrix& PMAT,       
+              NumericVector& YVEK,       
+              NumericVector& PSUM,       
+              int IHI, 
+              double FAC,
+              const NumericMatrix& X,     
+              const NumericVector& Y,     
+              const NumericMatrix& M,     
+              const NumericVector& MU,     
+              double LAMBDA,             
+              double CONST1,              
+              double CONST2,              
+              int U,                      
+              int V){
   //PMAT: The simplex matrix - each row is a vertex (parameter vector)
   //YVEK: Function values at each vertex (loss at each simplex point)
   //PSUM: Sum of all vertices (used to compute centroid efficiently)
