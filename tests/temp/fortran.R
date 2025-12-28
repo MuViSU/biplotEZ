@@ -229,6 +229,194 @@ biplot.spline.axis <- function(j, X, Y, means, sd, n.int,
 
 
 
+biplot.spline.axis <- function(j, X, Y, means, sd, 
+                               n.int, spline.control, dmeth=0, ... ){
+  n <- nrow(X)
+  p <- ncol(X)
+  if (n > 103){  
+      my.sample <- sample (1:n, size=103, replace=F)
+      X <- X[my.sample,]
+      Y <- Y[my.sample,]
+      n <- nrow(X)
+    }
+  
+  tau <- spline.control$tau
+  nmu <- spline.control$nmu
+  u <- spline.control$u
+  v <- spline.control$v
+  lambda <- spline.control$lambda
+  smallsigma <- spline.control$smallsigma
+  bigsigma <- spline.control$bigsigma
+  gamma <- spline.control$gamma
+  bigsigmaactivate <- spline.control$bigsigmaactivate
+  eps <- spline.control$eps
+  tiny <- spline.control$tiny
+  itmax <- spline.control$itmax
+  ftol <- spline.control$ftol
+  
+  cat ("Calculating spline axis for variable", j, "\n")
+  if(dmeth==1) stop("dmeth should be equal to zero or integer greater than 1 \n")  
+  Ytilde <- scale(scale(Y, center=FALSE, scale=1/sd), center=-1*means, scale=FALSE)
+  
+  ytilde <- Ytilde[,j]
+  mutilde <- seq(from=min(ytilde),to=max(ytilde),length.out=nmu)
+  y <- Y[,j]
+  rangey <- max(y)-min(y)
+  mu <- seq(from=min(y)-.3*rangey,to=max(y)+.3*rangey,length.out=nmu)
+  markers <- (pretty(ytilde)-means[j])/sd[j]
+  mu <- sort(c(mu,markers))
+  mu <- unique(mu)
+  nmu <- length(mu)
+  
+  if (v>0){
+    knots <- seq.int(from=0,to=1,length.out=v+2)[-c(1,v+2)]
+    knots <- stats::quantile(y,knots)
+    M <- splines::bs(mu,knots=knots,degree=u,intercept=FALSE)
+  } else M <- splines::bs(mu,df=u+v,degree=u,intercept=FALSE)
+  M <- scale(M,scale=FALSE,center=M[which.min(abs(mu)),]) # To ensure that the spline passes through the origin at the calibration which represents the mean of the variable
+  Breg <- t(solve(t(X)%*%X)%*%t(X)%*%y)
+  Zreg <- mu%*%Breg/sum(Breg^2)
+  Bvec <- as.vector(solve(t(M)%*%M)%*%t(M)%*%Zreg)  # Closest to regression biplot
+  
+  const1 <- sum(y^2)
+  const2 <- sum(X^2)/(n*p)
+  TotalNumberOfLossFunctionCalls <- 0
+  
+  optimtouse <- function(Bvec){
+    timetemp <- proc.time()[3]
+    LOSS <- 1.0
+    LOSS1 <- 1.0
+    Ind <- rep(1,n)
+    pred <- rep(0,nmu)
+    deltmp <- 0
+    tau <- tau
+    #.5 # the choice of tau seems to affect perfomance quite substantially.
+    # tau is used to specify the points on the inital simplex.
+    Ay <- rep(0,(u+v)*p+1)
+    TEMPVK <- rep(0,(u+v)*p)
+    iter1 <- 0
+    iter <- 0
+    ERRO <- 0
+    
+    # Prepare for Fortran subroutine
+    storage.mode(X) <- "double"
+    storage.mode(Ind) <- "integer"
+    storage.mode(mu) <- "double"
+    storage.mode(pred) <- "double"
+    storage.mode(y) <- "double"
+    storage.mode(M) <- "double"
+    storage.mode(Bvec) <- "double"
+    storage.mode(Ay) <- "double"
+    storage.mode(TEMPVK) <- "double"
+  
+    returned_data <- .Fortran("l",
+      LOSS = as.double(0),
+      X = as.double(X),
+      N = as.integer(n),
+      P = as.integer(p),
+      NMU = as.integer(nmu),
+      IND = as.integer(rep(0, n)),
+      MU = as.double(mu),
+      PRED = as.double(rep(0, n)),
+      LAMBDA = as.double(lambda),
+      Y = as.double(y),
+      CONST1 = as.double(const1),
+      CONST2 = as.double(const2),
+      U = as.integer(u),
+      V = as.integer(v),
+      M = as.double(M),
+      BVEC = as.double(Bvec),
+      TAU = as.double(tau),
+      AY = as.double(rep(0, (u+v)*p+1)),
+      TEMPVK = as.double(rep(0, (u+v)*p)),
+      ITER = as.integer(0),
+      FTOL = as.double(ftol),
+      LOSS1 = as.double(0),
+      ITER1 = as.integer(0),
+      ERRO = as.integer(0),
+      CONST3 = as.double(tiny),
+      ITMAX = as.integer(itmax)
+    )
+    
+    aa <- list(
+      BestValue = returned_data$LOSS,
+      BestSolution = returned_data$BVEC,
+      ConvergenceCode = returned_data$ERRO,
+      iter1 = returned_data$ITER1,
+      iter = returned_data$ITER,
+      TimeTaken = proc.time()[3] - timetemp
+    )
+    
+    aa
+  }
+  EuclidDist2 <- function (X, Y){
+    n <- nrow(X)
+    m <- nrow(Y)
+    bx <- rowSums(X^2)
+    by <- rowSums(Y^2)
+    outer(bx, by, FUN = "+") - 2 * X %*% t(Y)
+  }
+  
+  ### Variable initialisation
+  outBestValues <- rep(NA,gamma+1)
+  outBestSolutions <- matrix(nrow=2*(u+v),ncol=gamma+1)
+  outTimeTaken <- rep(NA,gamma+1) # Is made one element longer at each iteration.
+  BestSolutionsFrequency <- rep(NA,gamma+1)
+  BestSolutionsIndices <- rep(NA,gamma+1) # Is made one element longer at each iteration.
+  SquaredDistancesBetweenBestSolutions <- matrix(nrow=gamma+1,ncol=gamma+1)
+  
+  ### Initial coefficients closest to regression biplot
+  temp <- optimtouse(Bvec)
+  outBestValues[1] <- temp$BestValue
+  outBestSolutions[,1] <- temp$BestSolution
+  outTimeTaken[1] <- temp$TimeTaken
+  BestSolutionsFrequency[1] <- 1
+  BestSolutionsIndices[1] <- 1
+  DistinctSolutions <- 1
+  PreviousBestSolution <- NA
+  nSameSolutionConsecutively <- 0
+  BigSigmaActivations <- NULL
+  
+  test.iter <- temp$iter
+  test.iter1 <- temp$iter1
+  
+  ### Last best coefficients perturbed
+  for (gammacounter in 2:(gamma+1)){
+    if (nSameSolutionConsecutively>=bigsigmaactivate){
+      temp <- optimtouse(outBestSolutions[,which.min(outBestValues)]+stats::rnorm((u+v)*2,mean=0,sd=bigsigma))
+      BigSigmaActivations <- c(BigSigmaActivations,gammacounter)
+    }
+    else temp <- optimtouse(outBestSolutions[,which.min(outBestValues)]+stats::rnorm((u+v)*2,mean=0,sd=smallsigma))
+    outTimeTaken[gammacounter] <- temp$TimeTaken
+    tempSquaredDistances <- EuclidDist2(matrix(temp$BestSolution,nrow=1),t(outBestSolutions[,1:DistinctSolutions]))
+    if (any(tempSquaredDistances<eps)){
+      BestSolutionsIndices[gammacounter] <- tempAA<-which.min(tempSquaredDistances)
+      BestSolutionsFrequency[tempAA] <- BestSolutionsFrequency[tempAA]+1
+      if (!is.na(PreviousBestSolution) && tempAA==PreviousBestSolution) nSameSolutionConsecutively<-nSameSolutionConsecutively+1
+      else{
+        PreviousBestSolution <- tempAA
+        nSameSolutionConsecutively <- 0
+      }
+    }
+    else{
+      DistinctSolutions <- DistinctSolutions+1
+      outBestValues[DistinctSolutions] <- temp$BestValue
+      outBestSolutions[,DistinctSolutions] <- temp$BestSolution
+      BestSolutionsFrequency[DistinctSolutions] <- 1
+      BestSolutionsIndices[gammacounter] <- DistinctSolutions
+      SquaredDistancesBetweenBestSolutions[1:(DistinctSolutions-1),DistinctSolutions]<-tempSquaredDistances
+      nSameSolutionConsecutively <- 0
+    }
+  }
+  axis.points <- cbind(M%*%matrix(outBestSolutions[,which.min(outBestValues)],ncol=2), mu, 0)
+  
+  for (i in 1:nrow(axis.points)) if (any(zapsmall(axis.points[i,3] - markers) == 0)) axis.points[i, 4] <- 1
+  axis.points[,3] <- axis.points[,3]*sd[j] + means[j]
+  axis.points
+}
+
+
+
 
 set.seed(123)
 
@@ -326,6 +514,7 @@ for(j in 1:n_vars) {
 
 legend("topright", legend = paste("Variable", 1:n_vars),
        col = colors, lwd = 2, cex = 0.8)
+
 
 
 
