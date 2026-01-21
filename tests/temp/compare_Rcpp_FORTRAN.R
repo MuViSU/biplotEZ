@@ -19,8 +19,6 @@ biplot.spline.axis <- function(j, X, Y, means, sd, n.int,
                                 base_seed = NULL, # NEW PARAMETER
                                 sampling_seed = NULL, # NEW: separate seed for sampling
                                 ...) {
-  
-
   n <- nrow(X)
   p <- ncol(X)
   
@@ -298,9 +296,6 @@ v <- 0
 # Test Bvec
 Bvec_test <- rnorm((u+v)*p)
 
-cat("========================================\n")
-cat("EXAMPLE 1: LOSS FUNCTION CALCULATION\n")
-cat("========================================\n\n")
 
 loss_value <- alfunc(Bvec_test, X, y, M, mu, lambda, const1, const2, u, v)
 cat("Test Bvec:", round(Bvec_test, 4), "\n")
@@ -310,10 +305,8 @@ cat("Loss value:", loss_value, "\n\n")
 # EXAMPLE 2: COMPARE RCPP VS FORTRAN
 # ========================================
 
-cat("========================================\n")
-cat("EXAMPLE 2: RCPP VS FORTRAN COMPARISON\n")
-cat("WITH FIXED SEED FOR REPRODUCIBILITY\n")
-cat("========================================\n\n")
+
+# WITH FIXED SEED FOR REPRODUCIBILITY
 
 COMPARISON_SEED <- 999  # Use same seed for both methods
 SAMPLING_SEED <- 777    # NEW: Separate seed for data sampling
@@ -371,57 +364,3 @@ bvec_fortran <- attr(result_fortran, "bvec")
 cat("  Rcpp:    ", round(bvec_rcpp, 6), "\n")
 cat("  FORTRAN: ", round(bvec_fortran, 6), "\n")
 cat("\n")
-
-cat("DIFFERENCES:\n")
-loss_diff <- abs(loss_rcpp - loss_fortran)
-bvec_diff <- sqrt(sum((bvec_rcpp - bvec_fortran)^2))
-
-cat(sprintf("  %-25s: %.15f\n", "Loss difference", loss_diff))
-cat(sprintf("  %-25s: %.15f\n", "Bvec L2 distance", bvec_diff))
-cat("\n")
-
-# Check if results are practically identical
-if (loss_diff < 1e-8 && bvec_diff < 1e-8) {
-  cat("✓ Results are essentially IDENTICAL!\n\n")
-} else if (loss_diff < 1e-6 && bvec_diff < 1e-6) {
-  cat("✓ Results are very close (within numerical precision)\n\n")
-} else {
-  cat("✗ Results differ significantly - investigation needed\n\n")
-}
-
-# ========================================
-# EXAMPLE 3: TEST REPEATABILITY
-# ========================================
-
-cat("========================================\n")
-cat("EXAMPLE 3: REPEATABILITY TEST\n")
-cat("========================================\n\n")
-
-cat("Running Rcpp twice with same seed:\n")
-result_rcpp_1 <- biplot.spline.axis(
-  j = 1, X = X, Y = Y, means = means, sd = sd,
-  n.int = NULL, spline.control = spline.control,
-  dmeth = 0, optim_method = "rcpp",
-  fix_seed = TRUE, base_seed = 777,
-  sampling_seed = 888  # Add sampling seed
-)
-
-result_rcpp_2 <- biplot.spline.axis(
-  j = 1, X = X, Y = Y, means = means, sd = sd,
-  n.int = NULL, spline.control = spline.control,
-  dmeth = 0, optim_method = "rcpp",
-  fix_seed = TRUE, base_seed = 777,
-  sampling_seed = 888  # Same sampling seed
-)
-
-loss_diff <- abs(attr(result_rcpp_1, "loss") - attr(result_rcpp_2, "loss"))
-bvec_diff <- sqrt(sum((attr(result_rcpp_1, "bvec") - attr(result_rcpp_2, "bvec"))^2))
-
-cat(sprintf("  Loss difference: %.15f\n", loss_diff))
-cat(sprintf("  Bvec difference: %.15f\n", bvec_diff))
-
-if (loss_diff < 1e-10 && bvec_diff < 1e-10) {
-  cat("  ✓ Results are identical!\n")
-} else {
-  cat("  ✗ Results differ (possible numerical precision issues)\n")
-}
