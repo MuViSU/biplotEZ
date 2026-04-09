@@ -7,9 +7,7 @@ using namespace Rcpp;
 
 //- Eliminated intermediate B matrix creation by computing Z = M %*% B directly from BVEC vector
 //- Combined three separate loops (exind, prediction, loss calculation) into single pass
-//- Removed fortran-unused utility functions matm() and exind()
-//- Reduces memory allocations and improves cache locality
-//- Maintains identical mathematical behavior with better performance
+
 
 // [[Rcpp::export]]
 double alfunc(NumericVector BVEC,
