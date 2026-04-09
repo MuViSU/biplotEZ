@@ -455,9 +455,9 @@ The overall quality of fit is therefore defined as
 
 $$
 quality = \frac{\|\hat{\mathbf{X}}\|^2}{\|\mathbf{X}\|^2} =
-\frac{tr(\mathbf{XX}')}{tr(\mathbf{\hat{X}\hat{X}'})} =
-\frac{tr(\mathbf{X'X})}{tr(\mathbf{\hat{X}'\hat{X}})} =
-\frac{tr(\mathbf{VD}^2\mathbf{V'})}{tr(\mathbf{VD}^2\mathbf{JV'})}.
+\frac{tr(\mathbf{\hat{X}\hat{X}'})}{tr(\mathbf{XX}')} =
+\frac{tr(\mathbf{\hat{X}'\hat{X}})}{tr(\mathbf{X'X})} =
+\frac{tr(\mathbf{VD}^2\mathbf{JV'})}{tr(\mathbf{VD}^2\mathbf{V'})}.
 $$
 In *biplotEZ* the overall quality is displayed as a percentage:
 

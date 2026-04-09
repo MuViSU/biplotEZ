@@ -372,7 +372,7 @@ plot3D <- function(bp,
                     exp.factor = 1.2,...)
 {
   if (!requireNamespace("rgl", quietly = TRUE)) {
-     stop("Package 'ggplot2' is required for this function. Please install it.", call. = FALSE)
+     stop("Package 'rgl' is required for this function. Please install it.", call. = FALSE)
    }
   
   if (is.null(bp$Z)) stop ("Add a biplot method before generating a plot")

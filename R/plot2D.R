@@ -74,7 +74,6 @@
                       group.aes = group.aes, pch = rep(NA,n),
                       col = rep(NA,n), cex = rep(NA,n),
                       cex.vec, Z)
-
     for(j in 1:length(sample.aes$which))
     {
       ZZ$pch[group.aes==g.names[sample.aes$which[j]]] = sample.aes$pch[j]

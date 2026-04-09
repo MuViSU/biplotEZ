@@ -78,7 +78,6 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
   g <- bp$g
   n <- bp$n
   p <- bp$p
-  
   if(is.null(which) & length(col)==0) col <- ez.col
   
  if(inherits(bp,"CA")) 
