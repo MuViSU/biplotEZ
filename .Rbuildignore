@@ -9,4 +9,6 @@
 ^doc$
 ^Meta$
 ^examples/temp/
+^tests/temp/
+
 
