@@ -1074,7 +1074,7 @@
 #'
 #' @param j Index of the axis to be calibrated in the data
 #' @param X Coordinates of the samples on the biplot space
-#' @param Ytilde Raw data used to construct the biplot
+#' @param Y Raw data used to construct the biplot
 #' @param means column means of the raw data
 #' @param sd Column standard deviations of the data
 #' @param n.int the number of tick marks per axis
@@ -1082,6 +1082,8 @@
 #' @param dmeth Argument unused
 #' @param ... additional arguments
 #' 
+#' @noRd
+
 
 
 biplot.spline.axis <- function(j, X, Y, means, sd, 
