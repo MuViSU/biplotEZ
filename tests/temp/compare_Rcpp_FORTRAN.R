@@ -291,7 +291,7 @@ const1 <- sum(y^2)
 const2 <- sum(X^2) / (n*p)
 lambda <- 0.1
 u <- 3
-v <- 0
+v <- 1
 
 # Test Bvec
 Bvec_test <- rnorm((u+v)*p)
@@ -343,11 +343,6 @@ cat("\n========================================\n")
 cat("COMPARISON RESULTS\n")
 cat("========================================\n\n")
 
-cat("TIMING (seconds):\n")
-cat(sprintf("  %-15s: %7.3f\n", "Rcpp", time_rcpp[3]))
-cat(sprintf("  %-15s: %7.3f\n", "FORTRAN", time_fortran[3]))
-cat(sprintf("  %-15s: %7.3f\n", "Speedup", time_fortran[3] / time_rcpp[3]))
-cat("\n")
 
 cat("LOSS VALUES:\n")
 loss_rcpp <- attr(result_rcpp, "loss")
@@ -364,3 +359,9 @@ bvec_fortran <- attr(result_fortran, "bvec")
 cat("  Rcpp:    ", round(bvec_rcpp, 6), "\n")
 cat("  FORTRAN: ", round(bvec_fortran, 6), "\n")
 cat("\n")
+
+
+#cat("TIMING (seconds):\n")
+#cat(sprintf("  %-15s: %7.3f\n", "Rcpp", time_rcpp[3]))
+#cat(sprintf("  %-15s: %7.3f\n", "FORTRAN", time_fortran[3]))
+
