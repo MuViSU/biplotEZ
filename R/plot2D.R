@@ -1070,7 +1070,6 @@
 
 }
 
-
 #' calibrate spline based axes on biplots
 #'
 #' @param j Index of the axis to be calibrated in the data
@@ -1083,16 +1082,13 @@
 #' @param dmeth Argument unused
 #' @param ... additional arguments
 #' 
-#' @useDynLib biplotEZ, .registration = TRUE
-#'
-#' @noRd
+
+
 biplot.spline.axis <- function(j, X, Y, means, sd, 
-                               n.int, spline.control, dmeth=0, ... )
-{
+                               n.int, spline.control, dmeth=0, ... ){
   n <- nrow(X)
   p <- ncol(X)
-  if (n > 103)
-    {  
+  if (n > 103){  
       my.sample <- sample (1:n, size=103, replace=F)
       X <- X[my.sample,]
       Y <- Y[my.sample,]
@@ -1127,8 +1123,7 @@ biplot.spline.axis <- function(j, X, Y, means, sd,
   mu <- unique(mu)
   nmu <- length(mu)
   
-  if (v>0)
-  {
+  if (v>0){
     knots <- seq.int(from=0,to=1,length.out=v+2)[-c(1,v+2)]
     knots <- stats::quantile(y,knots)
     M <- splines::bs(mu,knots=knots,degree=u,intercept=FALSE)
@@ -1141,56 +1136,44 @@ biplot.spline.axis <- function(j, X, Y, means, sd,
   const1 <- sum(y^2)
   const2 <- sum(X^2)/(n*p)
   TotalNumberOfLossFunctionCalls <- 0
-  
-  optimtouse <- function(Bvec)
-  {
+  optimtouse <- function(Bvec) {
     timetemp <- proc.time()[3]
-    LOSS <- 1.0
-    LOSS1 <- 1.0
-    Ind <- rep(1,n)
-    pred <- rep(0,nmu)
-    deltmp <- 0
-    tau <- tau
-    #.5 # the choice of tau seems to affect perfomance quite substantially.
-    # tau is used to specify the points on the inital simplex.
-    Ay <- rep(0,(u+v)*p+1)
-    TEMPVK <- rep(0,(u+v)*p)
-    iter1 <- 0
-    iter <- 0
-    ERRO <- 0
-    
-    # Prepare for Fortran subroutine
-    storage.mode(X) <- "double"
-    storage.mode(Ind) <- "integer"
-    storage.mode(mu) <- "double"
-    storage.mode(pred) <- "double"
-    storage.mode(y) <- "double"
-    storage.mode(M) <- "double"
-    storage.mode(Bvec) <- "double"
-    storage.mode(Ay) <- "double"
-    storage.mode(TEMPVK) <- "double"
   
+      # Use Rcpp optimize_spline function
+    returned_data <- optimize_spline(
+      BVEC = Bvec, 
+      X = X, 
+      Y = y, 
+      M = M, 
+      MU = mu,
+      LAMBDA = lambda, 
+      CONST1 = const1, 
+      CONST2 = const2,
+      U = u, 
+      V = v, 
+      TAU = tau, 
+      FTOL = ftol, 
+      TINY = tiny, 
+      ITMAX = itmax
+    )
     
-    returned_data <-.Fortran('L',LOSS=as.double(LOSS),X=X,n=as.integer(n),p=as.integer(p),nmu=as.integer(nmu),Ind=Ind,
-                            mu=mu,pred=pred,lambda=as.double(lambda),y=y,const1=as.double(const1),const2=as.double(const2),u=as.integer(u),
-                            v=as.integer(v),M=M,Bvec=Bvec,tau=as.double(tau),Ay=Ay,TEMPVEK=TEMPVK,iter=as.integer(iter),
-                            ftol=as.double(ftol),LOSS1=as.double(LOSS1),iter1=as.integer(iter1),fout = as.integer(ERRO),
-                            const3=as.double(tiny), itmax=as.integer(itmax))
-    if(returned_data$fout > 0)
-    {
-      cat("Fout is: ", returned_data$fout, "\n")
-      warning("Increase itmax for Fortran \n")
+    if(returned_data$ERRO > 0) {
+      cat("  Warning: Error code =", returned_data$ERRO, "\n")
     }
     
-    B <- matrix(returned_data$Bvec,ncol=p)
-    Z <- M%*%B 
+    aa <- list(
+      BestValue = returned_data$LOSS,
+      BestSolution = returned_data$BVEC,
+      ConvergenceCode = returned_data$ERRO,
+      iter1 = returned_data$ITER1,
+      iter = returned_data$ITER,
+      TimeTaken = proc.time()[3] - timetemp
+    )
     
-    aa <- list(BestValue=returned_data$LOSS,BestSolution=returned_data$Bvec,ConvergenceCode=returned_data$fout, iter1=returned_data$iter1,
-             iter=returned_data$iter,TimeTaken=proc.time()[3]-timetemp)
     aa
   }
-  EuclidDist2 <- function (X, Y) 
-  {
+
+  EuclidDist2 <- function (X, Y) {
     n <- nrow(X)
     m <- nrow(Y)
     bx <- rowSums(X^2)
@@ -1222,29 +1205,24 @@ biplot.spline.axis <- function(j, X, Y, means, sd,
   test.iter1 <- temp$iter1
   
   ### Last best coefficients perturbed
-  for (gammacounter in 2:(gamma+1))
-  {
-    if (nSameSolutionConsecutively>=bigsigmaactivate)
-    {
+  for (gammacounter in 2:(gamma+1)){
+    if (nSameSolutionConsecutively>=bigsigmaactivate){
       temp <- optimtouse(outBestSolutions[,which.min(outBestValues)]+stats::rnorm((u+v)*2,mean=0,sd=bigsigma))
       BigSigmaActivations <- c(BigSigmaActivations,gammacounter)
     }
     else temp <- optimtouse(outBestSolutions[,which.min(outBestValues)]+stats::rnorm((u+v)*2,mean=0,sd=smallsigma))
     outTimeTaken[gammacounter] <- temp$TimeTaken
     tempSquaredDistances <- EuclidDist2(matrix(temp$BestSolution,nrow=1),t(outBestSolutions[,1:DistinctSolutions]))
-    if (any(tempSquaredDistances<eps))
-    {
+    if (any(tempSquaredDistances<eps)){
       BestSolutionsIndices[gammacounter] <- tempAA<-which.min(tempSquaredDistances)
       BestSolutionsFrequency[tempAA] <- BestSolutionsFrequency[tempAA]+1
       if (!is.na(PreviousBestSolution) && tempAA==PreviousBestSolution) nSameSolutionConsecutively<-nSameSolutionConsecutively+1
-      else
-      {
+      else{
         PreviousBestSolution <- tempAA
         nSameSolutionConsecutively <- 0
       }
     }
-    else
-    {
+    else{
       DistinctSolutions <- DistinctSolutions+1
       outBestValues[DistinctSolutions] <- temp$BestValue
       outBestSolutions[,DistinctSolutions] <- temp$BestSolution
@@ -1260,6 +1238,9 @@ biplot.spline.axis <- function(j, X, Y, means, sd,
   axis.points[,3] <- axis.points[,3]*sd[j] + means[j]
   axis.points
 }
+
+
+
 
 
 #' Plot nonlinear axes on biplots
