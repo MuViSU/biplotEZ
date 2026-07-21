@@ -4,14 +4,15 @@
 \alias{means}
 \title{Format aesthetics for the class or group means}
 \usage{
-means (bp,  which = NULL, col = NULL, pch = 15, cex = 1, label = FALSE,
+means (bp,  which =  bp$samples$which, col = NULL, pch = 15, cex = 1, label = FALSE,
 label.col = NULL,label.cex = 0.75, label.side = "bottom", label.offset = 0.5,
 opacity = 1, shade.darker = TRUE)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot}.}
 
-\item{which}{a vector containing the groups or classes for which the means should be displayed, with default \code{bp$g}.}
+\item{which}{a vector containing the groups or classes for which the means should be displayed, with default
+the \code{which} argument of samples.}
 
 \item{col}{the colour(s) for the means, with default as the colour of the samples.}
 

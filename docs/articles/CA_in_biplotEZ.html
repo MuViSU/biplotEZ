@@ -4,101 +4,72 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>CA in biplotEZ • biplotEZ</title>
-<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
-<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
-<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
-<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
-<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="CA in biplotEZ">
-<meta property="og:description" content="biplotEZ">
-<meta property="og:image" content="/logo.png">
-<!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
-<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]-->
+<!-- favicons --><link rel="icon" type="image/png" sizes="96x96" href="../favicon-96x96.png">
+<link rel="icon" type="”image/svg+xml”" href="../favicon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="icon" sizes="any" href="../favicon.ico">
+<link rel="manifest" href="../site.webmanifest">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="CA in biplotEZ">
 </head>
-<body data-spy="scroll" data-target="#toc">
-    
+<body>
+    <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">biplotEZ</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">2.0</span>
-      </span>
-    </div>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li>
-  <a href="../articles/biplotEZ.html">Get started</a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/biplotEZ_enhancements.html">biplotEZ enhancements</a>
-    </li>
-    <li>
-      <a href="../articles/Biplots_in_1D.html">Biplots in 1D</a>
-    </li>
-    <li>
-      <a href="../articles/Biplots_in_3D.html">Biplots in 3D</a>
-    </li>
-    <li>
-      <a href="../articles/CA_in_biplotEZ.html">CA in biplotEZ</a>
-    </li>
-    <li>
-      <a href="../articles/Class_separation.html">Class separation</a>
-    </li>
-    <li>
-      <a href="../articles/MDS.html">MDS</a>
-    </li>
+    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+
+    <a class="navbar-brand me-2" href="../index.html">biplotEZ</a>
+
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3</small>
+
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item"><a class="nav-link" href="../articles/biplotEZ.html">Get started</a></li>
+<li class="nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
+<li class="active nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
+<li><a class="dropdown-item" href="../articles/biplotEZ.html">biplotEZ</a></li>
+    <li><a class="dropdown-item" href="../articles/biplotEZ_enhancements.html">biplotEZ enhancements</a></li>
+    <li><a class="dropdown-item" href="../articles/MDS.html">Multi-dimensional scaling</a></li>
+    <li><a class="dropdown-item" href="../articles/Class_separation.html">Biplots for separating classes</a></li>
+    <li><a class="dropdown-item" href="../articles/CA_in_biplotEZ.html">Categorical biplots</a></li>
+    <li><a class="dropdown-item" href="../articles/Biplots_in_1D.html">One dimensional biplots</a></li>
+    <li><a class="dropdown-item" href="../articles/Biplots_in_3D.html">Three dimensional biplots</a></li>
   </ul>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
+<ul class="navbar-nav">
+<li class="nav-item"><form class="form-inline" role="search">
+ <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
+</form></li>
+      </ul>
 </div>
-<!--/.nav-collapse -->
+
+
   </div>
-<!--/.container -->
-</div>
-<!--/.navbar -->
+</nav><div class="container template-article">
 
-      
 
-      </header><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>CA in biplotEZ</h1>
+
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+      <img src="../logo.png" class="logo" alt=""><h1>CA in biplotEZ</h1>
             
       
-      
-      <div class="hidden name"><code>CA_in_biplotEZ.Rmd</code></div>
 
+      <div class="d-none name"><code>CA_in_biplotEZ.Rmd</code></div>
     </div>
 
     
@@ -111,11 +82,13 @@ association between two categorical variables by utilising a two-way
 frequency table. Numerous variants of CA are available for the
 application to diverse problems, the interested reader is referred to:
 <span class="citation">Gower, Lubbe, and Roux (2011)</span>, <span class="citation">Beh and Lombardo (2014)</span>.</p>
-<p>In <code>biplotEZ</code> focus will be places on three
-<em>EZ</em>-to-use versions based on the Pearson residuals (<span class="citation">Gower, Lubbe, and Roux (2011)</span>: Page 300).</p>
+<p>In this vignette, focus will be placed on three <em>EZ</em>-to-use
+versions based on the Pearson residuals (<span class="citation">Gower,
+Lubbe, and Roux (2011)</span> :300).</p>
 <p>Now, the two-way frequency table is also referred to as the data
-matrix: <span class="math inline">\(\mathbf{X}:r\times c\)</span>. This
-data matrix is different from the continuous case used for the
+matrix:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐗</mi><mo>:</mo><mi>r</mi><mo>×</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">\mathbf{X}:r\times c</annotation></semantics></math>.
+This data matrix is different from the continuous case used for the
 <code><a href="../reference/PCA.html">PCA()</a></code> and <code><a href="../reference/CVA.html">CVA()</a></code> examples, as it represents the
 cross-tabulations of two categorical variables (i.e. factors), each with
 a finite number of levels (i.e response values). The elements of the
@@ -125,104 +98,131 @@ particular levels of the two variables. Consider the
 the hair and eye color of male and female statistics students. For the
 purpose of this example only the male students will be considered:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span></span>
+<code class="sourceCode R"><span><span class="va">X</span> <span class="op">&lt;-</span> <span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span></span>
 <span><span class="va">X</span></span>
 <span><span class="co">#&gt;        Eye</span></span>
 <span><span class="co">#&gt; Hair    Brown Blue Hazel Green</span></span>
-<span><span class="co">#&gt;   Black    32   11    10     3</span></span>
-<span><span class="co">#&gt;   Brown    53   50    25    15</span></span>
-<span><span class="co">#&gt;   Red      10   10     7     7</span></span>
-<span><span class="co">#&gt;   Blond     3   30     5     8</span></span></code></pre></div>
-<p>The grand total of the table <span class="math inline">\(N\)</span>
+<span><span class="co">#&gt;   Black    36    9     5     2</span></span>
+<span><span class="co">#&gt;   Brown    66   34    29    14</span></span>
+<span><span class="co">#&gt;   Red      16    7     7     7</span></span>
+<span><span class="co">#&gt;   Blond     4   64     5     8</span></span></code></pre></div>
+<p>The grand total of the table
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math>
 is obtained from the total of all frequencies:</p>
-<p><span class="math display">\[
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><munderover><mo>∑</mo><mrow><mi>r</mi><mo>=</mo><mn>1</mn></mrow><mi>R</mi></munderover><munderover><mo>∑</mo><mrow><mi>c</mi><mo>=</mo><mn>1</mn></mrow><mi>C</mi></munderover><msub><mi>x</mi><mrow><mi>r</mi><mi>c</mi></mrow></msub><mo>=</mo><mi>N</mi></mrow><annotation encoding="application/x-tex">
 \sum_{r=1}^{R}\sum_{c=1}^{C}x_{rc}=N
-\]</span></p>
+</annotation></semantics></math></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">N</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span></span>
 <span><span class="va">N</span></span>
-<span><span class="co">#&gt; [1] 279</span></span></code></pre></div>
+<span><span class="co">#&gt; [1] 313</span></span></code></pre></div>
 <p>It is common to work with the proportions rather than the frequencies
-in terms of the correspondence matrix, <span class="math inline">\(\mathbf{P}\)</span>:</p>
-<p><span class="math display">\[
+in terms of the correspondence matrix,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐏</mi><annotation encoding="application/x-tex">\mathbf{P}</annotation></semantics></math>:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐏</mi><mo>=</mo><mfrac><mi>𝐗</mi><mi>N</mi></mfrac></mrow><annotation encoding="application/x-tex">
 \mathbf{P}=\frac{\mathbf{X}}{N}
-\]</span></p>
+</annotation></semantics></math></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">P</span> <span class="op">&lt;-</span> <span class="va">X</span><span class="op">/</span><span class="va">N</span></span>
 <span><span class="va">P</span></span>
 <span><span class="co">#&gt;        Eye</span></span>
-<span><span class="co">#&gt; Hair         Brown       Blue      Hazel      Green</span></span>
-<span><span class="co">#&gt;   Black 0.11469534 0.03942652 0.03584229 0.01075269</span></span>
-<span><span class="co">#&gt;   Brown 0.18996416 0.17921147 0.08960573 0.05376344</span></span>
-<span><span class="co">#&gt;   Red   0.03584229 0.03584229 0.02508961 0.02508961</span></span>
-<span><span class="co">#&gt;   Blond 0.01075269 0.10752688 0.01792115 0.02867384</span></span></code></pre></div>
-<p>Other useful summaries of <span class="math inline">\(\mathbf{P}\)</span> include the row and column
-masses (for arbitrary row and column <span class="math inline">\(r\)</span> and <span class="math inline">\(c\)</span>, respectively), also expressed as
-diagonal matrices:</p>
-<p><span class="math display">\[
+<span><span class="co">#&gt; Hair          Brown        Blue       Hazel       Green</span></span>
+<span><span class="co">#&gt;   Black 0.115015974 0.028753994 0.015974441 0.006389776</span></span>
+<span><span class="co">#&gt;   Brown 0.210862620 0.108626198 0.092651757 0.044728435</span></span>
+<span><span class="co">#&gt;   Red   0.051118211 0.022364217 0.022364217 0.022364217</span></span>
+<span><span class="co">#&gt;   Blond 0.012779553 0.204472843 0.015974441 0.025559105</span></span></code></pre></div>
+<p>Other useful summaries of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐏</mi><annotation encoding="application/x-tex">\mathbf{P}</annotation></semantics></math>
+include the row and column masses (for arbitrary row and column
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math>,
+respectively), also expressed as diagonal matrices:</p>
+<p><span class="math display">$$
 \mathbf{r}_r = \sum_{c=1}^{C}p_{rc}; \hspace{0.5 cm}
 \mathbf{c}_c = \sum_{r=1}^{R}p_{rc}\\
 \mathbf{r}=\mathbf{P1}; \hspace{0.5 cm}
 \mathbf{c}=\mathbf{P}^\prime\mathbf{1}
-\]</span></p>
+$$</span></p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">rMass</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">P</span><span class="op">)</span></span>
 <span><span class="va">rMass</span></span>
 <span><span class="co">#&gt;     Black     Brown       Red     Blond </span></span>
-<span><span class="co">#&gt; 0.2007168 0.5125448 0.1218638 0.1648746</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">cMass</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">P</span><span class="op">)</span></span>
+<span><span class="co">#&gt; 0.1661342 0.4568690 0.1182109 0.2587859</span></span>
+<span><span class="va">cMass</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">colSums</a></span><span class="op">(</span><span class="va">P</span><span class="op">)</span></span>
 <span><span class="va">cMass</span></span>
-<span><span class="co">#&gt;     Brown      Blue     Hazel     Green </span></span>
-<span><span class="co">#&gt; 0.3512545 0.3620072 0.1684588 0.1182796</span></span></code></pre></div>
+<span><span class="co">#&gt;      Brown       Blue      Hazel      Green </span></span>
+<span><span class="co">#&gt; 0.38977636 0.36421725 0.14696486 0.09904153</span></span></code></pre></div>
 <p>Diagonal matrices:</p>
-<p><span class="math display">\[
+<p><span class="math display">$$
 \mathbf{D_r}=\text{diag}(\mathbf{r}); \hspace{0.5 cm}
 \mathbf{D_c}=\text{diag}(\mathbf{c})
-\]</span></p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+$$</span></p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">Dr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">P</span>, <span class="fl">1</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">Dr</span></span>
-<span><span class="co">#&gt;           [,1]      [,2]      [,3]      [,4]</span></span>
-<span><span class="co">#&gt; [1,] 0.2007168 0.0000000 0.0000000 0.0000000</span></span>
-<span><span class="co">#&gt; [2,] 0.0000000 0.5125448 0.0000000 0.0000000</span></span>
-<span><span class="co">#&gt; [3,] 0.0000000 0.0000000 0.1218638 0.0000000</span></span>
-<span><span class="co">#&gt; [4,] 0.0000000 0.0000000 0.0000000 0.1648746</span></span></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Dc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">P</span>, <span class="fl">2</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;           [,1]     [,2]      [,3]      [,4]</span></span>
+<span><span class="co">#&gt; [1,] 0.1661342 0.000000 0.0000000 0.0000000</span></span>
+<span><span class="co">#&gt; [2,] 0.0000000 0.456869 0.0000000 0.0000000</span></span>
+<span><span class="co">#&gt; [3,] 0.0000000 0.000000 0.1182109 0.0000000</span></span>
+<span><span class="co">#&gt; [4,] 0.0000000 0.000000 0.0000000 0.2587859</span></span>
+<span><span class="va">Dc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">P</span>, <span class="fl">2</span>, <span class="va">sum</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">Dc</span></span>
-<span><span class="co">#&gt;           [,1]      [,2]      [,3]      [,4]</span></span>
-<span><span class="co">#&gt; [1,] 0.3512545 0.0000000 0.0000000 0.0000000</span></span>
-<span><span class="co">#&gt; [2,] 0.0000000 0.3620072 0.0000000 0.0000000</span></span>
-<span><span class="co">#&gt; [3,] 0.0000000 0.0000000 0.1684588 0.0000000</span></span>
-<span><span class="co">#&gt; [4,] 0.0000000 0.0000000 0.0000000 0.1182796</span></span></code></pre></div>
+<span><span class="co">#&gt;           [,1]      [,2]      [,3]       [,4]</span></span>
+<span><span class="co">#&gt; [1,] 0.3897764 0.0000000 0.0000000 0.00000000</span></span>
+<span><span class="co">#&gt; [2,] 0.0000000 0.3642173 0.0000000 0.00000000</span></span>
+<span><span class="co">#&gt; [3,] 0.0000000 0.0000000 0.1469649 0.00000000</span></span>
+<span><span class="co">#&gt; [4,] 0.0000000 0.0000000 0.0000000 0.09904153</span></span></code></pre></div>
 <p>In order to obtain the first form of the row and column coordinates,
 the singular value decomposition (SVD) of the matrix of standardised
-Pearson residuals (<span class="math inline">\(\mathbf{S}\)</span>) is
-computed:</p>
-<p><span class="math display">\[
+Pearson residuals
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐒</mi><annotation encoding="application/x-tex">\mathbf{S}</annotation></semantics></math>)
+is computed:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mtext mathvariant="normal">SVD</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐒</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mtext mathvariant="normal">SVD</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mi>𝐃</mi><mi>𝐫</mi><mrow><mi mathvariant="bold">−</mi><mfrac><mn>𝟏</mn><mn>𝟐</mn></mfrac></mrow></msubsup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐏</mi><mo>−</mo><mrow><mi>𝐫</mi><msup><mi>𝐜</mi><mi mathvariant="bold">′</mi></msup></mrow><mo stretchy="true" form="postfix">)</mo></mrow><msubsup><mi>𝐃</mi><mi>𝐜</mi><mrow><mi mathvariant="bold">−</mi><mfrac><mn>𝟏</mn><mn>𝟐</mn></mfrac></mrow></msubsup><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mrow><mi>𝐔</mi><mi>𝚲</mi><msup><mi>𝐕</mi><mi mathvariant="bold">′</mi></msup></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
-\text{SVD}(\mathbf{S}) &amp;=
-\text{SVD}\left(\mathbf{D_r^{-\frac{1}{2}}}(\mathbf{P}-\mathbf{rc^\prime})\mathbf{D_c^{-\frac{1}{2}}}\right)\\&amp;=
-\mathbf{U\Lambda V^\prime}
+\text{SVD}(\mathbf{S}) &amp;= \text{SVD}\left(\mathbf{D_r^{-\frac{1}{2}}}(\mathbf{P}-\mathbf{rc^\prime})\mathbf{D_c^{-\frac{1}{2}}}\right)\\&amp;= \mathbf{U\Lambda V^\prime}
 \end{aligned}
-\]</span> The return value for the Standardised pearson residuals is
-<code>Smat</code> and the singular value decomposition,
-<code>SVD</code>.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">Smat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">Dr</span><span class="op">)</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span><span class="op">(</span><span class="va">P</span><span class="op">-</span><span class="op">(</span><span class="va">Dr</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span>, nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span>  <span class="va">Dc</span><span class="op">)</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">Dc</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">svd.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/svd.html" class="external-link">svd</a></span><span class="op">(</span><span class="va">Smat</span><span class="op">)</span></span></code></pre></div>
-<p>This is linked to the <span class="math inline">\(\chi^2\)</span>-statistic to determine whether the
-two categorical variables (i.e. the rows and columns of the contingency
-table) are independent. The expected frequencies represented by the
-product of the row and column masses (<span class="math inline">\(\mathbf{rc^\prime}\)</span>).</p>
+</annotation></semantics></math> The return value for the Standardised
+pearson residuals is <code>Smat</code> and the singular value
+decomposition, <code>SVD</code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">Smat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">Dr</span><span class="op">)</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span><span class="op">(</span><span class="va">P</span><span class="op">-</span><span class="op">(</span><span class="va">Dr</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span><span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fl">1</span>, nrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span>, </span>
+<span>    ncol <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">X</span><span class="op">)</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span>  <span class="va">Dc</span><span class="op">)</span><span class="op">)</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span><span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/solve.html" class="external-link">solve</a></span><span class="op">(</span><span class="va">Dc</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="va">svd.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/svd.html" class="external-link">svd</a></span><span class="op">(</span><span class="va">Smat</span><span class="op">)</span></span>
+<span><span class="va">svd.out</span></span>
+<span><span class="co">#&gt; $d</span></span>
+<span><span class="co">#&gt; [1] 5.499629e-01 1.806424e-01 7.541748e-02 8.574459e-17</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $u</span></span>
+<span><span class="co">#&gt;            [,1]       [,2]        [,3]      [,4]</span></span>
+<span><span class="co">#&gt; [1,] -0.3832205  0.7807477 -0.27828196 0.4075956</span></span>
+<span><span class="co">#&gt; [2,] -0.3195599 -0.2982325  0.59335474 0.6759209</span></span>
+<span><span class="co">#&gt; [3,] -0.1736837 -0.5332073 -0.75320188 0.3438181</span></span>
+<span><span class="co">#&gt; [4,]  0.8490333  0.1310737 -0.05635808 0.5087101</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; $v</span></span>
+<span><span class="co">#&gt;             [,1]       [,2]        [,3]      [,4]</span></span>
+<span><span class="co">#&gt; [1,] -0.61837991  0.4547976 -0.14487614 0.6243207</span></span>
+<span><span class="co">#&gt; [2,]  0.75797511  0.2307003  0.08963172 0.6035041</span></span>
+<span><span class="co">#&gt; [3,] -0.20612962 -0.5898626  0.68015284 0.3833600</span></span>
+<span><span class="co">#&gt; [4,]  0.02430218 -0.6260980 -0.71300012 0.3147086</span></span></code></pre></div>
+<p>This is linked to the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>χ</mi><mn>2</mn></msup><annotation encoding="application/x-tex">\chi^2</annotation></semantics></math>-statistic
+to determine whether the two categorical variables (i.e. the rows and
+columns of the contingency table) are independent. The expected
+frequencies represented by the product of the row and column masses
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐫</mi><msup><mi>𝐜</mi><mi mathvariant="bold">′</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{rc^\prime}</annotation></semantics></math>).</p>
 <p>Furthermore, since the weights of certain objects might be
 substantially different from others which could result in a distorted
-approximation in lower dimension, the <span class="math inline">\(\chi^2\)</span>-distance, also referred to as the
-weighted Euclidean distance, is rather used to measure distances in CA.
-This is an intuitive decision as it follows from the <span class="math inline">\(\chi^2\)</span>-statistic to test the independence
-between two categorical variables, in this case the independence between
-the rows and columns of the contingency table. (<span class="citation">Beh and Lombardo (2014)</span>, <span class="citation">Greenacre (2017)</span>).</p>
+approximation in lower dimension, the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>χ</mi><mn>2</mn></msup><annotation encoding="application/x-tex">\chi^2</annotation></semantics></math>-distance,
+also referred to as the weighted Euclidean distance, is rather used to
+measure distances in CA. This is an intuitive decision as it follows
+from the
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>χ</mi><mn>2</mn></msup><annotation encoding="application/x-tex">\chi^2</annotation></semantics></math>-statistic
+to test the independence between two categorical variables, in this case
+the independence between the rows and columns of the contingency table.
+(<span class="citation">Beh and Lombardo (2014)</span>, <span class="citation">Greenacre (2017)</span>).</p>
 </div>
 <div class="section level2">
 <h2 id="ca-biplot">CA biplot<a class="anchor" aria-label="anchor" href="#ca-biplot"></a>
@@ -235,55 +235,118 @@ and column coordinates are meaningful an asymmetric display should be
 constructed. This means that the contribution of the singular values
 should be different for the row and column coordinates. (<span class="citation">Gabriel (1971)</span>) The standard coordinates are
 expressed by:</p>
-<p><span class="math display">\[
+<p><span class="math display">$$
 \begin{aligned}
 \text{Row standard coordinates:} \hspace{0.5 cm}&amp;\mathbf{U}\\
 \text{Column standard coordinates:} \hspace{0.5 cm}&amp;\mathbf{V}
 \end{aligned}
-\]</span></p>
+$$</span></p>
 <p>The principal coordinates are expressed by:</p>
-<p><span class="math display">\[
+<p><span class="math display">$$
 \begin{aligned}
 \text{Row principal coordinates:} \hspace{0.5
 cm}&amp;\mathbf{U\Lambda}\\
 \text{Column principal coordinates:} \hspace{0.5
 cm}&amp;\mathbf{V\Lambda}
 \end{aligned}
-\]</span></p>
+$$</span></p>
 <p>By including the singular values the magnitude of the association
 between the variables are incorporated in the scaling of the
 coordinates.</p>
 <p>In the <code>ca()</code> function the argument <code>variant</code>
 allows the user to choose between three types of CA biplots:
 <code>Princ</code>, <code>Stand</code> and <code>Symmetric</code>.</p>
-<p><span class="math display">\[
+<p><span class="math display">$$
 \begin{aligned}
 \text{Row coordinates:} \hspace{0.5 cm}&amp;\mathbf{U\Lambda^\gamma}\\
 \text{Column coordinates:} \hspace{0.5
 cm}&amp;\mathbf{V\Lambda^{1-\gamma}}
 \end{aligned}
-\]</span> The row standard (i.e. column principal) coordinate biplot:
-<code>Stand</code>, results from <span class="math inline">\(\gamma=0\)</span>.</p>
+$$</span> The row standard (i.e. column principal) coordinate biplot:
+<code>Stand</code>, results from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\gamma=0</annotation></semantics></math>.</p>
 <p>The row principal (i.e. column standard) coordinate biplot:
-<code>Princ</code>, results from <span class="math inline">\(\gamma=1\)</span>.</p>
+<code>Princ</code>, results from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\gamma=1</annotation></semantics></math>.</p>
 <p>The symmetric plot in which row and column coordinates are scaled
-equally: <code>Symmetric</code>, results from <span class="math inline">\(\gamma=0.5\)</span>.</p>
+equally: <code>Symmetric</code>, results from
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>γ</mi><mo>=</mo><mn>0.5</mn></mrow><annotation encoding="application/x-tex">\gamma=0.5</annotation></semantics></math>.</p>
 <p>The return value is <code>rowcoor</code> and <code>colcoor</code>,
 respectively.</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gamma</span> <span class="op">&lt;-</span> <span class="fl">0</span></span>
 <span><span class="va">rowcoor</span> <span class="op">&lt;-</span> <span class="va">svd.out</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">svd.out</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="va">gamma</span><span class="op">)</span></span>
 <span><span class="va">colcoor</span> <span class="op">&lt;-</span> <span class="va">svd.out</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span><span class="op"><a href="https://rdrr.io/r/base/matmult.html" class="external-link">%*%</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/diag.html" class="external-link">diag</a></span><span class="op">(</span><span class="va">svd.out</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span><span class="op">)</span><span class="op">^</span><span class="op">(</span><span class="fl">1</span><span class="op">-</span><span class="va">gamma</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="the-quality-of-the-biplot-display">The quality of the biplot display<a class="anchor" aria-label="anchor" href="#the-quality-of-the-biplot-display"></a>
+<h3 id="lambda-scaling">Lambda scaling<a class="anchor" aria-label="anchor" href="#lambda-scaling"></a>
 </h3>
-<p>This is measured by the ratio of the variance explained (sum of the
-squared singular values of the utilised (<span class="math inline">\(M\)</span>) components) and the total variance
-(sum of all squared singular values (<span class="math inline">\(p\)</span>)).</p>
-<p><span class="math display">\[
+<p>As presented in <span class="citation">Gower, Lubbe, and Roux
+(2011)</span> :24, when constructing a biplot representing the rows of a
+coordinate matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐀</mi><annotation encoding="application/x-tex">\mathbf{A}</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>𝐁</mi><mi>′</mi></msup><annotation encoding="application/x-tex">\mathbf{B}^\prime</annotation></semantics></math>.
+Take note that the inner product is invariant when
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐀</mi><annotation encoding="application/x-tex">\mathbf{A}</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐁</mi><annotation encoding="application/x-tex">\mathbf{B}</annotation></semantics></math>
+are scaled inversely by
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi>𝐀</mi><mi>𝐁</mi></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>λ</mi><mi>𝐀</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐁</mi><mi>/</mi><mi>λ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+\mathbf{AB} = (\lambda\mathbf{A})(\mathbf{B}/\lambda)
+</annotation></semantics></math> An arbitrary value of
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>
+can be selected or an <em>optimal</em> value could be to ensure that the
+average squared distance of the points in
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mi>𝐀</mi></mrow><annotation encoding="application/x-tex">\lambda\mathbf{A}</annotation></semantics></math>
+and
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐁</mi><mi>/</mi><mi>λ</mi></mrow><annotation encoding="application/x-tex">\mathbf{B}/\lambda</annotation></semantics></math>
+is equal.</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>λ</mi><mn>4</mn></msup><mo>=</mo><mfrac><mi>r</mi><mi>c</mi></mfrac><mfrac><mrow><mrow><mo stretchy="true" form="prefix">|</mo><mo stretchy="true" form="postfix">|</mo></mrow><mi>𝐁</mi><msup><mrow><mo stretchy="true" form="prefix">|</mo><mo stretchy="true" form="postfix">|</mo></mrow><mn>2</mn></msup></mrow><mrow><mrow><mo stretchy="true" form="prefix">|</mo><mo stretchy="true" form="postfix">|</mo></mrow><mi>𝐀</mi><msup><mrow><mo stretchy="true" form="prefix">|</mo><mo stretchy="true" form="postfix">|</mo></mrow><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+\lambda^4 =\frac{r}{c}\frac{||\mathbf{B}||^2}{||\mathbf{A}||^2}
+</annotation></semantics></math></p>
+<p>The default setting is to not apply lambda-scaling
+(i.e. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\lambda=1</annotation></semantics></math>).</p>
+<p>The return value is <code>lambda.val</code>.</p>
+</div>
+<div class="section level3">
+<h3 id="measures-of-fit">Measures of fit<a class="anchor" aria-label="anchor" href="#measures-of-fit"></a>
+</h3>
+<p><code>quality</code>, <code>adequacy</code>,
+<code>row.predictivities</code> and <code>column.predictivities</code>
+are available for CA biplots.</p>
+<p>As explained in the biplotEZ vignette, the quality of the biplot is
+measured by the ratio of the variance explained (sum of the squared
+singular values of the utilised
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math>)
+components) and the total variance (sum of all squared singular values
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>)).</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac><mrow><munderover><mo>∑</mo><mrow><mi>m</mi><mo>=</mo><mn>1</mn></mrow><mi>M</mi></munderover><msubsup><mi>λ</mi><mi>m</mi><mn>2</mn></msubsup></mrow><mrow><munderover><mo>∑</mo><mrow><mi>m</mi><mo>=</mo><mn>1</mn></mrow><mi>p</mi></munderover><msubsup><mi>λ</mi><mi>m</mi><mn>2</mn></msubsup></mrow></mfrac><annotation encoding="application/x-tex">
 \frac{\sum_{m=1}^{M}\lambda_m^2}{\sum_{m=1}^{p}\lambda_m^2}
-\]</span> The return value is <code>qual</code>.</p>
+</annotation></semantics></math> The <code>adequacy</code> refers to the
+representation of the variables. In <code><a href="../reference/CA.html">CA()</a></code> the factor
+variable represented in the columns is treated as the variables and is
+calculated as explained in the biplotEZ vignette:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>𝐕</mi><mi>r</mi></msub><msub><mi>𝐕</mi><mi>r</mi></msub><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi>𝐕</mi><mi>𝐕</mi></mrow><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo>=</mo><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>𝐕</mi><mi>r</mi></msub><msub><mi>𝐕</mi><mi>r</mi></msub><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+ \frac{diag(\mathbf{V}_r\mathbf{V}_r')}{diag(\mathbf{VV}')}= diag(\mathbf{V}_r\mathbf{V}_r')
+</annotation></semantics></math></p>
+<p>The predictivities provide a measure of how well the original values
+are recovered from the biplot. An element that is well represented will
+have a predictivity close to one, indicating that the row or column
+variable values from prediction is close to the observed values. If an
+element is poorly represented, the predicted values will be very
+different from the original values and the predictivity value will be
+close to zero.</p>
+<p>The <code>row.predictivities</code> are calculated as follows (<span class="citation">Gower, Lubbe, and Roux (2011)</span> :299):</p>
+<p><span class="math display">$$
+diag(\mathbf{U}\mathbf{\Sigma}\mathbf{J}\mathbf{\Sigma}\mathbf{U}')[diag(\mathbf{U}\mathbf{\Sigma}\mathbf{\Sigma}\mathbf{U}')]^{-1}\\
+=diag(\mathbf{U}\mathbf{\Sigma}^2\mathbf{J}\mathbf{U}')[diag(\mathbf{U}\mathbf{\Sigma^2}\mathbf{U}')]^{-1}
+$$</span></p>
+<p>The <code>col.predictivities</code> are calculated as follows (<span class="citation">Gower, Lubbe, and Roux (2011)</span> :299):</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐕</mi><msup><mi>𝚺</mi><mn>2</mn></msup><mi>𝐉</mi><mi>𝐕</mi><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mrow><mo stretchy="true" form="prefix">[</mo><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐕</mi><msup><mi>𝚺</mi><mn>𝟐</mn></msup><mi>𝐕</mi><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">
+diag(\mathbf{V}\mathbf{\Sigma}^2\mathbf{J}\mathbf{V}')[diag(\mathbf{V}\mathbf{\Sigma^2}\mathbf{V}')]^{-1}
+</annotation></semantics></math></p>
 </div>
 </div>
 <div class="section level2">
@@ -301,8 +364,8 @@ either <code>scale</code> or <code>center</code> is specified as
 <code>Variant="Princ"</code><a class="anchor" aria-label="anchor" href="#variantprinc"></a>
 </h3>
 <p>The default CA biplot is a row principal coordinate biplot:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 </div>
 <div class="section level3">
@@ -310,39 +373,153 @@ either <code>scale</code> or <code>center</code> is specified as
 <code>Variant="Stand"</code><a class="anchor" aria-label="anchor" href="#variantstand"></a>
 </h3>
 <p>To construct the CA biplot for row standard coordinates:</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ca.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Stand"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ca.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Stand"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ca.out</span><span class="op">$</span><span class="va">qual</span></span>
-<span><span class="co">#&gt; [1] 99.73298</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="variantsymmetric">
 <code>Variant="Symmetric"</code><a class="anchor" aria-label="anchor" href="#variantsymmetric"></a>
 </h3>
 <p>To construct the symmetric CA map:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ca.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ca.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">ca.out</span><span class="op">$</span><span class="va">qual</span></span>
-<span><span class="co">#&gt; [1] 99.73298</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ca.out</span><span class="op">$</span><span class="va">lambda.val</span></span>
+<span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="measures-of-fit-1">Measures of fit<a class="anchor" aria-label="anchor" href="#measures-of-fit-1"></a>
+</h3>
+<p>The <code>fit.mesaures()</code> function should be utilised to obtain
+the specific fit measures explained above.</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">ca.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/fit.measures.html">fit.measures</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Quality"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Quality"</span></span>
+<span><span class="va">ca.out</span><span class="op">$</span><span class="va">quality</span></span>
+<span><span class="co">#&gt; [1] 0.9833094</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Adequacy"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Adequacy"</span></span>
+<span><span class="va">ca.out</span><span class="op">$</span><span class="va">adequacy</span></span>
+<span><span class="co">#&gt;        Brown   Blue  Hazel  Green</span></span>
+<span><span class="co">#&gt; Dim 1 0.3824 0.5745 0.0425 0.0006</span></span>
+<span><span class="co">#&gt; Dim 2 0.5892 0.6277 0.3904 0.3926</span></span>
+<span><span class="co">#&gt; Dim 3 0.6102 0.6358 0.8530 0.9010</span></span>
+<span><span class="co">#&gt; Dim 4 1.0000 1.0000 1.0000 1.0000</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Row predictivities"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Row predictivities"</span></span>
+<span><span class="va">ca.out</span><span class="op">$</span><span class="va">row.predictivities</span></span>
+<span><span class="co">#&gt;        Black  Brown    Red  Blond</span></span>
+<span><span class="co">#&gt; Dim 1 0.6860 0.8630 0.4219 0.9974</span></span>
+<span><span class="co">#&gt; Dim 2 0.9932 0.9441 0.8508 0.9999</span></span>
+<span><span class="co">#&gt; Dim 3 1.0000 1.0000 1.0000 1.0000</span></span>
+<span><span class="co">#&gt; Dim 4 1.0000 1.0000 1.0000 1.0000</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="st">"Column predictivities"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] "Column predictivities"</span></span>
+<span><span class="va">ca.out</span><span class="op">$</span><span class="va">col.predictivities</span></span>
+<span><span class="co">#&gt;        Brown   Blue  Hazel  Green</span></span>
+<span><span class="co">#&gt; Dim 1 0.9439 0.9898 0.4789 0.0113</span></span>
+<span><span class="co">#&gt; Dim 2 0.9990 0.9997 0.9020 0.8177</span></span>
+<span><span class="co">#&gt; Dim 3 1.0000 1.0000 1.0000 1.0000</span></span>
+<span><span class="co">#&gt; Dim 4 1.0000 1.0000 1.0000 1.0000</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="interpolating-new-samples">Interpolating new samples<a class="anchor" aria-label="anchor" href="#interpolating-new-samples"></a>
+</h3>
+<p>Adding cross-tabulations of the two categorical variables to the plot
+is facilitated by the function <code><a href="../reference/interpolate.html">interpolate()</a></code>. Note that the
+additional variables to be interpolated did not contribute to the
+construction of the biplot. This is the reason why <span class="citation">Greenacre (2017)</span> term these supplementary
+points.</p>
+<p>The function <code><a href="../reference/interpolate.html">interpolate()</a></code> accepts a matrix or data
+frame containing the samples and variables to be interpolated. The
+argument <code>newdata</code> containing the samples to be interpolated
+needs to have a similar structure to the data set sent to
+<code><a href="../reference/biplot.html">biplot()</a></code>. If <code><a href="../reference/biplot.html">biplot()</a></code> received a data frame,
+<code>newdata</code> can be either another data frame or a matrix
+containing the subset of numerical variables.</p>
+<p>The function <code><a href="../reference/newsamples.html">newsamples()</a></code> operates similar to
+<code><a href="../reference/samples.html">samples()</a></code> and enables aesthetic changes to the new
+samples.</p>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/interpolate.html">interpolate</a></span><span class="op">(</span>newdata <span class="op">=</span> <span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/newsamples.html">newsamples</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"orange"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>      </span></code></pre></div>
+<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="aesthetics-and-legend">Aesthetics and legend<a class="anchor" aria-label="anchor" href="#aesthetics-and-legend"></a>
 </h3>
 <p>The <code><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample()</a></code> function should be utilised to specify the
 colours, plotting characters and expansion of the samples.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Princ"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyan"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span>, label.side<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>,<span class="st">"top"</span><span class="op">)</span>, </span>
-<span>          label.cex<span class="op">=</span><span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-12-1.png" width="672"><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-12-2.png" width="672"></p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyan"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span>, label.side <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>,<span class="st">"top"</span><span class="op">)</span>, </span>
+<span>          label.cex <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-14-1.png" width="672"><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-14-2.png" width="672"></p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"forestgreen"</span>,<span class="st">"magenta"</span><span class="op">)</span>, pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">17</span><span class="op">)</span>, label.side<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>,<span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"forestgreen"</span>,<span class="st">"magenta"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">17</span><span class="op">)</span>, </span>
+<span>          label.side <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>,<span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+</div>
+<div class="section level3">
+<h3 id="additional-example">Additional example<a class="anchor" aria-label="anchor" href="#additional-example"></a>
+</h3>
+<p>Consider the South African Crime data set 2008, extracted from the
+South African police website (<a href="http://www.saps.gov.za/" class="external-link uri">http://www.saps.gov.za/</a>). <span class="citation">Gower,
+Lubbe, and Roux (2011)</span> :312.</p>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">SACrime</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1235</span>,<span class="fl">432</span>,<span class="fl">1824</span>,<span class="fl">1322</span>,<span class="fl">573</span>,<span class="fl">588</span>,<span class="fl">624</span>,<span class="fl">169</span>,<span class="fl">629</span>,<span class="fl">34479</span>,<span class="fl">16833</span>,<span class="fl">46993</span>,<span class="fl">30606</span>,<span class="fl">13670</span>,</span>
+<span>              <span class="fl">16849</span>,<span class="fl">15861</span>,<span class="fl">9898</span>,<span class="fl">24915</span>,<span class="fl">2160</span>,<span class="fl">939</span>,<span class="fl">5257</span>,<span class="fl">4946</span>,<span class="fl">722</span>,<span class="fl">1271</span>,<span class="fl">881</span>,<span class="fl">775</span>,<span class="fl">1844</span>,<span class="fl">5946</span>,</span>
+<span>              <span class="fl">4418</span>,<span class="fl">15117</span>,<span class="fl">10258</span>,<span class="fl">5401</span>,<span class="fl">4273</span>,<span class="fl">4987</span>,<span class="fl">1956</span>,<span class="fl">10639</span>,<span class="fl">29508</span>,<span class="fl">15705</span>,<span class="fl">62703</span>,<span class="fl">37203</span>,</span>
+<span>              <span class="fl">11857</span>,<span class="fl">18855</span>,<span class="fl">14722</span>,<span class="fl">4924</span>,<span class="fl">42376</span>,<span class="fl">604</span>,<span class="fl">156</span>,<span class="fl">7466</span>,<span class="fl">3889</span>,<span class="fl">203</span>,<span class="fl">664</span>,<span class="fl">291</span>,<span class="fl">5</span>,<span class="fl">923</span>,<span class="fl">19875</span>,</span>
+<span>              <span class="fl">19885</span>,<span class="fl">57153</span>,<span class="fl">29410</span>,<span class="fl">11024</span>,<span class="fl">12202</span>,<span class="fl">10406</span>,<span class="fl">5431</span>,<span class="fl">32663</span>,<span class="fl">7086</span>,<span class="fl">4193</span>,<span class="fl">22152</span>,<span class="fl">9264</span>,<span class="fl">3760</span>,</span>
+<span>              <span class="fl">4752</span>,<span class="fl">3863</span>,<span class="fl">1337</span>,<span class="fl">8578</span>,<span class="fl">7929</span>,<span class="fl">4525</span>,<span class="fl">12348</span>,<span class="fl">24174</span>,<span class="fl">3198</span>,<span class="fl">1770</span>,<span class="fl">7004</span>,<span class="fl">2201</span>,<span class="fl">45985</span>,<span class="fl">764</span>,</span>
+<span>              <span class="fl">427</span>,<span class="fl">1501</span>,<span class="fl">1197</span>,<span class="fl">215</span>,<span class="fl">251</span>,<span class="fl">345</span>,<span class="fl">213</span>,<span class="fl">1850</span>,<span class="fl">3515</span>,<span class="fl">879</span>,<span class="fl">3674</span>,<span class="fl">4713</span>,<span class="fl">696</span>,<span class="fl">835</span>,<span class="fl">917</span>,<span class="fl">422</span>,<span class="fl">2836</span>,</span>
+<span>              <span class="fl">88</span>,<span class="fl">59</span>,<span class="fl">174</span>,<span class="fl">76</span>,<span class="fl">31</span>,<span class="fl">61</span>,<span class="fl">117</span>,<span class="fl">32</span>,<span class="fl">257</span>,<span class="fl">5499</span>,<span class="fl">2628</span>,<span class="fl">8073</span>,<span class="fl">6502</span>,<span class="fl">2816</span>,<span class="fl">2635</span>,<span class="fl">3017</span>,<span class="fl">1020</span>,<span class="fl">4000</span>,</span>
+<span>              <span class="fl">8939</span>,<span class="fl">4501</span>,<span class="fl">50970</span>,<span class="fl">24290</span>,<span class="fl">2447</span>,<span class="fl">5907</span>,<span class="fl">5528</span>,<span class="fl">1175</span>,<span class="fl">14555</span><span class="op">)</span>,nrow<span class="op">=</span><span class="fl">9</span>, ncol<span class="op">=</span><span class="fl">14</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">SACrime</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"ECpe"</span>, <span class="st">"FrSt"</span>, <span class="st">"Gaut"</span>, <span class="st">"KZN"</span>,  <span class="st">"Limp"</span>, <span class="st">"Mpml"</span>, <span class="st">"NWst"</span>, <span class="st">"NCpe"</span>,</span>
+<span>                            <span class="st">"WCpe"</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Arsn"</span>, <span class="st">"AGBH"</span>, <span class="st">"AtMr"</span>, <span class="st">"BNRs"</span>, <span class="st">"BRs"</span>,  <span class="st">"CrJk"</span>,</span>
+<span>                                              <span class="st">"CmAs"</span>, <span class="st">"CmRb"</span>, <span class="st">"DrgR"</span>, <span class="st">"InAs"</span>, <span class="st">"Mrd"</span>, <span class="st">"PubV"</span>, </span>
+<span>                                              <span class="st">"Rape"</span>, <span class="st">"RAC"</span> <span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">SACrime</span><span class="op">)</span><span class="op">)</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Provinces"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/dimnames.html" class="external-link">dimnames</a></span><span class="op">(</span><span class="va">SACrime</span><span class="op">)</span><span class="op">)</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Crimes"</span></span>
+<span><span class="va">SACrime</span></span>
+<span><span class="co">#&gt;          Crimes</span></span>
+<span><span class="co">#&gt; Provinces Arsn  AGBH AtMr  BNRs   BRs CrJk  CmAs  CmRb  DrgR InAs  Mrd PubV</span></span>
+<span><span class="co">#&gt;      ECpe 1235 34479 2160  5946 29508  604 19875  7086  7929  764 3515   88</span></span>
+<span><span class="co">#&gt;      FrSt  432 16833  939  4418 15705  156 19885  4193  4525  427  879   59</span></span>
+<span><span class="co">#&gt;      Gaut 1824 46993 5257 15117 62703 7466 57153 22152 12348 1501 3674  174</span></span>
+<span><span class="co">#&gt;      KZN  1322 30606 4946 10258 37203 3889 29410  9264 24174 1197 4713   76</span></span>
+<span><span class="co">#&gt;      Limp  573 13670  722  5401 11857  203 11024  3760  3198  215  696   31</span></span>
+<span><span class="co">#&gt;      Mpml  588 16849 1271  4273 18855  664 12202  4752  1770  251  835   61</span></span>
+<span><span class="co">#&gt;      NWst  624 15861  881  4987 14722  291 10406  3863  7004  345  917  117</span></span>
+<span><span class="co">#&gt;      NCpe  169  9898  775  1956  4924    5  5431  1337  2201  213  422   32</span></span>
+<span><span class="co">#&gt;      WCpe  629 24915 1844 10639 42376  923 32663  8578 45985 1850 2836  257</span></span>
+<span><span class="co">#&gt;          Crimes</span></span>
+<span><span class="co">#&gt; Provinces Rape   RAC</span></span>
+<span><span class="co">#&gt;      ECpe 5499  8939</span></span>
+<span><span class="co">#&gt;      FrSt 2628  4501</span></span>
+<span><span class="co">#&gt;      Gaut 8073 50970</span></span>
+<span><span class="co">#&gt;      KZN  6502 24290</span></span>
+<span><span class="co">#&gt;      Limp 2816  2447</span></span>
+<span><span class="co">#&gt;      Mpml 2635  5907</span></span>
+<span><span class="co">#&gt;      NWst 3017  5528</span></span>
+<span><span class="co">#&gt;      NCpe 1020  1175</span></span>
+<span><span class="co">#&gt;      WCpe 4000 14555</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">SACrime</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span>, lambda.scal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyan"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span>, label.side <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>,<span class="st">"top"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-17-1.png" width="672"><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-17-2.png" width="672"></p>
 </div>
 </div>
 <div class="section level2">
@@ -368,35 +545,26 @@ press.
 </div>
 </div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
-  <p></p>
-<p>Developed by Sugnet Lubbe, Niël le Roux, Johané Nienkemper-Swanepoel, Raeesa Ganey, Ruan Buys, Zoë-Mae Adams, Peter Manefeldt.</p>
+    <footer><div class="pkgdown-footer-left">
+  <p>Developed by Sugnet Lubbe, Niël le Roux, Johané Nienkemper-Swanepoel, Raeesa Ganey, Ruan Buys, Zoë-Mae Adams, Peter Manefeldt.</p>
 </div>
 
-<div class="pkgdown">
-  <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.9.</p>
+<div class="pkgdown-footer-right">
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
-      </footer>
+    </footer>
 </div>
 
-  
 
 
-  
+
 
   </body>
 </html>

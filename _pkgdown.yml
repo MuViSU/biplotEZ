@@ -1,0 +1,21 @@
+template:
+  bootstrap: 5
+navbar:
+ components:
+   articles:
+    text: Articles
+    menu:
+    - text: biplotEZ
+      href: articles/biplotEZ.html
+    - text: biplotEZ enhancements
+      href: articles/biplotEZ_enhancements.html
+    - text: Multi-dimensional scaling
+      href: articles/MDS.html
+    - text: Biplots for separating classes
+      href: articles/Class_separation.html
+    - text: Categorical biplots
+      href: articles/CA_in_biplotEZ.html
+    - text: One dimensional biplots
+      href: articles/Biplots_in_1D.html
+    - text: Three dimensional biplots
+      href: articles/Biplots_in_3D.html

@@ -4,8 +4,9 @@
 \alias{PCA}
 \title{Perform Principal Components Analysis (PCA)}
 \usage{
-PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X),
-group.aes = NULL, show.class.means = FALSE, correlation.biplot = FALSE)
+PCA(bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), 
+           group.aes=NULL, show.class.means = FALSE,
+           correlation.biplot=FALSE, ...)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot} obtained from preceding function \code{biplot()}.}
@@ -23,6 +24,8 @@ for differentiated aesthetics for samples.}
 optimally approximated in the biplot. If \code{TRUE}, the correlations between
 variables are optimally approximated by the cosine of the angles between
 axes. Default is \code{FALSE}.}
+
+\item{...}{additional arguments.}
 }
 \value{
 An object of class PCA with the following elements:

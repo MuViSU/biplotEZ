@@ -26,8 +26,6 @@ library(biplotEZ)
 ```
 
 
-<img src='../man/figures/logo.png' alt='alt text' style='width:10%; height:auto;' class="center">
-
 This vignette illustrates how to create one-dimensional biplot. The biplotEZ vignette demonstrates many functions of the functions in the package. The vignette will serve as a supplement to the biplotEZ vignette.
 
 

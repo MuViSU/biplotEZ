@@ -6,6 +6,7 @@
 #' @param axis.predictivity either a logical or a numeric value between \code{0} and \code{1}. If it is a numeric value, this value is used as threshold so that only axes with axis predictivity larger than the threshold is displayed. If \code{axis.predictivity = TRUE}, the axis colour is 'diluted' in proportion with the axis predictivity.
 #' @param sample.predictivity either a logical or a numeric value between 0 and 1. If it is a numeric value, this value is used as threshold so that only samples with sample predictivity larger than the threshold is displayed. If \code{sample.predictivity = TRUE}, the sample size is shrinked in proportion with the sample predictivity.
 #' @param zoom a logical value allowing the user to select an area to zoom into.
+#' @param add a logical value allowing the user to add the biplot to a current plot. If \code{add = TRUE} the argument \code{zoom} is inactive.
 #' @param xlim the horizontal limits of the plot.
 #' @param ylim the vertical limits of the plot.
 #' @param ... additional arguments.
@@ -17,15 +18,17 @@
 #' @examples
 #' biplot (iris[,1:4]) |> PCA() |> plot()
 plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predictivity=NULL,
-                        zoom=FALSE, xlim = NULL, ylim = NULL, ...)
+                        zoom = FALSE, add = FALSE, xlim = NULL, ylim = NULL, ...)
 {
+  
   #----- See all the internal functions in utility_2D.R
   if (is.null(x$Z)) stop ("Add a biplot method before generating a plot")
     else Z <- x$Z
 
   #aesthetics for samples
   if (is.null(x$samples)) x <- samples(x) 
-  
+
+  if (add) zoom <- FALSE  
   if(zoom)
     grDevices::dev.new()
 
@@ -63,6 +66,9 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
   ggrepel.new <- ggrepel.means <- ggrepel.samples <- NULL
   if (do.ggrepel)
   {
+    if (!requireNamespace("R.devices", quietly = TRUE)) {
+       stop("Package 'R.devices' is required for this function. Please install it.", call. = FALSE)
+    }
     out <- R.devices::suppressGraphics(.get.ggrepel.coords(df))
     if (n.newsamples>n.means) ggrepel.new <-list(coords = out$coords[out$visible>n.newsamples & out$visible<n.means+1,,drop=F],
                                                  visible = out$visible[out$visible>n.newsamples & out$visible<n.means+1]-n.means,
@@ -100,6 +106,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
       }
       
       # Start with empty plot
+      if (!add)
       plot(Z[, 1] * exp.factor, Z[, 2] * exp.factor, xlim = xlim, ylim = ylim,
            xaxt = "n", yaxt = "n", xlab = "", ylab = "", type = "n", xaxs = "i", yaxs = "i", asp = 1)
 
@@ -118,7 +125,6 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
         }
 
       # Classification Regions - this should be plotted first. 
-      # if(!is.null(x$classify)) x <- classify(x)
       classify.aes <- x$classify$aes
       
       if(!is.null(x$classify$classify.regions)) {
@@ -181,15 +187,6 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
       {
         if (length(ax.aes$which) > 0)
           {
-          if (!is.null(x$Lmat))
-              if (nrow(x$Lmat) == ncol(x$Lmat)) 
-                Xhat <- x$Z %*% solve(x$Lmat)[x$e.vects,]
-              else Xhat <- x$X
-            else
-              Xhat <- x$X
-            if (x$scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/x$sd)
-            if (x$center) Xhat <- scale(Xhat, center=-1*x$means, scale=FALSE)
-            
             if(!is.null(x$PCOaxes)) 
               { if (x$PCOaxes == "splines") # Only for PCO - if axes (type) is set to splines.  
                   {
@@ -201,15 +198,17 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
                   } 
                 else if(x$PCOaxes == "regression") # Only for PCO - if axes (type) is set to regression. 
                        {
-                         z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
-                                        ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
+                         z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, x$X, x$means, 
+                                          x$sd, x$ax.one.unit, ax.aes$which, ax.aes$ticks, 
+                                          ax.aes$orthogx, ax.aes$orthogy)
                         .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
                        }
               } 
             else 
               { # Otherwise calibrate linear axes
-                z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, x$ax.one.unit, ax.aes$which,
-                               ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
+                z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, x$X, x$means, x$sd, 
+                                 x$ax.one.unit, ax.aes$which, ax.aes$ticks, 
+                                 ax.aes$orthogx, ax.aes$orthogy)
                 .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
               }
             }
@@ -226,13 +225,56 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
       if (length(new.ax.aes$which) > 0)
       {
         
-        z.axes.new <- lapply(1:length(new.ax.aes$which), .calibrate.axis, 
-                             x$newvariable, x$new.means, x$new.sd, x$new.ax.one.unit, new.ax.aes$which,
+        z.axes.new <- lapply(1:length(new.ax.aes$which), .calibrate.axis, x$newvariable, 
+                             x$new.means, x$new.sd, x$new.ax.one.unit, new.ax.aes$which,
                              new.ax.aes$ticks, new.ax.aes$orthogx, new.ax.aes$orthogy)
-        .lin.axes.plot(z.axes.new, new.ax.aes, predict.mat, too.small, usr=usr, predict_which=x$predict$which)
+        .lin.axes.plot(z.axes.new, new.ax.aes, predict.mat, too.small, usr=usr, 
+                       predict_which=x$predict$which)
       }
       }
-      
+        
+      # Nominal and ordinal axes
+      if(inherits(x,"catPCA"))
+      {
+        if (sum(x$ax.type == "nominal") > 0)
+        {
+          nom.one.unit <- x$all.ax.one.unit[x$ax.type$ax.type == "nominal",,drop = FALSE]
+          if (is.null(x$nom.axes)) x <- nom.axes(x)
+
+          z.axes <- lapply(1:length(x$nom.axes$which), .calibrate.cat.axis, 
+                           nom.one.unit, x$nom.axes$which, x$nom.axes$orthogx, 
+                           x$nom.axes$orthogy, x$nom.levels)
+          .nom.axes.plot(z.axes, x$nom.axes, predict.mat, too.small,
+                         usr = usr, predict_which = x$predict$which)
+        }
+
+        if (sum(x$ax.type == "ordinal") > 0)
+        {
+          ord.one.unit <- x$all.ax.one.unit[x$ax.type$ax.type == "ordinal",,drop = FALSE]
+          if (is.null(x$ord.axes)) x <- ord.axes(x)
+          for (j in 1:length(x$ord.levels))
+          {
+            current.markers <- x$ord.levels[[j]]
+            i <- 1
+            while (i < length(current.markers) - 1)
+            {
+              if (abs(current.markers[i]-current.markers[i+1]) < 1.5*.Machine$double.eps)
+              {
+                names(current.markers[i]) <- paste(names(current.markers[i]),
+                                                   names(current.markers[i+1]), sep="*")
+                current.markers <- current.markers[-(i+1)]
+              }
+              else i <- i + 1
+            }
+            x$ord.levels[[j]] <- current.markers
+          }
+          z.axes <- lapply(1:length(x$ord.axes$which), .calibrate.cat.axis,  
+                           ord.one.unit, x$ord.axes$which, x$ord.axes$orthogx, 
+                           x$ord.axes$orthogy, x$ord.levels)
+          .ord.axes.plot(z.axes, x$ord.axes, predict.mat, too.small,
+                         usr = usr,predict_which = x$predict$which)
+        }
+      }
       
       # Fit measures 
       too.small <- NULL
@@ -329,6 +371,9 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
 plot3D <- function(bp,
                     exp.factor = 1.2,...)
 {
+  if (!requireNamespace("rgl", quietly = TRUE)) {
+     stop("Package 'rgl' is required for this function. Please install it.", call. = FALSE)
+   }
   
   if (is.null(bp$Z)) stop ("Add a biplot method before generating a plot")
   else Z <- bp$Z
@@ -408,7 +453,9 @@ if(!inherits(bp,"CA")){
   
   }
   
-
+  # Nominal and ordinal axes
+  if(inherits(bp,"catPCA")) stop ("catPCA not implemented for 3D biplots")
+    
   # Bags 
   
   
@@ -519,6 +566,9 @@ plot1D <-  function(bp, exp.factor = 1.2,...)
       .lin.axes.plot1D(z.axes.new, new.ax.aes, too.small, usr=usr)
     }
     }
+
+    # Nominal and ordinal axes
+    if(inherits(bp,"catPCA")) stop ("catPCA not implemented for 1D biplots")
 
     # Predictions of points with lines down to the axes.
     if (!is.null(predict.mat)){

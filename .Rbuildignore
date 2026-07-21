@@ -6,3 +6,9 @@
 ^docs$
 ^pkgdown$
 ^CRAN-SUBMISSION$
+^doc$
+^Meta$
+^examples/temp/
+^tests/temp/
+
+

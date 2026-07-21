@@ -13,6 +13,7 @@ analysis (CVA) biplots. This is accompanied by various formatting
 options for the samples and axes. Alpha-bags and concentration ellipses
 are included for visual enhancements and interpretation.
 
+
 ## Installation
 
 You can install the development version of biplotEZ like this:

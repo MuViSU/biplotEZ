@@ -153,7 +153,7 @@ density1D <- function(bp,which = NULL, h = "nrd0", kernel="gaussian",
 #' \item{lwd}{vector of line widths for the \eqn{\alpha}-bags.}
 #'
 #' @references
-#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.<br><br>
+#' Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.
 #'
 #' @export
 #' @usage alpha.bags(bp, alpha = 0.95, which = NULL, col = ez.col[which], lty = 1,
@@ -168,6 +168,9 @@ alpha.bags <- function(bp, alpha=0.95, which = NULL, col = ez.col[which], lty = 
                        lwd = 1, max = 2500, trace = TRUE, opacity = 0.25,
                        outlying=FALSE)
 { 
+  if (!requireNamespace("geometry", quietly = TRUE)) {
+     stop("Package 'geometry' is required for this function. Please install it.", call. = FALSE)
+   }
   g <- bp$g
   g.names <- bp$g.names
   if (is.null(which)) which <- 1:g
@@ -564,6 +567,14 @@ calc.alpha.bags <- function (x, y, aa=0.95, na.rm = TRUE, approx.limit = 2500, p
   }
   xydata <- if (missing(y)) x
   else cbind(x, y)
+  if (all(!is.na(apply(xydata,2,stats::sd))))
+  if (any(apply(xydata,2,stats::sd)<1e-15))
+  {
+    xy <- apply(xydata, 2, mean)
+    xy <- jitter(rbind (xy, xy, xy))
+    return (list(xy=xy))
+  }
+    
   if (is.data.frame(xydata)) xydata <- as.matrix(xydata)
   if (any(is.na(xydata))) {
     if (na.rm) {

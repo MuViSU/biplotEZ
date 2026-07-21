@@ -54,5 +54,7 @@
 #' @importFrom graphics points
 #' @importFrom graphics text
 #' @importFrom grDevices colorRampPalette
+#' @importFrom Rcpp sourceCpp
+#' @useDynLib biplotEZ, .registration = TRUE
 ## usethis namespace: end
 NULL
