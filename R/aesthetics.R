@@ -936,10 +936,8 @@ control.alpha.bags <- function (g, g.names, alpha, which=NULL, col, lty, lwd, ma
   col <- stats::na.omit(col)
   while (length(col) < bag.num) col <- c(col, col)
   col <- col[1:bag.num]
-  while (length(lty) < bag.num) lty <- rep(lty, each=ww)
-  lty <- lty[1:bag.num]
-  while (length(lwd) < bag.num) lwd <- rep(lwd, each=ww)
-  lwd <- lwd[1:bag.num]
+  lty <- rep_len(lty, bag.num)
+  lwd <- rep_len(lwd, bag.num)
   while (length(opacity) < bag.num) opacity <- c(opacity, opacity)
   opacity <- opacity[1:bag.num]
   
@@ -985,10 +983,8 @@ control.concentration.ellipse <- function (g, g.names, df, kappa, which,
   col <- stats::na.omit(col)
   while (length(col) < ellipse.num) col <- c(col, col)
   col <- col[1:ellipse.num]
-  while (length(lty) < ellipse.num) lty <- rep(lty, each=ww)
-  lty <- lty[1:ellipse.num]
-  while (length(lwd) < ellipse.num) lwd <- rep(lwd, each=ww)
-  lwd <- as.vector(lwd[1:ellipse.num])
+  lty <- rep_len(lty, ellipse.num)
+  lwd <- as.vector(rep_len(lwd, ellipse.num))
   while (length(opacity) < ellipse.num) opacity <- c(opacity, opacity)
   opacity <- opacity[1:ellipse.num]
 

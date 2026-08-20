@@ -3,16 +3,12 @@
 
 # biplotEZ
 
-<!-- badges: start -->
-<!-- badges: end -->
-
 The goal of biplotEZ is to provide users an EZ-to-use platform for
 visually representing their data with biplots. Currently, this package
 includes principal component analysis (PCA) and canonical variate
 analysis (CVA) biplots. This is accompanied by various formatting
 options for the samples and axes. Alpha-bags and concentration ellipses
 are included for visual enhancements and interpretation.
-
 
 ## Installation
 
@@ -29,15 +25,10 @@ This is a basic example which shows you how to construct a PCA biplot:
 
 ``` r
 library(biplotEZ)
-#> 
-#> Attaching package: 'biplotEZ'
-#> The following object is masked from 'package:stats':
-#> 
-#>     biplot
 biplot (iris[,1:4], Title="Test PCA biplot") |> PCA() |> plot()
 ```
 
-<img src="man/figures/README-PCA_example-1.png" width="100%" />
+<img src="man/figures/README-PCA_example-1.png" alt="" width="100%" />
 
 While the PCA biplot provides a visual representation of the overall
 data set, optimally representing the variance in 1, 2 or 3 dimensions,
@@ -48,7 +39,7 @@ This is a basic example which shows you how to construct a CVA biplot:
 biplot (iris[,1:4], Title="Test CVA biplot") |> CVA(classes=iris[,5]) |> plot()
 ```
 
-<img src="man/figures/README-CVA_example-1.png" width="100%" />
+<img src="man/figures/README-CVA_example-1.png" alt="" width="100%" />
 
 An over-the-top example of changing all the formatting and adding all
 the bells and whistles:
@@ -69,7 +60,7 @@ biplot (iris[,1:4], group.aes=iris[,5]) |> PCA() |>
 #> Computing 2.15 -ellipse for versicolor
 ```
 
-<img src="man/figures/README-aes_example-1.png" width="100%" />
+<img src="man/figures/README-aes_example-1.png" alt="" width="100%" />
 
 ## CA biplot
 
@@ -78,18 +69,20 @@ such as:
 
 ``` r
 biplot(HairEyeColor[,,2], center = FALSE) |> CA() |> plot()
+#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.
 ```
 
-<img src="man/figures/README-ca_default-1.png" width="100%" />
+<img src="man/figures/README-ca_default-1.png" alt="" width="100%" />
 
 To change to row standard coordinates use a call such as:
 
 ``` r
 biplot(HairEyeColor[,,2], center = FALSE) |> 
   CA(variant = "Stand") |> samples(col=c("magenta","purple"), pch=c(15,18)) |> plot()
+#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.
 ```
 
-<img src="man/figures/README-ca_standard-1.png" width="100%" />
+<img src="man/figures/README-ca_standard-1.png" alt="" width="100%" />
 
 ## Regression biplot
 
@@ -101,7 +94,7 @@ out <- biplot(iris) |> PCO(dist.func = sqrtManhattan)
 biplot(iris) |> regress(out$Z) |> plot()
 ```
 
-<img src="man/figures/README-regress-1.png" width="100%" />
+<img src="man/figures/README-regress-1.png" alt="" width="100%" />
 
 ## Report Bugs and Support
 

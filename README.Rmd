@@ -20,9 +20,7 @@ visually representing their data with biplots. Currently, this package
 includes principal component analysis (PCA) and canonical variate
 analysis (CVA) biplots. This is accompanied by various formatting
 options for the samples and axes. Alpha-bags and concentration ellipses
-are included for visual enhancements and interpretation. Biplots are
-rendered with `ggplot2` by default, with a base R graphics engine
-available as an alternative.
+are included for visual enhancements and interpretation.
 
 ## Installation
 
@@ -65,42 +63,6 @@ biplot (iris[,1:4], group.aes=iris[,5]) |> PCA() |>
   plot()
 ```
 
-
-## Plotting engine: ggplot2 or base R
-
-Since version 2.3, `plot()` renders biplots with `ggplot2` by default,
-returning an object that can be further customised with standard
-ggplot2 syntax. Biplot types not yet supported by the ggplot2 engine
-(3D biplots, CA maps, catPCA axes, spline axes, interactive zooming and
-`legend.type(new = TRUE)`) automatically fall back to base graphics,
-with a warning.
-
-To use base R graphics instead, set `engine = "base"`:
-
-```{r base_engine}
-biplot (iris[,1:4], Title="Test PCA biplot") |> PCA() |> plot(engine = "base")
-```
-
-For direct access to the underlying ggplot object - for example to add
-titles, themes or annotations with ggplot2 syntax - use `gg_biplot()`
-(or its `autoplot()` method):
-
-```{r gg_biplot_example}
-library(ggplot2)
-biplot (iris[,1:4], group.aes=iris[,5]) |> PCA() |>
-  gg_biplot(draw = FALSE) +
-  ggtitle("Iris PCA biplot") +
-  theme(legend.position = "bottom")
-```
-
-Sample, mean and new-sample labels can be placed with `ggrepel` to avoid
-overlapping text, by setting `label = "ggrepel"` in `samples()`,
-`means()` or `newsamples()`:
-
-```{r ggrepel_example}
-biplot (iris[,1:4], group.aes=iris[,5]) |> PCA() |>
-  samples(label = "ggrepel") |> plot()
-```
 
 ## CA biplot
 
