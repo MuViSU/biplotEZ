@@ -242,11 +242,11 @@ biplot(state.x77,scaled = TRUE) |>
 ```
 
 ```{r,echo=FALSE}
-biplot(state.x77,scaled = TRUE) |> 
-  PCA() |> 
+biplot(state.x77,scaled = TRUE) |>
+  PCA() |>
   samples(which=NULL) |>
-  density2D(which=1,col=c("white","purple","blue","cyan"),contours = TRUE,cuts = 20) |> 
-  plot()
+  density2D(which=1,col=c("white","purple","blue","cyan"),contours = TRUE,cuts = 20) |>
+  plot(engine="base")
 
 
 a<-list(x=-2.499021,y=2.92864)
