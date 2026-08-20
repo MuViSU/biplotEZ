@@ -3,13 +3,13 @@
 \name{print.gg_biplot}
 \alias{print.gg_biplot}
 \title{Printing a gg_biplot displays the stored ggplot, then (as base
-print.biplot does) reports any predictions -- here with the actual
+print.biplot does) reports any predictions - here with the actual
 predicted values, which base leaves to be read off the axes.}
 \usage{
 \method{print}{gg_biplot}(x, ...)
 }
 \description{
 Printing a gg_biplot displays the stored ggplot, then (as base
-print.biplot does) reports any predictions -- here with the actual
+print.biplot does) reports any predictions - here with the actual
 predicted values, which base leaves to be read off the axes.
 }

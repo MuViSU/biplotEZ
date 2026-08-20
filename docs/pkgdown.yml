@@ -1,12 +1,12 @@
-pandoc: '3.4'
-pkgdown: 2.1.2
+pandoc: 3.10.2
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
-  biplotEZ: biplotEZ.html
   biplotEZ_enhancements: biplotEZ_enhancements.html
+  biplotEZ: biplotEZ.html
   Biplots_in_1D: Biplots_in_1D.html
   Biplots_in_3D: Biplots_in_3D.html
   CA_in_biplotEZ: CA_in_biplotEZ.html
   Class_separation: Class_separation.html
   MDS: MDS.html
-last_built: 2025-05-27T00:15Z
+last_built: 2026-08-20T13:55Z

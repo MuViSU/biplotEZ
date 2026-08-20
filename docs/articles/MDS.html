@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="MDS">
 </head>
@@ -94,7 +94,7 @@ dimensional map of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
 samples such that the Euclidean distances between the samples match a
 given set of dissimilarities
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝚫</mi><mo>:</mo><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">\mathbf{\Delta}:n \times n</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold">𝚫</mi><mo>:</mo><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">\mathbf{\Delta}:n \times n</annotation></semantics></math>
 as closely as possible. Here the focus is on Principal Coordinate
 Analysis (PCO), an approach based on the singular value decomposition of
 a matrix. However, the regression biplot provides a general structure
@@ -109,20 +109,20 @@ should contain the data set that will be used to construct the biplot
 axes. The second argument <code>Z</code> contains the coordinates of the
 samples in the MDS map. By default linear regression axes will be fitted
 to the plot. If
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐗</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑿</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>
 denote the data matrix, the directions of the biplot axes are found by
 solving the regression equation</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐗</mi><mo>=</mo><mrow><mi>𝐙</mi><mi>𝐇</mi></mrow><mi>′</mi><mo>+</mo><mi>𝐄</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑿</mi><mo>=</mo><msup><mrow><mi mathvariant="bold-italic">𝒁</mi><mi mathvariant="bold-italic">𝑯</mi></mrow><mo>′</mo></msup><mo>+</mo><mi mathvariant="bold-italic">𝑬</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \mathbf{X} = \mathbf{ZH}' + \mathbf{E}.
 </annotation></semantics></math> The matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐇</mi><mi>′</mi><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi>𝐙</mi><mi mathvariant="bold">′</mi><mi>𝐙</mi></mrow><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mn>1</mn></mrow></msup><mrow><mi>𝐙</mi><mi mathvariant="bold">′</mi><mi>𝐗</mi></mrow></mrow><annotation encoding="application/x-tex">\mathbf{H}'=(\mathbf{Z'Z})^{-1}\mathbf{Z'X}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold-italic">𝑯</mi><mo>′</mo></msup><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mrow><msup><mi mathvariant="bold-italic">𝒁</mi><mo mathvariant="bold">′</mo></msup><mi mathvariant="bold-italic">𝒁</mi></mrow><msup><mo stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup><mrow><msup><mi mathvariant="bold-italic">𝒁</mi><mo mathvariant="bold">′</mo></msup><mi mathvariant="bold-italic">𝑿</mi></mrow></mrow><annotation encoding="application/x-tex">\mathbf{H}'=(\mathbf{Z'Z})^{-1}\mathbf{Z'X}</annotation></semantics></math>
 and calibration of the axes proceed analogous to equation (2) in the
 biplotEZ vignette. The coordinates of the marker
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>/</mi><mi>m</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">/mu</annotation></semantics></math>
 on biplot axis
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>
 is given as follows</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>μ</mi></msub><mo>=</mo><mfrac><mi>μ</mi><mrow><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mi>′</mi><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow></mfrac><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><mi>μ</mi></msub><mo>=</mo><mfrac><mi>μ</mi><mrow><msubsup><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow><mo>′</mo></msubsup><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub></mrow></mfrac><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mi>.</mi></mrow><annotation encoding="application/x-tex">
 p_{\mu} =  \frac{\mu}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}\mathbf{h}_{(j)}.
 </annotation></semantics></math></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
@@ -133,16 +133,16 @@ p_{\mu} =  \frac{\mu}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}\mathbf{h}_{(j)}.
 <span><span class="co">#&gt; stress after  10 iters: 0.01094, magic = 0.500</span></span>
 <span><span class="co">#&gt; stress after  20 iters: 0.01080, magic = 0.500</span></span>
 <span><span class="co">#&gt; stress after  30 iters: 0.01078, magic = 0.500</span></span></code></pre></div>
-<p><img src="MDS_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
+<p><img src="MDS_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="672"></p>
 <p>More flexibility is provided by approximating the biplot axes using
 B-splines. A calibrated trajectory represented in a matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐇</mi><mo>:</mo><mi>m</mi><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\mathbf{H}:m \times 2</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑯</mi><mo>:</mo><mi>m</mi><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\mathbf{H}:m \times 2</annotation></semantics></math>
 snakes through the samples points
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐙</mi><annotation encoding="application/x-tex">\mathbf{Z}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝒁</mi><annotation encoding="application/x-tex">\mathbf{Z}</annotation></semantics></math>
 such that the marker on the trajectory which is closest to a particular
 sample gives the predicted value of that sample for the particular
 variable. To retain smoothness of the trajectory
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐇</mi><annotation encoding="application/x-tex">\mathbf{H}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑯</mi><annotation encoding="application/x-tex">\mathbf{H}</annotation></semantics></math>,
 B-splines are used.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -152,8 +152,10 @@ B-splines are used.</p>
 <span><span class="co">#&gt; Initial stress        : 0.02554</span></span>
 <span><span class="co">#&gt; stress after  10 iters: 0.01094, magic = 0.500</span></span>
 <span><span class="co">#&gt; stress after  20 iters: 0.01080, magic = 0.500</span></span>
-<span><span class="co">#&gt; stress after  30 iters: 0.01078, magic = 0.500</span></span></code></pre></div>
-<p><img src="MDS_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
+<span><span class="co">#&gt; stress after  30 iters: 0.01078, magic = 0.500</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support spline axes; falling back to</span></span>
+<span><span class="co">#&gt; base graphics.</span></span></code></pre></div>
+<p><img src="MDS_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="672"></p>
 <pre><code><span><span class="co">#&gt; Calculating spline axis for variable 1 </span></span>
 <span><span class="co">#&gt; Calculating spline axis for variable 2 </span></span>
 <span><span class="co">#&gt; Calculating spline axis for variable 3 </span></span>
@@ -163,7 +165,7 @@ B-splines are used.</p>
 <h2 id="principal-coordinate-analysis-pco-biplots">Principal Coordinate Analysis (PCO) biplots<a class="anchor" aria-label="anchor" href="#principal-coordinate-analysis-pco-biplots"></a>
 </h2>
 <p>Let
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>𝚫</mi><mo accent="true">̃</mo></mover><annotation encoding="application/x-tex">\mathbf{\tilde\Delta}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi mathvariant="bold">𝚫</mi><mo accent="true">̃</mo></mover><annotation encoding="application/x-tex">\mathbf{\tilde\Delta}</annotation></semantics></math>
 be the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>n</mi><mo>×</mo><mi>n</mi></mrow><annotation encoding="application/x-tex">n \times n</annotation></semantics></math>
 matrix containing the values
@@ -175,51 +177,52 @@ represent the dissimilarity between objects
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>.
 If it is possible to find a set of coordinates
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐘</mi><mo>:</mo><mi>n</mi><mo>×</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">\mathbf{Y}:n\times m</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝒀</mi><mo>:</mo><mi>n</mi><mo>×</mo><mi>m</mi></mrow><annotation encoding="application/x-tex">\mathbf{Y}:n\times m</annotation></semantics></math>
 where typically
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mi>n</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">m = n-1</annotation></semantics></math>
 such that the Euclidean distances between the rows of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐘</mi><annotation encoding="application/x-tex">\mathbf{Y}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝒀</mi><annotation encoding="application/x-tex">\mathbf{Y}</annotation></semantics></math>
 exactly match the dissimilarities
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>δ</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">\delta_{ij}</annotation></semantics></math>,
 the dissimilarity is known as a Euclidean embeddable distance metric.
-<span class="citation">J. C. Gower (1982)</span> shows that if the
-distances
+<span class="citation">Gower (1982)</span> shows that if the distances
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>δ</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><annotation encoding="application/x-tex">\delta_{ij}</annotation></semantics></math>
 are Euclidean embeddable, then</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐈</mi><mo>−</mo><mrow><mn>𝟏</mn><mi>𝐬</mi></mrow><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mover><mi>𝚫</mi><mo accent="true">̃</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐈</mi><mo>−</mo><mrow><mi>𝐬</mi><mn>𝟏</mn></mrow><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi mathvariant="bold-italic">𝑰</mi><mo>−</mo><msup><mrow><mn mathvariant="bold">𝟏</mn><mi mathvariant="bold-italic">𝒔</mi></mrow><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo><mover><mi mathvariant="bold">𝚫</mi><mo accent="true">̃</mo></mover><mo stretchy="false" form="prefix">(</mo><mi mathvariant="bold-italic">𝑰</mi><mo>−</mo><msup><mrow><mi mathvariant="bold-italic">𝒔</mi><mn mathvariant="bold">𝟏</mn></mrow><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
 (\mathbf{I}-\mathbf{1s}')\mathbf{\tilde\Delta} (\mathbf{I}-\mathbf{s1}')
 </annotation></semantics></math></p>
 <p>is positive semi-definite.</p>
 <p>The Euclidean representation of the samples is obtained as
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mi>𝐘</mi><mo mathvariant="bold">=</mo><mi>𝐕</mi><mi>𝚲</mi></mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></msup><annotation encoding="application/x-tex">\mathbf{Y=V\Lambda}^{\frac{1}{2}}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mi mathvariant="bold-italic">𝒀</mi><mo mathvariant="bold">=</mo><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold">𝚲</mi></mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></msup><annotation encoding="application/x-tex">\mathbf{Y=V\Lambda}^{\frac{1}{2}}</annotation></semantics></math>
 where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐈</mi><mo>−</mo><mrow><mn>𝟏</mn><mi>𝐬</mi></mrow><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mover><mi>𝚫</mi><mo accent="true">̃</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐈</mi><mo>−</mo><mrow><mi>𝐬</mi><mn>𝟏</mn></mrow><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mrow><mi>𝐕</mi><mi>𝚲</mi><mi>𝐕</mi><mi mathvariant="bold">′</mi></mrow></mrow><annotation encoding="application/x-tex">(\mathbf{I}-\mathbf{1s}')\mathbf{\tilde\Delta} (\mathbf{I}-\mathbf{s1}') = \mathbf{V \Lambda V'}</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi mathvariant="bold-italic">𝑰</mi><mo>−</mo><msup><mrow><mn mathvariant="bold">𝟏</mn><mi mathvariant="bold-italic">𝒔</mi></mrow><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo><mover><mi mathvariant="bold">𝚫</mi><mo accent="true">̃</mo></mover><mo stretchy="false" form="prefix">(</mo><mi mathvariant="bold-italic">𝑰</mi><mo>−</mo><msup><mrow><mi mathvariant="bold-italic">𝒔</mi><mn mathvariant="bold">𝟏</mn></mrow><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold">𝚲</mi><msup><mi mathvariant="bold-italic">𝑽</mi><mo mathvariant="bold">′</mo></msup></mrow></mrow><annotation encoding="application/x-tex">(\mathbf{I}-\mathbf{1s}')\mathbf{\tilde\Delta} (\mathbf{I}-\mathbf{s1}') = \mathbf{V \Lambda V'}</annotation></semantics></math>.
 Since the coordinates in
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐘</mi><annotation encoding="application/x-tex">\mathbf{Y}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝒀</mi><annotation encoding="application/x-tex">\mathbf{Y}</annotation></semantics></math>
 is already referred to their principal axes with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐘</mi><mi mathvariant="bold">′</mi><mi>𝐘</mi><mo mathvariant="bold">=</mo><mi>𝚲</mi></mrow><annotation encoding="application/x-tex">\mathbf{Y'Y=\Lambda}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold-italic">𝒀</mi><mo mathvariant="bold">′</mo></msup><mi mathvariant="bold-italic">𝒀</mi><mo mathvariant="bold">=</mo><mi mathvariant="bold">𝚲</mi></mrow><annotation encoding="application/x-tex">\mathbf{Y'Y=\Lambda}</annotation></semantics></math>,
 the representation of the samples in a 2D biplot is obtained from the
 first two columns of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐘</mi><annotation encoding="application/x-tex">\mathbf{Y}</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝒀</mi><annotation encoding="application/x-tex">\mathbf{Y}</annotation></semantics></math>.</p>
 <p>In addition to the exact biplot axis representations discussed in
-<span class="citation">J. C. Gower, Lubbe, and Roux (2011)</span>
-approximate axes can be obtained. Linear axes are fitted with the
-regression method. The variables in the data matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐗</mi><mo>:</mo><mi>n</mi><mo>×</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">\mathbf{X}:n \times p</annotation></semantics></math>
+<span class="citation">Gower et al. (2011)</span> approximate axes can
+be obtained. Linear axes are fitted with the regression method. The
+variables in the data matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑿</mi><mo>:</mo><mi>n</mi><mo>×</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">\mathbf{X}:n \times p</annotation></semantics></math>
 can be represented as biplot axes in the PCO biplot with the sample
 points
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mi>𝐙</mi><mo mathvariant="bold">=</mo><mi>𝐕</mi><mi>𝚲</mi></mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></msup><msub><mi>𝐉</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{Z=V\Lambda}^{\frac{1}{2}}\mathbf{J}_2</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mi mathvariant="bold-italic">𝒁</mi><mo mathvariant="bold">=</mo><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold">𝚲</mi></mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></msup><msub><mi mathvariant="bold-italic">𝑱</mi><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{Z=V\Lambda}^{\frac{1}{2}}\mathbf{J}_2</annotation></semantics></math>
 according to the regression method discussed in section 2 above.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCO.html">PCO</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="MDS_files/figure-html/unnamed-chunk-4-1.png" width="672"></p>
+<p><img src="MDS_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="672"></p>
 <p>Using B-splines instead of linear regression provides the user with
 more flexibility. This is achieved by setting the argument
 <code>axes = "splines"</code>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCO.html">PCO</a></span><span class="op">(</span>axes <span class="op">=</span> <span class="st">"splines"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="MDS_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCO.html">PCO</a></span><span class="op">(</span>axes <span class="op">=</span> <span class="st">"splines"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support spline axes; falling back to</span></span>
+<span><span class="co">#&gt; base graphics.</span></span></code></pre></div>
+<p><img src="MDS_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="672"></p>
 <pre><code><span><span class="co">#&gt; Calculating spline axis for variable 1 </span></span>
 <span><span class="co">#&gt; Calculating spline axis for variable 2 </span></span>
 <span><span class="co">#&gt; Calculating spline axis for variable 3 </span></span>
@@ -233,10 +236,10 @@ is Euclidean embeddable, the Clark’s distance</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>δ</mi><mrow><mi>i</mi><mi>j</mi></mrow><mn>2</mn></msubsup><mo>=</mo><munderover><mo>∑</mo><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow><mi>p</mi></munderover><msup><mrow><mo stretchy="true" form="prefix">(</mo><mfrac><mrow><msub><mi>x</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo>−</mo><msub><mi>x</mi><mrow><mi>j</mi><mi>k</mi></mrow></msub></mrow><mrow><msub><mi>x</mi><mrow><mi>i</mi><mi>k</mi></mrow></msub><mo>+</mo><msub><mi>x</mi><mrow><mi>j</mi><mi>k</mi></mrow></msub></mrow></mfrac><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">
 \delta_{ij}^2 = \sum_{k=1}^{p}\left(\frac{x_{ik}-x_{jk}}{x_{ik}+x_{jk}}\right)^2
 </annotation></semantics></math></p>
-<p>as defined by <span class="citation">John C. Gower and Ngouenet
-(2005)</span> is calculated below and used for constructing a PCO
-biplot. Note that the metric is only defined for strictly positive
-values, so that the data is scaled to values between
+<p>as defined by <span class="citation">Gower and Ngouenet (2005)</span>
+is calculated below and used for constructing a PCO biplot. Note that
+the metric is only defined for strictly positive values, so that the
+data is scaled to values between
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math>.</p>
@@ -252,8 +255,10 @@ and
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/MathFun.html" class="external-link">sqrt</a></span><span class="op">(</span><span class="va">Dmat</span> <span class="op">+</span> <span class="fu"><a href="https://rdrr.io/r/base/t.html" class="external-link">t</a></span><span class="op">(</span><span class="va">Dmat</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="va">my.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/scale.html" class="external-link">scale</a></span><span class="op">(</span><span class="va">rock</span>, center<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">rock</span>,<span class="fl">2</span>,<span class="va">min</span><span class="op">)</span>, scale<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/diff.html" class="external-link">diff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">rock</span>,<span class="fl">2</span>,<span class="va">range</span><span class="op">)</span><span class="op">)</span><span class="op">)</span><span class="op">+</span><span class="fl">1</span></span>
-<span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCO.html">PCO</a></span><span class="op">(</span>Dmat <span class="op">=</span> <span class="fu">Clark.dist</span> <span class="op">(</span><span class="va">rock</span><span class="op">)</span>, axes <span class="op">=</span> <span class="st">"splines"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="MDS_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCO.html">PCO</a></span><span class="op">(</span>Dmat <span class="op">=</span> <span class="fu">Clark.dist</span> <span class="op">(</span><span class="va">rock</span><span class="op">)</span>, axes <span class="op">=</span> <span class="st">"splines"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support spline axes; falling back to</span></span>
+<span><span class="co">#&gt; base graphics.</span></span></code></pre></div>
+<p><img src="MDS_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="672"></p>
 <pre><code><span><span class="co">#&gt; Calculating spline axis for variable 1 </span></span>
 <span><span class="co">#&gt; Calculating spline axis for variable 2 </span></span>
 <span><span class="co">#&gt; Calculating spline axis for variable 3 </span></span>
@@ -269,15 +274,15 @@ function computing a Euclidean embeddable <code>dist</code> object.</p>
 <span><span class="co">#&gt; {</span></span>
 <span><span class="co">#&gt;     sqrt(stats::dist(X, method = "manhattan"))</span></span>
 <span><span class="co">#&gt; }</span></span>
-<span><span class="co">#&gt; &lt;bytecode: 0x000001fc00ec0e68&gt;</span></span>
+<span><span class="co">#&gt; &lt;bytecode: 0xa818ec698&gt;</span></span>
 <span><span class="co">#&gt; &lt;environment: namespace:biplotEZ&gt;</span></span>
 <span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCO.html">PCO</a></span><span class="op">(</span>dist.func <span class="op">=</span> <span class="va">sqrtManhattan</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="MDS_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
+<p><img src="MDS_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-Gower1982" class="csl-entry">
 Gower, J. C. 1982. <span>“Euclidean Distance Geometry.”</span>
 <em>Mathematical Scientist</em>, 1–14.
@@ -304,7 +309,7 @@ Analysis</em> 94 (2): 344–65.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

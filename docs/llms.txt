@@ -1,0 +1,217 @@
+# biplotEZ
+
+The goal of biplotEZ is to provide users an EZ-to-use platform for
+visually representing their data with biplots. Currently, this package
+includes principal component analysis (PCA) and canonical variate
+analysis (CVA) biplots. This is accompanied by various formatting
+options for the samples and axes. Alpha-bags and concentration ellipses
+are included for visual enhancements and interpretation.
+
+## Installation
+
+You can install the development version of biplotEZ like this:
+
+[`library`](https://rdrr.io/r/base/library.html)`(`[`devtools`](https://devtools.r-lib.org/)`)`` ``devtools``::`[`install_github`](https://devtools.r-lib.org/reference/install-deprecated.html)`(``"MuViSU/biplotEZ"``)`
+
+## Example
+
+This is a basic example which shows you how to construct a PCA biplot:
+
+[`library`](https://rdrr.io/r/base/library.html)`(``biplotEZ``)`` ``#> `` ``#> Attaching package: 'biplotEZ'`` ``#> The following object is masked from 'package:stats':`` ``#> `` ``#> biplot`` `[`biplot`](reference/biplot.md)` ``(``iris``[``,``1``:``4``]``, Title``=``"Test PCA biplot"``)`` ``|>`` `[`PCA`](reference/PCA.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+
+![](reference/figures/README-PCA_example-1.png)
+
+While the PCA biplot provides a visual representation of the overall
+data set, optimally representing the variance in 1, 2 or 3 dimensions,
+the CVA biplot aims to optimally separate specified groups in the data.
+This is a basic example which shows you how to construct a CVA biplot:
+
+[`biplot`](reference/biplot.md)` ``(``iris``[``,``1``:``4``]``, Title``=``"Test CVA biplot"``)`` ``|>`` `[`CVA`](reference/CVA.md)`(``classes``=``iris``[``,``5``]``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+
+![](reference/figures/README-CVA_example-1.png)
+
+An over-the-top example of changing all the formatting and adding all
+the bells and whistles:
+
+[`biplot`](reference/biplot.md)` ``(``iris``[``,``1``:``4``]``, group.aes``=``iris``[``,``5``]``)`` ``|>`` `[`PCA`](reference/PCA.md)`(``)`` ``|>`` `` `` `[`samples`](reference/samples.md)`(``col``=``"gold"``, pch``=``15``)`` ``|>`` `` `[`axes`](reference/axes.md)`(``which``=``2``:``3``, col``=``"cyan"``, label.cex``=``1.2``, tick.col``=``"blue"``, `` `` tick.label.col``=``"purple"``)`` ``|>`` `` `[`alpha.bags`](reference/alpha.bags.md)` ``(``alpha``=`[`c`](https://rdrr.io/r/base/c.html)`(``0.5``,``0.75``,``0.95``)``, which``=``3``, col``=``"red"``, lty``=``1``:``3``, lwd``=``3``)`` ``|>`` `` `[`ellipses`](reference/ellipses.md)`(``alpha``=``0.9``, which``=``1``:``2``, col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"green"``,``"olivedrab"``)``)`` ``|>`` `` `[`legend.type`](reference/legend.type.md)`(``bags ``=`` ``TRUE``, ellipses``=``TRUE``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Computing 0.5 -bag for virginica `` ``#> Computing 0.75 -bag for virginica `` ``#> Computing 0.95 -bag for virginica `` ``#> Computing 2.15 -ellipse for setosa `` ``#> Computing 2.15 -ellipse for versicolor`
+
+![](reference/figures/README-aes_example-1.png)
+
+## CA biplot
+
+The default CA biplots represents row principal coordinates with a call
+such as:
+
+[`biplot`](reference/biplot.md)`(``HairEyeColor``[``,,``2``]``, center ``=`` ``FALSE``)`` ``|>`` `[`CA`](reference/CA.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+
+![](reference/figures/README-ca_default-1.png)
+
+To change to row standard coordinates use a call such as:
+
+[`biplot`](reference/biplot.md)`(``HairEyeColor``[``,,``2``]``, center ``=`` ``FALSE``)`` ``|>`` `` `` `[`CA`](reference/CA.md)`(``variant ``=`` ``"Stand"``)`` ``|>`` `[`samples`](reference/samples.md)`(``col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"magenta"``,``"purple"``)``, pch``=`[`c`](https://rdrr.io/r/base/c.html)`(``15``,``18``)``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+
+![](reference/figures/README-ca_standard-1.png)
+
+## Regression biplot
+
+With the function `regress` linear regression biplot axes can be fitted
+to a biplot
+
+`out`` ``<-`` `[`biplot`](reference/biplot.md)`(``iris``)`` ``|>`` `[`PCO`](reference/PCO.md)`(``dist.func ``=`` ``sqrtManhattan``)`` `` `[`biplot`](reference/biplot.md)`(``iris``)`` ``|>`` `[`regress`](reference/regress.md)`(``out``$``Z``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+
+![](reference/figures/README-regress-1.png)
+
+## Report Bugs and Support
+
+If you encounter any issues or have questions, please open an issue on
+the GitHub repository.
+
+# Package index
+
+## All functions
+
+- [`AoD()`](AoD.md) : Use the Analysis of Distance (AoD) method to
+  construct the biplot
+
+- [`AoD(`*`<biplot>`*`)`](AoD.biplot.md) : Calculate elements for the
+  Analysis of Distance (AoD) biplot
+
+- [`CA()`](CA.md) : Correspondence Analysis (CA) method
+
+- [`CA(`*`<biplot>`*`)`](CA.biplot.md) : CA biplot
+
+- [`CLPs()`](CLPs.md) : Format aesthetics for the category level points
+
+- [`CLRs()`](CLRs.md) : Format aesthetics for the category level regions
+
+- [`CVA()`](CVA.md) : Perform Canonical Variate Analysis (CVA)
+
+- [`CVA(`*`<biplot>`*`)`](CVA.biplot.md) : Calculate elements for the
+  CVA biplot
+
+- [`CVAlowdim()`](CVAlowdim.md) : Construct additional dimensions when
+  the dimension of the canonical space is smaller than the dimension of
+  the biplot
+
+- [`CatPCA()`](CatPCA.md) : Perform Categorical Principal Components
+  Analysis (CatPCA)
+
+- [`CatPCA(`*`<biplot>`*`)`](CatPCA.biplot.md) : Calculate elements for
+  the CatPCA biplot
+
+- [`PCA()`](PCA.md) : Perform Principal Components Analysis (PCA)
+
+- [`PCA(`*`<biplot>`*`)`](PCA.biplot.md) : Calculate elements for the
+  PCA biplot
+
+- [`PCO()`](PCO.md) : Principal Coordinate Analysis (PCO) biplot method
+
+- [`PCO(`*`<biplot>`*`)`](PCO.biplot.md) : PCO biplot
+
+- [`alpha.bags()`](alpha.bags.md) : Create alpha bags
+
+- [`axes()`](axes.md) : Format aesthetics for the biplot axes
+
+- [`biplot()`](biplot.md) :
+
+  First step to create a new biplot with biplotEZ
+
+- [`biplotEZ`](biplotEZ.md) : biplotEZ: EZ-to-Use Biplots
+
+- [`classification()`](classification.md) : Classification biplot method
+
+- [`classification(`*`<biplot>`*`)`](classification.biplot.md) :
+  classification biplot
+
+- [`classify()`](classify.md) : Classify samples into classes
+
+- [`density1D()`](density1D.md) : Creates a kernel density in
+  1-dimension
+
+- [`density2D()`](density2D.md) : Create a density in 2-dimensions
+
+- [`ellipses()`](ellipses.md) : Concentration ellipses
+  (\\\kappa\\-ellipses)
+
+- [`extended.matching.coefficient()`](extended.matching.coefficient.md)
+  : Extended matching coefficient
+
+- [`fit.measures()`](fit.measures.md) : Compute measures of fit for the
+  biplot.
+
+- [`gg_biplot()`](gg_biplot.md) : ggplot2 plot method for biplotEZ
+  objects
+
+- [`interpolate()`](interpolate.md) : Interpolate supplementary points
+  and variables to add to the biplot
+
+- [`legend.type()`](legend.type.md) : Format the legend for the biplot
+
+- [`means()`](means.md) : Format aesthetics for the class or group means
+
+- [`newaxes()`](newaxes.md) : Format aesthetics for the supplementary
+  (new) biplot axes
+
+- [`newsamples()`](newsamples.md) : Format aesthetics for the
+  supplementary (new) biplot samples
+
+- [`nom.axes()`](nom.axes.md) : Format aesthetics for the nominal biplot
+  axes
+
+- [`ord.axes()`](ord.axes.md) : Format aesthetics for the ordinal biplot
+  axes
+
+- [`plot(`*`<biplot>`*`)`](plot.biplot.md) : Generic Plotting function
+  of objects of class biplot
+
+- [`plot(`*`<gg_biplot>`*`)`](plot.gg_biplot.md) : plot() on a gg_biplot
+  re-displays the ggplot
+
+- [`` `+`( ``*`<gg_biplot>`*`)`](plus-.gg_biplot.md) :
+
+  `+` composes with ggplot components and returns a plain ggplot, so
+  `bp |> gg_biplot() + labs(...)` still works.
+
+- [`prediction()`](prediction.md) : Predict samples to display on the
+  biplot
+
+- [`print(`*`<biplot>`*`)`](print.biplot.md) : Generic print function
+  for objects of class biplot
+
+- [`print(`*`<gg_biplot>`*`)`](print.gg_biplot.md) : Printing a
+  gg_biplot displays the stored ggplot, then (as base print.biplot does)
+  reports any predictions - here with the actual predicted values, which
+  base leaves to be read off the axes.
+
+- [`reflect()`](reflect.md) : Reflect the biplot about a chosen axis
+
+- [`regress()`](regress.md) : Regression biplot method
+
+- [`regress(`*`<biplot>`*`)`](regress.biplot.md) : Regression biplot
+
+- [`rotate()`](rotate.md) : Rotate the biplot a chosen amount of degrees
+
+- [`samples()`](samples.md) : Format aesthetics for the biplot samples
+
+- [`sqrtManhattan()`](sqrtManhattan.md) : Computes the square root of
+  the Manhattan distance An example of a Euclidean embeddable distance
+  metric
+
+- [`summary(`*`<biplot>`*`)`](summary.biplot.md) : Generic summary
+  function for objects of class biplot
+
+- [`ties()`](ties.md) : Applies primary or secondary approach to ties
+
+- [`translate_axes()`](translate_axes.md) : Translate biplot axes
+
+# Articles
+
+### All vignettes
+
+- [biplotEZ enhancements](biplotEZ_enhancements.md):
+- [biplotEZ](biplotEZ.md):
+- [Biplots in 1D](Biplots_in_1D.md):
+- [Biplots in 3D](Biplots_in_3D.md):
+- [CA in biplotEZ](CA_in_biplotEZ.md):
+- [Class separation](Class_separation.md):
+- [MDS](MDS.md):

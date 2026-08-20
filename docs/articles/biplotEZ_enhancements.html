@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="biplotEZ enhancements">
 </head>
@@ -100,12 +100,12 @@ encloses the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mn>100</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">\alpha100\%</annotation></semantics></math>
 inner data points in a cloud of points. It is based on the concept of
 halfspace location depth as defined by <span class="citation">Tukey
-(1975)</span>. <span class="citation">Rousseeuw, Ruts, and Tukey
-(1999)</span> generalised a boxplot to a two-dimensional bagplot where
-the box is replaced by a bag containing the inner
+(1975)</span>. <span class="citation">Rousseeuw et al. (1999)</span>
+generalised a boxplot to a two-dimensional bagplot where the box is
+replaced by a bag containing the inner
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>50</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">50\%</annotation></semantics></math>
-of the observations. <span class="citation">Gower, Lubbe, and Roux
-(2011)</span> replaces the
+of the observations. <span class="citation">Gower et al. (2011)</span>
+replaces the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>50</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">50\%</annotation></semantics></math>-bag
 contour by a general
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>α</mi><mn>100</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">\alpha100\%</annotation></semantics></math>
@@ -140,7 +140,7 @@ necessary here.</p>
 <span><span class="co">#&gt; Computing 0.95 -bag for 19-th </span></span>
 <span><span class="co">#&gt; Computing 0.95 -bag for 20-th </span></span>
 <span><span class="co">#&gt; Computing 0.95 -bag for 21-st</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-2-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-2-1.png" class="r-plt" alt="" width="672"></p>
 <p>By default one
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>95</mn><mi>%</mi></mrow><annotation encoding="application/x-tex">95\%</annotation></semantics></math>-bag
 is constructed for each group. In general, the <code><a href="../reference/alpha.bags.html">alpha.bags()</a></code>
@@ -166,7 +166,7 @@ but by setting <code>opacity = 0</code> removes the fill of the
 <span><span class="co">#&gt; Computing 0.95 -bag for 21-st </span></span>
 <span><span class="co">#&gt; Computing 0.99 -bag for 18-th </span></span>
 <span><span class="co">#&gt; Computing 0.99 -bag for 21-st</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="672"></p>
 <p>In the biplot above, the colours were recycled for each alpha value.
 To specify differential colours, we can use the <code>col</code>
 argument and similarly the <code>lty</code> and or <code>lwd</code>
@@ -198,8 +198,10 @@ which plots a lighter shade inside the
 <span><span class="co">#&gt; Computing 0.99 -bag for 18-th </span></span>
 <span><span class="co">#&gt; Computing 0.99 -bag for 19-th </span></span>
 <span><span class="co">#&gt; Computing 0.99 -bag for 20-th </span></span>
-<span><span class="co">#&gt; Computing 0.99 -bag for 21-st</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-4-1.png" width="672"><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-4-2.png" width="672"></p>
+<span><span class="co">#&gt; Computing 0.99 -bag for 21-st</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);</span></span>
+<span><span class="co">#&gt; falling back to base graphics.</span></span></code></pre></div>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-4-1.png" class="r-plt" alt="" width="672"><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-4-2.png" class="r-plt" alt="" width="672"></p>
 <p>For a completely custom combination of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bags,
 we do not rely on any recycling and specify each of the arguments
@@ -228,7 +230,7 @@ Setting <code>trace = FALSE</code> will suppress the message “Computing
 <span><span class="co">#&gt; Computing 0.5 -bag for 20-th </span></span>
 <span><span class="co">#&gt; Computing 0.6 -bag for 20-th </span></span>
 <span><span class="co">#&gt; Computing 0.7 -bag for 20-th</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-5-1.png" class="r-plt" alt="" width="672"></p>
 <p>The function <code>alpha.bags</code> provides the option to only plot
 the samples that sit outside the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>α</mi><annotation encoding="application/x-tex">\alpha</annotation></semantics></math>-bags.
@@ -246,7 +248,7 @@ function differs from the <code>which</code> in the
 <span><span class="co">#&gt; Computing 0.95 -bag for 19-th </span></span>
 <span><span class="co">#&gt; Computing 0.95 -bag for 20-th </span></span>
 <span><span class="co">#&gt; Computing 0.95 -bag for 21-st</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="the-function-ellipses">The function <code>ellipses()</code><a class="anchor" aria-label="anchor" href="#the-function-ellipses"></a>
@@ -254,12 +256,12 @@ function differs from the <code>which</code> in the
 <p>If we observe a random sample from a
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>-variate
 normal distribution with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>𝐱</mi><mo accent="true">‾</mo></mover><annotation encoding="application/x-tex">\bar{\mathbf{x}}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi mathvariant="bold-italic">𝒙</mi><mo accent="true">‾</mo></mover><annotation encoding="application/x-tex">\bar{\mathbf{x}}</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐒</mi><annotation encoding="application/x-tex">\mathbf{S}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑺</mi><annotation encoding="application/x-tex">\mathbf{S}</annotation></semantics></math>
 the usual unbaised estimates of the mean vector and covariance matrix,
 then</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo>−</mo><mover><mi>𝐱</mi><mo accent="true">‾</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mi>′</mi><msup><mi>𝐒</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐱</mi><mo>−</mo><mover><mi>𝐱</mi><mo accent="true">‾</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msup><mi>κ</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi mathvariant="bold-italic">𝒙</mi><mo>−</mo><mover><mi mathvariant="bold-italic">𝒙</mi><mo accent="true">‾</mo></mover><msup><mo stretchy="false" form="postfix">)</mo><mo>′</mo></msup><msup><mi mathvariant="bold-italic">𝑺</mi><mrow><mi>−</mi><mn>1</mn></mrow></msup><mo stretchy="false" form="prefix">(</mo><mi mathvariant="bold-italic">𝒙</mi><mo>−</mo><mover><mi mathvariant="bold-italic">𝒙</mi><mo accent="true">‾</mo></mover><mo stretchy="false" form="postfix">)</mo><mo>=</mo><msup><mi>κ</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">
 (\mathbf{x} - \bar{\mathbf{x}})' \mathbf{S}^{-1} (\mathbf{x} - \bar{\mathbf{x}}) = \kappa^2
 </annotation></semantics></math></p>
 <p>traces an ellipsoid in
@@ -267,11 +269,11 @@ then</p>
 dimensions. For
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>p</mi><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">p=2</annotation></semantics></math>,
 choosing
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>κ</mi><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mi>χ</mi><mrow><mn>2</mn><mo>,</mo><mn>1</mn><mo>−</mo><mi>α</mi></mrow><mn>2</mn></msubsup><mo stretchy="true" form="postfix">)</mo></mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></msup></mrow><annotation encoding="application/x-tex">\kappa = {(\chi^{2}_{2,1-\alpha})}^{\frac{1}{2}}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>κ</mi><mo>=</mo><msup><mrow><mo stretchy="false" form="prefix">(</mo><msubsup><mi>χ</mi><mrow><mn>2</mn><mo>,</mo><mn>1</mn><mo>−</mo><mi>α</mi></mrow><mn>2</mn></msubsup><mo stretchy="false" form="postfix">)</mo></mrow><mfrac><mn>1</mn><mn>2</mn></mfrac></msup></mrow><annotation encoding="application/x-tex">\kappa = {(\chi^{2}_{2,1-\alpha})}^{\frac{1}{2}}</annotation></semantics></math>
 where
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>χ</mi><mrow><mn>2</mn><mo>,</mo><mn>1</mn><mo>−</mo><mi>α</mi></mrow><mn>2</mn></msubsup><annotation encoding="application/x-tex">\chi^{2}_{2,1-\alpha}</annotation></semantics></math>
 denotes the
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>α</mi><mo stretchy="true" form="postfix">)</mo></mrow><mn>100</mn></mrow><annotation encoding="application/x-tex">(1-\alpha)100</annotation></semantics></math>-th
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>−</mo><mi>α</mi><mo stretchy="false" form="postfix">)</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">(1-\alpha)100</annotation></semantics></math>-th
 percentage point of the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msubsup><mi>χ</mi><mn>2</mn><mn>2</mn></msubsup><annotation encoding="application/x-tex">\chi^2_2</annotation></semantics></math>
 distribution results in an ellipse covering approximately
@@ -307,7 +309,7 @@ sample observed from a normal distribution.</p>
 <span><span class="co">#&gt; Computing 2.45 -ellipse for 19-th </span></span>
 <span><span class="co">#&gt; Computing 2.45 -ellipse for 20-th </span></span>
 <span><span class="co">#&gt; Computing 2.45 -ellipse for 21-st</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-7-1.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">sunspots</span>, group.aes<span class="op">=</span><span class="va">century</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -323,7 +325,7 @@ sample observed from a normal distribution.</p>
 <span><span class="co">#&gt; Computing 2 -ellipse for 19-th </span></span>
 <span><span class="co">#&gt; Computing 2 -ellipse for 20-th </span></span>
 <span><span class="co">#&gt; Computing 2 -ellipse for 21-st</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-7-2.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-7-2.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="the-function-density2d">The function <code>density2D()</code><a class="anchor" aria-label="anchor" href="#the-function-density2d"></a>
@@ -345,13 +347,13 @@ components of the <code>col</code>. The default is
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>,group.aes <span class="op">=</span> <span class="va">state.region</span>,scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/density2D.html">density2D</a></span><span class="op">(</span>which<span class="op">=</span><span class="fl">2</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>,<span class="st">"purple"</span>,<span class="st">"blue"</span>,<span class="st">"cyan"</span><span class="op">)</span>,contours<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-8-1.png" class="r-plt" alt="" width="672"></p>
 <p>In this case, the vector <code>group.aes</code> is not specified, so
 all samples form under one group.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>,scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>which<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/density2D.html">density2D</a></span><span class="op">(</span>which<span class="op">=</span><span class="fl">1</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>,<span class="st">"purple"</span>,<span class="st">"blue"</span>,<span class="st">"cyan"</span><span class="op">)</span>,contours <span class="op">=</span> <span class="cn">TRUE</span>,cuts <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="the-functions-interpolate-with-newsamples-and-newaxes">The functions <code>interpolate()</code> with
@@ -363,22 +365,22 @@ the coordinates of a
 sample in the lower dimensional biplot space. For PCA we showed in
 section 1 in the biplotEZ vignette that the sample points are
 represented by
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐆</mi><mo>=</mo><msub><mrow><mi>𝐔</mi><mi>𝐃</mi><mi>𝐉</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UDJ}_2</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑮</mi><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UDJ}_2</annotation></semantics></math>
 which can be written as
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐆</mi><mo>=</mo><msub><mrow><mi>𝐔</mi><mi>𝐃</mi><mi>𝐕</mi><mi mathvariant="bold">′</mi><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub><mo>=</mo><msub><mrow><mi>𝐗</mi><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UDV'VJ}_2=\mathbf{XVJ}_2</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑮</mi><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑫</mi><msup><mi mathvariant="bold-italic">𝑽</mi><mo mathvariant="bold">′</mo></msup><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑿</mi><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UDV'VJ}_2=\mathbf{XVJ}_2</annotation></semantics></math>.
 Finding the position of a new sample
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝐱</mi><mo>*</mo></msup><mo>:</mo><mi>p</mi><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}^*:p \times 1</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold-italic">𝒙</mi><mo>*</mo></msup><mo>:</mo><mi>p</mi><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}^*:p \times 1</annotation></semantics></math>
 make use of the same transformation so that the 2D coordinates is given
 by
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝐳</mi><mo>*</mo></msup><mi>′</mi><mo>:</mo><mn>2</mn><mo>×</mo><mn>1</mn><mo>=</mo><msup><mi>𝐱</mi><mo>*</mo></msup><mi>′</mi><msub><mrow><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">{\mathbf{z}^*}':2 \times 1 ={\mathbf{x}^*}' \mathbf{VJ}_2</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><msup><mi mathvariant="bold-italic">𝒛</mi><mo>*</mo></msup><mo>′</mo></msup><mo>:</mo><mn>2</mn><mo>×</mo><mn>1</mn><mo>=</mo><msup><msup><mi mathvariant="bold-italic">𝒙</mi><mo>*</mo></msup><mo>′</mo></msup><msub><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">{\mathbf{z}^*}':2 \times 1 ={\mathbf{x}^*}' \mathbf{VJ}_2</annotation></semantics></math>.
 Similarly, the position of a new variable
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝐱</mi><mo>*</mo></msup><mo>:</mo><mi>n</mi><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}^*:n \times 1</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold-italic">𝒙</mi><mo>*</mo></msup><mo>:</mo><mi>n</mi><mo>×</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\mathbf{x}^*:n \times 1</annotation></semantics></math>
 is added using a regression method that assumes that
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>𝐱</mi><mo>*</mo></msup><annotation encoding="application/x-tex">\mathbf{x}^*</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi mathvariant="bold-italic">𝒙</mi><mo>*</mo></msup><annotation encoding="application/x-tex">\mathbf{x}^*</annotation></semantics></math>
 is approximately a linear function
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝐱</mi><mo>*</mo></msup><mo>=</mo><msub><mrow><mi>𝐗</mi><mi>𝐕</mi></mrow><mi>r</mi></msub><msub><mi>𝐛</mi><mi>r</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{x}^* = \mathbf{XV}_r\mathbf{b}_r</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold-italic">𝒙</mi><mo>*</mo></msup><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑿</mi><mi mathvariant="bold-italic">𝑽</mi></mrow><mi>r</mi></msub><msub><mi mathvariant="bold-italic">𝒃</mi><mi>r</mi></msub></mrow><annotation encoding="application/x-tex">\mathbf{x}^* = \mathbf{XV}_r\mathbf{b}_r</annotation></semantics></math>
 with solution
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi>𝐛</mi><mo accent="true">̂</mo></mover><mi>r</mi></msub><mo>:</mo><mi>r</mi><mo>×</mo><mn>1</mn><mo>=</mo><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐕</mi><msub><mi>′</mi><mi>r</mi></msub><mi>𝐗</mi><mi>′</mi><msub><mrow><mi>𝐗</mi><mi>𝐕</mi></mrow><mi>r</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mi>−</mi><mn>1</mn></mrow></msup><msub><mi>𝐕</mi><mi>r</mi></msub><mi>𝐗</mi><mi>′</mi><msup><mi>𝐱</mi><mo>*</mo></msup></mrow><annotation encoding="application/x-tex">\hat{\mathbf{b}}_r :r \times 1 = (\mathbf{V}'_r\mathbf{X}'\mathbf{XV}_r)^{-1}\mathbf{V}_r\mathbf{X}'\mathbf{x}^*</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mover><mi mathvariant="bold-italic">𝒃</mi><mo accent="true">̂</mo></mover><mi>r</mi></msub><mo>:</mo><mi>r</mi><mo>×</mo><mn>1</mn><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msubsup><mi mathvariant="bold-italic">𝑽</mi><mi>r</mi><mo>′</mo></msubsup><msup><mi mathvariant="bold-italic">𝑿</mi><mo>′</mo></msup><msub><mrow><mi mathvariant="bold-italic">𝑿</mi><mi mathvariant="bold-italic">𝑽</mi></mrow><mi>r</mi></msub><msup><mo stretchy="false" form="postfix">)</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup><msub><mi mathvariant="bold-italic">𝑽</mi><mi>r</mi></msub><msup><mi mathvariant="bold-italic">𝑿</mi><mo>′</mo></msup><msup><mi mathvariant="bold-italic">𝒙</mi><mo>*</mo></msup></mrow><annotation encoding="application/x-tex">\hat{\mathbf{b}}_r :r \times 1 = (\mathbf{V}'_r\mathbf{X}'\mathbf{XV}_r)^{-1}\mathbf{V}_r\mathbf{X}'\mathbf{x}^*</annotation></semantics></math>.</p>
 <p>Adding samples and variables to the plot is facilitated by the
 function <code><a href="../reference/interpolate.html">interpolate()</a></code>. Note that the samples and variables
 to be interpolated did not contribute to the construction of the biplot.
@@ -402,7 +404,7 @@ new samples is to be interpolated the call will be:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/interpolate.html">interpolate</a></span> <span class="op">(</span>newdata<span class="op">=</span><span class="va">rock</span><span class="op">[</span><span class="fl">41</span><span class="op">:</span><span class="fl">48</span>,<span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="672"></p>
 <p>The function <code><a href="../reference/newsamples.html">newsamples()</a></code> operates similar to samples,
 allowing changes to the aesthetics of the interpolated new samples.
 There is no argument <code>which</code> for <code><a href="../reference/newsamples.html">newsamples()</a></code>
@@ -415,13 +417,13 @@ used:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">40</span>,<span class="op">]</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/interpolate.html">interpolate</a></span> <span class="op">(</span><span class="va">rock</span><span class="op">[</span><span class="fl">41</span><span class="op">:</span><span class="fl">48</span>,<span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/newsamples.html">newsamples</a></span> <span class="op">(</span>label <span class="op">=</span> <span class="cn">TRUE</span>, label.side <span class="op">=</span> <span class="st">"top"</span>, col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/grDevices/palettes.html" class="external-link">rainbow</a></span><span class="op">(</span><span class="fl">10</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="672"></p>
 <p>Suppose constructing a PCA biplot using the three variables in the
 <code>rock</code> data, and interpolating the other variable.</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/interpolate.html">interpolate</a></span> <span class="op">(</span>newvariable <span class="op">=</span><span class="va">rock</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="672"></p>
 <p>We can change the aesthetics of the new variables with the
 <code><a href="../reference/newaxes.html">newaxes()</a></code> function which operates similarly to the
 <code><a href="../reference/axes.html">axes()</a></code> function.</p>
@@ -429,7 +431,7 @@ used:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span><span class="op">[</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/interpolate.html">interpolate</a></span> <span class="op">(</span>newvariable <span class="op">=</span><span class="va">rock</span><span class="op">[</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/newaxes.html">newaxes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"red"</span>,ticks <span class="op">=</span> <span class="fl">50</span>,X.new.names <span class="op">=</span> <span class="st">"shape"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="672"></p>
 <p>The function <code><a href="../reference/interpolate.html">interpolate()</a></code> will also work if new samples
 and new variables need to be interpolated at the same time. For
 example:</p>
@@ -437,7 +439,7 @@ example:</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">40</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/interpolate.html">interpolate</a></span> <span class="op">(</span>newdata<span class="op">=</span><span class="va">rock</span><span class="op">[</span><span class="fl">41</span><span class="op">:</span><span class="fl">48</span>,<span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span>,<span class="fl">4</span><span class="op">)</span><span class="op">]</span>,newvariable <span class="op">=</span><span class="va">rock</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">40</span>,<span class="fl">3</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/newaxes.html">newaxes</a></span><span class="op">(</span>col<span class="op">=</span><span class="st">"red"</span>,ticks <span class="op">=</span> <span class="fl">100</span>,X.new.names <span class="op">=</span> <span class="st">"shape"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-14-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="672"></p>
 <p>Notice that <code>newdata</code> has the same number of variables as
 the data sent to <code><a href="../reference/biplot.html">biplot()</a></code> and <code>newvariable</code> has
 the same number of samples as the data sent to
@@ -451,10 +453,60 @@ the same number of samples as the data sent to
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>         <span class="fu"><a href="../reference/prediction.html">prediction</a></span> <span class="op">(</span>predict.samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="672"></p>
+<pre><code><span><span class="co">#&gt; Sample predictions for samples 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48:</span></span>
+<span><span class="co">#&gt;         area     peri shape     perm</span></span>
+<span><span class="co">#&gt; 1   5182.518 2694.668 0.086   17.426</span></span>
+<span><span class="co">#&gt; 2   7691.949 3526.494 0.135   35.517</span></span>
+<span><span class="co">#&gt; 3   8318.033 3628.700 0.162   99.695</span></span>
+<span><span class="co">#&gt; 4   7636.831 3630.891 0.117  -34.365</span></span>
+<span><span class="co">#&gt; 5   8084.856 3781.500 0.126  -32.323</span></span>
+<span><span class="co">#&gt; 6   8499.105 3765.037 0.155   57.771</span></span>
+<span><span class="co">#&gt; 7   9738.891 4180.153 0.178   64.357</span></span>
+<span><span class="co">#&gt; 8   8877.364 3954.756 0.153   24.056</span></span>
+<span><span class="co">#&gt; 9   8718.501 3605.532 0.191  190.899</span></span>
+<span><span class="co">#&gt; 10  6776.004 2972.989 0.152  170.463</span></span>
+<span><span class="co">#&gt; 11  9517.287 4203.798 0.161    7.757</span></span>
+<span><span class="co">#&gt; 12  8667.626 3841.427 0.155   47.358</span></span>
+<span><span class="co">#&gt; 13 10542.328 4258.150 0.220  176.827</span></span>
+<span><span class="co">#&gt; 14  9102.060 3644.408 0.211  243.663</span></span>
+<span><span class="co">#&gt; 15  9351.922 4027.159 0.174   75.571</span></span>
+<span><span class="co">#&gt; 16  8590.817 3776.896 0.159   68.935</span></span>
+<span><span class="co">#&gt; 17 11002.857 4604.087 0.202   70.663</span></span>
+<span><span class="co">#&gt; 18 11465.727 4562.156 0.238  184.664</span></span>
+<span><span class="co">#&gt; 19 11713.492 4918.011 0.205   31.398</span></span>
+<span><span class="co">#&gt; 20  9794.836 4371.196 0.156  -32.951</span></span>
+<span><span class="co">#&gt; 21  7486.756 3459.784 0.131   33.298</span></span>
+<span><span class="co">#&gt; 22 11970.162 4545.578 0.273  292.407</span></span>
+<span><span class="co">#&gt; 23 12048.397 4816.307 0.241  154.307</span></span>
+<span><span class="co">#&gt; 24  8161.391 3531.763 0.165  124.063</span></span>
+<span><span class="co">#&gt; 25  6473.046 1887.111 0.281  726.488</span></span>
+<span><span class="co">#&gt; 26  3937.319 1270.405 0.201  581.415</span></span>
+<span><span class="co">#&gt; 27  6361.245 2198.963 0.231  528.041</span></span>
+<span><span class="co">#&gt; 28  4364.754 1641.882 0.177  454.332</span></span>
+<span><span class="co">#&gt; 29  5961.529 1813.404 0.258  668.506</span></span>
+<span><span class="co">#&gt; 30  5419.192 1075.240 0.324  980.896</span></span>
+<span><span class="co">#&gt; 31  6687.830 1728.179 0.316  858.393</span></span>
+<span><span class="co">#&gt; 32  6862.484 1912.204 0.303  788.206</span></span>
+<span><span class="co">#&gt; 33  5072.364 1506.645 0.242  668.904</span></span>
+<span><span class="co">#&gt; 34  5330.680 1039.172 0.323  984.069</span></span>
+<span><span class="co">#&gt; 35  5510.961 1842.252 0.224  564.315</span></span>
+<span><span class="co">#&gt; 36  6834.394 1864.972 0.307  809.483</span></span>
+<span><span class="co">#&gt; 37  3788.048 1612.781 0.144  358.372</span></span>
+<span><span class="co">#&gt; 38  3912.089  510.009 0.303 1007.222</span></span>
+<span><span class="co">#&gt; 39  3569.066 1564.615 0.136  342.960</span></span>
+<span><span class="co">#&gt; 40  5655.233 2040.800 0.207  479.977</span></span>
+<span><span class="co">#&gt; 41  4984.153  680.945 0.349 1119.422</span></span>
+<span><span class="co">#&gt; 42  1341.442 -373.144 0.257 1006.269</span></span>
+<span><span class="co">#&gt; 43  6519.731  738.717 0.441 1386.098</span></span>
+<span><span class="co">#&gt; 44  8964.500 1961.991 0.432 1169.847</span></span>
+<span><span class="co">#&gt; 45  3589.848 1128.435 0.197  594.085</span></span>
+<span><span class="co">#&gt; 46  2533.721  417.055 0.226  791.127</span></span>
+<span><span class="co">#&gt; 47  4876.168 1721.456 0.200  508.970</span></span>
+<span><span class="co">#&gt; 48  7521.495 2660.643 0.243  492.744</span></span></code></pre>
 <p>In addition the predictions are computed and can be accessed with the
 <code>summary.method</code>.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Object of class biplot, based on 48 samples and 4 variables.</span></span>
 <span><span class="co">#&gt; 4 numeric variables.</span></span>
@@ -517,19 +569,25 @@ biplot. By specifying <code>predict.samples = TRUE</code> and/or
 predicted. Alternatively either of these arguments accepts a vector
 indicating which samples and/or means to predict. In the example below,
 only the mean values of the Central and West regions are predicted.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span>, show.class.means <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>         <span class="fu"><a href="../reference/prediction.html">prediction</a></span> <span class="op">(</span>predict.means <span class="op">=</span> <span class="fl">3</span><span class="op">:</span><span class="fl">4</span>, which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Income"</span>,<span class="st">"Murder"</span>,<span class="st">"Population"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="672"></p>
+<pre><code><span><span class="co">#&gt; Class mean predictions for classes North Central, West:</span></span>
+<span><span class="co">#&gt;               Population   Income Illiteracy Life Exp Murder HS Grad   Frost</span></span>
+<span><span class="co">#&gt; North Central   3211.604 4611.672      0.804   71.596  5.108  57.016 129.322</span></span>
+<span><span class="co">#&gt; West            5268.183 4862.927      0.944   71.277  6.866  58.147 114.290</span></span>
+<span><span class="co">#&gt;                   Area</span></span>
+<span><span class="co">#&gt; North Central  65529.0</span></span>
+<span><span class="co">#&gt; West          114849.8</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">out</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Object of class biplot, based on 50 samples and 8 variables.</span></span>
 <span><span class="co">#&gt; 8 numeric variables.</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; Class mean predictions</span></span>
 <span><span class="co">#&gt;                 Income   Murder Population</span></span>
 <span><span class="co">#&gt; North Central 4611.672 5.108174   3211.604</span></span>
-<span><span class="co">#&gt; West          4862.927 6.865661   5268.183</span></span></code></pre></div>
+<span><span class="co">#&gt; West          4862.927 6.865661   5268.183</span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="the-functions-reflect-and-rotate">The functions <code>reflect()</code> and <code>rotate()</code><a class="anchor" aria-label="anchor" href="#the-functions-reflect-and-rotate"></a>
@@ -539,22 +597,22 @@ the biplot display about the x-axis or y-axis or both. The argument
 <code>reflect.axis</code> offers the options
 <code>"FALSE"</code>,<code>"x"</code>,<code>"y"</code>,<code>"xy"</code>.</p>
 <p>Here the biplot is reflected about the x-axis.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.division</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/reflect.html">reflect</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-18-1.png" width="672"></p>
-<p>Here the biplot is reflected about the y-axis.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.division</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/reflect.html">reflect</a></span><span class="op">(</span><span class="st">"x"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="672"></p>
+<p>Here the biplot is reflected about the y-axis.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.division</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/reflect.html">reflect</a></span><span class="op">(</span><span class="st">"y"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-19-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="672"></p>
 <p>The function <code><a href="../reference/rotate.html">rotate()</a></code> allows for the user to rotate the
 biplot display by a certain value of degrees. The default is 0 and
 positive value results in anti-clockwise rotation and negative value in
 clockwise rotation. For example when <code>rotate.degrees</code> is set
 to 100 degrees, then the biplot is rotated by 100 degrees in the
 anticlockwise direction.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.division</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/rotate.html">rotate</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-20-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="zooming-in-on-the-biplot-with-zoom-true-in-plot">Zooming in on the biplot with <code>zoom = TRUE</code> in
@@ -565,15 +623,15 @@ in on the plot. This is done through the <code><a href="https://rdrr.io/r/graphi
 which alters the <code>xlim</code> and <code>ylim</code> paramaters of
 the plot. The implementation opens up a new graphics window before
 promting the locator function. It is illustrated below:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>,scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>which<span class="op">=</span><span class="cn">NULL</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/density2D.html">density2D</a></span><span class="op">(</span>which<span class="op">=</span><span class="fl">1</span>,col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"white"</span>,<span class="st">"purple"</span>,<span class="st">"blue"</span>,<span class="st">"cyan"</span><span class="op">)</span>,contours <span class="op">=</span> <span class="cn">TRUE</span>,cuts <span class="op">=</span> <span class="fl">20</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>zoom<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-22-1.png" width="672">
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="672">
 With the final plot then rendered as:</p>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-23-1.png" width="672"></p>
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="the-function-translate_axes">The function <code>translate_axes()</code><a class="anchor" aria-label="anchor" href="#the-function-translate_axes"></a>
@@ -583,13 +641,13 @@ With the final plot then rendered as:</p>
 translate the axes out of the plot center to the boundary using
 orthogonal parallel translation. The axes can be translated manually by
 setting the distance in the <code>distance</code> argument.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>,scaled<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/translate_axes.html">translate_axes</a></span><span class="op">(</span>delta <span class="op">=</span> <span class="fl">0.02</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>exp.factor<span class="op">=</span><span class="fl">3</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-24-1.png" width="672"></p>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<p><img src="biplotEZ_enhancements_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" alt="" width="672"></p>
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-GowerHand1996" class="csl-entry">
 Gower, J. C., and D. J. Hand. 1996. <em>Biplots.</em> Chapman &amp;
 Hall.
@@ -628,7 +686,7 @@ with s (4th Edition).</em> New York: Springer.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

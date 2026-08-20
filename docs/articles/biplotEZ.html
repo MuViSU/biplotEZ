@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="biplotEZ">
 </head>
@@ -78,17 +78,38 @@
 constructing multi-dimensional scatter plots of their data. The simplest
 form of a biplot is the principal component analysis (PCA) biplot which
 will be used for illustration in this vignette.</p>
+<p>Read more …</p>
+<ul>
+<li>
+<code><a href="../articles/Biplots_in_1D.html">vignette("Biplots_in_1D")</a></code> for 1-dimensional
+biplots</li>
+<li>
+<code><a href="../articles/Biplots_in_3D.html">vignette("Biplots_in_3D")</a></code> for 3-dimensional
+biplots</li>
+<li>
+<code><a href="../articles/biplotEZ_enhancements.html">vignette("biplotEZ_enhancements")</a></code> for alpha-bags,
+ellipses, densities, interpolation, prediction, reflection, rotation,
+zoom and axes translation</li>
+<li>
+<code>vignette("Class_sepeartion")</code> for grouped data</li>
+<li>
+<code><a href="../articles/CA_in_biplotEZ.html">vignette("CA_in_biplotEZ")</a></code> for correspondence
+analysis</li>
+<li>
+<code><a href="../articles/MDS.html">vignette("MDS")</a></code> for multidimensional scaling
+biplots</li>
+</ul>
 <div class="section level2">
 <h2 id="what-is-a-pca-biplot">What is a PCA biplot<a class="anchor" aria-label="anchor" href="#what-is-a-pca-biplot"></a>
 </h2>
 <p>Consider a data matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>𝐗</mi><mo>*</mo></msup><mo>:</mo><mi>n</mi><mo>×</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">\mathbf{X}^{*}:n \times p</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="bold-italic">𝑿</mi><mo>*</mo></msup><mo>:</mo><mi>n</mi><mo>×</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">\mathbf{X}^{*}:n \times p</annotation></semantics></math>
 containing data on
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
 objects and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
 variables. To produce a 2D biplot, we need to optimally approximate
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐗</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>𝐈</mi><mi>n</mi></msub><mo>−</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><mn>𝟏𝟏</mn><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mi>𝐗</mi><mo>*</mo></msup></mrow><annotation encoding="application/x-tex">\mathbf{X} = (\mathbf{I}_n-\frac{1}{n}\mathbf{11}')\mathbf{X}^{*}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑿</mi><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mi mathvariant="bold-italic">𝑰</mi><mi>n</mi></msub><mo>−</mo><mfrac><mn>1</mn><mi>n</mi></mfrac><msup><mn mathvariant="bold">𝟏𝟏</mn><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo><msup><mi mathvariant="bold-italic">𝑿</mi><mo>*</mo></msup></mrow><annotation encoding="application/x-tex">\mathbf{X} = (\mathbf{I}_n-\frac{1}{n}\mathbf{11}')\mathbf{X}^{*}</annotation></semantics></math>
 (typically of rank
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
 with
@@ -96,140 +117,140 @@ with
 with a rank
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math>
 matrix. In terms of the least squares error, we want to</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>i</mi><mi>n</mi><mo stretchy="false" form="postfix">∥</mo><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mo>−</mo><mi>𝐗</mi><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mi>i</mi><mi>n</mi><mo stretchy="false" form="postfix">∥</mo><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo>−</mo><mi mathvariant="bold-italic">𝑿</mi><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">
 min \| \hat{\mathbf{X}}-\mathbf{X} \|^2
 </annotation></semantics></math> where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>a</mi><mi>n</mi><mi>k</mi><mrow><mo stretchy="true" form="prefix">(</mo><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">rank(\hat{\mathbf{X}})=2</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mi>a</mi><mi>n</mi><mi>k</mi><mo stretchy="false" form="prefix">(</mo><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">rank(\hat{\mathbf{X}})=2</annotation></semantics></math>.
 It was shown by <span class="citation">Eckart and Young (1936)</span>
 that if the singular value decomposition of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐗</mi><mo>=</mo><mrow><mi>𝐔</mi><mi>𝐃</mi><mi>𝐕</mi><mi mathvariant="bold">′</mi></mrow></mrow><annotation encoding="application/x-tex">\mathbf{X} = \mathbf{UDV'}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑿</mi><mo>=</mo><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑫</mi><msup><mi mathvariant="bold-italic">𝑽</mi><mo mathvariant="bold">′</mo></msup></mrow></mrow><annotation encoding="application/x-tex">\mathbf{X} = \mathbf{UDV'}</annotation></semantics></math>
 then
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mo>=</mo><mrow><mi>𝐔</mi><mi>𝐉</mi><mi>𝐃</mi><mi>𝐉</mi><mi>𝐕</mi><mi mathvariant="bold">′</mi></mrow></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo>=</mo><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑱</mi><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝑱</mi><msup><mi mathvariant="bold-italic">𝑽</mi><mo mathvariant="bold">′</mo></msup></mrow></mrow><annotation encoding="application/x-tex">
 \hat{\mathbf{X}} = \mathbf{UJDJV'}
 </annotation></semantics></math> with
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐉</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>𝐈</mi><mn>2</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mn>𝟎</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>𝟎</mn></mtd><mtd columnalign="center" style="text-align: center"><mn>𝟎</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑱</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi mathvariant="bold-italic">𝑰</mi><mn>2</mn></msub></mtd><mtd columnalign="center" style="text-align: center"><mn mathvariant="bold">𝟎</mn></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn mathvariant="bold">𝟎</mn></mtd><mtd columnalign="center" style="text-align: center"><mn mathvariant="bold">𝟎</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
 \mathbf{J} = \begin{bmatrix}
               \mathbf{I}_2 &amp; \mathbf{0}\\
               \mathbf{0} &amp; \mathbf{0}
              \end{bmatrix}
 </annotation></semantics></math> essentially selecting only the first
 two columns of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐔</mi><annotation encoding="application/x-tex">\mathbf{U}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑼</mi><annotation encoding="application/x-tex">\mathbf{U}</annotation></semantics></math>,
 the diagonal matrix of the first (largest) two singular values and the
 first two rows of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐕</mi><mi>′</mi></mrow><annotation encoding="application/x-tex">\mathbf{V}'</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi mathvariant="bold-italic">𝑽</mi><mo>′</mo></msup><annotation encoding="application/x-tex">\mathbf{V}'</annotation></semantics></math>.
 Define
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐉</mi><mn>2</mn></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi>𝐈</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn>𝟎</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="bold-italic">𝑱</mi><mn>2</mn></msub><mo>=</mo><mrow><mo stretchy="true" form="prefix">[</mo><mtable><mtr><mtd columnalign="center" style="text-align: center"><msub><mi mathvariant="bold-italic">𝑰</mi><mn>2</mn></msub></mtd></mtr><mtr><mtd columnalign="center" style="text-align: center"><mn mathvariant="bold">𝟎</mn></mtd></mtr></mtable><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">
 \mathbf{J}_2 = \begin{bmatrix}
                 \mathbf{I}_2\\
                 \mathbf{0}
                \end{bmatrix}
 </annotation></semantics></math> then
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>𝐉</mi><mn>2</mn></msub><msub><mi>𝐉</mi><mn>2</mn></msub><mi>′</mi><mo>=</mo><mi>𝐉</mi></mrow><annotation encoding="application/x-tex">\mathbf{J}_2\mathbf{J}_2' = \mathbf{J}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi mathvariant="bold-italic">𝑱</mi><mn>2</mn></msub><msubsup><mi mathvariant="bold-italic">𝑱</mi><mn>2</mn><mo>′</mo></msubsup><mo>=</mo><mi mathvariant="bold-italic">𝑱</mi></mrow><annotation encoding="application/x-tex">\mathbf{J}_2\mathbf{J}_2' = \mathbf{J}</annotation></semantics></math>
 and we can write
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mrow><mi>𝐔</mi><mi>𝐃</mi><mi>𝐉</mi></mrow><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mrow><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>′</mi></mrow><annotation encoding="application/x-tex">\hat{\mathbf{X}} = (\mathbf{UDJ}_2)(\mathbf{VJ}_2)'</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><msub><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub><msup><mo stretchy="false" form="postfix">)</mo><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">\hat{\mathbf{X}} = (\mathbf{UDJ}_2)(\mathbf{VJ}_2)'</annotation></semantics></math>.</p>
 <p><span class="citation">Gabriel (1971)</span> shows that any rank
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math>
 matrix can be written as
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mo>=</mo><mi>𝐆</mi><mi>𝐇</mi><mi>′</mi></mrow><annotation encoding="application/x-tex">\begin{equation}
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo>=</mo><mi mathvariant="bold-italic">𝑮</mi><msup><mi mathvariant="bold-italic">𝑯</mi><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">\begin{equation}
   \hat{\mathbf{X}} = \mathbf{G} \mathbf{H}' \tag{1}
 \end{equation}</annotation></semantics></math> where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐆</mi><mo>:</mo><mi>n</mi><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\mathbf{G}:n \times 2</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑮</mi><mo>:</mo><mi>n</mi><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\mathbf{G}:n \times 2</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐇</mi><mo>:</mo><mi>p</mi><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\mathbf{H}:p \times 2</annotation></semantics></math>.The
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑯</mi><mo>:</mo><mi>p</mi><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\mathbf{H}:p \times 2</annotation></semantics></math>.The
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
 rows of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐆</mi><annotation encoding="application/x-tex">\mathbf{G}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑮</mi><annotation encoding="application/x-tex">\mathbf{G}</annotation></semantics></math>
 provide the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
 pairs of 2D coordinates representing the rows of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{\mathbf{X}}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{\mathbf{X}}</annotation></semantics></math>
 and the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
 rows of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐇</mi><annotation encoding="application/x-tex">\mathbf{H}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑯</mi><annotation encoding="application/x-tex">\mathbf{H}</annotation></semantics></math>
 provide the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
 pairs of 2D coordinates representing the columns of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{\mathbf{X}}</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{\mathbf{X}}</annotation></semantics></math>.
 Since
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mrow><mi>𝐔</mi><mi>𝐃</mi><mi>𝐉</mi></mrow><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><msub><mrow><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>′</mi></mrow><annotation encoding="application/x-tex">\hat{\mathbf{X}} = (\mathbf{UDJ}_2)(\mathbf{VJ}_2)'</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">(</mo><msub><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><msub><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub><msup><mo stretchy="false" form="postfix">)</mo><mo>′</mo></msup></mrow><annotation encoding="application/x-tex">\hat{\mathbf{X}} = (\mathbf{UDJ}_2)(\mathbf{VJ}_2)'</annotation></semantics></math>,
 by setting
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐆</mi><mo>=</mo><msub><mrow><mi>𝐔</mi><mi>𝐃</mi><mi>𝐉</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UDJ}_2</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑮</mi><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UDJ}_2</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐇</mi><mo>=</mo><msub><mrow><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{H}=\mathbf{VJ}_2</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑯</mi><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{H}=\mathbf{VJ}_2</annotation></semantics></math>
 we obtains the best least squares approximation of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐗</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑿</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>.
 <span class="citation">Gabriel (1971)</span> further shows that the
 approximation of distances between the rows are optimal, while the
 approximation of correlations by the cosines between the angles of the
 rows of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐇</mi><annotation encoding="application/x-tex">\mathbf{H}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑯</mi><annotation encoding="application/x-tex">\mathbf{H}</annotation></semantics></math>
 is sub-optimal.</p>
 <p>The rows of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐆</mi><annotation encoding="application/x-tex">\mathbf{G}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑮</mi><annotation encoding="application/x-tex">\mathbf{G}</annotation></semantics></math>
 is plotted as points, representing the samples. The rows of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐇</mi><annotation encoding="application/x-tex">\mathbf{H}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑯</mi><annotation encoding="application/x-tex">\mathbf{H}</annotation></semantics></math>
 provide the directions of the axes for the variables. Since we have
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>x</mi><mrow><mi>i</mi><mi>j</mi></mrow><mo>*</mo></msubsup><mo>−</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>j</mi></msub><mo>=</mo><msub><mi>x</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>≈</mo><msub><mover><mi>x</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><msub><mi>𝐠</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mi>′</mi><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>x</mi><mrow><mi>i</mi><mi>j</mi></mrow><mo>*</mo></msubsup><mo>−</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>j</mi></msub><mo>=</mo><msub><mi>x</mi><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>≈</mo><msub><mover><mi>x</mi><mo accent="true">̂</mo></mover><mrow><mi>i</mi><mi>j</mi></mrow></msub><mo>=</mo><msubsup><mi mathvariant="bold-italic">𝒈</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo stretchy="false" form="postfix">)</mo></mrow><mo>′</mo></msubsup><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">
 x^{*}_{ij}-\bar{x}_j = x_{ij} \approx \hat{x}_{ij} = \mathbf{g}_{(i)}'\mathbf{h}_{(j)}
 </annotation></semantics></math> all the values that will predict
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>μ</mi><annotation encoding="application/x-tex">\mu</annotation></semantics></math>
 for variable
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>j</mi><annotation encoding="application/x-tex">j</annotation></semantics></math>
 is of the form
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo>=</mo><mi>𝐠</mi><msub><mi>′</mi><mi>μ</mi></msub><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo>=</mo><msubsup><mi mathvariant="bold-italic">𝒈</mi><mi>μ</mi><mo>′</mo></msubsup><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">
 \mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}
 </annotation></semantics></math> which defines a straight line
 orthogonal to
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><annotation encoding="application/x-tex">\mathbf{h}_{(j)}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><annotation encoding="application/x-tex">\mathbf{h}_{(j)}</annotation></semantics></math>
 in the biplot space (see the dotted red line in Figure 1(a)). To find
 the intersection of this prediction line with
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><annotation encoding="application/x-tex">\mathbf{h}_{(j)}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><annotation encoding="application/x-tex">\mathbf{h}_{(j)}</annotation></semantics></math>
 we note that
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐠</mi><msub><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>=</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi>𝐠</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo><mi>c</mi><mi>o</mi><mi>s</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>𝐠</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>,</mo><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="postfix">∥</mo><mi>𝐩</mi><mo stretchy="false" form="postfix">∥</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi mathvariant="bold-italic">𝒈</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo stretchy="false" form="postfix">)</mo></mrow><mo>′</mo></msubsup><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo>=</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi mathvariant="bold-italic">𝒈</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo><mi>c</mi><mi>o</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><msub><mi mathvariant="bold-italic">𝒈</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo>,</mo><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mo stretchy="false" form="postfix">∥</mo><mi mathvariant="bold-italic">𝒑</mi><mo stretchy="false" form="postfix">∥</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo></mrow><annotation encoding="application/x-tex">
 \mathbf{g}'_{(i)}\mathbf{h}_{(j)} = \| \mathbf{g}_{(i)} \| \| \mathbf{h}_{(j)} \| cos(\mathbf{g}_{(i)},\mathbf{h}_{(j)}) = 
 \| \mathbf{p} \| \| \mathbf{h}_{(j)} \| 
 </annotation></semantics></math> where
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐩</mi><annotation encoding="application/x-tex">\mathbf{p}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝒑</mi><annotation encoding="application/x-tex">\mathbf{p}</annotation></semantics></math>
 is the length of the orthogonal projection of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐠</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><annotation encoding="application/x-tex">\mathbf{g}_{(i)}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="bold-italic">𝒈</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><annotation encoding="application/x-tex">\mathbf{g}_{(i)}</annotation></semantics></math>
 on
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><annotation encoding="application/x-tex">\mathbf{h}_{(j)}</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><annotation encoding="application/x-tex">\mathbf{h}_{(j)}</annotation></semantics></math>.
 This is illustrated in Figure 1(b) with triangle ABC:
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mi>A</mi><mi>C</mi></mrow><mrow><mi>A</mi><mi>B</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">cos(\theta) = \frac{AC}{AB}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo><mo>=</mo><mfrac><mrow><mi>A</mi><mi>C</mi></mrow><mrow><mi>A</mi><mi>B</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">cos(\theta) = \frac{AC}{AB}</annotation></semantics></math>
 or
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>C</mi><mo>=</mo><mi>A</mi><mi>B</mi><mi>c</mi><mi>o</mi><mi>s</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">AC = AB cos(\theta)</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>C</mi><mo>=</mo><mi>A</mi><mi>B</mi><mi>c</mi><mi>o</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><mi>θ</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">AC = AB cos(\theta)</annotation></semantics></math>
 The length of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>C</mi></mrow><annotation encoding="application/x-tex">AC</annotation></semantics></math>,
 written as
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="postfix">∥</mo><mi>𝐩</mi><mo stretchy="false" form="postfix">∥</mo></mrow><annotation encoding="application/x-tex">\| \mathbf{p} \|</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="postfix">∥</mo><mi mathvariant="bold-italic">𝒑</mi><mo stretchy="false" form="postfix">∥</mo></mrow><annotation encoding="application/x-tex">\| \mathbf{p} \|</annotation></semantics></math>
 is equal to the cosine times the length of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">AB</annotation></semantics></math>,
-i.e. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>𝐠</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>,</mo><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">∥</mo><msub><mi>𝐠</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>i</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo></mrow><annotation encoding="application/x-tex">cos(\mathbf{g}_{(i)},\mathbf{h}_{(j)}) \| \mathbf{g}_{(i)} \|</annotation></semantics></math>.</p>
+i.e. <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mi>o</mi><mi>s</mi><mo stretchy="false" form="prefix">(</mo><msub><mi mathvariant="bold-italic">𝒈</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo>,</mo><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi mathvariant="bold-italic">𝒈</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>i</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo></mrow><annotation encoding="application/x-tex">cos(\mathbf{g}_{(i)},\mathbf{h}_{(j)}) \| \mathbf{g}_{(i)} \|</annotation></semantics></math>.</p>
 <div class="figure">
-<img src="axis_calibration.png" alt="Figure 1: Calibration of biplot axes." width="100%"><p class="caption">
+<img src="axis_calibration.png" class="r-plt" alt="Figure 1: Calibration of biplot axes." width="100%"><p class="caption">
 Figure 1: Calibration of biplot axes.
 </p>
 </div>
 <p>Since
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐩</mi><annotation encoding="application/x-tex">\mathbf{p}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝒑</mi><annotation encoding="application/x-tex">\mathbf{p}</annotation></semantics></math>
 is along
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><annotation encoding="application/x-tex">\mathbf{h}_{(j)}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><annotation encoding="application/x-tex">\mathbf{h}_{(j)}</annotation></semantics></math>
 we can write
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐩</mi><mo>=</mo><mi>c</mi><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">\mathbf{p} = c\mathbf{h}_{(j)}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝒑</mi><mo>=</mo><mi>c</mi><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">\mathbf{p} = c\mathbf{h}_{(j)}</annotation></semantics></math>
 and all points on the prediction line
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo>=</mo><mi>𝐠</mi><msub><mi>′</mi><mi>μ</mi></msub><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">\mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo>=</mo><msubsup><mi mathvariant="bold-italic">𝒈</mi><mi>μ</mi><mo>′</mo></msubsup><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">\mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}</annotation></semantics></math>
 project on the same point
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mi>μ</mi></msub><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">c_{\mu}\mathbf{h}_{(j)}</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mi>μ</mi></msub><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">c_{\mu}\mathbf{h}_{(j)}</annotation></semantics></math>.
 We solve for
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>c</mi><mi>μ</mi></msub><annotation encoding="application/x-tex">c_{\mu}</annotation></semantics></math>
 from
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo>=</mo><mi>𝐠</mi><msub><mi>′</mi><mi>μ</mi></msub><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>=</mo><mo stretchy="false" form="postfix">∥</mo><mi>𝐩</mi><mo stretchy="false" form="postfix">∥</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo><mo>=</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi>c</mi><mi>μ</mi></msub><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>μ</mi><mo>=</mo><msubsup><mi mathvariant="bold-italic">𝒈</mi><mi>μ</mi><mo>′</mo></msubsup><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo>=</mo><mo stretchy="false" form="postfix">∥</mo><mi mathvariant="bold-italic">𝒑</mi><mo stretchy="false" form="postfix">∥</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo><mo>=</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi>c</mi><mi>μ</mi></msub><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo><mo stretchy="false" form="postfix">∥</mo><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo stretchy="false" form="postfix">∥</mo></mrow><annotation encoding="application/x-tex">
 \mu = \mathbf{g}'_{\mu}\mathbf{h}_{(j)}=\| \mathbf{p} \| \| \mathbf{h}_{(j)} \| = 
 \| c_{\mu}\mathbf{h}_{(j)} \| \| \mathbf{h}_{(j)} \|
 </annotation></semantics></math></p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mi>μ</mi></msub><mo>=</mo><mfrac><mi>μ</mi><mrow><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mi>′</mi><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>c</mi><mi>μ</mi></msub><mo>=</mo><mfrac><mi>μ</mi><mrow><msubsup><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow><mo>′</mo></msubsup><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 c_{\mu} = \frac{\mu}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}.
 </annotation></semantics></math> If we select ‘nice’ scale markers
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>τ</mi><mn>1</mn></msub><mo>,</mo><msub><mi>τ</mi><mn>2</mn></msub><mo>,</mo><mi>⋯</mi><msub><mi>τ</mi><mi>k</mi></msub></mrow><annotation encoding="application/x-tex">\tau_{1}, \tau_{2}, \cdots \tau_{k}</annotation></semantics></math>
@@ -238,18 +259,18 @@ for variable
 then
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>τ</mi><mi>h</mi></msub><mo>−</mo><msub><mover><mi>x</mi><mo accent="true">‾</mo></mover><mi>j</mi></msub><mo>=</mo><msub><mi>μ</mi><mi>h</mi></msub></mrow><annotation encoding="application/x-tex">\tau_{h}-\bar{x}_j = \mu_{h}</annotation></semantics></math>
 and positions of these scale markers on
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><annotation encoding="application/x-tex">\mathbf{h}_{(j)}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><annotation encoding="application/x-tex">\mathbf{h}_{(j)}</annotation></semantics></math>
 are given by
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><msub><mi>μ</mi><mn>1</mn></msub></msub><mo>,</mo><msub><mi>p</mi><msub><mi>μ</mi><mn>2</mn></msub></msub><mo>,</mo><mi>⋯</mi><msub><mi>p</mi><msub><mi>μ</mi><mi>k</mi></msub></msub></mrow><annotation encoding="application/x-tex">p_{\mu_{1}}, p_{\mu_{2}}, \cdots p_{\mu_{k}}</annotation></semantics></math>
 with
-<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><msub><mi>μ</mi><mi>h</mi></msub></msub><mo>=</mo><msub><mi>c</mi><msub><mi>μ</mi><mi>h</mi></msub></msub><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mo>=</mo><mfrac><msub><mi>μ</mi><mi>h</mi></msub><mrow><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub><mi>′</mi><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow></mfrac><msub><mi>𝐡</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>j</mi><mo stretchy="true" form="postfix">)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>p</mi><msub><mi>μ</mi><mi>h</mi></msub></msub><mo>=</mo><msub><mi>c</mi><msub><mi>μ</mi><mi>h</mi></msub></msub><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub><mo>=</mo><mfrac><msub><mi>μ</mi><mi>h</mi></msub><mrow><msubsup><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow><mo>′</mo></msubsup><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub></mrow></mfrac><msub><mi mathvariant="bold-italic">𝒉</mi><mrow><mo stretchy="false" form="prefix">(</mo><mi>j</mi><mo stretchy="false" form="postfix">)</mo></mrow></msub></mrow><annotation encoding="application/x-tex">
 p_{\mu_h} = c_{\mu_h}\mathbf{h}_{(j)} =  \frac{\mu_h}{\mathbf{h}_{(j)}'\mathbf{h}_{(j)}}\mathbf{h}_{(j)} \tag{2}
 </annotation></semantics></math> To obtain a PCA biplot of the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>48</mn><mo>×</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">48\times 4</annotation></semantics></math>
 rock data in <code>R</code> we call</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-3-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="the-function-biplot">The function <code>biplot()</code><a class="anchor" aria-label="anchor" href="#the-function-biplot"></a>
@@ -419,18 +440,18 @@ a grouping argument for the sample aesthetics. A PCA biplot of the
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="672"></p>
 <p>The output of <code><a href="../reference/PCA.html">PCA()</a></code> is an object of class
 <code>PCA</code> which inherits from the class <code>biplot</code>. Four
 additional components are present in the <code>PCA</code> object. The
 matrix <code>Z</code> contains the coordinates of the sample points,
 while the matrix <code>Vr</code> contains the “coordinates” for the
 variables. In the notation of equation (1),
-Z=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐆</mi><mo>:</mo><mi>n</mi><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\mathbf{G}:n \times 2</annotation></semantics></math>
+Z=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑮</mi><mo>:</mo><mi>n</mi><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\mathbf{G}:n \times 2</annotation></semantics></math>
 and
-Vr=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐇</mi><mo>:</mo><mi>p</mi><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\mathbf{H}:p \times 2</annotation></semantics></math>.
+Vr=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑯</mi><mo>:</mo><mi>p</mi><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\mathbf{H}:p \times 2</annotation></semantics></math>.
 The component <code>Xhat</code> is the matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{\mathbf{X}}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{\mathbf{X}}</annotation></semantics></math>
 on the left hand side of equation (1). The final component
 <code>ax.one.unit</code> contains as rows the expression in equation (2)
 with
@@ -445,32 +466,32 @@ graphical device. To add a legend to the biplot, we call</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="672"></p>
 <p>It was mentioned in section 1 that the default choice
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐆</mi><mo>=</mo><msub><mrow><mi>𝐔</mi><mi>𝐃</mi><mi>𝐉</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UDJ}_2</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑮</mi><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UDJ}_2</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐇</mi><mo>=</mo><msub><mrow><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{H}=\mathbf{VJ}_2</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑯</mi><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{H}=\mathbf{VJ}_2</annotation></semantics></math>
 provides an exact representation of the distances between the rows of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\mathbf{\hat{X}}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\mathbf{\hat{X}}</annotation></semantics></math>
 which is an optimal approximation in the least squares sense of the
 distances between the rows of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐗</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑿</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>
 (samples). Alternatively, the correlations between the variables
 (columns of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐗</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>)
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑿</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>)
 can be optimally approximated by the cosines of the angles between the
 axes, leaving the approximation of the distances between the samples to
 be suboptimal. In this case
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐆</mi><mo>=</mo><msub><mrow><mi>𝐔</mi><mi>𝐉</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UJ}_2</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑮</mi><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UJ}_2</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐇</mi><mo>=</mo><msub><mrow><mi>𝐕</mi><mi>𝐃</mi><mi>𝐉</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{H}=\mathbf{VDJ}_2</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑯</mi><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{H}=\mathbf{VDJ}_2</annotation></semantics></math>
 and this biplot is obtained by setting the argument
 <code>correlation.biplot = TRUE</code>.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span>, correlation.biplot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="the-function-samples">The function <code>samples()</code><a class="anchor" aria-label="anchor" href="#the-function-samples"></a>
@@ -484,7 +505,7 @@ coloured according to <code>state.division</code>.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.division</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="672"></p>
 <p>Since the legend interferes with the sample points, we choose to
 place the legend on a new page, by setting <code>new = TRUE</code> in
 the <code>legend.type</code> function. Furthermore, we wish to select
@@ -496,8 +517,10 @@ that has default 1.</p>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.division</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"darkorange"</span>, <span class="st">"gold"</span>, <span class="st">"chartreuse4"</span>, </span>
 <span>                   <span class="st">"green"</span>, <span class="st">"salmon"</span>, <span class="st">"magenta"</span>, <span class="st">"#000000"</span>, <span class="st">"blue"</span><span class="op">)</span>,opacity <span class="op">=</span> <span class="fl">0.65</span>,pch<span class="op">=</span><span class="fl">19</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-14-1.png" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-14-2.png" width="672"></p>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);</span></span>
+<span><span class="co">#&gt; falling back to base graphics.</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-14-2.png" class="r-plt" alt="" width="672"></p>
 <p>Furthermore we want to use a different plotting character for the
 central regions.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
@@ -514,8 +537,10 @@ divisions.</p>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"darkorange"</span>, <span class="st">"gold"</span>, <span class="st">"chartreuse4"</span>, </span>
 <span>                   <span class="st">"green"</span>, <span class="st">"salmon"</span>, <span class="st">"magenta"</span>, <span class="st">"black"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>           pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">15</span>, <span class="fl">15</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-16-1.png" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-16-2.png" width="672"></p>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);</span></span>
+<span><span class="co">#&gt; falling back to base graphics.</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-16-2.png" class="r-plt" alt="" width="672"></p>
 <p>To increase the size of the plotting characters of the eastern
 states, we add the following:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
@@ -525,8 +550,10 @@ states, we add the following:</p>
 <span>                   <span class="st">"green"</span>, <span class="st">"salmon"</span>, <span class="st">"magenta"</span>, <span class="st">"black"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>           pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">15</span>, <span class="fl">15</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span>,</span>
 <span>           cex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1.5</span>,<span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1.5</span>,<span class="fl">1</span>,<span class="fl">1.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-17-1.png" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-17-2.png" width="672"></p>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);</span></span>
+<span><span class="co">#&gt; falling back to base graphics.</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-17-2.png" class="r-plt" alt="" width="672"></p>
 <p>If we choose to only show the samples for the central states, the
 argument <code>which</code> is used either indicating the number(s) in
 the sequence of levels (<code>which = 4:7</code>), or as shown below,
@@ -538,8 +565,10 @@ the levels themselves:</p>
 <span>                   <span class="st">"green"</span>, <span class="st">"salmon"</span>, <span class="st">"magenta"</span>, <span class="st">"black"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>           which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"West North Central"</span>, <span class="st">"West South Central"</span>, <span class="st">"East South Central"</span>, </span>
 <span>                     <span class="st">"East North Central"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-18-1.png" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-18-2.png" width="672"></p>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);</span></span>
+<span><span class="co">#&gt; falling back to base graphics.</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-18-2.png" class="r-plt" alt="" width="672"></p>
 <p>Note that since four regions are selected, the colour (and other
 aesthetics) is applied to these regions in the order they are specified
 in <code>which</code>. To add the sample names, the <code>label</code>
@@ -555,7 +584,7 @@ equal to the number of samples.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-19-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="672"></p>
 <p>We can use the arguments <code>label.cex</code>,
 <code>label.side</code> and <code>label.offset</code> to make the plot
 more legible with a little effort.</p>
@@ -578,49 +607,13 @@ more legible with a little effort.</p>
 <span><span class="fu"><a href="../reference/biplot.html">biplot</a></span> <span class="op">(</span><span class="va">state.x77</span>, scaled<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>label<span class="op">=</span><span class="cn">TRUE</span>, label.cex<span class="op">=</span><span class="fl">0.6</span>, label.side<span class="op">=</span><span class="va">label.side</span>, label.offset<span class="op">=</span><span class="va">label.offset</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-20-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="672"></p>
 <p>We can also make use of the functionality of the <code>ggrepel</code>
 package to place the labels.</p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>label <span class="op">=</span> <span class="st">"ggrepel"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$x` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `x` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$y` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `y` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$z` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `z` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$x` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `x` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$y` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `y` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$z` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `z` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$x` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `x` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$y` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `y` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$z` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `z` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$x` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `x` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$y` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `y` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$z` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `z` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$x` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `x` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$y` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `y` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$z` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `z` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$x` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `x` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$y` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `y` instead.</span></span>
-<span><span class="co">#&gt; Warning: Use of `df$z` is discouraged.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Use `z` instead.</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-21-1.png" width="672"></p>
+<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>label <span class="op">=</span> <span class="st">"ggrepel"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" alt="" width="672"></p>
 <p>Additionally, the user can add customised label names to the samples
 in the biplot. To do this, <code>label</code> must be set to
 <code>TRUE</code> (or <code>"ggrepel"</code>) and
@@ -631,7 +624,7 @@ data).</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>label <span class="op">=</span> <span class="st">"TRUE"</span>,label.name<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/strtrim.html" class="external-link">strtrim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-22-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="672"></p>
 <p>If the data plotted in the biplot is a multivariate time series, it
 can make sense to connect the data points in order. Let us consider the
 four quarters of the <code>UKgas</code> data set as four variables and
@@ -644,7 +637,7 @@ we represent the years as sample points in a PCA biplot.</p>
 <span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">gas.data</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>connected <span class="op">=</span> <span class="cn">TRUE</span>, connect.col<span class="op">=</span><span class="st">"red"</span>, label <span class="op">=</span> <span class="va">even.labels</span>, label.cex<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-23-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="the-function-means">The function <code>means()</code><a class="anchor" aria-label="anchor" href="#the-function-means"></a>
@@ -680,7 +673,7 @@ line widths and line type 2, we need to following code:</p>
 <span>                                    col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lightskyblue"</span>,<span class="st">"slategrey"</span><span class="op">)</span>,</span>
 <span>                                    lwd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>                               <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-24-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" alt="" width="672"></p>
 <p>The following four arguments deal with the axis labels. The argument
 <code>label.dir</code> is based on the graphics parameter
 <code>las</code> and allows for labels to be either orthogonal to the
@@ -698,7 +691,7 @@ applied.</p>
 <span>                               <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lightskyblue"</span>,<span class="st">"slategrey"</span>,<span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>                                    label.dir<span class="op">=</span><span class="st">"Hor"</span>, label.line<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.5</span>,<span class="fl">1</span>,<span class="fl">1.5</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>                               <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-25-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" alt="" width="672"></p>
 <p>The function <code><a href="https://rdrr.io/r/base/pretty.html" class="external-link">pretty()</a></code> finds ‘nice’ tick marks where the
 value specified in the argument <code>ticks</code> determine the
 <em>desired</em> number of tick marks, although the observed number
@@ -718,7 +711,7 @@ for the axes, this can be done in the argument
 <span>                                    ax.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"area"</span>, <span class="st">"perimeter"</span>, <span class="st">"shape"</span>, </span>
 <span>                                                 <span class="st">"permeability in milli-Darcies"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>                               <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-26-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-26-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="the-functions-fit-measures-and-summary">The functions <code>fit.measures()</code> and
@@ -749,30 +742,30 @@ object.</p>
 <h3 id="quality-of-approximation">Quality of approximation<a class="anchor" aria-label="anchor" href="#quality-of-approximation"></a>
 </h3>
 <p>We start with the identity</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐗</mi><mo>=</mo><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mo>+</mo><mrow><mi>𝐗</mi><mo mathvariant="bold">−</mo><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover></mrow></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑿</mi><mo>=</mo><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo>+</mo><mrow><mi mathvariant="bold-italic">𝑿</mi><mo mathvariant="bold">−</mo><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover></mrow></mrow><annotation encoding="application/x-tex">
 \mathbf{X} = \mathbf{\hat{X}} + \mathbf{X-\hat{X}}
 </annotation></semantics></math> which decomposes
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐗</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑿</mi><annotation encoding="application/x-tex">\mathbf{X}</annotation></semantics></math>
 into a fitted part</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mo>=</mo><mrow><mi>𝐔</mi><mi>𝐉</mi><mi>𝐃</mi><mi>𝐉</mi><mi>𝐕</mi><mi mathvariant="bold">′</mi></mrow><mo>=</mo><msub><mrow><mi>𝐔</mi><mi>𝐃</mi><mi>𝐉</mi></mrow><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mrow><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>′</mi><mo>=</mo><msub><mrow><mi>𝐔</mi><mi>𝐃</mi><mi>𝐕</mi><mi mathvariant="bold">′</mi><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub><mrow><mo stretchy="true" form="prefix">(</mo><msub><mrow><mi>𝐕</mi><mi>𝐉</mi></mrow><mn>2</mn></msub><mo stretchy="true" form="postfix">)</mo></mrow><mi>′</mi><mo>=</mo><mrow><mi>𝐗</mi><mi>𝐕</mi><mi>𝐉</mi><mi>𝐕</mi><mi mathvariant="bold">′</mi></mrow></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo>=</mo><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑱</mi><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝑱</mi><msup><mi mathvariant="bold-italic">𝑽</mi><mo mathvariant="bold">′</mo></msup></mrow><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub><msup><mo stretchy="false" form="postfix">)</mo><mo>′</mo></msup><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑫</mi><msup><mi mathvariant="bold-italic">𝑽</mi><mo mathvariant="bold">′</mo></msup><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub><mo stretchy="false" form="prefix">(</mo><msub><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub><msup><mo stretchy="false" form="postfix">)</mo><mo>′</mo></msup><mo>=</mo><mrow><mi mathvariant="bold-italic">𝑿</mi><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑱</mi><msup><mi mathvariant="bold-italic">𝑽</mi><mo mathvariant="bold">′</mo></msup></mrow></mrow><annotation encoding="application/x-tex">
 \mathbf{\hat{X}} = \mathbf{UJDJV'} = \mathbf{UDJ}_2(\mathbf{VJ}_2)' = \mathbf{UDV'VJ}_2(\mathbf{VJ}_2)' = \mathbf{XVJV'}
 </annotation></semantics></math></p>
 <p>and the residual part
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐗</mi><mo mathvariant="bold">−</mo><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover></mrow><annotation encoding="application/x-tex">\mathbf{X-\hat{X}}</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑿</mi><mo mathvariant="bold">−</mo><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover></mrow><annotation encoding="application/x-tex">\mathbf{X-\hat{X}}</annotation></semantics></math>.
 The lack of fit is quantified by the quantity we are minimising</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="postfix">∥</mo><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mo>−</mo><mi>𝐗</mi><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="postfix">∥</mo><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo>−</mo><mi mathvariant="bold-italic">𝑿</mi><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">
 \| \hat{\mathbf{X}}-\mathbf{X} \|^2
 </annotation></semantics></math> where we have the orthogonal
 decomposition</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="postfix">∥</mo><mi>𝐗</mi><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup><mo>=</mo><mo stretchy="false" form="postfix">∥</mo><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup><mi>+</mi><mo stretchy="false" form="postfix">∥</mo><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mo>−</mo><mi>𝐗</mi><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="postfix">∥</mo><mi mathvariant="bold-italic">𝑿</mi><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup><mo>=</mo><mo stretchy="false" form="postfix">∥</mo><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup><mi>+</mi><mo stretchy="false" form="postfix">∥</mo><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo>−</mo><mi mathvariant="bold-italic">𝑿</mi><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup><mi>.</mi></mrow><annotation encoding="application/x-tex">
 \|\mathbf{X}\|^2 = \|\hat{\mathbf{X}}\|^2 + \|\hat{\mathbf{X}}-\mathbf{X} \|^2.
 </annotation></semantics></math> The overall quality of fit is therefore
 defined as</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo><mfrac><mrow><mo stretchy="false" form="postfix">∥</mo><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup></mrow><mrow><mo stretchy="false" form="postfix">∥</mo><mi>𝐗</mi><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>t</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi>𝐗</mi><mi>𝐗</mi></mrow><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>t</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mi mathvariant="bold">′</mi></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>t</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi>𝐗</mi><mi mathvariant="bold">′</mi><mi>𝐗</mi></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>t</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mi mathvariant="bold">′</mi><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>t</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mrow><mi>𝐕</mi><mi>𝐃</mi></mrow><mn>2</mn></msup><mrow><mi>𝐕</mi><mi mathvariant="bold">′</mi></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>t</mi><mi>r</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mrow><mi>𝐕</mi><mi>𝐃</mi></mrow><mn>2</mn></msup><mrow><mi>𝐉</mi><mi>𝐕</mi><mi mathvariant="bold">′</mi></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo><mfrac><mrow><mo stretchy="false" form="postfix">∥</mo><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup></mrow><mrow><mo stretchy="false" form="postfix">∥</mo><mi mathvariant="bold-italic">𝑿</mi><msup><mo stretchy="false" form="postfix">∥</mo><mn>2</mn></msup></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>t</mi><mi>r</mi><mo stretchy="false" form="prefix">(</mo><mrow><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><msup><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo mathvariant="bold">′</mo></msup></mrow><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>t</mi><mi>r</mi><mo stretchy="false" form="prefix">(</mo><msup><mrow><mi mathvariant="bold-italic">𝑿</mi><mi mathvariant="bold-italic">𝑿</mi></mrow><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>t</mi><mi>r</mi><mo stretchy="false" form="prefix">(</mo><mrow><msup><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo mathvariant="bold">′</mo></msup><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover></mrow><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>t</mi><mi>r</mi><mo stretchy="false" form="prefix">(</mo><mrow><msup><mi mathvariant="bold-italic">𝑿</mi><mo mathvariant="bold">′</mo></msup><mi mathvariant="bold-italic">𝑿</mi></mrow><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>t</mi><mi>r</mi><mo stretchy="false" form="prefix">(</mo><msup><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑫</mi></mrow><mn>2</mn></msup><mrow><mi mathvariant="bold-italic">𝑱</mi><msup><mi mathvariant="bold-italic">𝑽</mi><mo mathvariant="bold">′</mo></msup></mrow><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>t</mi><mi>r</mi><mo stretchy="false" form="prefix">(</mo><msup><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑫</mi></mrow><mn>2</mn></msup><msup><mi mathvariant="bold-italic">𝑽</mi><mo mathvariant="bold">′</mo></msup><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><mi>.</mi></mrow><annotation encoding="application/x-tex">
 quality = \frac{\|\hat{\mathbf{X}}\|^2}{\|\mathbf{X}\|^2} =
-\frac{tr(\mathbf{XX}')}{tr(\mathbf{\hat{X}\hat{X}'})} =
-\frac{tr(\mathbf{X'X})}{tr(\mathbf{\hat{X}'\hat{X}})} =
-\frac{tr(\mathbf{VD}^2\mathbf{V'})}{tr(\mathbf{VD}^2\mathbf{JV'})}.
+\frac{tr(\mathbf{\hat{X}\hat{X}'})}{tr(\mathbf{XX}')} =
+\frac{tr(\mathbf{\hat{X}'\hat{X}})}{tr(\mathbf{X'X})} =
+\frac{tr(\mathbf{VD}^2\mathbf{JV'})}{tr(\mathbf{VD}^2\mathbf{V'})}.
 </annotation></semantics></math> In <em>biplotEZ</em> the overall
 quality is displayed as a percentage:</p>
 <p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>q</mi><mi>u</mi><mi>a</mi><mi>l</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo><mfrac><mrow><msubsup><mi>d</mi><mn>1</mn><mn>2</mn></msubsup><mo>+</mo><msubsup><mi>d</mi><mn>2</mn><mn>2</mn></msubsup></mrow><mrow><msubsup><mi>d</mi><mn>1</mn><mn>2</mn></msubsup><mo>+</mo><mi>…</mi><mo>+</mo><msubsup><mi>d</mi><mi>p</mi><mn>2</mn></msubsup></mrow></mfrac><mn>100</mn><mi>%</mi><mi>.</mi></mrow><annotation encoding="application/x-tex">
@@ -790,11 +783,11 @@ represent the adequacy with which the variable is represented.</p>
 <p>By fitting the biplot with calibrated axes, it is much easier to read
 off values for the variables, but the adequacy values can still be
 computed from</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>𝐕</mi><mi>r</mi></msub><msub><mi>𝐕</mi><mi>r</mi></msub><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi>𝐕</mi><mi>𝐕</mi></mrow><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo>=</mo><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>𝐕</mi><mi>r</mi></msub><msub><mi>𝐕</mi><mi>r</mi></msub><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><msub><mi mathvariant="bold-italic">𝑽</mi><mi>r</mi></msub><msubsup><mi mathvariant="bold-italic">𝑽</mi><mi>r</mi><mo>′</mo></msubsup><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><msup><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑽</mi></mrow><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><mo>=</mo><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><msub><mi mathvariant="bold-italic">𝑽</mi><mi>r</mi></msub><msubsup><mi mathvariant="bold-italic">𝑽</mi><mi>r</mi><mo>′</mo></msubsup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
 \frac{diag(\mathbf{V}_r\mathbf{V}_r')}{diag(\mathbf{VV}')}= diag(\mathbf{V}_r\mathbf{V}_r')
 </annotation></semantics></math></p>
 <p>due to the orthogonality of the matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐕</mi><mo>:</mo><mi>p</mi><mo>×</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">\mathbf{V}:p \times p</annotation></semantics></math>.</p>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑽</mi><mo>:</mo><mi>p</mi><mo>×</mo><mi>p</mi></mrow><annotation encoding="application/x-tex">\mathbf{V}:p \times p</annotation></semantics></math>.</p>
 </div>
 <div class="section level3">
 <h3 id="predictivities">Predictivities<a class="anchor" aria-label="anchor" href="#predictivities"></a>
@@ -811,7 +804,7 @@ original values and the predictivity value will be close to zero.</p>
 <p>The predictivity for each of the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>p</mi><annotation encoding="application/x-tex">p</annotation></semantics></math>
 variables is computed as the elementwise ratios</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>x</mi><mi>i</mi><mi>s</mi><mspace width="0.222em"></mspace><mi>p</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo><mfrac><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mi mathvariant="bold">′</mi><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi>𝐗</mi><mi mathvariant="bold">′</mi><mi>𝐗</mi></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>x</mi><mi>i</mi><mi>s</mi><mspace width="0.222em"></mspace><mi>p</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo><mfrac><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><mrow><msup><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo mathvariant="bold">′</mo></msup><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover></mrow><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><mrow><msup><mi mathvariant="bold-italic">𝑿</mi><mo mathvariant="bold">′</mo></msup><mi mathvariant="bold-italic">𝑿</mi></mrow><mo stretchy="false" form="postfix">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">
 axis \: predictivity = \frac{diag(\mathbf{\hat{X}'\hat{X}})}{diag(\mathbf{X'X})}
 </annotation></semantics></math></p>
 </div>
@@ -821,7 +814,7 @@ axis \: predictivity = \frac{diag(\mathbf{\hat{X}'\hat{X}})}{diag(\mathbf{X'X})}
 <p>The predictivity for each of the
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math>
 samples is computed as the elementwise ratios</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>a</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi><mspace width="0.222em"></mspace><mi>p</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo><mfrac><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mover><mi>𝐗</mi><mo accent="true">̂</mo></mover><mi mathvariant="bold">′</mi></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi>𝐗</mi><mi>𝐗</mi><mi mathvariant="bold">′</mi></mrow><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>s</mi><mi>a</mi><mi>m</mi><mi>p</mi><mi>l</mi><mi>e</mi><mspace width="0.222em"></mspace><mi>p</mi><mi>r</mi><mi>e</mi><mi>d</mi><mi>i</mi><mi>c</mi><mi>t</mi><mi>i</mi><mi>v</mi><mi>i</mi><mi>t</mi><mi>y</mi><mo>=</mo><mfrac><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><mrow><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><msup><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><mo mathvariant="bold">′</mo></msup></mrow><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><mrow><mi mathvariant="bold-italic">𝑿</mi><msup><mi mathvariant="bold-italic">𝑿</mi><mo mathvariant="bold">′</mo></msup></mrow><mo stretchy="false" form="postfix">)</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">
 sample \: predictivity = \frac{diag(\mathbf{\hat{X}\hat{X}'})}{diag(\mathbf{XX'})}
 </annotation></semantics></math> By calling the function
 <code><a href="../reference/fit.measures.html">fit.measures()</a></code> these quantities are computed for the
@@ -830,7 +823,7 @@ specific biplot object. The values are displayed with the
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/fit.measures.html">fit.measures</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-29-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-29-1.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span> <span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Object of class biplot, based on 50 samples and 8 variables.</span></span>
@@ -900,7 +893,7 @@ values.</p>
 <span>  <span class="fu"><a href="../reference/axes.html">axes</a></span> <span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fit.measures.html">fit.measures</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span> <span class="op">(</span>sample.predictivity <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                          axis.predictivity <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-31-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-31-1.png" class="r-plt" alt="" width="672"></p>
 <p>Comparing the plot with the <code>summary</code> output it is clear
 that the variables Population and Frost are not very well represented
 and it can be expected that predictions on these variables will be less
@@ -922,14 +915,14 @@ squared length of the arrow.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/axes.html">axes</a></span> <span class="op">(</span>vectors <span class="op">=</span> <span class="cn">TRUE</span>,unit.circle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fit.measures.html">fit.measures</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span> <span class="op">(</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-32-1.png" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-32-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-EckartYoung1936" class="csl-entry">
 Eckart, C., and G. Young. 1936. <span>“The Approximation of One Matrix
 by Another of Lower Rank.”</span> <em>Psychometrika</em>, 211–18.
@@ -952,7 +945,7 @@ Application to Principal Component Analysis.”</span>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

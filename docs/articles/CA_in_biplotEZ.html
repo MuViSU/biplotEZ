@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="CA in biplotEZ">
 </head>
@@ -81,13 +81,13 @@
 association between two categorical variables by utilising a two-way
 frequency table. Numerous variants of CA are available for the
 application to diverse problems, the interested reader is referred to:
-<span class="citation">Gower, Lubbe, and Roux (2011)</span>, <span class="citation">Beh and Lombardo (2014)</span>.</p>
+<span class="citation">Gower et al. (2011)</span>, <span class="citation">Beh and Lombardo (2014)</span>.</p>
 <p>In this vignette, focus will be placed on three <em>EZ</em>-to-use
-versions based on the Pearson residuals (<span class="citation">Gower,
-Lubbe, and Roux (2011)</span> :300).</p>
+versions based on the Pearson residuals (<span class="citation">Gower et
+al. (2011)</span> :300).</p>
 <p>Now, the two-way frequency table is also referred to as the data
 matrix:
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐗</mi><mo>:</mo><mi>r</mi><mo>×</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">\mathbf{X}:r\times c</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑿</mi><mo>:</mo><mi>r</mi><mo>×</mo><mi>c</mi></mrow><annotation encoding="application/x-tex">\mathbf{X}:r\times c</annotation></semantics></math>.
 This data matrix is different from the continuous case used for the
 <code><a href="../reference/PCA.html">PCA()</a></code> and <code><a href="../reference/CVA.html">CVA()</a></code> examples, as it represents the
 cross-tabulations of two categorical variables (i.e. factors), each with
@@ -118,8 +118,8 @@ is obtained from the total of all frequencies:</p>
 <span><span class="co">#&gt; [1] 313</span></span></code></pre></div>
 <p>It is common to work with the proportions rather than the frequencies
 in terms of the correspondence matrix,
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐏</mi><annotation encoding="application/x-tex">\mathbf{P}</annotation></semantics></math>:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐏</mi><mo>=</mo><mfrac><mi>𝐗</mi><mi>N</mi></mfrac></mrow><annotation encoding="application/x-tex">
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑷</mi><annotation encoding="application/x-tex">\mathbf{P}</annotation></semantics></math>:</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑷</mi><mo>=</mo><mfrac><mi mathvariant="bold-italic">𝑿</mi><mi>N</mi></mfrac></mrow><annotation encoding="application/x-tex">
 \mathbf{P}=\frac{\mathbf{X}}{N}
 </annotation></semantics></math></p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -132,7 +132,7 @@ in terms of the correspondence matrix,
 <span><span class="co">#&gt;   Red   0.051118211 0.022364217 0.022364217 0.022364217</span></span>
 <span><span class="co">#&gt;   Blond 0.012779553 0.204472843 0.015974441 0.025559105</span></span></code></pre></div>
 <p>Other useful summaries of
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐏</mi><annotation encoding="application/x-tex">\mathbf{P}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑷</mi><annotation encoding="application/x-tex">\mathbf{P}</annotation></semantics></math>
 include the row and column masses (for arbitrary row and column
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
 and
@@ -176,9 +176,9 @@ $$</span></p>
 <p>In order to obtain the first form of the row and column coordinates,
 the singular value decomposition (SVD) of the matrix of standardised
 Pearson residuals
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐒</mi><annotation encoding="application/x-tex">\mathbf{S}</annotation></semantics></math>)
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑺</mi><annotation encoding="application/x-tex">\mathbf{S}</annotation></semantics></math>)
 is computed:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right"><mtext mathvariant="normal">SVD</mtext><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐒</mi><mo stretchy="true" form="postfix">)</mo></mrow></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mtext mathvariant="normal">SVD</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mi>𝐃</mi><mi>𝐫</mi><mrow><mi mathvariant="bold">−</mi><mfrac><mn>𝟏</mn><mn>𝟐</mn></mfrac></mrow></msubsup><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐏</mi><mo>−</mo><mrow><mi>𝐫</mi><msup><mi>𝐜</mi><mi mathvariant="bold">′</mi></msup></mrow><mo stretchy="true" form="postfix">)</mo></mrow><msubsup><mi>𝐃</mi><mi>𝐜</mi><mrow><mi mathvariant="bold">−</mi><mfrac><mn>𝟏</mn><mn>𝟐</mn></mfrac></mrow></msubsup><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right"></mtd><mtd columnalign="left" style="text-align: left"><mo>=</mo><mrow><mi>𝐔</mi><mi>𝚲</mi><msup><mi>𝐕</mi><mi mathvariant="bold">′</mi></msup></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mtable><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"><mtext mathvariant="normal">SVD</mtext><mo stretchy="false" form="prefix">(</mo><mi mathvariant="bold-italic">𝑺</mi><mo stretchy="false" form="postfix">)</mo></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mtext mathvariant="normal">SVD</mtext><mrow><mo stretchy="true" form="prefix">(</mo><msubsup><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝒓</mi><mrow><mi mathvariant="bold-italic">−</mi><mfrac><mn mathvariant="bold">𝟏</mn><mn mathvariant="bold">𝟐</mn></mfrac></mrow></msubsup><mo stretchy="false" form="prefix">(</mo><mi mathvariant="bold-italic">𝑷</mi><mo>−</mo><mrow><mi mathvariant="bold-italic">𝒓</mi><msup><mi mathvariant="bold-italic">𝒄</mi><mi mathvariant="bold-italic">′</mi></msup></mrow><mo stretchy="false" form="postfix">)</mo><msubsup><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝒄</mi><mrow><mi mathvariant="bold-italic">−</mi><mfrac><mn mathvariant="bold">𝟏</mn><mn mathvariant="bold">𝟐</mn></mfrac></mrow></msubsup><mo stretchy="true" form="postfix">)</mo></mrow></mtd></mtr><mtr><mtd columnalign="right" style="text-align: right; padding-right: 0"></mtd><mtd columnalign="left" style="text-align: left; padding-left: 0"><mo>=</mo><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold">𝚲</mi><msup><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">′</mi></msup></mrow></mtd></mtr></mtable><annotation encoding="application/x-tex">
 \begin{aligned}
 \text{SVD}(\mathbf{S}) &amp;= \text{SVD}\left(\mathbf{D_r^{-\frac{1}{2}}}(\mathbf{P}-\mathbf{rc^\prime})\mathbf{D_c^{-\frac{1}{2}}}\right)\\&amp;= \mathbf{U\Lambda V^\prime}
 \end{aligned}
@@ -191,7 +191,7 @@ decomposition, <code>SVD</code>.</p>
 <span><span class="va">svd.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/svd.html" class="external-link">svd</a></span><span class="op">(</span><span class="va">Smat</span><span class="op">)</span></span>
 <span><span class="va">svd.out</span></span>
 <span><span class="co">#&gt; $d</span></span>
-<span><span class="co">#&gt; [1] 5.499629e-01 1.806424e-01 7.541748e-02 8.574459e-17</span></span>
+<span><span class="co">#&gt; [1] 5.499629e-01 1.806424e-01 7.541748e-02 1.145995e-16</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; $u</span></span>
 <span><span class="co">#&gt;            [,1]       [,2]        [,3]      [,4]</span></span>
@@ -211,7 +211,7 @@ decomposition, <code>SVD</code>.</p>
 to determine whether the two categorical variables (i.e. the rows and
 columns of the contingency table) are independent. The expected
 frequencies represented by the product of the row and column masses
-(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐫</mi><msup><mi>𝐜</mi><mi mathvariant="bold">′</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{rc^\prime}</annotation></semantics></math>).</p>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝒓</mi><msup><mi mathvariant="bold-italic">𝒄</mi><mi mathvariant="bold-italic">′</mi></msup></mrow><annotation encoding="application/x-tex">\mathbf{rc^\prime}</annotation></semantics></math>).</p>
 <p>Furthermore, since the weights of certain objects might be
 substantially different from others which could result in a distorted
 approximation in lower dimension, the
@@ -281,29 +281,29 @@ respectively.</p>
 <div class="section level3">
 <h3 id="lambda-scaling">Lambda scaling<a class="anchor" aria-label="anchor" href="#lambda-scaling"></a>
 </h3>
-<p>As presented in <span class="citation">Gower, Lubbe, and Roux
-(2011)</span> :24, when constructing a biplot representing the rows of a
-coordinate matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐀</mi><annotation encoding="application/x-tex">\mathbf{A}</annotation></semantics></math>
+<p>As presented in <span class="citation">Gower et al. (2011)</span>
+:24, when constructing a biplot representing the rows of a coordinate
+matrix
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑨</mi><annotation encoding="application/x-tex">\mathbf{A}</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>𝐁</mi><mi>′</mi></msup><annotation encoding="application/x-tex">\mathbf{B}^\prime</annotation></semantics></math>.
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi mathvariant="bold-italic">𝑩</mi><mi>′</mi></msup><annotation encoding="application/x-tex">\mathbf{B}^\prime</annotation></semantics></math>.
 Take note that the inner product is invariant when
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐀</mi><annotation encoding="application/x-tex">\mathbf{A}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑨</mi><annotation encoding="application/x-tex">\mathbf{A}</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>𝐁</mi><annotation encoding="application/x-tex">\mathbf{B}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi mathvariant="bold-italic">𝑩</mi><annotation encoding="application/x-tex">\mathbf{B}</annotation></semantics></math>
 are scaled inversely by
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>.</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi>𝐀</mi><mi>𝐁</mi></mrow><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>λ</mi><mi>𝐀</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐁</mi><mi>/</mi><mi>λ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mi mathvariant="bold-italic">𝑨</mi><mi mathvariant="bold-italic">𝑩</mi></mrow><mo>=</mo><mo stretchy="false" form="prefix">(</mo><mi>λ</mi><mi mathvariant="bold-italic">𝑨</mi><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">(</mo><mi mathvariant="bold-italic">𝑩</mi><mi>/</mi><mi>λ</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
 \mathbf{AB} = (\lambda\mathbf{A})(\mathbf{B}/\lambda)
 </annotation></semantics></math> An arbitrary value of
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>λ</mi><annotation encoding="application/x-tex">\lambda</annotation></semantics></math>
 can be selected or an <em>optimal</em> value could be to ensure that the
 average squared distance of the points in
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mi>𝐀</mi></mrow><annotation encoding="application/x-tex">\lambda\mathbf{A}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>λ</mi><mi mathvariant="bold-italic">𝑨</mi></mrow><annotation encoding="application/x-tex">\lambda\mathbf{A}</annotation></semantics></math>
 and
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>𝐁</mi><mi>/</mi><mi>λ</mi></mrow><annotation encoding="application/x-tex">\mathbf{B}/\lambda</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑩</mi><mi>/</mi><mi>λ</mi></mrow><annotation encoding="application/x-tex">\mathbf{B}/\lambda</annotation></semantics></math>
 is equal.</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>λ</mi><mn>4</mn></msup><mo>=</mo><mfrac><mi>r</mi><mi>c</mi></mfrac><mfrac><mrow><mrow><mo stretchy="true" form="prefix">|</mo><mo stretchy="true" form="postfix">|</mo></mrow><mi>𝐁</mi><msup><mrow><mo stretchy="true" form="prefix">|</mo><mo stretchy="true" form="postfix">|</mo></mrow><mn>2</mn></msup></mrow><mrow><mrow><mo stretchy="true" form="prefix">|</mo><mo stretchy="true" form="postfix">|</mo></mrow><mi>𝐀</mi><msup><mrow><mo stretchy="true" form="prefix">|</mo><mo stretchy="true" form="postfix">|</mo></mrow><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>λ</mi><mn>4</mn></msup><mo>=</mo><mfrac><mi>r</mi><mi>c</mi></mfrac><mfrac><mrow><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi mathvariant="bold-italic">𝑩</mi><mo stretchy="false" form="prefix">|</mo><msup><mo stretchy="false" form="prefix">|</mo><mn>2</mn></msup></mrow><mrow><mo stretchy="false" form="prefix">|</mo><mo stretchy="false" form="prefix">|</mo><mi mathvariant="bold-italic">𝑨</mi><mo stretchy="false" form="prefix">|</mo><msup><mo stretchy="false" form="prefix">|</mo><mn>2</mn></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">
 \lambda^4 =\frac{r}{c}\frac{||\mathbf{B}||^2}{||\mathbf{A}||^2}
 </annotation></semantics></math></p>
 <p>The default setting is to not apply lambda-scaling
@@ -328,7 +328,7 @@ components) and the total variance (sum of all squared singular values
 representation of the variables. In <code><a href="../reference/CA.html">CA()</a></code> the factor
 variable represented in the columns is treated as the variables and is
 calculated as explained in the biplotEZ vignette:</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>𝐕</mi><mi>r</mi></msub><msub><mi>𝐕</mi><mi>r</mi></msub><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mrow><mi>𝐕</mi><mi>𝐕</mi></mrow><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow></mfrac><mo>=</mo><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>𝐕</mi><mi>r</mi></msub><msub><mi>𝐕</mi><mi>r</mi></msub><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><msub><mi mathvariant="bold-italic">𝑽</mi><mi>r</mi></msub><msubsup><mi mathvariant="bold-italic">𝑽</mi><mi>r</mi><mo>′</mo></msubsup><mo stretchy="false" form="postfix">)</mo></mrow><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><msup><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑽</mi></mrow><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo></mrow></mfrac><mo>=</mo><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><msub><mi mathvariant="bold-italic">𝑽</mi><mi>r</mi></msub><msubsup><mi mathvariant="bold-italic">𝑽</mi><mi>r</mi><mo>′</mo></msubsup><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">
  \frac{diag(\mathbf{V}_r\mathbf{V}_r')}{diag(\mathbf{VV}')}= diag(\mathbf{V}_r\mathbf{V}_r')
 </annotation></semantics></math></p>
 <p>The predictivities provide a measure of how well the original values
@@ -338,13 +338,13 @@ variable values from prediction is close to the observed values. If an
 element is poorly represented, the predicted values will be very
 different from the original values and the predictivity value will be
 close to zero.</p>
-<p>The <code>row.predictivities</code> are calculated as follows (<span class="citation">Gower, Lubbe, and Roux (2011)</span> :299):</p>
+<p>The <code>row.predictivities</code> are calculated as follows (<span class="citation">Gower et al. (2011)</span> :299):</p>
 <p><span class="math display">$$
 diag(\mathbf{U}\mathbf{\Sigma}\mathbf{J}\mathbf{\Sigma}\mathbf{U}')[diag(\mathbf{U}\mathbf{\Sigma}\mathbf{\Sigma}\mathbf{U}')]^{-1}\\
 =diag(\mathbf{U}\mathbf{\Sigma}^2\mathbf{J}\mathbf{U}')[diag(\mathbf{U}\mathbf{\Sigma^2}\mathbf{U}')]^{-1}
 $$</span></p>
-<p>The <code>col.predictivities</code> are calculated as follows (<span class="citation">Gower, Lubbe, and Roux (2011)</span> :299):</p>
-<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐕</mi><msup><mi>𝚺</mi><mn>2</mn></msup><mi>𝐉</mi><mi>𝐕</mi><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><msup><mrow><mo stretchy="true" form="prefix">[</mo><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>𝐕</mi><msup><mi>𝚺</mi><mn>𝟐</mn></msup><mi>𝐕</mi><mi>′</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">]</mo></mrow><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">
+<p>The <code>col.predictivities</code> are calculated as follows (<span class="citation">Gower et al. (2011)</span> :299):</p>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><mi mathvariant="bold-italic">𝑽</mi><msup><mi mathvariant="bold">𝚺</mi><mn>2</mn></msup><mi mathvariant="bold-italic">𝑱</mi><msup><mi mathvariant="bold-italic">𝑽</mi><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo><mo stretchy="false" form="prefix">[</mo><mi>d</mi><mi>i</mi><mi>a</mi><mi>g</mi><mo stretchy="false" form="prefix">(</mo><mi mathvariant="bold-italic">𝑽</mi><msup><mi mathvariant="bold">𝚺</mi><mn mathvariant="bold">𝟐</mn></msup><msup><mi mathvariant="bold-italic">𝑽</mi><mo>′</mo></msup><mo stretchy="false" form="postfix">)</mo><msup><mo stretchy="false" form="postfix">]</mo><mrow><mi>−</mi><mn>1</mn></mrow></msup></mrow><annotation encoding="application/x-tex">
 diag(\mathbf{V}\mathbf{\Sigma}^2\mathbf{J}\mathbf{V}')[diag(\mathbf{V}\mathbf{\Sigma^2}\mathbf{V}')]^{-1}
 </annotation></semantics></math></p>
 </div>
@@ -365,8 +365,10 @@ either <code>scale</code> or <code>center</code> is specified as
 </h3>
 <p>The default CA biplot is a row principal coordinate biplot:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support CA maps; falling back to base</span></span>
+<span><span class="co">#&gt; graphics.</span></span></code></pre></div>
+<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-9-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="variantstand">
@@ -375,8 +377,10 @@ either <code>scale</code> or <code>center</code> is specified as
 <p>To construct the CA biplot for row standard coordinates:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ca.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Stand"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support CA maps; falling back to base</span></span>
+<span><span class="co">#&gt; graphics.</span></span></code></pre></div>
+<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="variantsymmetric">
@@ -385,8 +389,10 @@ either <code>scale</code> or <code>center</code> is specified as
 <p>To construct the symmetric CA map:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ca.out</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
+<span>  <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support CA maps; falling back to base</span></span>
+<span><span class="co">#&gt; graphics.</span></span></code></pre></div>
+<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ca.out</span><span class="op">$</span><span class="va">lambda.val</span></span>
 <span><span class="co">#&gt; [1] 1</span></span></code></pre></div>
@@ -447,10 +453,9 @@ containing the subset of numerical variables.</p>
 <code><a href="../reference/samples.html">samples()</a></code> and enables aesthetic changes to the new
 samples.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">2</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/interpolate.html">interpolate</a></span><span class="op">(</span>newdata <span class="op">=</span> <span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/newsamples.html">newsamples</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"orange"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span>      </span></code></pre></div>
-<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-13-1.png" width="672"></p>
+<code class="sourceCode R"><span><span class="co">#biplot(HairEyeColor[,,2], center = FALSE) |&gt; CA(variant = "Symmetric") |&gt; </span></span>
+<span><span class="co">#  samples(pch = c(0,2)) |&gt; interpolate(newdata = HairEyeColor[,,1]) |&gt; </span></span>
+<span><span class="co">#  newsamples(col = c("orange","purple"), pch = c(15,17)) |&gt; plot()      </span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="aesthetics-and-legend">Aesthetics and legend<a class="anchor" aria-label="anchor" href="#aesthetics-and-legend"></a>
@@ -460,21 +465,25 @@ colours, plotting characters and expansion of the samples.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Princ"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyan"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span>, label.side <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>,<span class="st">"top"</span><span class="op">)</span>, </span>
-<span>          label.cex <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-14-1.png" width="672"><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-14-2.png" width="672"></p>
+<span>          label.cex <span class="op">=</span> <span class="fl">1</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);</span></span>
+<span><span class="co">#&gt; falling back to base graphics.</span></span></code></pre></div>
+<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="672"><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-14-2.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"forestgreen"</span>,<span class="st">"magenta"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">12</span>,<span class="fl">17</span><span class="op">)</span>, </span>
 <span>          label.side <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"top"</span>,<span class="st">"bottom"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support CA maps; falling back to base</span></span>
+<span><span class="co">#&gt; graphics.</span></span></code></pre></div>
+<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level3">
 <h3 id="additional-example">Additional example<a class="anchor" aria-label="anchor" href="#additional-example"></a>
 </h3>
 <p>Consider the South African Crime data set 2008, extracted from the
-South African police website (<a href="http://www.saps.gov.za/" class="external-link uri">http://www.saps.gov.za/</a>). <span class="citation">Gower,
-Lubbe, and Roux (2011)</span> :312.</p>
+South African police website (<a href="http://www.saps.gov.za/" class="external-link uri">http://www.saps.gov.za/</a>). <span class="citation">Gower
+et al. (2011)</span> :312.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">SACrime</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1235</span>,<span class="fl">432</span>,<span class="fl">1824</span>,<span class="fl">1322</span>,<span class="fl">573</span>,<span class="fl">588</span>,<span class="fl">624</span>,<span class="fl">169</span>,<span class="fl">629</span>,<span class="fl">34479</span>,<span class="fl">16833</span>,<span class="fl">46993</span>,<span class="fl">30606</span>,<span class="fl">13670</span>,</span>
 <span>              <span class="fl">16849</span>,<span class="fl">15861</span>,<span class="fl">9898</span>,<span class="fl">24915</span>,<span class="fl">2160</span>,<span class="fl">939</span>,<span class="fl">5257</span>,<span class="fl">4946</span>,<span class="fl">722</span>,<span class="fl">1271</span>,<span class="fl">881</span>,<span class="fl">775</span>,<span class="fl">1844</span>,<span class="fl">5946</span>,</span>
@@ -518,14 +527,16 @@ Lubbe, and Roux (2011)</span> :312.</p>
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">SACrime</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span>, lambda.scal <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span><span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyan"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">17</span><span class="op">)</span>, label.side <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bottom"</span>,<span class="st">"top"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-17-1.png" width="672"><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-17-2.png" width="672"></p>
+<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);</span></span>
+<span><span class="co">#&gt; falling back to base graphics.</span></span></code></pre></div>
+<p><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="672"><img src="CA_in_biplotEZ_files/figure-html/unnamed-chunk-17-2.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 <div class="section level2">
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
-<div id="refs" class="references csl-bib-body hanging-indent" entry-spacing="0">
+<div id="refs" class="references csl-bib-body hanging-indent">
 <div id="ref-BehLombardo2014" class="csl-entry">
 Beh, E, and Rosaria Lombardo. 2014. <span>“Correspondence
 Analysis.”</span> <em>Theory, Paractice and New Strategies</em>.
@@ -556,7 +567,7 @@ press.
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>
