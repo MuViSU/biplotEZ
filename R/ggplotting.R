@@ -234,7 +234,9 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
 #' for a specific reason (see code). Used by gg_biplot() (which stops) and by
 #' plot.biplot(engine = "ggplot2") (which warns and falls back to base).
 #' @noRd
-.gg_supported <- function(x) {
+.gg_supported <- function(x, zoom = FALSE) {
+  if (isTRUE(zoom)) return("interactive zooming")
+  if (isTRUE(x$legend$new)) return("legend.type(new = TRUE)")
   if (!is.null(x$dim.biplot) && x$dim.biplot != 2)
     return(paste0(x$dim.biplot, "D biplots"))
   if (inherits(x, "CA"))     return("CA maps")
@@ -676,7 +678,7 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
   cexs <- m.aes$cex[jj][invals]
   lbls <- g.names[which][invals]
   df <- data.frame(x = ZZ[invals, 1], y = ZZ[invals, 2],
-                   name = rownames(ZZ)[invals], lbl = lbls)
+                   name = lbls, lbl = lbls)
   
   if (show.legend) {
     layers <- list(ggplot2::geom_point(

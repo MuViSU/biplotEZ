@@ -24,7 +24,7 @@ plot.biplot <- function(x, engine = c("ggplot2","base"),
 {
   engine <- match.arg(engine)
   if (engine == "ggplot2") {
-    reason <- .gg_supported(x)
+    reason <- .gg_supported(x, zoom)
     if (is.null(reason))
       return(gg_biplot(x, exp.factor = exp.factor,
                        axis.predictivity = axis.predictivity,
