@@ -536,6 +536,4 @@ biplot(state.x77, scale = TRUE) |> PCA(group.aes = state.region) |>
 
 
 
-
-
 # References

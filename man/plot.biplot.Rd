@@ -6,6 +6,7 @@
 \usage{
 \method{plot}{biplot}(
   x,
+  engine = c("ggplot2", "base"),
   exp.factor = 1.2,
   axis.predictivity = NULL,
   sample.predictivity = NULL,
@@ -18,6 +19,8 @@
 }
 \arguments{
 \item{x}{An object of class \code{biplot}.}
+
+\item{engine}{whether to plot in base R or \code{ggplot2}.}
 
 \item{exp.factor}{a numeric value with default axes of the biplot. Larger values are specified for zooming out with respect to sample points in the biplot display and smaller values are specified for zooming in with respect to sample points in the biplot display.}
 

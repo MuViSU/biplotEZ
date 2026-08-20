@@ -2,6 +2,7 @@
 #' Generic Plotting function of objects of class biplot
 #'
 #' @param x An object of class \code{biplot}.
+#' @param engine whether to plot in base R or \code{ggplot2}.
 #' @param exp.factor a numeric value with default axes of the biplot. Larger values are specified for zooming out with respect to sample points in the biplot display and smaller values are specified for zooming in with respect to sample points in the biplot display.
 #' @param axis.predictivity either a logical or a numeric value between \code{0} and \code{1}. If it is a numeric value, this value is used as threshold so that only axes with axis predictivity larger than the threshold is displayed. If \code{axis.predictivity = TRUE}, the axis colour is 'diluted' in proportion with the axis predictivity.
 #' @param sample.predictivity either a logical or a numeric value between 0 and 1. If it is a numeric value, this value is used as threshold so that only samples with sample predictivity larger than the threshold is displayed. If \code{sample.predictivity = TRUE}, the sample size is shrinked in proportion with the sample predictivity.
@@ -17,9 +18,21 @@
 #'
 #' @examples
 #' biplot (iris[,1:4]) |> PCA() |> plot()
-plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predictivity=NULL,
+plot.biplot <- function(x, engine = c("ggplot2","base"), 
+                        exp.factor=1.2, axis.predictivity=NULL, sample.predictivity=NULL,
                         zoom = FALSE, add = FALSE, xlim = NULL, ylim = NULL, ...)
 {
+  engine <- match.arg(engine)
+  if (engine == "ggplot2") {
+    reason <- .gg_supported(x)
+    if (is.null(reason))
+      return(gg_biplot(x, exp.factor = exp.factor,
+                       axis.predictivity = axis.predictivity,
+                       sample.predictivity = sample.predictivity,
+                       xlim = xlim, ylim = ylim))
+    warning("The ggplot2 engine does not yet support ", reason,
+            "; falling back to base graphics.", call. = FALSE)
+  }
   
   #----- See all the internal functions in utility_2D.R
   if (is.null(x$Z)) stop ("Add a biplot method before generating a plot")
@@ -117,7 +130,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
         if (!is.null(x$CLR.aes))
         {
           x <- CLRs(x)
-          a <- predict.regions(x$CLPs[[x$CLR.aes$which]],usr)
+          a <- predict_regions(x$CLPs[[x$CLR.aes$which]],usr)
           for(i in 1:length(a))
           {
             graphics::polygon(a[[i]],col=x$CLR.aes$col[i],border = NULL)
@@ -130,7 +143,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
       if(!is.null(x$classify$classify.regions)) {
         if(x$classify$classify.regions)
         {
-          a <- predict.regions(x$classify$region.midpoints,usr)
+          a <- predict_regions(x$classify$region.midpoints,usr)
           for(i in 1:length(a))
           {
             graphics::polygon(a[[i]],col=classify.aes$col[i],
@@ -187,6 +200,15 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
       {
         if (length(ax.aes$which) > 0)
           {
+          if (!is.null(x$Lmat))
+              if (nrow(x$Lmat) == ncol(x$Lmat)) 
+                Xhat <- x$Z %*% solve(x$Lmat)[x$e.vects,]
+              else Xhat <- x$X
+            else
+              Xhat <- x$X
+            if (x$scaled) Xhat <- scale(Xhat, center=FALSE, scale=1/x$sd)
+            if (x$center) Xhat <- scale(Xhat, center=-1*x$means, scale=FALSE)
+          
             if(!is.null(x$PCOaxes)) 
               { if (x$PCOaxes == "splines") # Only for PCO - if axes (type) is set to splines.  
                   {
@@ -198,7 +220,7 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
                   } 
                 else if(x$PCOaxes == "regression") # Only for PCO - if axes (type) is set to regression. 
                        {
-                         z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, x$X, x$means, 
+                         z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, 
                                           x$sd, x$ax.one.unit, ax.aes$which, ax.aes$ticks, 
                                           ax.aes$orthogx, ax.aes$orthogy)
                         .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
@@ -206,12 +228,12 @@ plot.biplot <- function(x, exp.factor=1.2, axis.predictivity=NULL, sample.predic
               } 
             else 
               { # Otherwise calibrate linear axes
-                z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, x$X, x$means, x$sd, 
+                z.axes <- lapply(1:length(ax.aes$which), .calibrate.axis, Xhat, x$means, x$sd, 
                                  x$ax.one.unit, ax.aes$which, ax.aes$ticks, 
                                  ax.aes$orthogx, ax.aes$orthogy)
                 .lin.axes.plot(z.axes, ax.aes, predict.mat, too.small,usr=usr,predict_which=x$predict$which)
               }
-            }
+        }
             if (ax.aes$vectors) { # Draw vectors on the calibrated axes
               # this only draws vectors on top of the chosen calibrated axis 
               if(inherits(x,"PCA")) .lin.axes.vector.plot(x$Lmat[,1:2],ax.aes)

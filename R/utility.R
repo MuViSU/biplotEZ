@@ -188,8 +188,8 @@ minEucDist <- function(p1,p2) {
 #' it is in fact a separating line between the two classes contained in 
 #' points parameter
 #'
-#' @param seg Line segment - matrix [x,y]
-#' @param original coordinates of class means - matrix [x,y]. Has been generalised to accept p columns as well.
+#' @param seg Line segment - matrix `[x,y]`
+#' @param original coordinates of class means - matrix `[x,y]`. Has been generalised to accept p columns as well.
 #' @param points vector showing which two points the proposed line segment
 #'               is separating - ex (1,2)
 #'
@@ -273,14 +273,14 @@ makeCircular<-function(x,points){
 
 #' Main entry function to get the prediction regions.
 #'
-#' @param x Matrix of coordinates - class centers. [x,y,z,p,...]
+#' @param x Matrix of coordinates - class centers. `[x,y,z,p,...]`
 #' @param bounds Bounds of the plotting frame
 #'
 #' @return Polygon regions 
 #' 
 #' @noRd
 #'
-predict.regions <- function (x, bounds=graphics::par("usr"))
+predict_regions <- function (x, bounds=graphics::par("usr"))
 { 
   Deets <- getintersects(x=x,bounds=bounds)
   Get_segments <- makelistmat(Deets)

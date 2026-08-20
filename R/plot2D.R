@@ -1,13 +1,13 @@
 #' Title
 #'
 #' @param Z Coordinates of points (x,y,label)
-#' @param group.aes 
-#' @param sample.aes 
-#' @param n 
-#' @param g.names 
-#' @param ggrepel.labs 
-#' @param too.small 
-#' @param cex.vec 
+#' @param group.aes factor indicating group membership of each sample
+#' @param sample.aes sample aesthetics
+#' @param n number of samples
+#' @param g.names names of the group levels
+#' @param ggrepel.labs ggrepel label positions
+#' @param too.small indices of points with predictivity below cutoff, excluded from plotting
+#' @param cex.vec vector of character expansion values
 #'
 #' @noRd
 .samples.plot <- function(Z, group.aes, sample.aes, n, g.names,
@@ -160,10 +160,10 @@
 }
 #' Title
 #'
-#' @param Z 
-#' @param sample.aes 
-#' @param g.names 
-#' @param ggrepel.labs 
+#' @param Z Coordinates of class means
+#' @param sample.aes sample aesthetics
+#' @param g.names names of the group levels
+#' @param ggrepel.labs ggrepel label positions
 #'
 #'
 #' @noRd
@@ -218,9 +218,9 @@
 
 #' Title
 #'
-#' @param Z 
-#' @param sample.aes 
-#' @param ggrepel.labs 
+#' @param Z Coordinates of the new samples
+#' @param sample.aes sample aesthetics
+#' @param ggrepel.labs ggrepel label positions
 #'
 #' @noRd
 .newsamples.plot <- function(Z, sample.aes, ggrepel.labs, usr)
@@ -266,11 +266,11 @@
 
 #' Title
 #'
-#' @param p.point 
-#' @param coef 
-#' @param col 
-#' @param lty 
-#' @param lwd 
+#' @param p.point point to project onto the axis, (x,y) with optional y-limit
+#' @param coef (intercept, slope) of the axis
+#' @param col colour of the projection line
+#' @param lty line type of the projection line
+#' @param lwd line width of the projection line
 #'
 #' @noRd
 .predict.func <- function(p.point, coef, col, lty, lwd) {
@@ -298,14 +298,14 @@
 #' @param Xhat Matrix of predicted values
 #' @param means vector: column means of X
 #' @param sd vector: column standard deviations
-#' @param axes.rows 
-#' @param ax.which 
-#' @param ax.tickvec 
-#' @param ax.orthogxvec 
-#' @param ax.orthogyvec 
+#' @param axes.rows matrix of biplot axis directions, one row per axis
+#' @param ax.which indices of the axes to be drawn
+#' @param ax.tickvec number of tick marks per axis
+#' @param ax.orthogxvec x-coordinates of the axis origin/orthogonal shift
+#' @param ax.orthogyvec y-coordinates of the axis origin/orthogonal shift
 #'
 #' @noRd
-.calibrate.axis <- function (j, Xhat, means, sd, 
+.calibrate.axis <- function (j, Xhat, means, sd,
                              axes.rows, ax.which, ax.tickvec,
                              ax.orthogxvec, ax.orthogyvec)
 {
@@ -360,11 +360,11 @@
 #' .calibrate.cat.axis
 #'
 #' @param j Index of axis to calibrate
-#' @param axes.rows 
-#' @param ax.which 
-#' @param ax.orthogxvec 
-#' @param ax.orthogyvec 
-#' @param markers
+#' @param axes.rows matrix of biplot axis directions, one row per axis
+#' @param ax.which indices of the axes to be drawn
+#' @param ax.orthogxvec x-coordinates of the axis origin/orthogonal shift
+#' @param ax.orthogyvec y-coordinates of the axis origin/orthogonal shift
+#' @param markers list of category marker positions per axis
 #'
 #' @noRd
 .calibrate.cat.axis <- function (j, axes.rows, ax.which, ax.orthogxvec, ax.orthogyvec,
@@ -980,8 +980,8 @@
 
 #' Title
 #'
-#' @param z.bags 
-#' @param bag.aes 
+#' @param z.bags list of alpha-bag polygon coordinates
+#' @param bag.aes alpha-bag aesthetics
 #'
 #' @noRd
 .bags.plot <- function(z.bags, bag.aes)
@@ -995,8 +995,8 @@
 
 #' Title
 #'
-#' @param z.ellipse 
-#' @param ellipse.aes 
+#' @param z.ellipse list of concentration ellipse polygon coordinates
+#' @param ellipse.aes concentration ellipse aesthetics
 #'
 #' @noRd
 .conc.ellipse.plot <- function(z.ellipse, ellipse.aes)
@@ -1051,11 +1051,11 @@
 
 #' Title
 #'
-#' @param Z.density 
-#' @param density.style 
+#' @param Z.density density estimate coordinates to plot
+#' @param density.style density plot aesthetics (colours, cuts, contour settings)
 #'
 #' @noRd
-.density.plot <- function(Z.density, density.style) 
+.density.plot <- function(Z.density, density.style)
 {
 
   levels.rect <- pretty(range(Z.density$z), n = density.style$cuts)
