@@ -143,30 +143,25 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
     while (length(label) < n) label <- c(label, label)
     label <- as.vector(label[1:n])
     for (i in 1:g) if (is.na(match(i, which))) label[bp$group.aes==bp$g.names[i]] <- NA
-#    label <- stats::na.omit(label)
 
     while (length(label.side) < n) label.side <- c(label.side, label.side)
     label.side <- as.vector(label.side[1:n])
     for (i in 1:g) if (is.na(match(i, which))) label.side[bp$group.aes==bp$g.names[i]] <- NA
-#    label.side <- stats::na.omit(label.side)
 
     while (length(label.offset) < n) label.offset <- c(label.offset, label.offset)
     label.offset <- as.vector(label.offset[1:n])
     for (i in 1:g) if (is.na(match(i, which))) label.offset[bp$group.aes==bp$g.names[i]] <- NA
-#    label.offset <- stats::na.omit(label.offset)
   }
 
   while (length(label.cex) < n) label.cex <- c(label.cex, label.cex)
   label.cex <- as.vector(label.cex[1:n])
   for (i in 1:g) if (is.na(match(i, which))) label.cex[bp$group.aes==bp$g.names[i]] <- NA
-#  label.cex <- stats::na.omit(label.cex)
 
   if (is.null(label.col))
   {
     label.col <- rep(NA, n)
     for (j in 1:g)
       if (!is.na(match(j, which))) label.col[bp$group.aes==bp$g.names[j]] <- col[which==j][1]
-  #label.col <- stats::na.omit(label.col)
   }
   else
   {
@@ -1179,7 +1174,6 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
     label<-TRUE
   nn <- nrow(bp$Xnew)
   gg <- bp$new.g
-
   if (length(col)==1)
     col <- rep(col, nn)
   else

@@ -273,15 +273,17 @@ biplot <- function(data, classes = NULL, group.aes = NULL, center = TRUE,
     }
     else
     {
-      means <- apply(X, 2, mean)
-      sd <- apply(X, 2, stats::sd)
       n <- nrow(X)
       p <- ncol(X)
+      means <- apply(X, 2, mean)
+      sd <- apply(X, 2, stats::sd)
+      if (any(sd<1e-14)) stop (paste("You have zero standard deviation(s) for variable(s):",(1:p)[sd<1e-14]))
       if (!center) {  X <- X
       means <- rep(0, ncol(X))
       sd <- rep(1, ncol(X))
       }
-      else if (scaled) { X <- scale(X) }
+      else if (scaled) { 
+        X <- scale(X) }
       else { X <- scale(X, scale = FALSE)
       sd <- rep(1, ncol(X))
       }

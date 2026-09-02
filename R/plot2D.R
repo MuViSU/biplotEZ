@@ -91,10 +91,10 @@
     ZZ <- ZZ[,-(1:5)]
     for (j in 1:nrow(ZZ.labels))
     {  text.pos <- match(ZZ.labels$label.side[j], c("bottom", "left", "top", "right"))
-    if (ZZ.labels$label[j])
-      graphics::text(ZZ[j, 1], ZZ[j, 2], labels = ZZ.labels$names[j],
-                     cex = ZZ.labels$label.cex[j], col = ZZ.labels$label.col[j],
-                     pos = text.pos, offset = ZZ.labels$label.offset[j])
+       if (ZZ.labels$label[j])
+          graphics::text(ZZ[j, 1], ZZ[j, 2], labels = ZZ.labels$names[j],
+                         cex = ZZ.labels$label.cex[j], col = ZZ.labels$label.col[j],
+                         pos = text.pos, offset = ZZ.labels$label.offset[j])
     }
   }
   for (i in 1:nrow(ZZ.points))
