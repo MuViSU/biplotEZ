@@ -9,7 +9,7 @@
 #' @param col the colour(s) for the samples, with default \code{blue}.
 #' @param pch the plotting character(s) for the samples, with default \code{16}.
 #' @param cex the character expansion(s) for the samples, with default \code{1}.
-#' @param label a logical value indicating whether the samples should be labelled, with default \code{FALSE}. Alternatively, specify \code{"ggrepel"} for non-overlapping placement of labels.
+#' @param label a logical value indicating whether the samples should be labelled, with default \code{FALSE}. Alternatively, specify \code{"ggrepel"} for non-overlapping placement of labels. Note that \code{"ggrepel"} is only supported by the \code{ggplot2} engine of \code{plot()}; with \code{engine = "base"} ordinary labels are used.
 #' @param label.name a vector of the same length as \code{which} with label names for the samples, with default \code{NULL}. If \code{NULL}, the \code{rownames(bp)} are used. Alternatively, a custom vector of length \code{n} should be used.
 #' @param label.col a vector of the same length as \code{which} with label colours for the samples, with default as the same colour of the sample points.
 #' @param label.cex a vector of the same length as \code{which} with label text expansions for the samples, with default \code{0.75}.
@@ -83,12 +83,15 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
  if(inherits(bp,"CA")) 
  {label <- TRUE}
   
- if(!is.null(label.name) | !is.null(label.col) | 
-    any(label.side!="bottom") | any(label.offset !=0.5) | any(label.cex!=0.75))
-   label<-TRUE
+ # setting any of the label.* arguments switches labelling on, but must not
+ # override an explicit request for ggrepel placement
+ if(!identical(label[1], "ggrepel"))
+   if(!is.null(label.name) | !is.null(label.col) | 
+      any(label.side!="bottom") | any(label.offset !=0.5) | any(label.cex!=0.75))
+     label<-TRUE
   
  if(is.null(label.name)) label.name <- rownames(bp$Z)
-  else label <- TRUE
+  else if(!identical(label[1], "ggrepel")) label <- TRUE
   
   #This piece of code is just to ensure which arguments in samples() and alpha.bag() lines up
   # to plot only the specified alpha bags and points
@@ -132,26 +135,20 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
   cex <- cex[ifelse(1:g%%cex.len==0,cex.len,1:g%%cex.len)]
   if(is.null(cex)){cex <- rep(0, g)}
   
-  if (label[1] == "ggrepel")
-  {
-     label <- label[1]
-     label.side <- NULL
-     label.offset <- NULL
-   }
-  else
-  {
-    while (length(label) < n) label <- c(label, label)
-    label <- as.vector(label[1:n])
-    for (i in 1:g) if (is.na(match(i, which))) label[bp$group.aes==bp$g.names[i]] <- NA
+  # label may be logical or the character "ggrepel"; label.side and label.offset
+  # are expanded either way so that the base engine can fall back to ordinary
+  # labels when ggrepel placement is requested
+  while (length(label) < n) label <- c(label, label)
+  label <- as.vector(label[1:n])
+  for (i in 1:g) if (is.na(match(i, which))) label[bp$group.aes==bp$g.names[i]] <- NA
 
-    while (length(label.side) < n) label.side <- c(label.side, label.side)
-    label.side <- as.vector(label.side[1:n])
-    for (i in 1:g) if (is.na(match(i, which))) label.side[bp$group.aes==bp$g.names[i]] <- NA
+  while (length(label.side) < n) label.side <- c(label.side, label.side)
+  label.side <- as.vector(label.side[1:n])
+  for (i in 1:g) if (is.na(match(i, which))) label.side[bp$group.aes==bp$g.names[i]] <- NA
 
-    while (length(label.offset) < n) label.offset <- c(label.offset, label.offset)
-    label.offset <- as.vector(label.offset[1:n])
-    for (i in 1:g) if (is.na(match(i, which))) label.offset[bp$group.aes==bp$g.names[i]] <- NA
-  }
+  while (length(label.offset) < n) label.offset <- c(label.offset, label.offset)
+  label.offset <- as.vector(label.offset[1:n])
+  for (i in 1:g) if (is.na(match(i, which))) label.offset[bp$group.aes==bp$g.names[i]] <- NA
 
   while (length(label.cex) < n) label.cex <- c(label.cex, label.cex)
   label.cex <- as.vector(label.cex[1:n])
@@ -236,8 +233,11 @@ means <- function (bp,  which = bp$samples$which, col = NULL,
   if (is.null(bp$samples)) bp <- samples(bp)
   g <- bp$g
   
-  if(!is.null(label.col) | label.side!="bottom" | label.offset !=0.5 | label.cex!=0.75)
-    label<-TRUE
+  # setting any of the label.* arguments switches labelling on, but must not
+  # override an explicit request for ggrepel placement
+  if(!identical(label[1], "ggrepel"))
+    if(!is.null(label.col) | label.side!="bottom" | label.offset !=0.5 | label.cex!=0.75)
+      label<-TRUE
   if (!is.null(which))
   {
     if (!all(is.numeric(which))) which <- match(which, bp$g.names, nomatch = 0)
@@ -266,21 +266,15 @@ means <- function (bp,  which = bp$samples$which, col = NULL,
   # Expand cex to length g
   cex.len <- length(cex)
   cex <- cex[ifelse(1:g%%cex.len==0,cex.len,1:g%%cex.len)]
-  if (label[1] == "ggrepel")
-  {
-    label <- label[1]
-    label.side <- NULL
-    label.offset <- NULL
-  }
-  else
-  {
-    while (length(label) < class.num) label <- c(label, label)
-    label <- as.vector(label[1:class.num])
-    while (length(label.side) < class.num) label.side <- c(label.side, label.side)
-    label.side <- as.vector(label.side[1:class.num])
-    while (length(label.offset) < class.num) label.offset <- c(label.offset, label.offset)
-    label.offset <- as.vector(label.offset[1:class.num])
-  }
+  # label may be logical or the character "ggrepel"; label.side and label.offset
+  # are expanded either way so that the base engine can fall back to ordinary
+  # labels when ggrepel placement is requested
+  while (length(label) < class.num) label <- c(label, label)
+  label <- as.vector(label[1:class.num])
+  while (length(label.side) < class.num) label.side <- c(label.side, label.side)
+  label.side <- as.vector(label.side[1:class.num])
+  while (length(label.offset) < class.num) label.offset <- c(label.offset, label.offset)
+  label.offset <- as.vector(label.offset[1:class.num])
   while (length(label.cex) < class.num) label.cex <- c(label.cex, label.cex)
   label.cex <- as.vector(label.cex[1:class.num])
 
@@ -1169,9 +1163,12 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
                         label.offset = 0.5, connected=FALSE, 
                         connect.col = "black", connect.lty = 1, connect.lwd = 1)
 { 
-  if(!is.null(label.name) | !is.null(label.col) | 
-     any(label.side!="bottom") | any(label.offset !=0.5) | any(label.cex!=0.75))
-    label<-TRUE
+  # setting any of the label.* arguments switches labelling on, but must not
+  # override an explicit request for ggrepel placement
+  if(!identical(label[1], "ggrepel"))
+    if(!is.null(label.name) | !is.null(label.col) | 
+       any(label.side!="bottom") | any(label.offset !=0.5) | any(label.cex!=0.75))
+      label<-TRUE
   nn <- nrow(bp$Xnew)
   gg <- bp$new.g
   if (length(col)==1)
@@ -1213,21 +1210,15 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
     cex <- new.cex
   }
 
-  if (label[1] == "ggrepel")
-  {
-    label <- label[1]
-    label.side <- NULL
-    label.offset <- NULL
-  }
-  else
-  {
-    while (length(label) < nn) label <- c(label, label)
-    label <- as.vector(label[1:nn])
-    while (length(label.side) < nn) label.side <- c(label.side, label.side)
-    label.side <- as.vector(label.side[1:nn])
-    while (length(label.offset) < nn) label.offset <- c(label.offset, label.offset)
-    label.offset <- as.vector(label.offset[1:nn])
-  }
+  # label may be logical or the character "ggrepel"; label.side and label.offset
+  # are expanded either way so that the base engine can fall back to ordinary
+  # labels when ggrepel placement is requested
+  while (length(label) < nn) label <- c(label, label)
+  label <- as.vector(label[1:nn])
+  while (length(label.side) < nn) label.side <- c(label.side, label.side)
+  label.side <- as.vector(label.side[1:nn])
+  while (length(label.offset) < nn) label.offset <- c(label.offset, label.offset)
+  label.offset <- as.vector(label.offset[1:nn])
   while (length(label.cex) < nn) label.cex <- c(label.cex, label.cex)
   label.cex <- as.vector(label.cex[1:nn])
   if (is.null(label.col)) label.col <- col

@@ -21,7 +21,7 @@ connect.lwd = 1, opacity = 1)
 
 \item{cex}{the character expansion(s) for the samples, with default \code{1}.}
 
-\item{label}{a logical value indicating whether the samples should be labelled, with default \code{FALSE}. Alternatively, specify \code{"ggrepel"} for non-overlapping placement of labels.}
+\item{label}{a logical value indicating whether the samples should be labelled, with default \code{FALSE}. Alternatively, specify \code{"ggrepel"} for non-overlapping placement of labels. Note that \code{"ggrepel"} is only supported by the \code{ggplot2} engine of \code{plot()}; with \code{engine = "base"} ordinary labels are used.}
 
 \item{label.name}{a vector of the same length as \code{which} with label names for the samples, with default \code{NULL}. If \code{NULL}, the \code{rownames(bp)} are used. Alternatively, a custom vector of length \code{n} should be used.}
 

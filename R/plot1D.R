@@ -14,7 +14,7 @@
 }
 
 
-.samples.plot1D <- function(Z, samples.aes, group.aes, g.names,  usr)#ggrepel.labs,
+.samples.plot1D <- function(Z, samples.aes, group.aes, g.names,  usr)
 {
   group.member <- sapply((group.aes),function(x)which(x==g.names))
   which.indices <- group.member%in%samples.aes$which
@@ -60,7 +60,7 @@
   }
 }
 
-.samples.plot1D.CA <- function(Z, samples.aes, group.aes, g.names,  usr)#ggrepel.labs,
+.samples.plot1D.CA <- function(Z, samples.aes, group.aes, g.names,  usr)
 {
   print(group.aes)
   group.member <- sapply((group.aes),function(x)which(x==g.names))
@@ -118,7 +118,7 @@
   graphics::rect(borders[1], 0.5, borders[2], bounds[4], col = col, border = border) 
 }
 #----------
-.means.plot1D <- function(Z, means.aes, g.names,  usr)#ggrepel.labs,
+.means.plot1D <- function(Z, means.aes, g.names,  usr)
 {
   x.vals <- Z[, 1, drop = FALSE]
   y.vals <- rep(0, length(Z))
@@ -377,7 +377,7 @@ plot_CA_1D <- function(bp, exp.factor=1.2, axis.predictivity=NULL, sample.predic
   
 }
   
-.samples.plot1D.CA <- function(Z, samples.aes, group.aes, g.names, c,r)#ggrepel.labs,
+.samples.plot1D.CA <- function(Z, samples.aes, group.aes, g.names, c,r)
 {
   nn <- nrow(Z)
   

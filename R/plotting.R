@@ -38,7 +38,7 @@ plot.biplot <- function(x, engine = c("ggplot2","base"),
   if (is.null(x$Z)) stop ("Add a biplot method before generating a plot")
     else Z <- x$Z
 
-  #aesthetics for samples
+  # aesthetics for samples
   if (is.null(x$samples)) x <- samples(x) 
 
   if (add) zoom <- FALSE  
@@ -54,47 +54,9 @@ plot.biplot <- function(x, engine = c("ggplot2","base"),
   if (!is.null(x$predict$means)) 
     predict.mat <- rbind(predict.mat, x$Zmeans[x$predict$means, , drop = F])
   
-  ###  ggrepel for samples, new samples and class means 
-  if (is.null(x$samples$which)) samples.ggrepel <- FALSE
-    else samples.ggrepel <- any(stats::na.omit(x$samples$label=="ggrepel"))
-  newsamples.ggrepel <- FALSE
-  if (!is.null(x$Znew)) newsamples.ggrepel <- any(stats::na.omit(x$newsamples$label=="ggrepel"))
-  means.ggrepel <- FALSE
-  if (!is.null(x$class.means)) if (x$class.means) means.ggrepel <- any(stats::na.omit(x$means.aes$label=="ggrepel"))
-
-  do.ggrepel <- samples.ggrepel | means.ggrepel | newsamples.ggrepel
-  if (samples.ggrepel)
-    {  df <- data.frame (x=Z[,1], y=Z[,2], z=rownames(Z))
-       for (i in 1:x$g)
-         if (is.na(match(i, x$samples$which))) df$x[x$g.names[i]==x$group.aes] <- NA
-       df <- stats::na.omit(df)
-  }
-    else df <- data.frame (x=NULL, y=NULL, z=NULL)
-  n.samples <- nrow(df)
-  if (means.ggrepel) df <- rbind (df, data.frame(x=x$Zmeans[x$means.aes$which,1], y=x$Zmeans[x$means.aes$which,2],
-                                           z=rownames(x$Zmeans)[x$means.aes$which]))
-  n.means <- nrow(df)
-  if (newsamples.ggrepel) df <- rbind (df, data.frame(x=x$Znew[,1], y=x$Znew[,2],z=rownames(x$Znew)))
-  n.newsamples <- nrow(df)
-  ggrepel.new <- ggrepel.means <- ggrepel.samples <- NULL
-  if (do.ggrepel)
-  {
-    if (!requireNamespace("R.devices", quietly = TRUE)) {
-       stop("Package 'R.devices' is required for this function. Please install it.", call. = FALSE)
-    }
-    out <- R.devices::suppressGraphics(.get.ggrepel.coords(df))
-    if (n.newsamples>n.means) ggrepel.new <-list(coords = out$coords[out$visible>n.newsamples & out$visible<n.means+1,,drop=F],
-                                                 visible = out$visible[out$visible>n.newsamples & out$visible<n.means+1]-n.means,
-                                                 textlines = out$textlines[out$textlines>n.newsamples & out$textlines<n.means+1]-n.means)
-    if (n.means>n.samples) ggrepel.means <- list(coords = out$coords[out$visible>n.samples & out$visible<n.newsamples+1,,drop=F],
-                                                 visible = out$visible[out$visible>n.samples & out$visible<n.newsamples+1]-n.samples,
-                                                 textlines = out$textlines[out$textlines>n.samples & out$textlines<n.newsamples+1]-n.samples)
-    if (samples.ggrepel) ggrepel.samples <- list(coords = out$coords[out$visible<n.samples+1,,drop=F],
-                                                 visible = out$visible[out$visible<n.samples+1],
-                                                 textlines = out$textlines[out$textlines<n.samples+1])
-  }
-
-  ### end of ggrepel 
+  ### label = "ggrepel" is a ggplot2-engine feature: with base graphics the
+  ### labels are placed in the ordinary way
+  x <- .no.ggrepel(x)
   
   
   if (x$dim.biplot == 3) plot3D(bp=x, exp.factor=exp.factor, ...)
@@ -315,19 +277,19 @@ plot.biplot <- function(x, engine = c("ggplot2","base"),
       if  (!is.null(x$samples$which) & !inherits(x, "CA"))
         {
         .samples.plot(Z, x$group.aes, x$samples, 
-                      x$n, x$g.names, ggrepel.samples,
+                      x$n, x$g.names,
                       too.small, cex.vec, usr=usr,x$alpha.bag.outside,
                       x$alpha.bag.aes)}
 
       # New samples 
       if (!is.null(x$Znew)) if (is.null(x$newsamples)) x <- newsamples(x)
-      if (!is.null(x$Znew)) .newsamples.plot (x$Znew, x$newsamples, ggrepel.new, usr=usr)
+      if (!is.null(x$Znew)) .newsamples.plot (x$Znew, x$newsamples, usr=usr)
       
       # Means
       if (!is.null(x$class.means)) if (x$class.means)
       {
         if (is.null(x$means.aes)) x <- means(x)
-        .means.plot (x$Zmeans, x$means.aes, x$g.names, ggrepel.means,usr=usr)
+        .means.plot (x$Zmeans, x$means.aes, x$g.names, usr=usr)
       }
 
       # CLPs 
@@ -630,7 +592,7 @@ plot1D <-  function(bp, exp.factor = 1.2,...)
     if (!is.null(bp$class.means)) if (bp$class.means)
     {
       if (is.null(bp$means.aes)) bp <- means(bp)
-      .means.plot1D (bp$Zmeans, bp$means.aes, bp$g.names, usr=usr)#, ggrepel.means=FALSE)
+      .means.plot1D (bp$Zmeans, bp$means.aes, bp$g.names, usr=usr)
     }
     
     # Legend

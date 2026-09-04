@@ -35,10 +35,8 @@ Suggests:
     geometry,
     ggplot2,
     ggrepel,
-    grid,
     knitr,
     MASS,
-    R.devices,
     RColorBrewer,
     rgl,
     rmarkdown
