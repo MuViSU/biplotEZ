@@ -286,8 +286,11 @@ and the quality of the approximation of the original variables
 $`\mathbf{\bar{X}}`$ in the 2D CVA biplot is given by
 
 ``` math
-Quality (original \: variables) = \frac{tr(\mathbf{\Lambda J})}{tr(\mathbf{\Lambda)}}
+Quality (original \: variables) = \frac{\sum_{j=1}^{r}{\lambda_jm^{jj}}}{\sum_{j=1}^{p}{\lambda_jm^{jj}}}
 ```
+
+where $`\mathbf{M = LV}`$ as defined in section 1 and $`m^{jj}`$
+represents the $`j`$-th diagonal value of $`(\mathbf{M'M})^{-1}`$.
 
 ### Adequacy of representation of variables
 

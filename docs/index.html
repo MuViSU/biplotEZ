@@ -68,8 +68,6 @@
 <img src="logo.png" class="logo" alt=""><h1 id="biplotez">biplotEZ<a class="anchor" aria-label="anchor" href="#biplotez"></a>
 </h1>
 </div>
-<!-- badges: start -->
-<!-- badges: end -->
 <p>The goal of biplotEZ is to provide users an EZ-to-use platform for visually representing their data with biplots. Currently, this package includes principal component analysis (PCA) and canonical variate analysis (CVA) biplots. This is accompanied by various formatting options for the samples and axes. Alpha-bags and concentration ellipses are included for visual enhancements and interpretation.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -85,17 +83,12 @@
 <p>This is a basic example which shows you how to construct a PCA biplot:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">biplotEZ</span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'biplotEZ'</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     biplot</span></span>
 <span><span class="fu"><a href="reference/biplot.html">biplot</a></span> <span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, Title<span class="op">=</span><span class="st">"Test PCA biplot"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-PCA_example-1.png" width="100%"></p>
+<p><img src="reference/figures/README-PCA_example-1.png" alt="" width="100%"></p>
 <p>While the PCA biplot provides a visual representation of the overall data set, optimally representing the variance in 1, 2 or 3 dimensions, the CVA biplot aims to optimally separate specified groups in the data. This is a basic example which shows you how to construct a CVA biplot:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/biplot.html">biplot</a></span> <span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, Title<span class="op">=</span><span class="st">"Test CVA biplot"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/CVA.html">CVA</a></span><span class="op">(</span>classes<span class="op">=</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-CVA_example-1.png" width="100%"></p>
+<p><img src="reference/figures/README-CVA_example-1.png" alt="" width="100%"></p>
 <p>An over-the-top example of changing all the formatting and adding all the bells and whistles:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/biplot.html">biplot</a></span> <span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, group.aes<span class="op">=</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">5</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
@@ -111,20 +104,22 @@
 <span><span class="co">#&gt; Computing 0.95 -bag for virginica </span></span>
 <span><span class="co">#&gt; Computing 2.15 -ellipse for setosa </span></span>
 <span><span class="co">#&gt; Computing 2.15 -ellipse for versicolor</span></span></code></pre></div>
-<p><img src="reference/figures/README-aes_example-1.png" width="100%"></p>
+<p><img src="reference/figures/README-aes_example-1.png" alt="" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="ca-biplot">CA biplot<a class="anchor" aria-label="anchor" href="#ca-biplot"></a>
 </h2>
 <p>The default CA biplots represents row principal coordinates with a call such as:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/CA.html">CA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-ca_default-1.png" width="100%"></p>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/CA.html">CA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.</span></span></code></pre></div>
+<p><img src="reference/figures/README-ca_default-1.png" alt="" width="100%"></p>
 <p>To change to row standard coordinates use a call such as:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Stand"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/samples.html">samples</a></span><span class="op">(</span>col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"magenta"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">18</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-ca_standard-1.png" width="100%"></p>
+<span>  <span class="fu"><a href="reference/CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Stand"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/samples.html">samples</a></span><span class="op">(</span>col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"magenta"</span>,<span class="st">"purple"</span><span class="op">)</span>, pch<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>,<span class="fl">18</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.</span></span></code></pre></div>
+<p><img src="reference/figures/README-ca_standard-1.png" alt="" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="regression-biplot">Regression biplot<a class="anchor" aria-label="anchor" href="#regression-biplot"></a>
@@ -133,7 +128,7 @@
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">out</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/PCO.html">PCO</a></span><span class="op">(</span>dist.func <span class="op">=</span> <span class="va">sqrtManhattan</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/regress.html">regress</a></span><span class="op">(</span><span class="va">out</span><span class="op">$</span><span class="va">Z</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="reference/figures/README-regress-1.png" width="100%"></p>
+<p><img src="reference/figures/README-regress-1.png" alt="" width="100%"></p>
 </div>
 <div class="section level2">
 <h2 id="report-bugs-and-support">Report Bugs and Support<a class="anchor" aria-label="anchor" href="#report-bugs-and-support"></a>

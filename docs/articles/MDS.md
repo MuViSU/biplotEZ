@@ -139,7 +139,7 @@ embeddable, but the square root of the distance is. The function
 `sqrtManhattan` is included as an example of a function computing a
 Euclidean embeddable `dist` object.
 
-`sqrtManhattan`` ``#> function (X) `` ``#> {`` ``#> sqrt(stats::dist(X, method = "manhattan"))`` ``#> }`` ``#> <bytecode: 0xa818ec698>`` ``#> <environment: namespace:biplotEZ>`` `[`biplot`](../reference/biplot.md)`(``rock``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCO`](../reference/PCO.md)`(``dist.func ``=`` ``sqrtManhattan``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+`sqrtManhattan`` ``#> function (X) `` ``#> {`` ``#> sqrt(stats::dist(X, method = "manhattan"))`` ``#> }`` ``#> <bytecode: 0xc6f9dc0e8>`` ``#> <environment: namespace:biplotEZ>`` `[`biplot`](../reference/biplot.md)`(``rock``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCO`](../reference/PCO.md)`(``dist.func ``=`` ``sqrtManhattan``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](MDS_files/figure-html/unnamed-chunk-7-1.png)
 

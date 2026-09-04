@@ -205,9 +205,10 @@ interpolated new samples. There is no argument `which` for
 samples are interpolated to be represented in the biplot. All the other
 arguments are vectors of length similar to the number of samples in
 `newdata`. To change the colour of the interpolated samples and add
-labels, the following call will be used:
+labels, the argument `new.group.aes`needs to be used in conjunction with
+[`newsamples()`](../reference/newsamples.md):
 
-[`biplot`](../reference/biplot.md)`(``rock``[``1``:``40``,``]``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`interpolate`](../reference/interpolate.md)` ``(``rock``[``41``:``48``,``]``)`` ``|>`` `` `[`newsamples`](../reference/newsamples.md)` ``(``label ``=`` ``TRUE``, label.side ``=`` ``"top"``, col ``=`` `[`rainbow`](https://rdrr.io/r/grDevices/palettes.html)`(``10``)``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``rock``[``1``:``40``,``]``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`interpolate`](../reference/interpolate.md)` ``(``rock``[``41``:``48``,``]``, new.group.aes``=`[`rep`](https://rdrr.io/r/base/rep.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"A"``,``"B"``)``, each``=``4``)``)`` ``|>`` `` `[`newsamples`](../reference/newsamples.md)` ``(``label ``=`` ``TRUE``, label.side ``=`` ``"top"``, col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"magenta"``,``"cyan"``)``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-11-1.png)
 
