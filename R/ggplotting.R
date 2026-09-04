@@ -633,26 +633,39 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
     ggplot2::scale_shape_manual(name = NULL, values = pch.map, drop = FALSE),
     ggplot2::scale_size_manual(values = cex.map, drop = FALSE, guide = "none"))
   
-  lab.on <- s.aes$label
+  # col/pch/cex are per group, but label, label.col, label.cex, label.side and
+  # label.offset are per sample. Clip those to the samples actually drawn and
+  # keep them vectors, exactly as base .samples.plot does by carrying them as
+  # columns of its ZZ data frame; using [1] paints every label like sample 1.
+  nshow <- sum(show)
+  sub <- function(v, d)
+    if (length(v) == x$n) v[show] else rep_len(if (length(v)) v[1] else d, nshow)
+  lab.on  <- s.aes$label
+  lab.cex <- sub(s.aes$label.cex, 0.75)
+  lab.col <- sub(s.aes$label.col, "black")
   if (any(stats::na.omit(lab.on == "ggrepel"))) {
     if (!requireNamespace("ggrepel", quietly = TRUE))
       stop("Package 'ggrepel' is required for label = 'ggrepel'.", call. = FALSE)
     layers <- c(layers, list(ggrepel::geom_text_repel(
       data = df, ggplot2::aes(x = .data$x, y = .data$y, label = .data$name),
-      size = 3.2 * s.aes$label.cex[1],
-      colour = if (!is.null(s.aes$label.col)) s.aes$label.col[1] else "black",
+      size = 3.2 * lab.cex, colour = lab.col,
       max.overlaps = Inf, seed = 1, show.legend = FALSE)))
   } else if (any(stats::na.omit(as.logical(lab.on)))) {
-    nudge <- switch(s.aes$label.side[1],
-                    bottom = c(0, -1), top = c(0, 1),
-                    left = c(-1, 0), right = c(1, 0), c(0, -1))
-    off <- s.aes$label.offset[1] * 0.02 * (usr[2] - usr[1])
-    layers <- c(layers, list(ggplot2::geom_text(
-      data = df, ggplot2::aes(x = .data$x, y = .data$y, label = .data$name),
-      size = 3.2 * s.aes$label.cex[1],
-      colour = if (!is.null(s.aes$label.col)) s.aes$label.col[1] else "black",
-      nudge_x = nudge[1] * off, nudge_y = nudge[2] * off,
-      show.legend = FALSE)))
+    on <- sub(lab.on, TRUE)
+    on <- !is.na(on) & as.logical(on)
+    if (any(on)) {
+      side  <- sub(s.aes$label.side, "bottom")[on]
+      off   <- sub(s.aes$label.offset, 0.5)[on] * 0.02 * (usr[2] - usr[1])
+      nudge <- vapply(side, function(sd)
+        switch(sd, bottom = c(0, -1), top = c(0, 1),
+               left = c(-1, 0), right = c(1, 0), c(0, -1)), numeric(2))
+      layers <- c(layers, list(ggplot2::geom_text(
+        data = df[on, , drop = FALSE],
+        ggplot2::aes(x = .data$x, y = .data$y, label = .data$name),
+        size = 3.2 * lab.cex[on], colour = lab.col[on],
+        nudge_x = nudge[1, ] * off, nudge_y = nudge[2, ] * off,
+        show.legend = FALSE)))
+    }
   }
   list(layers = layers, scales = scales)
 }
@@ -737,17 +750,21 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
     data = df, ggplot2::aes(x = .data$x, y = .data$y),
     colour = sub(ns.aes$col), shape = sub(ns.aes$pch),
     size = 2.2 * sub(ns.aes$cex), show.legend = FALSE)))
-  lab <- ns.aes$label
+  lab      <- sub(ns.aes$label)
+  lab.cex  <- sub(ns.aes$label.cex)
+  lab.col  <- sub(ns.aes$label.col)
   if (any(stats::na.omit(lab == "ggrepel")) &&
       requireNamespace("ggrepel", quietly = TRUE)) {
     out <- c(out, list(ggrepel::geom_text_repel(
       data = df, ggplot2::aes(x = .data$x, y = .data$y, label = .data$name),
-      size = 3.2 * ns.aes$label.cex[1], colour = ns.aes$label.col[1],
+      size = 3.2 * lab.cex, colour = lab.col,
       seed = 1, show.legend = FALSE)))
   } else if (any(stats::na.omit(as.logical(lab)))) {
+    on <- !is.na(lab) & as.logical(lab)
     out <- c(out, list(ggplot2::geom_text(
-      data = df, ggplot2::aes(x = .data$x, y = .data$y, label = .data$name),
-      size = 3.2 * ns.aes$label.cex[1], colour = ns.aes$label.col[1],
+      data = df[on, , drop = FALSE],
+      ggplot2::aes(x = .data$x, y = .data$y, label = .data$name),
+      size = 3.2 * lab.cex[on], colour = lab.col[on],
       vjust = 1.8, show.legend = FALSE)))
   }
   out

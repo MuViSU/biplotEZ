@@ -234,7 +234,22 @@
   x.vals <- Z[, 1]
   y.vals <- Z[, 2]
   invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
+  n.new <- length(invals)
+  # Clip the per-sample aesthetics along with the samples themselves: dropping a
+  # sample that falls outside the plotting region without dropping its colour,
+  # symbol and label shifts every remaining sample onto its neighbour's aesthetics.
+  sub <- function(v) if (length(v) == n.new) v[invals] else v
+  label.names <- sub(label.names)
+  pchs <- sub(sample.aes$pch)
+  cols <- sub(sample.aes$col)
+  cexs <- sub(sample.aes$cex)
+  lab.on <- sub(sample.aes$label)
+  lab.col <- sub(sample.aes$label.col)
+  lab.cex <- sub(sample.aes$label.cex)
+  lab.side <- sub(sample.aes$label.side)
+  lab.offset <- sub(sample.aes$label.offset)
   Z <- Z[invals, , drop = FALSE]
+  if (nrow(Z) == 0) return(invisible(NULL))
   if (sample.aes$label[1]=="ggrepel")
   {
     ggrepel.labs$coords <- ggrepel.labs$coords[invals, ,drop=F]
@@ -254,14 +269,14 @@
   else
   {
     for (j in 1:nrow(Z))
-    {  text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
-    if (sample.aes$label[j]) graphics::text(Z[j, 1], Z[j, 2], labels = label.names[j],
-                                            cex = sample.aes$label.cex[j], col = sample.aes$label.col[j],
-                                            pos = text.pos, offset = sample.aes$label.offset[j])
+    {  text.pos <- match(lab.side[j], c("bottom", "left", "top", "right"))
+    if (lab.on[j]) graphics::text(Z[j, 1], Z[j, 2], labels = label.names[j],
+                                  cex = lab.cex[j], col = lab.col[j],
+                                  pos = text.pos, offset = lab.offset[j])
     }
   }
-  graphics::points(x = Z[, 1], y = Z[, 2], pch = sample.aes$pch, col = sample.aes$col,
-                   cex = sample.aes$cex)
+  graphics::points(x = Z[, 1], y = Z[, 2], pch = pchs, col = cols,
+                   cex = cexs)
 }
 
 #' Title
