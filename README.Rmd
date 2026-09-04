@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# biplotEZ
+# biplotEZ <img src="man/figures/logo.png" align="right" height="139" alt="biplotEZ logo" />
 
 The goal of biplotEZ is to provide users an EZ-to-use platform for
 visually representing their data with biplots. Currently, this package

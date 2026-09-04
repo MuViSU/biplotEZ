@@ -23,3 +23,6 @@ symbols.rds
 *.tar.gz
 *.Rcheck/
 Rplots.pdf
+
+/.quarto/
+**/*.quarto_ipynb
