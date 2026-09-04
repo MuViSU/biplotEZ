@@ -227,7 +227,7 @@ plot.gg_biplot <- function(x, ...) { print(x$gg); invisible(x) }
   if (inherits(e1, "gg_biplot")) e1$gg + e2 else e1 + e2$gg
 }
 
-#' @export
+#' @exportS3Method ggplot2::autoplot
 autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
 
 

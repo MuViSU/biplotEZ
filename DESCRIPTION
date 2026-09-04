@@ -24,6 +24,8 @@ Description: Provides users with an EZ-to-use platform for representing data
              are included for visual enhancements and interpretation. For an extensive
              discussion on the topic, see Gower, J.C., Lubbe, S. and le Roux, N.J.
              (2011, ISBN: 978-0-470-01255-0) Understanding Biplots. Wiley: Chichester.
+Depends:
+    R (>= 3.6.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
