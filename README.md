@@ -25,6 +25,14 @@ This is a basic example which shows you how to construct a PCA biplot:
 
 ``` r
 library(biplotEZ)
+#> Welcome to biplotEZ! 
+#> This package is used to construct biplots 
+#> Run ?biplot or vignette() for more information
+#> 
+#> Attaching package: 'biplotEZ'
+#> The following object is masked from 'package:stats':
+#> 
+#>     biplot
 biplot (iris[,1:4], Title="Test PCA biplot") |> PCA() |> plot()
 ```
 
@@ -69,7 +77,8 @@ such as:
 
 ``` r
 biplot(HairEyeColor[,,2], center = FALSE) |> CA() |> plot()
-#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.
+#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base
+#> graphics.
 ```
 
 <img src="man/figures/README-ca_default-1.png" alt="" width="100%" />
@@ -79,7 +88,8 @@ To change to row standard coordinates use a call such as:
 ``` r
 biplot(HairEyeColor[,,2], center = FALSE) |> 
   CA(variant = "Stand") |> samples(col=c("magenta","purple"), pch=c(15,18)) |> plot()
-#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.
+#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base
+#> graphics.
 ```
 
 <img src="man/figures/README-ca_standard-1.png" alt="" width="100%" />

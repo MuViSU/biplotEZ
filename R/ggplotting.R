@@ -38,6 +38,11 @@ gg_biplot <- function(x, exp.factor = 1.2,
   if (is.null(x$samples)) x <- biplotEZ::samples(x)
   if (is.null(x$axes))    x <- biplotEZ::axes(x)
   leg <- x$legend                                # legend.type() flags, or NULL
+  ### a legend in a separate window is a base graphics feature: with ggplot2
+  ### the legend is drawn beside the biplot in the ordinary way
+  if (isTRUE(leg$new))
+    warning("legend.type(new = TRUE) only works with engine = \"base\"; ",
+            "the legend is placed next to the ggplot2 biplot.", call. = FALSE)
   
   # ---- plotting window -----------------------------------------------------
   if (is.null(xlim)) xlim <- range(Z[, 1] * exp.factor)
@@ -236,7 +241,6 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
 #' @noRd
 .gg_supported <- function(x, zoom = FALSE) {
   if (isTRUE(zoom)) return("interactive zooming")
-  if (isTRUE(x$legend$new)) return("legend.type(new = TRUE)")
   if (!is.null(x$dim.biplot) && x$dim.biplot != 2)
     return(paste0(x$dim.biplot, "D biplots"))
   if (inherits(x, "CA"))     return("CA maps")

@@ -286,7 +286,7 @@ The `sample()` function should be utilised to specify the colours, plotting char
 ```{r}
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Princ") |> 
   samples(col = c("cyan","purple"), pch = c(15,17), label.side = c("bottom","top"), 
-          label.cex = 1) |> legend.type(samples = TRUE, new = TRUE) |> plot()
+          label.cex = 1) |> legend.type(samples = TRUE, new = TRUE) |> plot(engine = "base")
 ```
 
 ```{r}
@@ -323,7 +323,7 @@ SACrime
 biplot(SACrime, center = FALSE) |> 
   CA(variant = "Symmetric", lambda.scal = TRUE) |> 
   samples(col = c("cyan","purple"), pch = c(15,17), label.side = c("bottom","top")) |>
-  legend.type(samples = TRUE, new = TRUE) |> plot()
+  legend.type(samples = TRUE, new = TRUE) |> plot(engine = "base")
 ```
 
 

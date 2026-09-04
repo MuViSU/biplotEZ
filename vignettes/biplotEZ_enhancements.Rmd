@@ -64,7 +64,7 @@ biplot(sunspots, group.aes=century) |> PCA() |>
         axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
         samples (which = NULL) |>
         alpha.bags (alpha = c(0.9, 0.95, 0.99), lty = c(1,3,5), opacity=0.05) |> 
-        legend.type(bags = TRUE, new = TRUE)  |> plot()
+        legend.type(bags = TRUE, new = TRUE)  |> plot(engine = "base")
 ```
 
 For a completely custom combination of $\alpha$-bags, we do not rely on any recycling and specify each of the arguments `alpha`, `which`, `col`, `lty`, `lwd` as a vector. Since the calculation of halfspace location depth is very computationally intensive, a random sample of size 2500 is chosen for each group to construct the $\alpha$-bag. This sample size can be changed with the argument `max`. Setting `trace = FALSE` will suppress the message "Computing $\alpha$" -bag for groupX." 

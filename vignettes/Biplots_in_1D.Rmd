@@ -201,12 +201,12 @@ biplot(iris) |> PCA(group.aes  = iris[,5],dim.biplot = 1, show.class.means = TRU
   legend.type(samples = TRUE,means = TRUE, bags = TRUE) |> plot()
 ```
 
-By specifying `new=TRUE`, the legends will be displayed on a new plot. 
+By specifying `new=TRUE`, the legends will be displayed on a new plot. This is a base graphics feature, so it requires `plot(engine = "base")`. 
 
 ```{r}
 biplot(iris) |> PCA(group.aes  = iris[,5],dim.biplot = 1, show.class.means = TRUE) |>
   axes(col="black") |> density1D() |> samples(opacity=0.5)|> alpha.bags()|>
-  legend.type(samples = TRUE,means = TRUE, bags = TRUE, new=TRUE) |> plot()
+  legend.type(samples = TRUE,means = TRUE, bags = TRUE, new=TRUE) |> plot(engine = "base")
 ```
 
 For the CVA biplot `legend.type` also displays a legend for classification regions if `
@@ -215,7 +215,7 @@ For the CVA biplot `legend.type` also displays a legend for classification regio
 ```{r}
 bp <- biplot(iris) |> CVA(classes  = iris[,5],dim.biplot = 1, show.class.means = TRUE) |>
   axes(col="black") |> classify() |> density1D() |> samples(opacity=0.5)|> alpha.bags()|>
-  legend.type(samples = TRUE,means = TRUE, bags = TRUE, regions = TRUE, new=TRUE) |> plot() #
+  legend.type(samples = TRUE,means = TRUE, bags = TRUE, regions = TRUE, new=TRUE) |> plot(engine = "base") #
 ```
 
 # The function `fit.measures()`

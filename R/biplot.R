@@ -470,7 +470,7 @@ ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple"
 #' @param bags a logical value indicating whether a legend should be printed for bags, with default \code{FALSE}.
 #' @param ellipses a logical value indicating whether a legend should be printed for concentration ellipses, with default \code{FALSE}.
 #' @param regions a logical value indicating whether a legend should be printed for classification regions, with default \code{FALSE}.
-#' @param new a logical value indicating whether the legend should appear in a new window, with default \code{FALSE}.
+#' @param new a logical value indicating whether the legend should appear in a new window, with default \code{FALSE}. This is a base graphics feature: use \code{plot(engine = "base")}, since the \code{ggplot2} engine always places the legend next to the biplot.
 #' @param ... additional arguments to be sent to \code{legend()}.
 #'
 #' @return A list with the following components is available:
