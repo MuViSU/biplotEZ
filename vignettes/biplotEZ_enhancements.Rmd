@@ -64,30 +64,38 @@ biplot(sunspots, group.aes=century) |> PCA() |>
         axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
         samples (which = NULL) |>
         alpha.bags (alpha = c(0.9, 0.95, 0.99), lty = c(1,3,5), opacity=0.05) |> 
-        legend.type(bags = TRUE, new = TRUE)  |> plot(engine = "base")
+        legend.type(bags = TRUE)  |> plot()
 ```
 
 For a completely custom combination of $\alpha$-bags, we do not rely on any recycling and specify each of the arguments `alpha`, `which`, `col`, `lty`, `lwd` as a vector. Since the calculation of halfspace location depth is very computationally intensive, a random sample of size 2500 is chosen for each group to construct the $\alpha$-bag. This sample size can be changed with the argument `max`. Setting `trace = FALSE` will suppress the message "Computing $\alpha$" -bag for groupX." 
 
 ```{r}
-biplot(sunspots, group.aes=century) |> PCA() |>
-        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
-        samples (which = NULL) |>
-        alpha.bags (alpha = c(   0.9,   0.95,   0.99,             0.5,         0.6,     0.7), 
-                    which = c(     1,      1,      2,               3,           3,      3),
-                    col   = c("brown", "red", "gold",  "deepskyblue2", "steelblue3","blue"),
-                    lty   = c(     1,      2,     10,               2,           2,      0),
-                    lwd   = c(     1,      1,      3,               1,           2,      1),
-                    opacity = 0.1) |> plot()
+biplot(sunspots, group.aes = century) |>
+  PCA() |>
+  axes(label.dir = "Hor", label.line = c(0.8, rep(0, 10), 0.8)) |>
+  samples(which = NULL) |>
+  alpha.bags(
+    alpha = c(0.9, 0.95, 0.99, 0.5, 0.6, 0.7),
+    which = c(1, 1, 2, 3, 3, 3),
+    col = c("brown", "red", "gold", "deepskyblue2", "steelblue3", "blue"),
+    lty = c(1, 2, 10, 2, 2, 0),
+    lwd = c(1, 1, 3, 1, 2, 1),
+    opacity = 0.1) |>
+  legend.type(bags = TRUE) |>   
+  plot()
 ```
 
 The function `alpha.bags` provides the option to only plot the samples that sit outside the $\alpha$-bags. This is done by setting the argument `outlying=TRUE`. Note the `which` argument may be overwritten when `outlying` is set to `TRUE`. This happens in particular when `which` in the `samples()` function differs from the `which` in the `alpha_bags()` function.  
 
 
 ```{r}
-biplot(sunspots, group.aes=century) |> PCA() |>
-        alpha.bags (col   = c("brown", "red", "gold","deepskyblue2"),
-                    opacity = 0.1,outlying = TRUE) |> plot()
+biplot(sunspots, group.aes = century) |>
+  PCA() |>
+  alpha.bags(
+    col = c("brown", "red", "gold", "deepskyblue2"),
+    opacity = 0.1,
+    outlying = TRUE) |>
+  plot()
 ```
 
 
@@ -104,17 +112,21 @@ traces an ellipsoid in $p$ dimensions. For $p=2$, choosing $\kappa = {(\chi^{2}_
 $\chi^{2}_{2,1-\alpha}$ denotes the $(1-\alpha)100$-th percentage point of the $\chi^2_2$ distribution results in an ellipse covering approximately $100\alpha\%$ of the configuration of two-dimensional points. With default arguments `df = 2` and `alpha = 0.95`, the value of $\kappa$ is $2.447747$ and the ellipse function constructs an ellipse that would enclose approximately $95\%$ of the observations from a bivariate normal distribution. The argument `kappa` can be specified directly, and will take precedence over the specification of `alpha`. The other arguments of the `ellipses()` function operates identically to the corresponding arguments of the function `alpha.bags()`. Using $\alpha$-bags, rather than ellipses is recommended in general, since the construction of the ellipses are based on the underlying assumption of a random sample observed from a normal distribution.
 
 ```{r}
-biplot(sunspots, group.aes=century) |> PCA() |>
-        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
-        samples (which = NULL) |>
-        ellipses (alpha = c(0.9, 0.95), lty = c(1,3,5), opacity = 0.1) |> 
-        legend.type(ellipses = TRUE)  |> plot()
+biplot(sunspots, group.aes = century) |>
+  PCA() |>
+  axes(label.dir = "Hor", label.line = c(0.8, rep(0, 10), 0.8)) |>
+  samples(which = NULL) |>
+  ellipses(alpha = c(0.9, 0.95), lty = c(1, 3, 5), opacity = 0.1) |>
+  legend.type(ellipses = TRUE) |>
+  plot()
 
-biplot(sunspots, group.aes=century) |> PCA() |>
-        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
-        samples (which = NULL) |>
-        ellipses (kappa = 1:2, lty = c(1,3,5), opacity = 0.1) |> 
-        legend.type(ellipses = TRUE) |> plot()
+biplot(sunspots, group.aes = century) |>
+  PCA() |>
+  axes(label.dir = "Hor", label.line = c(0.8, rep(0, 10), 0.8)) |>
+  samples(which = NULL) |>
+  ellipses(kappa = 1:2, lty = c(1, 3, 5), opacity = 0.1) |>
+  legend.type(ellipses = TRUE) |>
+  plot()
 ```
 
 # The function `density2D()`
@@ -128,14 +140,26 @@ kernel, evaluated on a square grid.
 The function plots the density for each group (specified in the argument `which`) in the data. In the following case, the second group's density is plotted with `contours=TRUE`. A vector of at least two components should be specified in the `col` argument to display the colours of the density response surface. There are `cuts`-1 colours interpolated between the components of the `col`. The default is `c("green", "yellow", "red")`.
 
 ```{r}
-biplot(state.x77,group.aes = state.region,scaled = TRUE) |> PCA() |>
-  density2D(which=2,col=c("white","purple","blue","cyan"),contours=TRUE) |> plot()
+biplot(state.x77, group.aes = state.region, scaled = TRUE) |>
+  PCA() |>
+  density2D(
+    which = 2,
+    col = c("white", "purple", "blue", "cyan"),
+    contours = TRUE) |>
+  plot()
 ```
 
 In this case, the vector `group.aes` is not specified, so all samples form under one group. 
 ```{r}
-biplot(state.x77,scaled = TRUE) |> PCA() |> samples(which=NULL) |>
-  density2D(which=1,col=c("white","purple","blue","cyan"),contours = TRUE,cuts = 20) |> plot()
+biplot(state.x77, scaled = TRUE) |>
+  PCA() |>
+  samples(which = NULL) |>
+  density2D(
+    which = 1,
+    col = c("white", "purple", "blue", "cyan"),
+    contours = TRUE,
+    cuts = 20) |>
+  plot()
 ```
 
 
@@ -150,39 +174,49 @@ The function `interpolate()` accepts a matrix or data frame containing the sampl
 Suppose we construct a PCA biplot of the first $40$ samples in the data set `rock` and then $8$ new samples is to be interpolated the call will be:
 
 ```{r}
-biplot(rock[1:40,], scale = TRUE) |> PCA() |> 
-  interpolate (newdata=rock[41:48,]) |> plot()
+biplot(rock[1:40, ], scale = TRUE) |>
+  PCA() |>
+  interpolate(newdata = rock[41:48, ]) |>
+  plot()
 ```
 
 The function `newsamples()` operates similar to samples, allowing changes to the aesthetics of the interpolated new samples. There is no argument `which` for `newsamples()` since it is assumed that samples are interpolated to be represented in the biplot. All the other arguments are vectors of length similar to the number of samples in `newdata`. To change the colour of the interpolated samples and add labels, the argument `new.group.aes`needs to be used in conjunction with `newsamples()`:
 
 ```{r}
-biplot(rock[1:40,], scale = TRUE) |> PCA() |> 
-  interpolate (rock[41:48,], new.group.aes=rep(c("A","B"), each=4)) |>
-  newsamples (label = TRUE, label.side = "top", col = c("magenta","cyan")) |> plot()
+biplot(rock[1:40, ], scale = TRUE) |>
+  PCA() |>
+  interpolate(rock[41:48, ], new.group.aes = rep(c("A", "B"), each = 4)) |>
+  newsamples(label = TRUE, label.side = "top", col = c("magenta", "cyan")) |>
+  plot()
 ```
 
 Suppose constructing a PCA biplot using the three variables in the `rock` data, and interpolating the other variable.
 
 ```{r}
-biplot(rock[,c(1,2,4)], scale = TRUE) |> PCA() |> 
-  interpolate (newvariable =rock[,3]) |> plot()
+biplot(rock[, c(1, 2, 4)], scale = TRUE) |>
+  PCA() |>
+  interpolate(newvariable = rock[, 3]) |>
+  plot()
 ```
 
 We can change the aesthetics of the new variables with the `newaxes()` function which operates similarly to the `axes()` function. 
 
 ```{r}
-biplot(rock[,c(1,2,4)], scale = TRUE) |> PCA() |> 
-  interpolate (newvariable =rock[,3]) |> 
-  newaxes(col="red",ticks = 50,X.new.names = "shape") |> plot()
+biplot(rock[, c(1, 2, 4)], scale = TRUE) |>
+  PCA() |>
+  interpolate(newvariable = rock[, 3]) |>
+  newaxes(col = "red", ticks = 50, X.new.names = "shape") |>
+  plot()
 ```
 
 The function `interpolate()` will also work if new samples and new variables need to be interpolated at the same time. For example:
 
 ```{r}
-biplot(rock[1:40,c(1,2,4)], scale = TRUE) |> PCA() |> 
-  interpolate (newdata=rock[41:48,c(1,2,4)],newvariable =rock[1:40,3]) |> 
-  newaxes(col="red",ticks = 100,X.new.names = "shape") |> plot()
+biplot(rock[1:40, c(1, 2, 4)], scale = TRUE) |>
+  PCA() |>
+  interpolate(newdata = rock[41:48, c(1, 2, 4)], newvariable = rock[1:40, 3]) |>
+  newaxes(col = "red", ticks = 100, X.new.names = "shape") |>
+  plot()
 ```
 
 Notice that `newdata` has the same number of variables as the data sent to `biplot()` and `newvariable` has the same number of samples as the data sent to `biplot()`. 
@@ -192,8 +226,10 @@ Notice that `newdata` has the same number of variables as the data sent to `bipl
 To add prediction of the sample points to the biplot, the function `prediction()` is used.
 
 ```{r}
-out <- biplot(rock, scale = TRUE) |> PCA() |> 
-         prediction (predict.samples = TRUE) |> plot()
+out <- biplot(rock, scale = TRUE) |>
+  PCA() |>
+  prediction(predict.samples = TRUE) |>
+  plot()
 ```
 
 In addition the predictions are computed and can be accessed with the `summary.method`.
@@ -205,8 +241,12 @@ summary(out)
 The other arguments to `prediction()` are `predict.means` to also (or only) predict the group means and `which` to indicate which axes' predictions are shown on the biplot. By specifying `predict.samples = TRUE` and/or `predict.means = TRUE` all samples and/or means are predicted. Alternatively either of these arguments accepts a vector indicating which samples and/or means to predict. In the example below, only the mean values of the Central and West regions are predicted.
 
 ```{r}
-out <- biplot(state.x77, scale = TRUE) |> PCA(group.aes = state.region, show.class.means = TRUE) |> 
-         prediction (predict.means = 3:4, which = c("Income","Murder","Population")) |> plot()
+out <- biplot(state.x77, scale = TRUE) |>
+  PCA(group.aes = state.region, show.class.means = TRUE) |>
+  prediction(
+    predict.means = 3:4,
+    which = c("Income", "Murder", "Population")) |>
+  plot()
 summary(out)
 ```
 
@@ -215,53 +255,73 @@ The function `reflect()` allows for the user to reflect the biplot display about
 
 Here the biplot is reflected about the x-axis.
 ```{r}
-biplot(state.x77, scale = TRUE) |> PCA(group.aes = state.division) |> reflect("x") |> plot()
+biplot(state.x77, scale = TRUE) |>
+  PCA(group.aes = state.division) |>
+  reflect("x") |>
+  plot()
 ```
 
 Here the biplot is reflected about the y-axis. 
 ```{r}
-biplot(state.x77, scale = TRUE) |> PCA(group.aes = state.division) |> reflect("y") |> plot()
+biplot(state.x77, scale = TRUE) |>
+  PCA(group.aes = state.division) |>
+  reflect("y") |>
+  plot()
 ```
 
 The function `rotate()` allows for the user to rotate the biplot display by a certain value of degrees. The default is 0 and positive value results in anti-clockwise rotation and negative value in clockwise rotation. For example when `rotate.degrees` is set to 100 degrees, then the biplot is rotated by 100 degrees in the anticlockwise direction. 
 
 ```{r}
-biplot(state.x77, scale = TRUE) |> PCA(group.aes = state.division) |> rotate(100) |> plot()
+biplot(state.x77, scale = TRUE) |>
+  PCA(group.aes = state.division) |>
+  rotate(100) |>
+  plot()
 ```
 
 # Zooming in on the biplot with `zoom = TRUE` in `plot()`
 
-The `plot()` function has built-in functionality to zoom in on the plot. This is done through the `locator()` function which alters the `xlim` and `ylim` paramaters of the plot. The implementation opens up a new graphics window before promting the locator function. It is illustrated below:
+The `plot(engine = "base")` function has built-in functionality to zoom in on the plot. This is done through the `locator()` function which alters the `xlim` and `ylim` paramaters of the plot. The implementation opens up a new graphics window before promting the locator function. It is illustrated below:
 
 ```{r,eval=FALSE}
-biplot(state.x77,scaled = TRUE) |> 
-  PCA() |> 
-  samples(which=NULL) |>
-  density2D(which=1,col=c("white","purple","blue","cyan"),contours = TRUE,cuts = 20) |> 
-  plot(zoom=TRUE)
+biplot(state.x77, scaled = TRUE) |>
+  PCA() |>
+  samples(which = NULL) |>
+  density2D(
+    which = 1,
+    col = c("white", "purple", "blue", "cyan"),
+    contours = TRUE,
+    cuts = 20) |>
+  plot(engine = "base", zoom = TRUE)
 ```
 
 ```{r,echo=FALSE}
-biplot(state.x77,scaled = TRUE) |>
+biplot(state.x77, scaled = TRUE) |>
   PCA() |>
-  samples(which=NULL) |>
-  density2D(which=1,col=c("white","purple","blue","cyan"),contours = TRUE,cuts = 20) |>
-  plot(engine="base")
+  samples(which = NULL) |>
+  density2D(
+    which = 1,
+    col = c("white", "purple", "blue", "cyan"),
+    contours = TRUE,
+    cuts = 20) |>
+  plot(engine = "base")
 
 
-a<-list(x=-2.499021,y=2.92864)
-aa<-list(x=-1.486956,y=3.378447)
+a <- list(x = -2.499021, y = 2.92864)
+aa <- list(x = -1.486956, y = 3.378447)
 
-b<-list(x=1.867849,y=-2.356584)
-bb<-list(x=2.767462,y=-2.112939)
+b <- list(x = 1.867849, y = -2.356584)
+bb <- list(x = 2.767462, y = -2.112939)
 
-text(aa,"Click here",pos=3)
-text(bb,"Click here",pos=3)
+text(aa, "Click here", pos = 3)
+text(bb, "Click here", pos = 3)
 
-arrows(aa$x,aa$y,a$x,a$y,length=0.125,lwd=2)
-arrows(bb$x,bb$y,b$x,b$y,length=0.125,lwd=2)
-polygon(c(a$x,a$x,b$x,b$x),c(a$y,b$y,b$y,a$y),col=adjustcolor("gray",0.6))
-
+arrows(aa$x, aa$y, a$x, a$y, length = 0.125, lwd = 2)
+arrows(bb$x, bb$y, b$x, b$y, length = 0.125, lwd = 2)
+polygon(
+  c(a$x, a$x, b$x, b$x),
+  c(a$y, b$y, b$y, a$y),
+  col = adjustcolor("gray", 0.6)
+)
 ```
 With the final plot then rendered as:
 
