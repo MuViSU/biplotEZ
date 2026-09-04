@@ -1,11 +1,25 @@
+# RStudio / R session files
 .Rproj.user
 .Rhistory
 .RData
 .Ruserdata
-\R\.Rhistory
 .DS_Store
-.o
-.so
-.dll
+
+# Compiled build artefacts.
+# NEVER commit these: they are machine-, compiler- and architecture-specific.
+# Once tracked, every `git pull` overwrites a collaborator's freshly compiled
+# objects with someone else's, which makes devtools::load_all() link a stale
+# object file and fail with a .dll / .so load error.
+*.o
+*.so
+*.dll
+*.dylib
+*.a
+symbols.rds
+
+# R package build output
 /doc/
 /Meta/
+*.tar.gz
+*.Rcheck/
+Rplots.pdf
