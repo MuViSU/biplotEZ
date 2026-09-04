@@ -39,7 +39,10 @@ connect.lwd = 1, opacity = 1)
 
   a logical value indicating whether the samples should be labelled,
   with default `FALSE`. Alternatively, specify `"ggrepel"` for
-  non-overlapping placement of labels.
+  non-overlapping placement of labels. Note that `"ggrepel"` is only
+  supported by the `ggplot2` engine of
+  [`plot()`](https://rdrr.io/r/graphics/plot.default.html); with
+  `engine = "base"` ordinary labels are used.
 
 - label.name:
 

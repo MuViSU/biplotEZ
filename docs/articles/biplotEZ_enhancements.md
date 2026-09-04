@@ -64,9 +64,9 @@ to specify different line types for different $`\alpha`$ values. Here
 the `opacity` is set to $`0.05`$ which plots a lighter shade inside the
 $`\alpha`$-bags.
 
-[`biplot`](../reference/biplot.md)`(``sunspots``, group.aes``=``century``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`axes`](../reference/axes.md)` ``(``label.dir ``=`` ``"Hor"``, label.line ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.8``, `[`rep`](https://rdrr.io/r/base/rep.html)`(``0``,``10``)``, ``0.8``)``)`` ``|>`` `` `[`samples`](../reference/samples.md)` ``(``which ``=`` ``NULL``)`` ``|>`` `` `[`alpha.bags`](../reference/alpha.bags.md)` ``(``alpha ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.9``, ``0.95``, ``0.99``)``, lty ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``,``3``,``5``)``, opacity``=``0.05``)`` ``|>`` `` `` `[`legend.type`](../reference/legend.type.md)`(``bags ``=`` ``TRUE``, new ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Computing 0.9 -bag for 18-th `` ``#> Computing 0.9 -bag for 19-th `` ``#> Computing 0.9 -bag for 20-th `` ``#> Computing 0.9 -bag for 21-st `` ``#> Computing 0.95 -bag for 18-th `` ``#> Computing 0.95 -bag for 19-th `` ``#> Computing 0.95 -bag for 20-th `` ``#> Computing 0.95 -bag for 21-st `` ``#> Computing 0.99 -bag for 18-th `` ``#> Computing 0.99 -bag for 19-th `` ``#> Computing 0.99 -bag for 20-th `` ``#> Computing 0.99 -bag for 21-st`` ``#> Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);`` ``#> falling back to base graphics.`
+[`biplot`](../reference/biplot.md)`(``sunspots``, group.aes``=``century``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`axes`](../reference/axes.md)` ``(``label.dir ``=`` ``"Hor"``, label.line ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.8``, `[`rep`](https://rdrr.io/r/base/rep.html)`(``0``,``10``)``, ``0.8``)``)`` ``|>`` `` `[`samples`](../reference/samples.md)` ``(``which ``=`` ``NULL``)`` ``|>`` `` `[`alpha.bags`](../reference/alpha.bags.md)` ``(``alpha ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.9``, ``0.95``, ``0.99``)``, lty ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``,``3``,``5``)``, opacity``=``0.05``)`` ``|>`` `` `` `[`legend.type`](../reference/legend.type.md)`(``bags ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Computing 0.9 -bag for 18-th `` ``#> Computing 0.9 -bag for 19-th `` ``#> Computing 0.9 -bag for 20-th `` ``#> Computing 0.9 -bag for 21-st `` ``#> Computing 0.95 -bag for 18-th `` ``#> Computing 0.95 -bag for 19-th `` ``#> Computing 0.95 -bag for 20-th `` ``#> Computing 0.95 -bag for 21-st `` ``#> Computing 0.99 -bag for 18-th `` ``#> Computing 0.99 -bag for 19-th `` ``#> Computing 0.99 -bag for 20-th `` ``#> Computing 0.99 -bag for 21-st`
 
-![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-4-1.png)![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-4-2.png)
+![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-4-1.png)
 
 For a completely custom combination of $`\alpha`$-bags, we do not rely
 on any recycling and specify each of the arguments `alpha`, `which`,
@@ -77,7 +77,7 @@ sample size can be changed with the argument `max`. Setting
 `trace = FALSE` will suppress the message “Computing $`\alpha`$” -bag
 for groupX.”
 
-[`biplot`](../reference/biplot.md)`(``sunspots``, group.aes``=``century``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`axes`](../reference/axes.md)` ``(``label.dir ``=`` ``"Hor"``, label.line ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.8``, `[`rep`](https://rdrr.io/r/base/rep.html)`(``0``,``10``)``, ``0.8``)``)`` ``|>`` `` `[`samples`](../reference/samples.md)` ``(``which ``=`` ``NULL``)`` ``|>`` `` `[`alpha.bags`](../reference/alpha.bags.md)` ``(``alpha ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(`` ``0.9``, ``0.95``, ``0.99``, ``0.5``, ``0.6``, ``0.7``)``, `` `` which ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(`` ``1``, ``1``, ``2``, ``3``, ``3``, ``3``)``,`` `` col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"brown"``, ``"red"``, ``"gold"``, ``"deepskyblue2"``, ``"steelblue3"``,``"blue"``)``,`` `` lty ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(`` ``1``, ``2``, ``10``, ``2``, ``2``, ``0``)``,`` `` lwd ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(`` ``1``, ``1``, ``3``, ``1``, ``2``, ``1``)``,`` `` opacity ``=`` ``0.1``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Computing 0.9 -bag for 18-th `` ``#> Computing 0.95 -bag for 18-th `` ``#> Computing 0.99 -bag for 19-th `` ``#> Computing 0.5 -bag for 20-th `` ``#> Computing 0.6 -bag for 20-th `` ``#> Computing 0.7 -bag for 20-th`
+[`biplot`](../reference/biplot.md)`(``sunspots``, group.aes ``=`` ``century``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`axes`](../reference/axes.md)`(``label.dir ``=`` ``"Hor"``, label.line ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.8``, `[`rep`](https://rdrr.io/r/base/rep.html)`(``0``, ``10``)``, ``0.8``)``)`` ``|>`` `` `[`samples`](../reference/samples.md)`(``which ``=`` ``NULL``)`` ``|>`` `` `[`alpha.bags`](../reference/alpha.bags.md)`(`` `` alpha ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.9``, ``0.95``, ``0.99``, ``0.5``, ``0.6``, ``0.7``)``,`` `` which ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1``, ``2``, ``3``, ``3``, ``3``)``,`` `` col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"brown"``, ``"red"``, ``"gold"``, ``"deepskyblue2"``, ``"steelblue3"``, ``"blue"``)``,`` `` lty ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``10``, ``2``, ``2``, ``0``)``,`` `` lwd ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``1``, ``3``, ``1``, ``2``, ``1``)``,`` `` opacity ``=`` ``0.1``)`` ``|>`` `` `[`legend.type`](../reference/legend.type.md)`(``bags ``=`` ``TRUE``)`` ``|>`` `` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Computing 0.9 -bag for 18-th `` ``#> Computing 0.95 -bag for 18-th `` ``#> Computing 0.99 -bag for 19-th `` ``#> Computing 0.5 -bag for 20-th `` ``#> Computing 0.6 -bag for 20-th `` ``#> Computing 0.7 -bag for 20-th`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-5-1.png)
 
@@ -88,7 +88,7 @@ when `outlying` is set to `TRUE`. This happens in particular when
 `which` in the [`samples()`](../reference/samples.md) function differs
 from the `which` in the `alpha_bags()` function.
 
-[`biplot`](../reference/biplot.md)`(``sunspots``, group.aes``=``century``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`alpha.bags`](../reference/alpha.bags.md)` ``(``col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"brown"``, ``"red"``, ``"gold"``,``"deepskyblue2"``)``,`` `` opacity ``=`` ``0.1``,outlying ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Computing 0.95 -bag for 18-th `` ``#> Computing 0.95 -bag for 19-th `` ``#> Computing 0.95 -bag for 20-th `` ``#> Computing 0.95 -bag for 21-st`
+[`biplot`](../reference/biplot.md)`(``sunspots``, group.aes ``=`` ``century``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`alpha.bags`](../reference/alpha.bags.md)`(`` `` col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"brown"``, ``"red"``, ``"gold"``, ``"deepskyblue2"``)``,`` `` opacity ``=`` ``0.1``,`` `` outlying ``=`` ``TRUE``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Computing 0.95 -bag for 18-th `` ``#> Computing 0.95 -bag for 19-th `` ``#> Computing 0.95 -bag for 20-th `` ``#> Computing 0.95 -bag for 21-st`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-6-1.png)
 
@@ -120,11 +120,11 @@ rather than ellipses is recommended in general, since the construction
 of the ellipses are based on the underlying assumption of a random
 sample observed from a normal distribution.
 
-[`biplot`](../reference/biplot.md)`(``sunspots``, group.aes``=``century``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`axes`](../reference/axes.md)` ``(``label.dir ``=`` ``"Hor"``, label.line ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.8``, `[`rep`](https://rdrr.io/r/base/rep.html)`(``0``,``10``)``, ``0.8``)``)`` ``|>`` `` `[`samples`](../reference/samples.md)` ``(``which ``=`` ``NULL``)`` ``|>`` `` `[`ellipses`](../reference/ellipses.md)` ``(``alpha ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.9``, ``0.95``)``, lty ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``,``3``,``5``)``, opacity ``=`` ``0.1``)`` ``|>`` `` `` `[`legend.type`](../reference/legend.type.md)`(``ellipses ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Computing 2.15 -ellipse for 18-th `` ``#> Computing 2.15 -ellipse for 19-th `` ``#> Computing 2.15 -ellipse for 20-th `` ``#> Computing 2.15 -ellipse for 21-st `` ``#> Computing 2.45 -ellipse for 18-th `` ``#> Computing 2.45 -ellipse for 19-th `` ``#> Computing 2.45 -ellipse for 20-th `` ``#> Computing 2.45 -ellipse for 21-st`
+[`biplot`](../reference/biplot.md)`(``sunspots``, group.aes ``=`` ``century``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`axes`](../reference/axes.md)`(``label.dir ``=`` ``"Hor"``, label.line ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.8``, `[`rep`](https://rdrr.io/r/base/rep.html)`(``0``, ``10``)``, ``0.8``)``)`` ``|>`` `` `[`samples`](../reference/samples.md)`(``which ``=`` ``NULL``)`` ``|>`` `` `[`ellipses`](../reference/ellipses.md)`(``alpha ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.9``, ``0.95``)``, lty ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``3``, ``5``)``, opacity ``=`` ``0.1``)`` ``|>`` `` `[`legend.type`](../reference/legend.type.md)`(``ellipses ``=`` ``TRUE``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Computing 2.15 -ellipse for 18-th `` ``#> Computing 2.15 -ellipse for 19-th `` ``#> Computing 2.15 -ellipse for 20-th `` ``#> Computing 2.15 -ellipse for 21-st `` ``#> Computing 2.45 -ellipse for 18-th `` ``#> Computing 2.45 -ellipse for 19-th `` ``#> Computing 2.45 -ellipse for 20-th `` ``#> Computing 2.45 -ellipse for 21-st`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-7-1.png)
 
-` `[`biplot`](../reference/biplot.md)`(``sunspots``, group.aes``=``century``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`axes`](../reference/axes.md)` ``(``label.dir ``=`` ``"Hor"``, label.line ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.8``, `[`rep`](https://rdrr.io/r/base/rep.html)`(``0``,``10``)``, ``0.8``)``)`` ``|>`` `` `[`samples`](../reference/samples.md)` ``(``which ``=`` ``NULL``)`` ``|>`` `` `[`ellipses`](../reference/ellipses.md)` ``(``kappa ``=`` ``1``:``2``, lty ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``,``3``,``5``)``, opacity ``=`` ``0.1``)`` ``|>`` `` `` `[`legend.type`](../reference/legend.type.md)`(``ellipses ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Computing 1 -ellipse for 18-th `` ``#> Computing 1 -ellipse for 19-th `` ``#> Computing 1 -ellipse for 20-th `` ``#> Computing 1 -ellipse for 21-st `` ``#> Computing 2 -ellipse for 18-th `` ``#> Computing 2 -ellipse for 19-th `` ``#> Computing 2 -ellipse for 20-th `` ``#> Computing 2 -ellipse for 21-st`
+` `[`biplot`](../reference/biplot.md)`(``sunspots``, group.aes ``=`` ``century``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`axes`](../reference/axes.md)`(``label.dir ``=`` ``"Hor"``, label.line ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.8``, `[`rep`](https://rdrr.io/r/base/rep.html)`(``0``, ``10``)``, ``0.8``)``)`` ``|>`` `` `[`samples`](../reference/samples.md)`(``which ``=`` ``NULL``)`` ``|>`` `` `[`ellipses`](../reference/ellipses.md)`(``kappa ``=`` ``1``:``2``, lty ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``3``, ``5``)``, opacity ``=`` ``0.1``)`` ``|>`` `` `[`legend.type`](../reference/legend.type.md)`(``ellipses ``=`` ``TRUE``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Computing 1 -ellipse for 18-th `` ``#> Computing 1 -ellipse for 19-th `` ``#> Computing 1 -ellipse for 20-th `` ``#> Computing 1 -ellipse for 21-st `` ``#> Computing 2 -ellipse for 18-th `` ``#> Computing 2 -ellipse for 19-th `` ``#> Computing 2 -ellipse for 20-th `` ``#> Computing 2 -ellipse for 21-st`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-7-2.png)
 
@@ -145,14 +145,14 @@ density response surface. There are `cuts`-1 colours interpolated
 between the components of the `col`. The default is
 `c("green", "yellow", "red")`.
 
-[`biplot`](../reference/biplot.md)`(``state.x77``,group.aes ``=`` ``state.region``,scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`density2D`](../reference/density2D.md)`(``which``=``2``,col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"white"``,``"purple"``,``"blue"``,``"cyan"``)``,contours``=``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``state.x77``, group.aes ``=`` ``state.region``, scaled ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`density2D`](../reference/density2D.md)`(`` `` which ``=`` ``2``,`` `` col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"white"``, ``"purple"``, ``"blue"``, ``"cyan"``)``,`` `` contours ``=`` ``TRUE``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-8-1.png)
 
 In this case, the vector `group.aes` is not specified, so all samples
 form under one group.
 
-[`biplot`](../reference/biplot.md)`(``state.x77``,scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `[`samples`](../reference/samples.md)`(``which``=``NULL``)`` ``|>`` `` `[`density2D`](../reference/density2D.md)`(``which``=``1``,col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"white"``,``"purple"``,``"blue"``,``"cyan"``)``,contours ``=`` ``TRUE``,cuts ``=`` ``20``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`samples`](../reference/samples.md)`(``which ``=`` ``NULL``)`` ``|>`` `` `[`density2D`](../reference/density2D.md)`(`` `` which ``=`` ``1``,`` `` col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"white"``, ``"purple"``, ``"blue"``, ``"cyan"``)``,`` `` contours ``=`` ``TRUE``,`` `` cuts ``=`` ``20``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-9-1.png)
 
@@ -194,7 +194,7 @@ Suppose we construct a PCA biplot of the first $`40`$ samples in the
 data set `rock` and then $`8`$ new samples is to be interpolated the
 call will be:
 
-[`biplot`](../reference/biplot.md)`(``rock``[``1``:``40``,``]``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`interpolate`](../reference/interpolate.md)` ``(``newdata``=``rock``[``41``:``48``,``]``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``rock``[``1``:``40``, ``]``, scale ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`interpolate`](../reference/interpolate.md)`(``newdata ``=`` ``rock``[``41``:``48``, ``]``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-10-1.png)
 
@@ -208,14 +208,14 @@ arguments are vectors of length similar to the number of samples in
 labels, the argument `new.group.aes`needs to be used in conjunction with
 [`newsamples()`](../reference/newsamples.md):
 
-[`biplot`](../reference/biplot.md)`(``rock``[``1``:``40``,``]``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`interpolate`](../reference/interpolate.md)` ``(``rock``[``41``:``48``,``]``, new.group.aes``=`[`rep`](https://rdrr.io/r/base/rep.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"A"``,``"B"``)``, each``=``4``)``)`` ``|>`` `` `[`newsamples`](../reference/newsamples.md)` ``(``label ``=`` ``TRUE``, label.side ``=`` ``"top"``, col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"magenta"``,``"cyan"``)``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``rock``[``1``:``40``, ``]``, scale ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`interpolate`](../reference/interpolate.md)`(``rock``[``41``:``48``, ``]``, new.group.aes ``=`` `[`rep`](https://rdrr.io/r/base/rep.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"A"``, ``"B"``)``, each ``=`` ``4``)``)`` ``|>`` `` `[`newsamples`](../reference/newsamples.md)`(``label ``=`` ``TRUE``, label.side ``=`` ``"top"``, col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"magenta"``, ``"cyan"``)``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-11-1.png)
 
 Suppose constructing a PCA biplot using the three variables in the
 `rock` data, and interpolating the other variable.
 
-[`biplot`](../reference/biplot.md)`(``rock``[``,`[`c`](https://rdrr.io/r/base/c.html)`(``1``,``2``,``4``)``]``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`interpolate`](../reference/interpolate.md)` ``(``newvariable ``=``rock``[``,``3``]``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``rock``[``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``4``)``]``, scale ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`interpolate`](../reference/interpolate.md)`(``newvariable ``=`` ``rock``[``, ``3``]``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-12-1.png)
 
@@ -223,7 +223,7 @@ We can change the aesthetics of the new variables with the
 [`newaxes()`](../reference/newaxes.md) function which operates similarly
 to the [`axes()`](../reference/axes.md) function.
 
-[`biplot`](../reference/biplot.md)`(``rock``[``,`[`c`](https://rdrr.io/r/base/c.html)`(``1``,``2``,``4``)``]``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`interpolate`](../reference/interpolate.md)` ``(``newvariable ``=``rock``[``,``3``]``)`` ``|>`` `` `` `[`newaxes`](../reference/newaxes.md)`(``col``=``"red"``,ticks ``=`` ``50``,X.new.names ``=`` ``"shape"``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``rock``[``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``4``)``]``, scale ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`interpolate`](../reference/interpolate.md)`(``newvariable ``=`` ``rock``[``, ``3``]``)`` ``|>`` `` `[`newaxes`](../reference/newaxes.md)`(``col ``=`` ``"red"``, ticks ``=`` ``50``, X.new.names ``=`` ``"shape"``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-13-1.png)
 
@@ -231,7 +231,7 @@ The function [`interpolate()`](../reference/interpolate.md) will also
 work if new samples and new variables need to be interpolated at the
 same time. For example:
 
-[`biplot`](../reference/biplot.md)`(``rock``[``1``:``40``,`[`c`](https://rdrr.io/r/base/c.html)`(``1``,``2``,``4``)``]``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`interpolate`](../reference/interpolate.md)` ``(``newdata``=``rock``[``41``:``48``,`[`c`](https://rdrr.io/r/base/c.html)`(``1``,``2``,``4``)``]``,newvariable ``=``rock``[``1``:``40``,``3``]``)`` ``|>`` `` `` `[`newaxes`](../reference/newaxes.md)`(``col``=``"red"``,ticks ``=`` ``100``,X.new.names ``=`` ``"shape"``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``rock``[``1``:``40``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``4``)``]``, scale ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`interpolate`](../reference/interpolate.md)`(``newdata ``=`` ``rock``[``41``:``48``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``, ``2``, ``4``)``]``, newvariable ``=`` ``rock``[``1``:``40``, ``3``]``)`` ``|>`` `` `[`newaxes`](../reference/newaxes.md)`(``col ``=`` ``"red"``, ticks ``=`` ``100``, X.new.names ``=`` ``"shape"``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-14-1.png)
 
@@ -245,7 +245,7 @@ number of samples as the data sent to
 To add prediction of the sample points to the biplot, the function
 [`prediction()`](../reference/prediction.md) is used.
 
-`out`` ``<-`` `[`biplot`](../reference/biplot.md)`(``rock``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`prediction`](../reference/prediction.md)` ``(``predict.samples ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+`out`` ``<-`` `[`biplot`](../reference/biplot.md)`(``rock``, scale ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`prediction`](../reference/prediction.md)`(``predict.samples ``=`` ``TRUE``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-15-1.png)
 
@@ -314,7 +314,7 @@ accepts a vector indicating which samples and/or means to predict. In
 the example below, only the mean values of the Central and West regions
 are predicted.
 
-`out`` ``<-`` `[`biplot`](../reference/biplot.md)`(``state.x77``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.region``, show.class.means ``=`` ``TRUE``)`` ``|>`` `` `` `[`prediction`](../reference/prediction.md)` ``(``predict.means ``=`` ``3``:``4``, which ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Income"``,``"Murder"``,``"Population"``)``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+`out`` ``<-`` `[`biplot`](../reference/biplot.md)`(``state.x77``, scale ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.region``, show.class.means ``=`` ``TRUE``)`` ``|>`` `` `[`prediction`](../reference/prediction.md)`(`` `` predict.means ``=`` ``3``:``4``,`` `` which ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"Income"``, ``"Murder"``, ``"Population"``)``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-17-1.png)
 
@@ -342,13 +342,13 @@ argument `reflect.axis` offers the options `"FALSE"`,`"x"`,`"y"`,`"xy"`.
 
 Here the biplot is reflected about the x-axis.
 
-[`biplot`](../reference/biplot.md)`(``state.x77``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `[`reflect`](../reference/reflect.md)`(``"x"``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``state.x77``, scale ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `[`reflect`](../reference/reflect.md)`(``"x"``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-18-1.png)
 
 Here the biplot is reflected about the y-axis.
 
-[`biplot`](../reference/biplot.md)`(``state.x77``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `[`reflect`](../reference/reflect.md)`(``"y"``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``state.x77``, scale ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `[`reflect`](../reference/reflect.md)`(``"y"``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-19-1.png)
 
@@ -359,20 +359,20 @@ value in clockwise rotation. For example when `rotate.degrees` is set to
 100 degrees, then the biplot is rotated by 100 degrees in the
 anticlockwise direction.
 
-[`biplot`](../reference/biplot.md)`(``state.x77``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `[`rotate`](../reference/rotate.md)`(``100``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``state.x77``, scale ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `[`rotate`](../reference/rotate.md)`(``100``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-20-1.png)
 
 ## Zooming in on the biplot with `zoom = TRUE` in `plot()`
 
-The [`plot()`](https://rdrr.io/r/graphics/plot.default.html) function
-has built-in functionality to zoom in on the plot. This is done through
-the [`locator()`](https://rdrr.io/r/graphics/locator.html) function
-which alters the `xlim` and `ylim` paramaters of the plot. The
-implementation opens up a new graphics window before promting the
-locator function. It is illustrated below:
+The `plot(engine = "base")` function has built-in functionality to zoom
+in on the plot. This is done through the
+[`locator()`](https://rdrr.io/r/graphics/locator.html) function which
+alters the `xlim` and `ylim` paramaters of the plot. The implementation
+opens up a new graphics window before promting the locator function. It
+is illustrated below:
 
-[`biplot`](../reference/biplot.md)`(``state.x77``,scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)`(``which``=``NULL``)`` ``|>`` `` `[`density2D`](../reference/density2D.md)`(``which``=``1``,col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"white"``,``"purple"``,``"blue"``,``"cyan"``)``,contours ``=`` ``TRUE``,cuts ``=`` ``20``)`` ``|>`` `` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``zoom``=``TRUE``)`
+[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`samples`](../reference/samples.md)`(``which ``=`` ``NULL``)`` ``|>`` `` `[`density2D`](../reference/density2D.md)`(`` `` which ``=`` ``1``,`` `` col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"white"``, ``"purple"``, ``"blue"``, ``"cyan"``)``,`` `` contours ``=`` ``TRUE``,`` `` cuts ``=`` ``20``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``engine ``=`` ``"base"``, zoom ``=`` ``TRUE``)`
 
 ![](biplotEZ_enhancements_files/figure-html/unnamed-chunk-22-1.png) With
 the final plot then rendered as:

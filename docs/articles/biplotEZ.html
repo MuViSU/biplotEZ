@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">biplotEZ</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -425,8 +425,7 @@ argument <code>data</code> now takes the value of an object of class
 </div>
 </div>
 <div class="section level2">
-<h2 id="the-functions-pca-plot-and-legend-type">The functions <code>PCA()</code>, <code>plot()</code> and
-<code>legend.type()</code><a class="anchor" aria-label="anchor" href="#the-functions-pca-plot-and-legend-type"></a>
+<h2 id="the-functions-pca-and-plot">The functions <code>PCA()</code> and <code>plot()</code><a class="anchor" aria-label="anchor" href="#the-functions-pca-and-plot"></a>
 </h2>
 <p>The first argument to the function <code><a href="../reference/PCA.html">PCA()</a></code> is an object of
 class <code>biplot</code>, i.e. the output of the <code><a href="../reference/biplot.html">biplot()</a></code>
@@ -439,7 +438,8 @@ a grouping argument for the sample aesthetics. A PCA biplot of the
 <code>state.region</code> is obtained as follows:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="biplotEZ_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="672"></p>
 <p>The output of <code><a href="../reference/PCA.html">PCA()</a></code> is an object of class
 <code>PCA</code> which inherits from the class <code>biplot</code>. Four
@@ -451,7 +451,7 @@ Z=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><
 and
 Vr=<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑯</mi><mo>:</mo><mi>p</mi><mo>×</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">\mathbf{H}:p \times 2</annotation></semantics></math>.
 The component <code>Xhat</code> is the matrix
-<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\hat{\mathbf{X}}</annotation></semantics></math>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi mathvariant="bold-italic">𝑿</mi><mo accent="true">̂</mo></mover><annotation encoding="application/x-tex">\mathbf{\hat{X}}</annotation></semantics></math>
 on the left hand side of equation (1). The final component
 <code>ax.one.unit</code> contains as rows the expression in equation (2)
 with
@@ -461,13 +461,8 @@ axis.</p>
 <p>By piping the <code>PCA</code> class object (inheriting from class
 <code>biplot</code>) to the generic <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code> function, the
 <code><a href="../reference/plot.biplot.html">plot.biplot()</a></code> function constructs the biplot on the
-graphical device. To add a legend to the biplot, we call</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="672"></p>
-<p>It was mentioned in section 1 that the default choice
+graphical device.</p>
+<p>It was mentioned in Section 1 that the default choice
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑮</mi><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑼</mi><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{G}=\mathbf{UDJ}_2</annotation></semantics></math>
 and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑯</mi><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{H}=\mathbf{VJ}_2</annotation></semantics></math>
@@ -487,11 +482,11 @@ and
 <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi mathvariant="bold-italic">𝑯</mi><mo>=</mo><msub><mrow><mi mathvariant="bold-italic">𝑽</mi><mi mathvariant="bold-italic">𝑫</mi><mi mathvariant="bold-italic">𝑱</mi></mrow><mn>2</mn></msub></mrow><annotation encoding="application/x-tex">\mathbf{H}=\mathbf{VDJ}_2</annotation></semantics></math>
 and this biplot is obtained by setting the argument
 <code>correlation.biplot = TRUE</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span>, correlation.biplot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="672"></p>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="the-function-samples">The function <code>samples()</code><a class="anchor" aria-label="anchor" href="#the-function-samples"></a>
@@ -501,29 +496,24 @@ biplot. The function accepts as first argument an object of class
 <code>biplot</code> where the aesthetics should be applied. Let us first
 construct a PCA biplot of the <code>state.x77</code> data with samples
 coloured according to <code>state.division</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.division</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="672"></p>
-<p>Since the legend interferes with the sample points, we choose to
-place the legend on a new page, by setting <code>new = TRUE</code> in
-the <code>legend.type</code> function. Furthermore, we wish to select
-colours, other than the defaults, for the divisions. We can also change
-the opacity of the sample colours with the argument <code>opacity</code>
-that has default 1.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="672"></p>
+<p>Furthermore, we wish to select colours, other than the defaults, for
+the divisions. We can also change the opacity of the sample colours with
+the argument <code>opacity</code> that has default 1.</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.division</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"darkorange"</span>, <span class="st">"gold"</span>, <span class="st">"chartreuse4"</span>, </span>
 <span>                   <span class="st">"green"</span>, <span class="st">"salmon"</span>, <span class="st">"magenta"</span>, <span class="st">"#000000"</span>, <span class="st">"blue"</span><span class="op">)</span>,opacity <span class="op">=</span> <span class="fl">0.65</span>,pch<span class="op">=</span><span class="fl">19</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);</span></span>
-<span><span class="co">#&gt; falling back to base graphics.</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-14-2.png" class="r-plt" alt="" width="672"></p>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="672"></p>
 <p>Furthermore we want to use a different plotting character for the
 central regions.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/levels.html" class="external-link">levels</a></span> <span class="op">(</span><span class="va">state.division</span><span class="op">)</span></span>
 <span><span class="co">#&gt; [1] "New England"        "Middle Atlantic"    "South Atlantic"    </span></span>
 <span><span class="co">#&gt; [4] "East South Central" "West South Central" "East North Central"</span></span>
@@ -531,44 +521,38 @@ central regions.</p>
 <p>We want to use <code>pch = 15</code> for the first three and final
 two divisions and <code>pch = 1</code> for the remaining four
 divisions.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.division</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"darkorange"</span>, <span class="st">"gold"</span>, <span class="st">"chartreuse4"</span>, </span>
 <span>                   <span class="st">"green"</span>, <span class="st">"salmon"</span>, <span class="st">"magenta"</span>, <span class="st">"black"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>           pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">15</span>, <span class="fl">15</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);</span></span>
-<span><span class="co">#&gt; falling back to base graphics.</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-16-2.png" class="r-plt" alt="" width="672"></p>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-15-1.png" class="r-plt" alt="" width="672"></p>
 <p>To increase the size of the plotting characters of the eastern
 states, we add the following:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.division</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"darkorange"</span>, <span class="st">"gold"</span>, <span class="st">"chartreuse4"</span>, </span>
 <span>                   <span class="st">"green"</span>, <span class="st">"salmon"</span>, <span class="st">"magenta"</span>, <span class="st">"black"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>           pch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">15</span>, <span class="fl">15</span>, <span class="fl">15</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">15</span>, <span class="fl">15</span><span class="op">)</span>,</span>
 <span>           cex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">1.5</span>,<span class="fl">4</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">1.5</span>,<span class="fl">1</span>,<span class="fl">1.5</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);</span></span>
-<span><span class="co">#&gt; falling back to base graphics.</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-17-2.png" class="r-plt" alt="" width="672"></p>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="672"></p>
 <p>If we choose to only show the samples for the central states, the
 argument <code>which</code> is used either indicating the number(s) in
 the sequence of levels (<code>which = 4:7</code>), or as shown below,
 the levels themselves:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.division</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>col <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"red"</span>, <span class="st">"darkorange"</span>, <span class="st">"gold"</span>, <span class="st">"chartreuse4"</span>, </span>
 <span>                   <span class="st">"green"</span>, <span class="st">"salmon"</span>, <span class="st">"magenta"</span>, <span class="st">"black"</span>, <span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>           which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"West North Central"</span>, <span class="st">"West South Central"</span>, <span class="st">"East South Central"</span>, </span>
 <span>                     <span class="st">"East North Central"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/legend.type.html">legend.type</a></span><span class="op">(</span>samples <span class="op">=</span> <span class="cn">TRUE</span>, new <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>  <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);</span></span>
-<span><span class="co">#&gt; falling back to base graphics.</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="672"><img src="biplotEZ_files/figure-html/unnamed-chunk-18-2.png" class="r-plt" alt="" width="672"></p>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="672"></p>
 <p>Note that since four regions are selected, the colour (and other
 aesthetics) is applied to these regions in the order they are specified
 in <code>which</code>. To add the sample names, the <code>label</code>
@@ -581,39 +565,19 @@ labels defaults to the colour(s) of the samples. However, individual
 label colours can be spesified with <code>label.col</code>, similar to
 <code>label.cex</code> as either a single value of a vector of length
 equal to the number of samples.</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>label <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="672"></p>
 <p>We can use the arguments <code>label.cex</code>,
 <code>label.side</code> and <code>label.offset</code> to make the plot
-more legible with a little effort.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Pennsylvania"</span>, <span class="st">"New Jersey"</span>, <span class="st">"Massachusetts"</span>,</span>
-<span>                            <span class="st">"Minnesota"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"PA"</span>, <span class="st">"NJ"</span>, <span class="st">"MA"</span>, <span class="st">"MN"</span><span class="op">)</span></span>
-<span><span class="va">above</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Alaska"</span>, <span class="st">"California"</span>, <span class="st">"Texas"</span>, <span class="st">"New York"</span>, <span class="st">"Nevada"</span>, <span class="st">"Georgia"</span>, <span class="st">"Alabama"</span>,</span>
-<span>                 <span class="st">"North Carolina"</span>, <span class="st">"Colorado"</span>, <span class="st">"Washington"</span>, <span class="st">"Illinois"</span>, <span class="st">"Michigan"</span>, <span class="st">"Arizon"</span>,</span>
-<span>                 <span class="st">"Florida"</span>, <span class="st">"Ohio"</span>, <span class="st">"NJ"</span>, <span class="st">"Kansas"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">right.side</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"South Carolina"</span>, <span class="st">"Kentucky"</span>, <span class="st">"Rhode Island"</span>, <span class="st">"New Hampshire"</span>, <span class="st">"Virginia"</span>,</span>
-<span>                      <span class="st">"Missouri"</span>, <span class="st">"Delaware"</span>, <span class="st">"Hawaii"</span>, <span class="st">"Oregon"</span>, <span class="st">"PA"</span>, <span class="st">"Nebraska"</span>, <span class="st">"Montana"</span>,</span>
-<span>                      <span class="st">"Maryland"</span>, <span class="st">"Indiana"</span>, <span class="st">"Idaho"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">left.side</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Wyoming"</span>, <span class="st">"Iowa"</span>, <span class="st">"MN"</span>, <span class="st">"Connecticut"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">label.offset</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="fl">0.3</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">label.offset</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/match.html" class="external-link">match</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Colorado"</span>, <span class="st">"Kansas"</span>, <span class="st">"Idaho"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">)</span><span class="op">)</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0.8</span>, <span class="fl">0.5</span>, <span class="fl">0.8</span><span class="op">)</span></span>
-<span><span class="va">label.side</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"bottom"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="va">label.side</span><span class="op">[</span><span class="va">above</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"top"</span></span>
-<span><span class="va">label.side</span><span class="op">[</span><span class="va">right.side</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"right"</span></span>
-<span><span class="va">label.side</span><span class="op">[</span><span class="va">left.side</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"left"</span></span>
-<span><span class="fu"><a href="../reference/biplot.html">biplot</a></span> <span class="op">(</span><span class="va">state.x77</span>, scaled<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>label<span class="op">=</span><span class="cn">TRUE</span>, label.cex<span class="op">=</span><span class="fl">0.6</span>, label.side<span class="op">=</span><span class="va">label.side</span>, label.offset<span class="op">=</span><span class="va">label.offset</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="672"></p>
-<p>We can also make use of the functionality of the <code>ggrepel</code>
-package to place the labels.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+more legible with a little effort. We can also make use of the
+functionality of the <code>ggrepel</code> package to place the
+labels.</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>label <span class="op">=</span> <span class="st">"ggrepel"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-19-1.png" class="r-plt" alt="" width="672"></p>
 <p>Additionally, the user can add customised label names to the samples
 in the biplot. To do this, <code>label</code> must be set to
 <code>TRUE</code> (or <code>"ggrepel"</code>) and
@@ -621,15 +585,16 @@ in the biplot. To do this, <code>label</code> must be set to
 specifying the label names of the samples. In this case, the label name
 is set to the first three characters of the state name (row names of the
 data).</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>label <span class="op">=</span> <span class="st">"TRUE"</span>,label.name<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/strtrim.html" class="external-link">strtrim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="672"></p>
+<span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>label <span class="op">=</span> <span class="st">"TRUE"</span>,label.name<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/strtrim.html" class="external-link">strtrim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/row.names.html" class="external-link">row.names</a></span><span class="op">(</span><span class="va">state.x77</span><span class="op">)</span>,<span class="fl">3</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-20-1.png" class="r-plt" alt="" width="672"></p>
 <p>If the data plotted in the biplot is a multivariate time series, it
 can make sense to connect the data points in order. Let us consider the
 four quarters of the <code>UKgas</code> data set as four variables and
 we represent the years as sample points in a PCA biplot.</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gas.data</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span> <span class="op">(</span><span class="va">UKgas</span>, ncol<span class="op">=</span><span class="fl">4</span>, byrow<span class="op">=</span><span class="cn">T</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">gas.data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Q"</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">gas.data</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="fl">60</span><span class="op">:</span><span class="fl">86</span></span>
@@ -637,7 +602,7 @@ we represent the years as sample points in a PCA biplot.</p>
 <span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">gas.data</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>connected <span class="op">=</span> <span class="cn">TRUE</span>, connect.col<span class="op">=</span><span class="st">"red"</span>, label <span class="op">=</span> <span class="va">even.labels</span>, label.cex<span class="op">=</span><span class="fl">0.6</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-21-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="the-function-means">The function <code>means()</code><a class="anchor" aria-label="anchor" href="#the-function-means"></a>
@@ -659,21 +624,20 @@ for changing the aestethics of the biplot axes. The first argument to
 <code>X.names</code> argument is typically not specified by the user,
 but is required for the function to allow specifying which axes to
 display in the <code>which</code> argument, by either speficying the
-column numbers<br>
-or the column names. The arguments <code>col</code>, <code>lwd</code>
-and <code>lty</code> pertains to the axes themselves and can be
-specified either as a scaler value (to be recycled) or a vector with
-length equal to that of <code>which</code>.</p>
+column numbers or the column names. The arguments <code>col</code>,
+<code>lwd</code> and <code>lty</code> pertains to the axes themselves
+and can be specified either as a scaler value (to be recycled) or a
+vector with length equal to that of <code>which</code>.</p>
 <p>To construct a PCA biplot of the rock data, displaying only the axes
 for peri and shape with different colours for the two axes, different
 line widths and line type 2, we need to following code:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>                               <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>which <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"shape"</span>,<span class="st">"peri"</span><span class="op">)</span>, </span>
 <span>                                    col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lightskyblue"</span>,<span class="st">"slategrey"</span><span class="op">)</span>,</span>
 <span>                                    lwd <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>,<span class="fl">2</span><span class="op">)</span>, lty<span class="op">=</span><span class="fl">2</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>                               <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-22-1.png" class="r-plt" alt="" width="672"></p>
 <p>The following four arguments deal with the axis labels. The argument
 <code>label.dir</code> is based on the graphics parameter
 <code>las</code> and allows for labels to be either orthogonal to the
@@ -685,13 +649,14 @@ far from the plot) the label is placed while <code>label.col</code> and
 <code>label.cex</code> is self-explanatory and defaults to the axis
 colour and size 0.75. Note in for the illustration the in the code below
 the colour vector has only three components, so that recycling is
-applied.</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+applied. These features are only available to base R plots where the
+user has to set <code>engine = "base"</code> in <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>.</p>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>                               <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lightskyblue"</span>,<span class="st">"slategrey"</span>,<span class="st">"blue"</span><span class="op">)</span>,</span>
 <span>                                    label.dir<span class="op">=</span><span class="st">"Hor"</span>, label.line<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>,<span class="fl">0.5</span>,<span class="fl">1</span>,<span class="fl">1.5</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>                               <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-25-1.png" class="r-plt" alt="" width="672"></p>
+<span>                               <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>engine<span class="op">=</span><span class="st">"base"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-23-1.png" class="r-plt" alt="" width="672"></p>
 <p>The function <code><a href="https://rdrr.io/r/base/pretty.html" class="external-link">pretty()</a></code> finds ‘nice’ tick marks where the
 value specified in the argument <code>ticks</code> determine the
 <em>desired</em> number of tick marks, although the observed number
@@ -704,14 +669,13 @@ completely, but limits the labels to the smallest and largest value
 visible in the plot. If the user would like to specify alternative names
 for the axes, this can be done in the argument
 <code>ax.names</code>.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
-<span>                               <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>label.dir<span class="op">=</span><span class="st">"Paral"</span>,</span>
-<span>                                    ticks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span>, tick.label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">F</span>, <span class="cn">F</span>, <span class="cn">T</span>, <span class="cn">T</span><span class="op">)</span>,</span>
+<span>                               <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>ticks <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">5</span>, <span class="fl">5</span>, <span class="fl">10</span><span class="op">)</span>, tick.label<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">F</span>, <span class="cn">F</span>, <span class="cn">T</span>, <span class="cn">T</span><span class="op">)</span>,</span>
 <span>                                    ax.names <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"area"</span>, <span class="st">"perimeter"</span>, <span class="st">"shape"</span>, </span>
 <span>                                                 <span class="st">"permeability in milli-Darcies"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>                               <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-26-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-24-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 <div class="section level2">
 <h2 id="the-functions-fit-measures-and-summary">The functions <code>fit.measures()</code> and
@@ -719,7 +683,7 @@ for the axes, this can be done in the argument
 </h2>
 <p>The <code>print</code> method provides a short summary of the biplot
 object.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">airquality</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Warning in biplot(airquality): 42 rows deleted due to missing values</span></span>
 <span>  <span class="va">obj</span></span>
@@ -729,7 +693,7 @@ object.</p>
 <span><span class="co">#&gt; The following 42 sample-rows where removed due to missing values</span></span>
 <span><span class="co">#&gt;  5 6 10 11 25 26 27 32 33 34 35 36 37 39 42 43 45 46 52 53 54 55 56 57 58 59 60 61 65 72 75 83 84 96 97 98 102 103 107 115 119 150</span></span></code></pre></div>
 <p>The output from <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> will be very similar.</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span>  <span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Object of class biplot, based on 111 samples and 6 variables.</span></span>
 <span><span class="co">#&gt; 6 numeric variables.</span></span>
@@ -820,11 +784,11 @@ sample \: predictivity = \frac{diag(\mathbf{\hat{X}\hat{X}'})}{diag(\mathbf{XX'}
 <code><a href="../reference/fit.measures.html">fit.measures()</a></code> these quantities are computed for the
 specific biplot object. The values are displayed with the
 <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code> function.</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/fit.measures.html">fit.measures</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-29-1.png" class="r-plt" alt="" width="672"></p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-27-1.png" class="r-plt" alt="" width="672"></p>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span> <span class="op">(</span><span class="va">obj</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Object of class biplot, based on 50 samples and 8 variables.</span></span>
 <span><span class="co">#&gt; 8 numeric variables.</span></span>
@@ -849,13 +813,13 @@ specific biplot object. The values are displayed with the
 <span><span class="co">#&gt;     0.01984127     0.70337480     0.33405270     0.30082350     0.96367113 </span></span>
 <span><span class="co">#&gt;         Kansas       Kentucky      Louisiana          Maine       Maryland </span></span>
 <span><span class="co">#&gt;     0.86554676     0.87758262     0.93717163     0.66553856     0.06362508 </span></span>
-<span><span class="co">#&gt;             MA       Michigan             MN    Mississippi       Missouri </span></span>
+<span><span class="co">#&gt;  Massachusetts       Michigan      Minnesota    Mississippi       Missouri </span></span>
 <span><span class="co">#&gt;     0.47386267     0.26050188     0.89207404     0.93073099     0.11321791 </span></span>
-<span><span class="co">#&gt;        Montana       Nebraska         Nevada  New Hampshire             NJ </span></span>
+<span><span class="co">#&gt;        Montana       Nebraska         Nevada  New Hampshire     New Jersey </span></span>
 <span><span class="co">#&gt;     0.44603781     0.93570441     0.22393876     0.87499561     0.15979033 </span></span>
 <span><span class="co">#&gt;     New Mexico       New York North Carolina   North Dakota           Ohio </span></span>
 <span><span class="co">#&gt;     0.29304145     0.40609063     0.93004841     0.69011551     0.08810179 </span></span>
-<span><span class="co">#&gt;       Oklahoma         Oregon             PA   Rhode Island South Carolina </span></span>
+<span><span class="co">#&gt;       Oklahoma         Oregon   Pennsylvania   Rhode Island South Carolina </span></span>
 <span><span class="co">#&gt;     0.37520943     0.36273523     0.02176080     0.58625617     0.93187284 </span></span>
 <span><span class="co">#&gt;   South Dakota      Tennessee          Texas           Utah        Vermont </span></span>
 <span><span class="co">#&gt;     0.83804787     0.96006357     0.73748654     0.66209083     0.80365601 </span></span>
@@ -869,7 +833,7 @@ measures, for instance if the interest is in the axis predictivity and
 there are many samples which result in a very long output, these can be
 set in the call to <code><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary()</a></code>. By default all measures are
 set to <code>TRUE</code>.</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">obj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/fit.measures.html">fit.measures</a></span><span class="op">(</span><span class="op">)</span> </span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span> <span class="op">(</span><span class="va">obj</span>, adequacy <span class="op">=</span> <span class="cn">FALSE</span>, sample.predictivity <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
@@ -887,13 +851,13 @@ in the biplot in two ways: setting either <code>axis.predictivity</code>
 and / or <code>sample.predictivity</code> to <code>TRUE</code>, applies
 shading for axes and shrinking for samples according to the predictivity
 values.</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/samples.html">samples</a></span> <span class="op">(</span>which <span class="op">=</span> <span class="st">"South"</span>, pch <span class="op">=</span> <span class="fl">15</span>, label <span class="op">=</span> <span class="cn">T</span>, label.cex<span class="op">=</span><span class="fl">0.5</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>  <span class="fu"><a href="../reference/axes.html">axes</a></span> <span class="op">(</span>col <span class="op">=</span> <span class="st">"black"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/fit.measures.html">fit.measures</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span> <span class="op">(</span>sample.predictivity <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>                          axis.predictivity <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-31-1.png" class="r-plt" alt="" width="672"></p>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-29-1.png" class="r-plt" alt="" width="672"></p>
 <p>Comparing the plot with the <code>summary</code> output it is clear
 that the variables Population and Frost are not very well represented
 and it can be expected that predictions on these variables will be less
@@ -911,11 +875,13 @@ give information on the adequacy of the variables, this can be done with
 the <code><a href="../reference/axes.html">axes()</a></code> function, by setting <code>vectors = TRUE</code>
 and <code>unit.circle = TRUE</code>. The adequacy value is given by
 squared length of the arrow.</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">state.x77</span>, scale <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span>group.aes <span class="op">=</span> <span class="va">state.region</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/axes.html">axes</a></span> <span class="op">(</span>vectors <span class="op">=</span> <span class="cn">TRUE</span>,unit.circle <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/fit.measures.html">fit.measures</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span> <span class="op">(</span><span class="op">)</span> </span></code></pre></div>
-<p><img src="biplotEZ_files/figure-html/unnamed-chunk-32-1.png" class="r-plt" alt="" width="672"></p>
+<span>  <span class="fu"><a href="../reference/fit.measures.html">fit.measures</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span> <span class="op">(</span>engine<span class="op">=</span><span class="st">"base"</span><span class="op">)</span> </span></code></pre></div>
+<p><img src="biplotEZ_files/figure-html/unnamed-chunk-30-1.png" class="r-plt" alt="" width="672"></p>
 </div>
 </div>
 </div>

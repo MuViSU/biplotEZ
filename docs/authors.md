@@ -22,9 +22,9 @@
 
 Lubbe S, le Roux N, Nienkemper-Swanepoel J, Ganey R, Buys R, Adams Z,
 Manefeldt P (2026). *biplotEZ: EZ-to-Use Biplots*. R package version
-2.3.
+3.0.
 
 @Manual{, title = {biplotEZ: EZ-to-Use Biplots}, author = {Sugnet Lubbe
 and Niël {le Roux} and Johané Nienkemper-Swanepoel and Raeesa Ganey and
 Ruan Buys and Zoë-Mae Adams and Peter Manefeldt}, year = {2026}, note =
-{R package version 2.3}, }
+{R package version 3.0}, }

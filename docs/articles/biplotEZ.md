@@ -186,7 +186,7 @@ takes the value of an object of class `prcomp` or `princomp`.
 
 [`princomp`](https://rdrr.io/r/stats/princomp.html)`(``state.x77``)`` ``|>`` `[`biplot`](../reference/biplot.md)`(``)`` ``#> Object of class biplot, based on 50 samples and 8 variables.`` ``#> 8 numeric variables.`` ``out`` ``<-`` `[`prcomp`](https://rdrr.io/r/stats/prcomp.html)`(``state.x77``, scale.``=``TRUE``)`` ``|>`` `[`biplot`](../reference/biplot.md)`(``)`` `[`rbind`](https://rdrr.io/r/base/cbind.html)` ``(`[`head`](https://rdrr.io/r/utils/head.html)`(``out``$``raw.X``,``3``)``,`[`tail`](https://rdrr.io/r/utils/head.html)`(``out``$``raw.X``,``3``)``)`` ``#> Population Income Illiteracy Life Exp Murder HS Grad Frost Area`` ``#> Alabama 3615 3624 2.1 69.05 15.1 41.3 20 50708`` ``#> Alaska 365 6315 1.5 69.31 11.3 66.7 152 566432`` ``#> Arizona 2212 4530 1.8 70.55 7.8 58.1 15 113417`` ``#> West Virginia 1799 3617 1.4 69.48 6.7 41.6 100 24070`` ``#> Wisconsin 4589 4468 0.7 72.48 3.0 54.5 149 54464`` ``#> Wyoming 376 4566 0.6 70.29 6.9 62.9 173 97203`` `[`rbind`](https://rdrr.io/r/base/cbind.html)` ``(`[`head`](https://rdrr.io/r/utils/head.html)`(``out``$``X``,``3``)``,`[`tail`](https://rdrr.io/r/utils/head.html)`(``out``$``X``,``3``)``)`` ``#> Population Income Illiteracy Life Exp Murder`` ``#> Alabama -0.14143156 -1.32113867 1.525758 -1.3621937 2.0918101`` ``#> Alaska -0.86939802 3.05824562 0.541398 -1.1685098 1.0624293`` ``#> Arizona -0.45568908 0.15330286 1.033578 -0.2447866 0.1143154`` ``#> West Virginia -0.54819682 -1.33253061 0.377338 -1.0418703 -0.1836632`` ``#> Wisconsin 0.07673438 0.05240289 -0.771082 1.1929438 -1.1859550`` ``#> Wyoming -0.86693413 0.21188994 -0.935142 -0.4384705 -0.1294853`` ``#> HS Grad Frost Area`` ``#> Alabama -1.4619293 -1.62482920 -0.2347183`` ``#> Alaska 1.6828035 0.91456761 5.8093497`` ``#> Arizona 0.6180514 -1.72101848 0.5002047`` ``#> West Virginia -1.4247868 -0.08580083 -0.5469045`` ``#> Wisconsin 0.1723413 0.85685405 -0.1906996`` ``#> Wyoming 1.2123316 1.31856256 0.3101835`` ``out``$``center`` ``#> [1] TRUE`` ``out``$``scaled`` ``#> [1] TRUE`` ``out``$``means`` ``#> Population Income Illiteracy Life Exp Murder HS Grad Frost `` ``#> 4246.4200 4435.8000 1.1700 70.8786 7.3780 53.1080 104.4600 `` ``#> Area `` ``#> 70735.8800`` ``out``$``sd`` ``#> Population Income Illiteracy Life Exp Murder HS Grad `` ``#> 4.464491e+03 6.144699e+02 6.095331e-01 1.342394e+00 3.691540e+00 8.076998e+00 `` ``#> Frost Area `` ``#> 5.198085e+01 8.532730e+04`
 
-## The functions `PCA()`, `plot()` and `legend.type()`
+## The functions `PCA()` and `plot()`
 
 The first argument to the function [`PCA()`](../reference/PCA.md) is an
 object of class `biplot`, i.e. the output of the
@@ -198,7 +198,7 @@ grouping argument for the sample aesthetics. A PCA biplot of the
 `state.x77` data with colouring according to `state.region` is obtained
 as follows:
 
-[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.region``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.region``)`` ``|>`` `` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_files/figure-html/unnamed-chunk-10-1.png)
 
@@ -208,7 +208,7 @@ present in the `PCA` object. The matrix `Z` contains the coordinates of
 the sample points, while the matrix `Vr` contains the “coordinates” for
 the variables. In the notation of equation (1),
 Z=$`\mathbf{G}:n \times 2`$ and Vr=$`\mathbf{H}:p \times 2`$. The
-component `Xhat` is the matrix $`\hat{\mathbf{X}}`$ on the left hand
+component `Xhat` is the matrix $`\mathbf{\hat{X}}`$ on the left hand
 side of equation (1). The final component `ax.one.unit` contains as rows
 the expression in equation (2) with $`\mu_h=1`$, in other words, one
 unit in the positive direction of the biplot axis.
@@ -216,14 +216,9 @@ unit in the positive direction of the biplot axis.
 By piping the `PCA` class object (inheriting from class `biplot`) to the
 generic [`plot()`](https://rdrr.io/r/graphics/plot.default.html)
 function, the [`plot.biplot()`](../reference/plot.biplot.md) function
-constructs the biplot on the graphical device. To add a legend to the
-biplot, we call
+constructs the biplot on the graphical device.
 
-[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.region``)`` ``|>`` `` `` `[`legend.type`](../reference/legend.type.md)`(``samples ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
-
-![](biplotEZ_files/figure-html/unnamed-chunk-11-1.png)
-
-It was mentioned in section 1 that the default choice
+It was mentioned in Section 1 that the default choice
 $`\mathbf{G}=\mathbf{UDJ}_2`$ and $`\mathbf{H}=\mathbf{VJ}_2`$ provides
 an exact representation of the distances between the rows of
 $`\mathbf{\hat{X}}`$ which is an optimal approximation in the least
@@ -235,9 +230,9 @@ distances between the samples to be suboptimal. In this case
 $`\mathbf{G}=\mathbf{UJ}_2`$ and $`\mathbf{H}=\mathbf{VDJ}_2`$ and this
 biplot is obtained by setting the argument `correlation.biplot = TRUE`.
 
-[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.region``, correlation.biplot ``=`` ``TRUE``)`` ``|>`` `` `` `[`legend.type`](../reference/legend.type.md)`(``samples ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.region``, correlation.biplot ``=`` ``TRUE``)`` ``|>`` `` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
-![](biplotEZ_files/figure-html/unnamed-chunk-12-1.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-11-1.png)
 
 ## The function `samples()`
 
@@ -247,19 +242,17 @@ biplot. The function accepts as first argument an object of class
 a PCA biplot of the `state.x77` data with samples coloured according to
 `state.division`.
 
-[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `` `[`legend.type`](../reference/legend.type.md)`(``samples ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+
+![](biplotEZ_files/figure-html/unnamed-chunk-12-1.png)
+
+Furthermore, we wish to select colours, other than the defaults, for the
+divisions. We can also change the opacity of the sample colours with the
+argument `opacity` that has default 1.
+
+[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"red"``, ``"darkorange"``, ``"gold"``, ``"chartreuse4"``, `` `` ``"green"``, ``"salmon"``, ``"magenta"``, ``"#000000"``, ``"blue"``)``,opacity ``=`` ``0.65``,pch``=``19``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](biplotEZ_files/figure-html/unnamed-chunk-13-1.png)
-
-Since the legend interferes with the sample points, we choose to place
-the legend on a new page, by setting `new = TRUE` in the `legend.type`
-function. Furthermore, we wish to select colours, other than the
-defaults, for the divisions. We can also change the opacity of the
-sample colours with the argument `opacity` that has default 1.
-
-[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"red"``, ``"darkorange"``, ``"gold"``, ``"chartreuse4"``, `` `` ``"green"``, ``"salmon"``, ``"magenta"``, ``"#000000"``, ``"blue"``)``,opacity ``=`` ``0.65``,pch``=``19``)`` ``|>`` `` `[`legend.type`](../reference/legend.type.md)`(``samples ``=`` ``TRUE``, new ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);`` ``#> falling back to base graphics.`
-
-![](biplotEZ_files/figure-html/unnamed-chunk-14-1.png)![](biplotEZ_files/figure-html/unnamed-chunk-14-2.png)
 
 Furthermore we want to use a different plotting character for the
 central regions.
@@ -269,24 +262,24 @@ central regions.
 We want to use `pch = 15` for the first three and final two divisions
 and `pch = 1` for the remaining four divisions.
 
-[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"red"``, ``"darkorange"``, ``"gold"``, ``"chartreuse4"``, `` `` ``"green"``, ``"salmon"``, ``"magenta"``, ``"black"``, ``"blue"``)``,`` `` pch ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``15``, ``15``, ``15``, ``1``, ``1``, ``1``, ``1``, ``15``, ``15``)``)`` ``|>`` `` `[`legend.type`](../reference/legend.type.md)`(``samples ``=`` ``TRUE``, new ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);`` ``#> falling back to base graphics.`
+[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"red"``, ``"darkorange"``, ``"gold"``, ``"chartreuse4"``, `` `` ``"green"``, ``"salmon"``, ``"magenta"``, ``"black"``, ``"blue"``)``,`` `` pch ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``15``, ``15``, ``15``, ``1``, ``1``, ``1``, ``1``, ``15``, ``15``)``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
-![](biplotEZ_files/figure-html/unnamed-chunk-16-1.png)![](biplotEZ_files/figure-html/unnamed-chunk-16-2.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-15-1.png)
 
 To increase the size of the plotting characters of the eastern states,
 we add the following:
 
-[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"red"``, ``"darkorange"``, ``"gold"``, ``"chartreuse4"``, `` `` ``"green"``, ``"salmon"``, ``"magenta"``, ``"black"``, ``"blue"``)``,`` `` pch ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``15``, ``15``, ``15``, ``1``, ``1``, ``1``, ``1``, ``15``, ``15``)``,`` `` cex ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(`[`rep`](https://rdrr.io/r/base/rep.html)`(``1.5``,``4``)``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``,``1.5``,``1``,``1.5``)``)``)`` ``|>`` `` `[`legend.type`](../reference/legend.type.md)`(``samples ``=`` ``TRUE``, new ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);`` ``#> falling back to base graphics.`
+[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"red"``, ``"darkorange"``, ``"gold"``, ``"chartreuse4"``, `` `` ``"green"``, ``"salmon"``, ``"magenta"``, ``"black"``, ``"blue"``)``,`` `` pch ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``15``, ``15``, ``15``, ``1``, ``1``, ``1``, ``1``, ``15``, ``15``)``,`` `` cex ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(`[`rep`](https://rdrr.io/r/base/rep.html)`(``1.5``,``4``)``, `[`c`](https://rdrr.io/r/base/c.html)`(``1``,``1.5``,``1``,``1.5``)``)``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
-![](biplotEZ_files/figure-html/unnamed-chunk-17-1.png)![](biplotEZ_files/figure-html/unnamed-chunk-17-2.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-16-1.png)
 
 If we choose to only show the samples for the central states, the
 argument `which` is used either indicating the number(s) in the sequence
 of levels (`which = 4:7`), or as shown below, the levels themselves:
 
-[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"red"``, ``"darkorange"``, ``"gold"``, ``"chartreuse4"``, `` `` ``"green"``, ``"salmon"``, ``"magenta"``, ``"black"``, ``"blue"``)``,`` `` which ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"West North Central"``, ``"West South Central"``, ``"East South Central"``, `` `` ``"East North Central"``)``)`` ``|>`` `` `[`legend.type`](../reference/legend.type.md)`(``samples ``=`` ``TRUE``, new ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Warning: The ggplot2 engine does not yet support legend.type(new = TRUE);`` ``#> falling back to base graphics.`
+[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.division``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``col ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"red"``, ``"darkorange"``, ``"gold"``, ``"chartreuse4"``, `` `` ``"green"``, ``"salmon"``, ``"magenta"``, ``"black"``, ``"blue"``)``,`` `` which ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"West North Central"``, ``"West South Central"``, ``"East South Central"``, `` `` ``"East North Central"``)``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
-![](biplotEZ_files/figure-html/unnamed-chunk-18-1.png)![](biplotEZ_files/figure-html/unnamed-chunk-18-2.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-17-1.png)
 
 Note that since four regions are selected, the colour (and other
 aesthetics) is applied to these regions in the order they are specified
@@ -302,21 +295,15 @@ equal to the number of samples.
 
 [`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``label ``=`` ``TRUE``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
-![](biplotEZ_files/figure-html/unnamed-chunk-19-1.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-18-1.png)
 
 We can use the arguments `label.cex`, `label.side` and `label.offset` to
-make the plot more legible with a little effort.
-
-[`rownames`](https://rdrr.io/r/base/colnames.html)`(``state.x77``)``[`[`match`](https://rdrr.io/r/base/match.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"Pennsylvania"``, ``"New Jersey"``, ``"Massachusetts"``,`` `` ``"Minnesota"``)``, `[`rownames`](https://rdrr.io/r/base/colnames.html)`(``state.x77``)``)``]`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``"PA"``, ``"NJ"``, ``"MA"``, ``"MN"``)`` ``above`` ``<-`` `[`match`](https://rdrr.io/r/base/match.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"Alaska"``, ``"California"``, ``"Texas"``, ``"New York"``, ``"Nevada"``, ``"Georgia"``, ``"Alabama"``,`` `` ``"North Carolina"``, ``"Colorado"``, ``"Washington"``, ``"Illinois"``, ``"Michigan"``, ``"Arizon"``,`` `` ``"Florida"``, ``"Ohio"``, ``"NJ"``, ``"Kansas"``)``, `[`rownames`](https://rdrr.io/r/base/colnames.html)`(``state.x77``)``)`` ``right.side`` ``<-`` `[`match`](https://rdrr.io/r/base/match.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"South Carolina"``, ``"Kentucky"``, ``"Rhode Island"``, ``"New Hampshire"``, ``"Virginia"``,`` `` ``"Missouri"``, ``"Delaware"``, ``"Hawaii"``, ``"Oregon"``, ``"PA"``, ``"Nebraska"``, ``"Montana"``,`` `` ``"Maryland"``, ``"Indiana"``, ``"Idaho"``)``, `[`rownames`](https://rdrr.io/r/base/colnames.html)`(``state.x77``)``)`` ``left.side`` ``<-`` `[`match`](https://rdrr.io/r/base/match.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"Wyoming"``, ``"Iowa"``, ``"MN"``, ``"Connecticut"``)``, `[`rownames`](https://rdrr.io/r/base/colnames.html)`(``state.x77``)``)`` ``label.offset`` ``<-`` `[`rep`](https://rdrr.io/r/base/rep.html)`(``0.3``, `[`nrow`](https://rdrr.io/r/base/nrow.html)`(``state.x77``)``)`` ``label.offset``[`[`match`](https://rdrr.io/r/base/match.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``"Colorado"``, ``"Kansas"``, ``"Idaho"``)``, `[`rownames`](https://rdrr.io/r/base/colnames.html)`(``state.x77``)``)``]`` ``<-`` `[`c`](https://rdrr.io/r/base/c.html)`(``0.8``, ``0.5``, ``0.8``)`` ``label.side`` ``<-`` `[`rep`](https://rdrr.io/r/base/rep.html)`(``"bottom"``, `[`nrow`](https://rdrr.io/r/base/nrow.html)`(``state.x77``)``)`` ``label.side``[``above``]`` ``<-`` ``"top"`` ``label.side``[``right.side``]`` ``<-`` ``"right"`` ``label.side``[``left.side``]`` ``<-`` ``"left"`` `[`biplot`](../reference/biplot.md)` ``(``state.x77``, scaled``=``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `[`samples`](../reference/samples.md)` ``(``label``=``TRUE``, label.cex``=``0.6``, label.side``=``label.side``, label.offset``=``label.offset``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
-
-![](biplotEZ_files/figure-html/unnamed-chunk-20-1.png)
-
-We can also make use of the functionality of the `ggrepel` package to
-place the labels.
+make the plot more legible with a little effort. We can also make use of
+the functionality of the `ggrepel` package to place the labels.
 
 [`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``label ``=`` ``"ggrepel"``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
-![](biplotEZ_files/figure-html/unnamed-chunk-21-1.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-19-1.png)
 
 Additionally, the user can add customised label names to the samples in
 the biplot. To do this, `label` must be set to `TRUE` (or `"ggrepel"`)
@@ -324,9 +311,9 @@ and `label.name` is set to be a vector of size `n` specifying the label
 names of the samples. In this case, the label name is set to the first
 three characters of the state name (row names of the data).
 
-[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``label ``=`` ``"TRUE"``,label.name``=`[`strtrim`](https://rdrr.io/r/base/strtrim.html)`(`[`row.names`](https://rdrr.io/r/base/row.names.html)`(``state.x77``)``,``3``)``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``state.x77``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``label ``=`` ``"TRUE"``,label.name``=`[`strtrim`](https://rdrr.io/r/base/strtrim.html)`(`[`row.names`](https://rdrr.io/r/base/row.names.html)`(``state.x77``)``,``3``)``)`` ``|>`` `` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
-![](biplotEZ_files/figure-html/unnamed-chunk-22-1.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-20-1.png)
 
 If the data plotted in the biplot is a multivariate time series, it can
 make sense to connect the data points in order. Let us consider the four
@@ -335,7 +322,7 @@ years as sample points in a PCA biplot.
 
 `gas.data`` ``<-`` `[`matrix`](https://rdrr.io/r/base/matrix.html)` ``(``UKgas``, ncol``=``4``, byrow``=``T``)`` `[`colnames`](https://rdrr.io/r/base/colnames.html)`(``gas.data``)`` ``<-`` `[`paste`](https://rdrr.io/r/base/paste.html)`(``"Q"``, ``1``:``4``, sep``=``""``)`` `[`rownames`](https://rdrr.io/r/base/colnames.html)`(``gas.data``)`` ``<-`` ``60``:``86`` ``even.labels`` ``<-`` `[`rep`](https://rdrr.io/r/base/rep.html)`(`[`c`](https://rdrr.io/r/base/c.html)`(``TRUE``, ``FALSE``)``, ``14``)`` `[`biplot`](../reference/biplot.md)`(``gas.data``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`samples`](../reference/samples.md)` ``(``connected ``=`` ``TRUE``, connect.col``=``"red"``, label ``=`` ``even.labels``, label.cex``=``0.6``)`` ``|>`` `` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
-![](biplotEZ_files/figure-html/unnamed-chunk-23-1.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-21-1.png)
 
 ## The function `means()`
 
@@ -355,8 +342,7 @@ function allows for changing the aestethics of the biplot axes. The
 first argument to [`axes()`](../reference/axes.md) is an object of class
 `biplot`. The `X.names` argument is typically not specified by the user,
 but is required for the function to allow specifying which axes to
-display in the `which` argument, by either speficying the column
-numbers\
+display in the `which` argument, by either speficying the column numbers
 or the column names. The arguments `col`, `lwd` and `lty` pertains to
 the axes themselves and can be specified either as a scaler value (to be
 recycled) or a vector with length equal to that of `which`.
@@ -367,7 +353,7 @@ widths and line type 2, we need to following code:
 
 [`biplot`](../reference/biplot.md)`(``rock``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`axes`](../reference/axes.md)`(``which ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"shape"``,``"peri"``)``, `` `` col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"lightskyblue"``,``"slategrey"``)``,`` `` lwd ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``1``,``2``)``, lty``=``2``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
-![](biplotEZ_files/figure-html/unnamed-chunk-24-1.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-22-1.png)
 
 The following four arguments deal with the axis labels. The argument
 `label.dir` is based on the graphics parameter `las` and allows for
@@ -379,11 +365,13 @@ margin line (how far from the plot) the label is placed while
 `label.col` and `label.cex` is self-explanatory and defaults to the axis
 colour and size 0.75. Note in for the illustration the in the code below
 the colour vector has only three components, so that recycling is
-applied.
+applied. These features are only available to base R plots where the
+user has to set `engine = "base"` in
+[`plot()`](https://rdrr.io/r/graphics/plot.default.html).
 
-[`biplot`](../reference/biplot.md)`(``rock``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`axes`](../reference/axes.md)`(``col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"lightskyblue"``,``"slategrey"``,``"blue"``)``,`` `` label.dir``=``"Hor"``, label.line``=`[`c`](https://rdrr.io/r/base/c.html)`(``0``,``0.5``,``1``,``1.5``)``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``rock``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`axes`](../reference/axes.md)`(``col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"lightskyblue"``,``"slategrey"``,``"blue"``)``,`` `` label.dir``=``"Hor"``, label.line``=`[`c`](https://rdrr.io/r/base/c.html)`(``0``,``0.5``,``1``,``1.5``)``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``engine``=``"base"``)`
 
-![](biplotEZ_files/figure-html/unnamed-chunk-25-1.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-23-1.png)
 
 The function [`pretty()`](https://rdrr.io/r/base/pretty.html) finds
 ‘nice’ tick marks where the value specified in the argument `ticks`
@@ -398,9 +386,9 @@ but limits the labels to the smallest and largest value visible in the
 plot. If the user would like to specify alternative names for the axes,
 this can be done in the argument `ax.names`.
 
-[`biplot`](../reference/biplot.md)`(``rock``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`axes`](../reference/axes.md)`(``label.dir``=``"Paral"``,`` `` ticks ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``3``, ``5``, ``5``, ``10``)``, tick.label``=`[`c`](https://rdrr.io/r/base/c.html)`(``F``, ``F``, ``T``, ``T``)``,`` `` ax.names ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"area"``, ``"perimeter"``, ``"shape"``, `` `` ``"permeability in milli-Darcies"``)``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](../reference/biplot.md)`(``rock``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`axes`](../reference/axes.md)`(``ticks ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``3``, ``5``, ``5``, ``10``)``, tick.label``=`[`c`](https://rdrr.io/r/base/c.html)`(``F``, ``F``, ``T``, ``T``)``,`` `` ax.names ``=`` `[`c`](https://rdrr.io/r/base/c.html)`(``"area"``, ``"perimeter"``, ``"shape"``, `` `` ``"permeability in milli-Darcies"``)``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
-![](biplotEZ_files/figure-html/unnamed-chunk-26-1.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-24-1.png)
 
 ## The functions `fit.measures()` and `summary()`
 
@@ -505,9 +493,9 @@ are displayed with the
 
 `obj`` ``<-`` `[`biplot`](../reference/biplot.md)`(``state.x77``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`fit.measures`](../reference/fit.measures.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
-![](biplotEZ_files/figure-html/unnamed-chunk-29-1.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-27-1.png)
 
-[`summary`](https://rdrr.io/r/base/summary.html)` ``(``obj``)`` ``#> Object of class biplot, based on 50 samples and 8 variables.`` ``#> 8 numeric variables.`` ``#> `` ``#> Quality of fit in 2 dimension(s) = 65.4% `` ``#> Adequacy of variables in 2 dimension(s):`` ``#> Population Income Illiteracy Life Exp Murder HS Grad Frost `` ``#> 0.1848016 0.3586383 0.2215201 0.1760908 0.2915819 0.2696184 0.1513317 `` ``#> Area `` ``#> 0.3464170 `` ``#> Axis predictivity in 2 dimension(s):`` ``#> Population Income Illiteracy Life Exp Murder HS Grad Frost `` ``#> 0.3330216 0.7609185 0.7917091 0.6206172 0.8640485 0.7947530 0.4982299 `` ``#> Area `` ``#> 0.5675169 `` ``#> Sample predictivity in 2 dimension(s):`` ``#> Alabama Alaska Arizona Arkansas California `` ``#> 0.95126856 0.61373919 0.26327256 0.86308539 0.57062754 `` ``#> Colorado Connecticut Delaware Florida Georgia `` ``#> 0.83358779 0.59003002 0.18284712 0.49725356 0.94461052 `` ``#> Hawaii Idaho Illinois Indiana Iowa `` ``#> 0.01984127 0.70337480 0.33405270 0.30082350 0.96367113 `` ``#> Kansas Kentucky Louisiana Maine Maryland `` ``#> 0.86554676 0.87758262 0.93717163 0.66553856 0.06362508 `` ``#> MA Michigan MN Mississippi Missouri `` ``#> 0.47386267 0.26050188 0.89207404 0.93073099 0.11321791 `` ``#> Montana Nebraska Nevada New Hampshire NJ `` ``#> 0.44603781 0.93570441 0.22393876 0.87499561 0.15979033 `` ``#> New Mexico New York North Carolina North Dakota Ohio `` ``#> 0.29304145 0.40609063 0.93004841 0.69011551 0.08810179 `` ``#> Oklahoma Oregon PA Rhode Island South Carolina `` ``#> 0.37520943 0.36273523 0.02176080 0.58625617 0.93187284 `` ``#> South Dakota Tennessee Texas Utah Vermont `` ``#> 0.83804787 0.96006357 0.73748654 0.66209083 0.80365601 `` ``#> Virginia Washington West Virginia Wisconsin Wyoming `` ``#> 0.58564755 0.33877314 0.85231725 0.82519206 0.42499724`
+[`summary`](https://rdrr.io/r/base/summary.html)` ``(``obj``)`` ``#> Object of class biplot, based on 50 samples and 8 variables.`` ``#> 8 numeric variables.`` ``#> `` ``#> Quality of fit in 2 dimension(s) = 65.4% `` ``#> Adequacy of variables in 2 dimension(s):`` ``#> Population Income Illiteracy Life Exp Murder HS Grad Frost `` ``#> 0.1848016 0.3586383 0.2215201 0.1760908 0.2915819 0.2696184 0.1513317 `` ``#> Area `` ``#> 0.3464170 `` ``#> Axis predictivity in 2 dimension(s):`` ``#> Population Income Illiteracy Life Exp Murder HS Grad Frost `` ``#> 0.3330216 0.7609185 0.7917091 0.6206172 0.8640485 0.7947530 0.4982299 `` ``#> Area `` ``#> 0.5675169 `` ``#> Sample predictivity in 2 dimension(s):`` ``#> Alabama Alaska Arizona Arkansas California `` ``#> 0.95126856 0.61373919 0.26327256 0.86308539 0.57062754 `` ``#> Colorado Connecticut Delaware Florida Georgia `` ``#> 0.83358779 0.59003002 0.18284712 0.49725356 0.94461052 `` ``#> Hawaii Idaho Illinois Indiana Iowa `` ``#> 0.01984127 0.70337480 0.33405270 0.30082350 0.96367113 `` ``#> Kansas Kentucky Louisiana Maine Maryland `` ``#> 0.86554676 0.87758262 0.93717163 0.66553856 0.06362508 `` ``#> Massachusetts Michigan Minnesota Mississippi Missouri `` ``#> 0.47386267 0.26050188 0.89207404 0.93073099 0.11321791 `` ``#> Montana Nebraska Nevada New Hampshire New Jersey `` ``#> 0.44603781 0.93570441 0.22393876 0.87499561 0.15979033 `` ``#> New Mexico New York North Carolina North Dakota Ohio `` ``#> 0.29304145 0.40609063 0.93004841 0.69011551 0.08810179 `` ``#> Oklahoma Oregon Pennsylvania Rhode Island South Carolina `` ``#> 0.37520943 0.36273523 0.02176080 0.58625617 0.93187284 `` ``#> South Dakota Tennessee Texas Utah Vermont `` ``#> 0.83804787 0.96006357 0.73748654 0.66209083 0.80365601 `` ``#> Virginia Washington West Virginia Wisconsin Wyoming `` ``#> 0.58564755 0.33877314 0.85231725 0.82519206 0.42499724`
 
 If is not necessary to call the
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html) function to
@@ -529,7 +517,7 @@ for samples according to the predictivity values.
 
 [`biplot`](../reference/biplot.md)`(``state.x77``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.region``)`` ``|>`` `` `[`samples`](../reference/samples.md)` ``(``which ``=`` ``"South"``, pch ``=`` ``15``, label ``=`` ``T``, label.cex``=``0.5``)`` ``|>`` `` `` `[`axes`](../reference/axes.md)` ``(``col ``=`` ``"black"``)`` ``|>`` `` `[`fit.measures`](../reference/fit.measures.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)` ``(``sample.predictivity ``=`` ``TRUE``,`` `` axis.predictivity ``=`` ``TRUE``)`` `
 
-![](biplotEZ_files/figure-html/unnamed-chunk-31-1.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-29-1.png)
 
 Comparing the plot with the `summary` output it is clear that the
 variables Population and Frost are not very well represented and it can
@@ -548,9 +536,9 @@ information on the adequacy of the variables, this can be done with the
 and `unit.circle = TRUE`. The adequacy value is given by squared length
 of the arrow.
 
-[`biplot`](../reference/biplot.md)`(``state.x77``, scale ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.region``)`` ``|>`` `` `[`axes`](../reference/axes.md)` ``(``vectors ``=`` ``TRUE``,unit.circle ``=`` ``TRUE``)`` ``|>`` `` `[`fit.measures`](../reference/fit.measures.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)` ``(``)`` `
+[`biplot`](../reference/biplot.md)`(``state.x77``, scale ``=`` ``TRUE``)`` ``|>`` `` `` `[`PCA`](../reference/PCA.md)`(``group.aes ``=`` ``state.region``)`` ``|>`` `` `[`axes`](../reference/axes.md)` ``(``vectors ``=`` ``TRUE``,unit.circle ``=`` ``TRUE``)`` ``|>`` `` `[`fit.measures`](../reference/fit.measures.md)`(``)`` ``|>`` `` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)` ``(``engine``=``"base"``)`` `
 
-![](biplotEZ_files/figure-html/unnamed-chunk-32-1.png)
+![](biplotEZ_files/figure-html/unnamed-chunk-30-1.png)
 
 ## References
 
