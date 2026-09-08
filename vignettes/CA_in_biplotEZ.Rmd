@@ -273,27 +273,26 @@ The function `interpolate()` accepts a matrix or data frame containing the sampl
 The function `newsamples()` operates similar to `samples()` and enables aesthetic changes to the new samples.
 
 ```{r}
-#biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
-#  samples(pch = c(0,2)) |> interpolate(newdata = HairEyeColor[,,1]) |> 
-#  newsamples(col = c("orange","purple"), pch = c(15,17)) |> plot()      
+biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
+  samples(pch = c(0,2)) |> interpolate(newdata = HairEyeColor[,,1]) |> 
+  newsamples(col = c("orange","purple"), pch = c(15,17), label = TRUE) |> plot()      
 ```
 
 
-## Aesthetics and legend
+## Aesthetics
 
 The `sample()` function should be utilised to specify the colours, plotting characters and expansion of the samples.
 
 ```{r}
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Princ") |> 
   samples(col = c("cyan","purple"), pch = c(15,17), label.side = c("bottom","top"), 
-          label.cex = 1) |> legend.type(samples = TRUE, new = TRUE) |> plot(engine = "base")
+          label.cex = 1) |> plot(engine = "ggplot2")
 ```
 
 ```{r}
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
   samples(col = c("forestgreen","magenta"), pch = c(12,17), 
-          label.side = c("top","bottom")) |> 
-  legend.type(samples = TRUE) |> plot()
+          label.side = c("top","bottom")) |> plot()
 ```
 
 ## Additional example
@@ -322,8 +321,8 @@ SACrime
 ```{r}
 biplot(SACrime, center = FALSE) |> 
   CA(variant = "Symmetric", lambda.scal = TRUE) |> 
-  samples(col = c("cyan","purple"), pch = c(15,17), label.side = c("bottom","top")) |>
-  legend.type(samples = TRUE, new = TRUE) |> plot(engine = "base")
+  samples(col = c("cyan","purple"), pch = c(15,17), label.side = c("bottom","top"))|> 
+  plot()
 ```
 
 

@@ -35,8 +35,9 @@ gg_biplot <- function(x, exp.factor = 1.2,
   Z <- x$Z
   
   # ---- default aesthetics, exactly as plot.biplot() does -------------------
+  is.CA <- inherits(x, "CA")
   if (is.null(x$samples)) x <- biplotEZ::samples(x)
-  if (is.null(x$axes))    x <- biplotEZ::axes(x)
+  if (!is.CA && is.null(x$axes)) x <- biplotEZ::axes(x)
   leg <- x$legend                                # legend.type() flags, or NULL
   ### a legend in a separate window is a base graphics feature: with ggplot2
   ### the legend is drawn beside the biplot in the ordinary way
@@ -59,7 +60,7 @@ gg_biplot <- function(x, exp.factor = 1.2,
   
   # ---- prediction: lines drawn later; store readable values now -------
   predict.mat <- NULL
-  if (!is.null(x$predict$samples)) {
+  if (!is.CA && !is.null(x$predict$samples)) {
     predict.mat <- Z[x$predict$samples, , drop = FALSE]
     x$predict$samples.mat <- .predicted_values(x, predict.mat)
   }
@@ -89,7 +90,10 @@ gg_biplot <- function(x, exp.factor = 1.2,
     }
   }
   samples.too.small <- NULL
-  cex.vec <- rep(1, x$n)
+  if (is.CA && (!is.null(axis.predictivity) || !is.null(sample.predictivity)))
+    stop("axis.predictivity and sample.predictivity do not apply to CA maps.",
+          call. = FALSE)
+  cex.vec <- rep(1, nrow(Z)) # was rep(1, x$n)
   if (!is.null(sample.predictivity) && !inherits(x, "CVA")) {
     if (is.null(x$sample.predictivity)) x <- biplotEZ::fit.measures(x)
     if (is.numeric(sample.predictivity))
@@ -98,6 +102,9 @@ gg_biplot <- function(x, exp.factor = 1.2,
   }
   
   # ---- calibrate axes using internal functions --------------------
+  if(is.CA) {
+    z.axes <- NULL
+  } else {
   if (!is.null(x$Lmat))
               if (nrow(x$Lmat) == ncol(x$Lmat)) 
                 Xhat <- x$Z %*% solve(x$Lmat)[x$e.vects,]
@@ -111,7 +118,8 @@ gg_biplot <- function(x, exp.factor = 1.2,
   z.axes <- lapply(seq_along(ax.aes$which), .calibrate.axis,
                    Xhat, x$means, x$sd, x$ax.one.unit,
                    ax.aes$which, ax.aes$ticks, ax.aes$orthogx, ax.aes$orthogy)
-  
+  }
+
   layers <- list(); scales <- list()
   
   # ---- CVA classification regions (drawn first, underneath everything) -----
@@ -126,7 +134,8 @@ gg_biplot <- function(x, exp.factor = 1.2,
     layers <- c(layers, .gg_density(x$z.density, x$density.style))
   
   # ---- linear calibrated axes ----------------------------------------------
-  layers <- c(layers, .gg_linear_axes(z.axes, ax.aes, usr, mm, axes.too.small,
+  if (!is.CA)
+    layers <- c(layers, .gg_linear_axes(z.axes, ax.aes, usr, mm, axes.too.small,
                                       predict.mat, x$predict$which))
   
   # ---- interpolated new axes ------------------------------------------------
@@ -243,7 +252,7 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
   if (isTRUE(zoom)) return("interactive zooming")
   if (!is.null(x$dim.biplot) && x$dim.biplot != 2)
     return(paste0(x$dim.biplot, "D biplots"))
-  if (inherits(x, "CA"))     return("CA maps")
+  # if (inherits(x, "CA"))     return("CA maps")
   if (inherits(x, "catPCA")) return("catPCA nominal/ordinal axes")
   if (!is.null(x$PCOaxes) && x$PCOaxes == "splines")
     return("spline axes")
@@ -593,6 +602,8 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
   s.aes <- x$samples
   if (is.null(s.aes$which)) return(list(layers = layers, scales = scales))
   
+  n.pts <- nrow(Z)
+
   if (isTRUE(s.aes$connected))
     layers <- c(layers, list(ggplot2::geom_path(
       data = data.frame(x = Z[, 1], y = Z[, 2]),
@@ -600,7 +611,7 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
       colour = s.aes$connect.col, linetype = s.aes$connect.lty,
       linewidth = 0.35 * s.aes$connect.lwd)))
   
-  show <- rep(FALSE, x$n)
+  show <- rep(FALSE, n.pts) 
   if (!is.null(x$alpha.bag.outside)) {
     for (j in seq_along(x$alpha.bag.aes$which))
       show[x$group.aes == x$g.names[s.aes$which[j]]] <- x$alpha.bag.outside[[j]]
@@ -637,13 +648,9 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
     ggplot2::scale_shape_manual(name = NULL, values = pch.map, drop = FALSE),
     ggplot2::scale_size_manual(values = cex.map, drop = FALSE, guide = "none"))
   
-  # col/pch/cex are per group, but label, label.col, label.cex, label.side and
-  # label.offset are per sample. Clip those to the samples actually drawn and
-  # keep them vectors, exactly as base .samples.plot does by carrying them as
-  # columns of its ZZ data frame; using [1] paints every label like sample 1.
   nshow <- sum(show)
   sub <- function(v, d)
-    if (length(v) == x$n) v[show] else rep_len(if (length(v)) v[1] else d, nshow)
+    if (length(v) == n.pts) v[show] else rep_len(if (length(v)) v[1] else d, nshow)
   lab.on  <- s.aes$label
   lab.cex <- sub(s.aes$label.cex, 0.75)
   lab.col <- sub(s.aes$label.col, "black")

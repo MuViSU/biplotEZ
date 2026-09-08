@@ -110,6 +110,7 @@
 #' @noRd
 .newsamples.CA.plot <- function(newrowcoor, newcolcoor, newsamples)
 {
+  # Indexing is incorrect
   #first factor newrowcoor
   graphics::points(x = newrowcoor[,1], y = newrowcoor[,2], pch = newsamples$pch[1],
                    col = newsamples$col[1], cex = newsamples$cex[1])

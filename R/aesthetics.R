@@ -77,6 +77,7 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
 {
   g <- bp$g
   n <- bp$n
+  if(inherits(bp,"CA")) n <- nrow(bp$Z) # 
   p <- bp$p
   if(is.null(which) & length(col)==0) col <- ez.col
   
@@ -1168,12 +1169,12 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
   if(!identical(label[1], "ggrepel"))
     if(!is.null(label.name) | !is.null(label.col) | 
        any(label.side!="bottom") | any(label.offset !=0.5) | any(label.cex!=0.75))
-      label<-TRUE
+      label <- TRUE
   nn <- nrow(bp$Xnew)
+  if(inherits(bp,"CA")) nn <- bp$r + bp$c
   gg <- bp$new.g
   if (length(col)==1)
-    col <- rep(col, nn)
-  else
+    col <- rep(col, nn) else
   {
     col.len <- length(col)
     col <- col[ifelse(1:gg%%col.len==0,col.len,1:gg%%col.len)]
@@ -1185,8 +1186,7 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
   }
 
   if (length(pch)==1)
-    pch <- rep(pch, nn)
-  else
+    pch <- rep(pch, nn) else
   {
     pch.len <- length(pch)
     pch <- pch[ifelse(1:gg%%pch.len==0,pch.len,1:gg%%pch.len)]
@@ -1198,8 +1198,7 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
   }
   
   if (length(cex)==1)
-    cex <- rep(cex, nn)
-  else
+    cex <- rep(cex, nn) else
   {
     cex.len <- length(cex)
     cex <- cex[ifelse(1:gg%%cex.len==0,cex.len,1:gg%%cex.len)]
