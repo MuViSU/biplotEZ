@@ -275,7 +275,8 @@ The function `newsamples()` operates similar to `samples()` and enables aestheti
 ```{r}
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
   samples(pch = c(0,2)) |> interpolate(newdata = HairEyeColor[,,1]) |> 
-  newsamples(col = c("orange","purple"), pch = c(15,17), label = TRUE) |> plot()      
+  newsamples(col = c("orange","purple"), pch = c(15,17), label = TRUE) |> 
+  plot()      
 ```
 
 
@@ -285,8 +286,8 @@ The `sample()` function should be utilised to specify the colours, plotting char
 
 ```{r}
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Princ") |> 
-  samples(col = c("cyan","purple"), pch = c(15,17), label.side = c("bottom","top"), 
-          label.cex = 1) |> plot(engine = "ggplot2")
+  samples(col = c("cyan","purple"), pch = c(15,17), 
+          label.side = c("bottom","top"), label.cex = 1) |> plot()
 ```
 
 ```{r}
@@ -321,7 +322,8 @@ SACrime
 ```{r}
 biplot(SACrime, center = FALSE) |> 
   CA(variant = "Symmetric", lambda.scal = TRUE) |> 
-  samples(col = c("cyan","purple"), pch = c(15,17), label.side = c("bottom","top"))|> 
+  samples(col = c("cyan","purple"), pch = c(15,17), 
+          label.side = c("bottom","top"))|> 
   plot()
 ```
 

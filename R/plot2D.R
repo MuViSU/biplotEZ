@@ -83,20 +83,20 @@
 #' @param g.names factor names
 #'
 #' @noRd
-.CA.plot <- function(rowcoor, colcoor, group.aes, sample.aes, r, c, g.names)
+.CA.plot <- function(Z, group.aes, sample.aes, r, c, g.names)
 {
   #first factor rowcoor
-  graphics::points(x = rowcoor[,1], y = rowcoor[,2], pch = sample.aes$pch[1],
+  graphics::points(x = Z[1:bp$r,1], y = Z[1:bp$r,2], pch = sample.aes$pch[1],
                    col = sample.aes$col[1], cex = sample.aes$cex[1])
   text.pos <- match(sample.aes$label.side[1], c("bottom", "left", "top", "right"))
-  graphics::text(x = rowcoor[,1], y = rowcoor[,2], labels = rownames(rowcoor), 
+  graphics::text(x = Z[1:bp$r,1], y = Z[1:bp$r,2], labels = rownames(Z[1:bp$r,]), 
                  col = sample.aes$col[1], cex = sample.aes$label.cex[1],
                  pos = text.pos, offset = sample.aes$label.offset)
   #second factor colcoor
-  graphics::points(x = colcoor[,1], y = colcoor[,2], pch = sample.aes$pch[2],
+  graphics::points(x = Z[(bp$r+1):nrow(Z),1], y = bp$Z[(bp$r+1):nrow(Z),2], pch = sample.aes$pch[2],
                    col = sample.aes$col[2], cex = sample.aes$cex[2])
   text.pos <- match(sample.aes$label.side[2], c("bottom", "left", "top", "right"))
-  graphics::text(x = colcoor[,1], y = colcoor[,2], labels = rownames(colcoor),
+  graphics::text(x = Z[(bp$r+1):nrow(Z),1], y = Z[(bp$r+1):nrow(Z),2], labels = rownames(Z[(bp$r+1):nrow(Z),]),
                  col = sample.aes$col[2], cex = sample.aes$label.cex[2],
                  pos = text.pos, offset = sample.aes$label.offset)
 }
@@ -108,22 +108,31 @@
 #' @param newsamples newsamples aesthetics
 #'
 #' @noRd
-.newsamples.CA.plot <- function(newrowcoor, newcolcoor, newsamples)
+.newsamples.CA.plot <- function(Znew, newsamples)
 {
-  # Indexing is incorrect
+  
+  if(length(newsamples$label.col)==1){
+    label.col <- rep(newsamples$label.col, nrow(Znew))
+  } else
+  {
+    label.col <- newsamples$label.col}
+  if(is.null(newsamples$label.col)) {
+    label.col <- newsamples$col
+    }
+  
   #first factor newrowcoor
-  graphics::points(x = newrowcoor[,1], y = newrowcoor[,2], pch = newsamples$pch[1],
+  graphics::points(x = Znew[1:bp$r,1], y = Znew[1:bp$r,2], pch = newsamples$pch[1],
                    col = newsamples$col[1], cex = newsamples$cex[1])
   text.pos <- match(newsamples$label.side[1], c("bottom", "left", "top", "right"))
-  graphics::text(x = newrowcoor[,1], y = newrowcoor[,2], labels = rownames(newrowcoor), 
-                 col = newsamples$col[1], cex = newsamples$label.cex[1],
+  graphics::text(x = Znew[1:bp$r,1], y = Znew[1:bp$r,2], labels = rownames(Znew[1:bp$r,]), 
+                 col = label.col[1], cex = newsamples$label.cex[1],
                  pos = text.pos, offset = newsamples$label.offset)
   #second factor newcolcoor
-  graphics::points(x = newcolcoor[,1], y = newcolcoor[,2], pch = newsamples$pch[2],
-                   col = newsamples$col[2], cex = newsamples$cex[2])
-  text.pos <- match(newsamples$label.side[2], c("bottom", "left", "top", "right"))
-  graphics::text(x = newcolcoor[,1], y = newcolcoor[,2], labels = rownames(newcolcoor),
-                 col = newsamples$col[2], cex = newsamples$label.cex[2],
+  graphics::points(x = Znew[(bp$r+1):nrow(Znew),1], y = Znew[(bp$r+1):nrow(Znew),2], pch = newsamples$pch[(bp$r+1)],
+                   col = newsamples$col[(bp$r+1)], cex = newsamples$cex[(bp$r+1)])
+  text.pos <- match(newsamples$label.side[(bp$r+1)], c("bottom", "left", "top", "right"))
+  graphics::text(x = Znew[(bp$r+1):nrow(Znew),1], y = Znew[(bp$r+1):nrow(Znew),2], labels = rownames(Znew[(bp$r+1):nrow(Znew),]),
+                 col = label.col[(bp$r+1)], cex = newsamples$label.cex[(bp$r+1)],
                  pos = text.pos, offset = newsamples$label.offset)
 }
 #' Title

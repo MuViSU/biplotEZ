@@ -150,9 +150,9 @@ plot.biplot <- function(x, engine = c("ggplot2","base"),
 
       if(inherits(x,"CA")){ # CA map
         if(x$dim.biplot == 2)
-          {.CA.plot(x$rowcoor, x$colcoor, x$group.aes, x$samples, x$r, x$c, x$g.names) 
+          {.CA.plot(x$Z, x$group.aes, x$samples, x$r, x$c, x$g.names) 
           # New samples 
-          if (!is.null(x$Znew)) .newsamples.CA.plot(x$newrowcoor, x$newcolcoor, x$newsamples)
+          if (!is.null(x$Znew)) .newsamples.CA.plot(x$Znew, x$newsamples)
           # Legends 
           if (!is.null(x$legend)) do.call(biplot.legend, list(bp=x, x$legend.arglist))
           } else{

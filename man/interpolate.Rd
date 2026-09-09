@@ -33,7 +33,12 @@ For an object of class \code{CA} the following additional elements will be appen
 This function adds supplementary points and variables to the plot from a new data set.
 }
 \examples{
+## PCA interpolation example
+
 biplot(data = iris[1:145,]) |> PCA() |> interpolate(newdata = iris[146:150,]) |> plot()
+
+## CA interpolation example
+
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
      interpolate(newdata = HairEyeColor[,,1]) |> plot()
 

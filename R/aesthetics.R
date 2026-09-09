@@ -77,11 +77,11 @@ samples <- function (bp,  which = 1:bp$g, col = ez.col, pch = 16,
 {
   g <- bp$g
   n <- bp$n
-  if(inherits(bp,"CA")) n <- nrow(bp$Z) # 
+  if(inherits(bp,"CA")) n <- nrow(bp$Z)  
   p <- bp$p
   if(is.null(which) & length(col)==0) col <- ez.col
   
- if(inherits(bp,"CA")) 
+ if(inherits(bp, "CA")) 
  {label <- TRUE}
   
  # setting any of the label.* arguments switches labelling on, but must not
@@ -1155,9 +1155,22 @@ CLRs <- function (bp,  which = 1, col = "black")
 #' @export
 #'
 #' @examples
+#' ## PCA example
 #' biplot(data = iris[1:145,]) |> PCA() |> samples(col = "grey") |>
 #' interpolate(newdata = iris[146:150,]) |> newsamples(col = rainbow(6), pch=15) |> plot()
 #' 
+#' ## Creating a sample to illustrate the grouping colours of interpolated samples
+#' set.seed(1148)
+#' smp <- sample(c(1:150),145)
+#' biplot(data = iris[smp,], group.aes =iris[smp,5]) |> PCA() |> 
+#' interpolate(newdata = iris[-smp,],new.group.aes=iris[-smp,5]) |> 
+#' newsamples(col = c("blue", "green", "gold"), pch=17, cex=2) |> plot()
+#'
+#' ## CA example
+#' biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
+#' samples(pch = c(0,2)) |> interpolate(newdata = HairEyeColor[,,1]) |> 
+#'   newsamples(col = c("orange","purple"), pch = c(15,17), label = TRUE) |> plot()
+#'   
 newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
                         label = FALSE, label.name = NULL, label.col=NULL, 
                         label.cex = 0.75, label.side = "bottom", 
@@ -1171,7 +1184,7 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
        any(label.side!="bottom") | any(label.offset !=0.5) | any(label.cex!=0.75))
       label <- TRUE
   nn <- nrow(bp$Xnew)
-  if(inherits(bp,"CA")) nn <- bp$r + bp$c
+  if(inherits(bp,"CA")) nn <- nrow(bp$Z)
   gg <- bp$new.g
   if (length(col)==1)
     col <- rep(col, nn) else
@@ -1180,7 +1193,7 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
     col <- col[ifelse(1:gg%%col.len==0,col.len,1:gg%%col.len)]
     if(is.null(col)){col <- rep(NA, gg)}
     new.col <- rep(NA, nn)
-    for (j in 1:bp$new.g)
+    for (j in 1:gg)
       new.col[bp$new.group.aes == bp$new.g.names[j]] <- col[j]
     col <- new.col
   }
@@ -1192,7 +1205,7 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
     pch <- pch[ifelse(1:gg%%pch.len==0,pch.len,1:gg%%pch.len)]
     if(is.null(pch)){pch <- rep(NA, gg)}
     new.pch <- rep(NA, nn)
-    for (j in 1:bp$new.g)
+    for (j in 1:gg)
       new.pch[bp$new.group.aes == bp$new.g.names[j]] <- pch[j]
     pch <- new.pch
   }

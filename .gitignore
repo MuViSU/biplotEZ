@@ -26,3 +26,4 @@ Rplots.pdf
 
 /.quarto/
 **/*.quarto_ipynb
+.positai
