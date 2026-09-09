@@ -448,6 +448,12 @@ fit.measures <- function (bp)
     bp$row.predictivities <- row.predictivities
   }
   
+  if(inherits(bp, "MCA")){
+    
+    quality <- sum((bp$SVD[[1]]^2)[bp$e.vects[1:bp$dim.biplot]])/sum((bp$SVD[[1]]^2))
+    bp$quality <- quality
+  }
+  
   bp
 }
 # ---------------------------------------------------------------------------------------------

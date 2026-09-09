@@ -35,7 +35,8 @@ This function adds supplementary points and variables to the plot from a new dat
 \examples{
 ## PCA interpolation example
 
-biplot(data = iris[1:145,]) |> PCA() |> interpolate(newdata = iris[146:150,]) |> plot()
+biplot(data = iris[1:145,]) |> PCA() |> 
+interpolate(newdata = iris[146:150,]) |> plot()
 
 ## CA interpolation example
 

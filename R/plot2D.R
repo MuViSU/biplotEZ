@@ -83,7 +83,7 @@
 #' @param g.names factor names
 #'
 #' @noRd
-.CA.plot <- function(Z, group.aes, sample.aes, r, c, g.names)
+.CA.plot <- function(bp, Z, group.aes, sample.aes, r, c, g.names)
 {
   #first factor rowcoor
   graphics::points(x = Z[1:bp$r,1], y = Z[1:bp$r,2], pch = sample.aes$pch[1],
@@ -108,7 +108,7 @@
 #' @param newsamples newsamples aesthetics
 #'
 #' @noRd
-.newsamples.CA.plot <- function(Znew, newsamples)
+.newsamples.CA.plot <- function(bp, Znew, newsamples)
 {
   
   if(length(newsamples$label.col)==1){

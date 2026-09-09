@@ -33,6 +33,13 @@ plot.biplot <- function(x, engine = c("ggplot2","base"),
     warning("The ggplot2 engine does not yet support ", reason,
             "; falling back to base graphics.", call. = FALSE)
   }
+  if(engine == "base" && inherits(x, "MCA")) {
+    print("MCA biplots are only available in ggplot2.")
+     return(gg_biplot(x, exp.factor = exp.factor,
+                     axis.predictivity = axis.predictivity,
+                     sample.predictivity = sample.predictivity,
+                     xlim = xlim, ylim = ylim))
+  }
   
   #----- See all the internal functions in utility_2D.R
   if (is.null(x$Z)) stop ("Add a biplot method before generating a plot")
@@ -117,8 +124,8 @@ plot.biplot <- function(x, engine = c("ggplot2","base"),
       if(!is.null(x$z.density)) .density.plot(x$z.density, x$density.style)
       
       # Axes 
-      # If x does not inherit object of class "CA" then and axes() is not called, create default aesthetics for axes. 
-      if(!inherits(x,"CA")) {
+      # If x does not inherit object of class "CA"  or "MCA then and axes() is not called, create default aesthetics for axes. 
+      if(!inherits(x,c("CA", "MCA"))) {
         if (is.null(x$axes)) x <- axes(x)}
       ax.aes <- x$axes
 
@@ -150,9 +157,9 @@ plot.biplot <- function(x, engine = c("ggplot2","base"),
 
       if(inherits(x,"CA")){ # CA map
         if(x$dim.biplot == 2)
-          {.CA.plot(x$Z, x$group.aes, x$samples, x$r, x$c, x$g.names) 
+          {.CA.plot(x, x$Z, x$group.aes, x$samples, x$r, x$c, x$g.names) 
           # New samples 
-          if (!is.null(x$Znew)) .newsamples.CA.plot(x$Znew, x$newsamples)
+          if (!is.null(x$Znew)) .newsamples.CA.plot(x, x$Znew, x$newsamples)
           # Legends 
           if (!is.null(x$legend)) do.call(biplot.legend, list(bp=x, x$legend.arglist))
           } else{
