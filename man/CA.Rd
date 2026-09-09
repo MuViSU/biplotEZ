@@ -4,8 +4,8 @@
 \alias{CA}
 \title{Correspondence Analysis (CA) method}
 \usage{
-CA(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant = "Princ", 
-lambda.scal = FALSE)
+CA(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), 
+       variant = "Princ", lambda.scal = FALSE)
 }
 \arguments{
 \item{bp}{object of class \code{biplot} obtained from preceding function \code{biplot(center = FALSE)}. In order to maintain the frequency table, the input should not be centered or scaled. For \code{CA}, \code{bp} should be a contingency table.}

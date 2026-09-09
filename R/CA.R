@@ -34,8 +34,8 @@
 #'
 #' @seealso [biplot()]
 #'
-#' @usage CA(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant = "Princ", 
-#' lambda.scal = FALSE)
+#' @usage CA(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), 
+#'        variant = "Princ", lambda.scal = FALSE)
 #' @aliases CA
 #'
 #' @export

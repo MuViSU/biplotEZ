@@ -57,7 +57,7 @@ The object of class \code{biplot} will be appended with a list called \code{news
 This function allows formatting changes to new samples.
 }
 \examples{
-PCA example
+## PCA example
 biplot(data = iris[1:145,]) |> PCA() |> samples(col = "grey") |>
 interpolate(newdata = iris[146:150,]) |> newsamples(col = rainbow(6), pch=15) |> plot()
 

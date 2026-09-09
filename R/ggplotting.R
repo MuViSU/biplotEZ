@@ -25,7 +25,7 @@ gg_biplot <- function(x, exp.factor = 1.2,
   if (!requireNamespace("ggplot2", quietly = TRUE))
     stop("Package 'ggplot2' is required for gg_biplot().", call. = FALSE)
   if (is.null(x$Z))
-    stop("Add a biplot method (PCA, CVA, ...) before generating a plot.")
+    stop("Add a biplot method (PCA, CVA, CA, MCA...) before generating a plot.")
   reason <- .gg_supported(x)
   if (!is.null(reason))
     stop("gg_biplot() does not yet support ", reason,
@@ -35,9 +35,9 @@ gg_biplot <- function(x, exp.factor = 1.2,
   Z <- x$Z
   
   # ---- default aesthetics, exactly as plot.biplot() does -------------------
-  is.CA <- inherits(x, "CA")
+  is.cat <- inherits(x, c("CA", "MCA"))
   if (is.null(x$samples)) x <- biplotEZ::samples(x)
-  if (!is.CA && is.null(x$axes)) x <- biplotEZ::axes(x)
+  if (!is.cat && is.null(x$axes)) x <- biplotEZ::axes(x)
   leg <- x$legend                                # legend.type() flags, or NULL
   ### a legend in a separate window is a base graphics feature: with ggplot2
   ### the legend is drawn beside the biplot in the ordinary way
@@ -60,7 +60,7 @@ gg_biplot <- function(x, exp.factor = 1.2,
   
   # ---- prediction: lines drawn later; store readable values now -------
   predict.mat <- NULL
-  if (!is.CA && !is.null(x$predict$samples)) {
+  if (!is.cat && !is.null(x$predict$samples)) {
     predict.mat <- Z[x$predict$samples, , drop = FALSE]
     x$predict$samples.mat <- .predicted_values(x, predict.mat)
   }
@@ -90,7 +90,7 @@ gg_biplot <- function(x, exp.factor = 1.2,
     }
   }
   samples.too.small <- NULL
-  if (is.CA && (!is.null(axis.predictivity) || !is.null(sample.predictivity)))
+  if (is.cat && (!is.null(axis.predictivity) || !is.null(sample.predictivity)))
     stop("axis.predictivity and sample.predictivity do not apply to CA maps.",
           call. = FALSE)
   cex.vec <- rep(1, nrow(Z)) # was rep(1, x$n)
@@ -102,7 +102,7 @@ gg_biplot <- function(x, exp.factor = 1.2,
   }
   
   # ---- calibrate axes using internal functions --------------------
-  if(is.CA) {
+  if(is.cat) {
     z.axes <- NULL
   } else {
   if (!is.null(x$Lmat))
@@ -134,7 +134,7 @@ gg_biplot <- function(x, exp.factor = 1.2,
     layers <- c(layers, .gg_density(x$z.density, x$density.style))
   
   # ---- linear calibrated axes ----------------------------------------------
-  if (!is.CA)
+  if (!is.cat)
     layers <- c(layers, .gg_linear_axes(z.axes, ax.aes, usr, mm, axes.too.small,
                                       predict.mat, x$predict$which))
   
