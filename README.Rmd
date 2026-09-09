@@ -76,7 +76,8 @@ To change to row standard coordinates use a call such as:
 
 ```{r ca_standard}
 biplot(HairEyeColor[,,2], center = FALSE) |> 
-  CA(variant = "Stand") |> samples(col=c("magenta","purple"), pch=c(15,18)) |> plot()
+  CA(variant = "Stand") |> samples(col=c("magenta","purple"), pch=c(15,18)) |> 
+  plot()
 ```
 
 ## Regression biplot
