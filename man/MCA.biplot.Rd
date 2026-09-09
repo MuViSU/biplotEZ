@@ -19,7 +19,7 @@
 
 \item{e.vects}{which eigenvectors (canonical variates) to extract, with default \code{1:dim.biplot}.}
 
-\item{variant}{which multiple correspondence analysis variant, with default "Indicator", SVD performed on the weighted indicator matrix. \code{variant = "Burt"}, SVD performed on the weighted Burt matrix.}
+\item{variant}{which multiple correspondence analysis variant, with default an only option in the current version being "Indicator", SVD performed on the weighted indicator matrix..}
 
 \item{lvl.num}{logical value to specify the labels of the category levels, with default \code{TRUE} to indicate levels with numbers (V1, V2, etc.). Alternatively the level names are used.}
 }
@@ -30,7 +30,7 @@ an object of class MCA, inherits from class biplot.
 Performs calculations for an MCA biplot.
 }
 \examples{
-biplot(as.data.frame(HairEyeColor), center = FALSE) |> 
+biplot(as.data.frame(HairEyeColor)[,-4], center = FALSE) |> 
 MCA(lvl.num = FALSE) |>  samples(col=c("purple3","forestgreen"), 
 pch=c(15,17), label = TRUE, label.offset = 1, label.col="gray37") |> 
 plot()
