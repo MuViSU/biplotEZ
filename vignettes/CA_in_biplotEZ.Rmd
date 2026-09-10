@@ -1,5 +1,5 @@
 ---
-title: "CA in biplotEZ"
+title: "CA and MCA in biplotEZ"
 output:
   rmarkdown::html_vignette:
     toc: true
@@ -216,7 +216,7 @@ $$
 
 # The function CA()
 
-The function `CA()` requires a two-way contingency table as input and will return an object of class `CA` and `biplot`. As this is not a standard data matrix as for `PCA` and `CVA`, scaling and centering is not allowed on the two-way contingency table and a warning will be given if either `scale` or `center` is specified as `TRUE` in biplot()`.
+The function `CA()` requires a two-way contingency table as input and will return an object of class `CA` and `biplot`. As this is not a standard data matrix as for `PCA` and `CVA`, scaling and centering are not allowed on the two-way contingency table and a warning will be given if either `scale` or `center` is specified as `TRUE` in biplot()`.
 
 ## `Variant="Princ"`
 
@@ -325,6 +325,95 @@ biplot(SACrime, center = FALSE) |>
   samples(col = c("cyan","purple"), pch = c(15,17), 
           label.side = c("bottom","top"))|> 
   plot()
+```
+
+# What is a Multiple Correspondence Analysis?
+
+Now we shift our attention to data sets with more than two categorical variables. Consider a data matrix $\mathbf{X}^{*}:n \times p$ containing data on $n$ objects and $p$ **categorical** variables. Before approximating this data matrix to be represented in a 2D biplot, we recode the variables as dummy variables in the form of an indicator matrix, $\mathbf{G}$. Each variable $p$ consists of $k$ category levels, therefore the indicator matrix $\mathbf{G}$ has $n$ rows and $\sum_{j=1}^pk_j$ columns. This indicator matrix is treated as the data matrix in CA, which includes the steps of obtaining a correspondence matrix, row and column masses expressed as diagonal matrices before obtaining the SVD of the matrix of standardised Pearson residuals ($\mathbf{S}$). since it is weighted by the row and column masses before SVD (@UB2011; @Greenacre2017):
+
+$$
+\begin{aligned}
+\text{SVD}(\mathbf{S}) &= \text{SVD}\left(\mathbf{D_r^{-\frac{1}{2}}}(\mathbf{G}-\mathbf{rc^\prime})\mathbf{D_c^{-\frac{1}{2}}}\right)\\&= \mathbf{U\Lambda V^\prime}
+\end{aligned}
+$$
+
+There are other known approaches to MCA, for example, utilising a Burt matrix in the place of the indicator matrix. Also, considering different distance metrics, such as the extended mathcing coefficient (@UB2011). These are not covered in the current version of `biplotEZ`.
+
+# MCA biplot
+
+The MCA biplot consists of two types of coordinates and no axes. In total there are $n$ samples coordinates and $\sum_{j=1}^pk_j$ category level point (CLP) coordinates. Typically, these coordinates are illustrated by different plotting characters and colours to ease visual interpretation. The distances between the coordinates are meaningful and reveal association between objects, between responses (category levels), as well as inter-relationships between responses and objects. These associations are approximated in a two-dimensional display, as the quality of the display increases, the proximity of the coordinates reflect the true response profiles captured in the data matrix.
+
+## Coordinates
+
+Again, the coordinates representing the objects and variables should have different contribution of the singular values. Typically, the sample coordinates are presented in principal coordinates and the category level point (CLP) coordinates are presented in standard coordinates with some being located on the vertices of the plot (@Gabriel1971).
+
+$$
+\begin{aligned}
+\text{Sample principal coordinates:} \hspace{0.5 cm}&\mathbf{D_r^{-\frac{1}{2}}}\mathbf{U}\\
+\text{Category level standard coordinates:} \hspace{0.5 cm}&\mathbf{D_c^{-\frac{1}{2}}}\mathbf{V}
+\end{aligned}
+$$
+The scaling of the coordinates by the row and column masses is a default approach adopted by @Greenacre2017. However, various valid alternative scaling options are available, but beyond the scope of `biplotEZ`.
+
+## Measures of fit
+
+`quality` is available for MCA biplots and is typically referred to as the total inertia in MCA literature. Again, it is measured by the ratio of the variance explained (sum of the squared singular values of the utilised ($M$) components) and the total variance (sum of all squared singular values ($p$)).
+
+$$
+\frac{\sum_{m=1}^{M}\lambda_m^2}{\sum_{m=1}^{p}\lambda_m^2}
+$$
+
+# The function MCA()
+
+The function `MCA()` requires a multivariate categorical data matrix as input and will return an object of class `MCA` and `biplot`. If a matrix with both numeric and categorical variables are passed through the `biplot()` function, only the categorical variables will be considered for MCA. As the variables are categorical, scaling and centering are not suitable transformations and a warning will be given if either `scale` or `center` is specified as `TRUE` in biplot()`.
+
+The full `HairEyeColor` is considered for the MCA examples.
+
+```{r}
+head(as.data.frame(HairEyeColor))
+```
+
+As the final column represents the frequency of the co-occurrences of the category elvels of the Hair, Eye and Sex variables, it is treated as numeric and will not be passed to the `MCA()` function.
+
+```{r}
+biplot(as.data.frame(HairEyeColor), center = FALSE) |> MCA() 
+```
+
+The default arguments will result in the following biplot:
+
+```{r}
+biplot(as.data.frame(HairEyeColor), center = FALSE) |> MCA() |> plot()
+```
+
+Since, two types of coordinates are represented, changes to the sample aesthetics are crucial. The addition of plotting labels also enhance the interpretability of the plot.
+
+```{r}
+biplot(as.data.frame(HairEyeColor), center = FALSE) |> 
+  MCA() |> 
+  samples(col = c("forestgreen", "orange3"), pch = c(15, 17), label = TRUE, 
+          label.col = "black", label.offset = 1) |> 
+  plot()
+```
+
+Default arguments for `MCA` will suffice, the only argument that is worth noting controls the labels of the CLP coordinates in the display. In the first example `lvl.num = TRUE` was shown, which is the default value. Detail regarding the levels can also be displayed by changing this argument to `FALSE`:
+
+```{r}
+biplot(as.data.frame(HairEyeColor), center = FALSE) |> 
+  MCA(lvl.num = FALSE) |> 
+  samples(col = c("forestgreen", "orange3"), pch = c(15, 17), label = TRUE, 
+          label.col = "black", label.offset = 1) |> 
+  plot()
+```
+
+## Measure of fit
+
+The `fit.mesaures()` function should be utilised to obtain the specific fit measures as is done in other biplot optpions available in `biplotEZ`:
+
+```{r}
+mca.out <- biplot(as.data.frame(HairEyeColor), center = FALSE) |> 
+  MCA() |> fit.measures()
+
+mca.out
 ```
 
 
