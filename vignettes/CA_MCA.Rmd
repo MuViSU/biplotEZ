@@ -1,12 +1,12 @@
 ---
-title: "CA and MCA in biplotEZ"
+title: "CA and MCA"
 output:
   rmarkdown::html_vignette:
     toc: true
     number_sections: true
 bibliography: references.bib
 vignette: >
-  %\VignetteIndexEntry{CA in biplotEZ}
+  %\VignetteIndexEntry{CA_MCA}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

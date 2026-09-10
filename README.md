@@ -85,7 +85,8 @@ To change to row standard coordinates use a call such as:
 
 ``` r
 biplot(HairEyeColor[,,2], center = FALSE) |> 
-  CA(variant = "Stand") |> samples(col=c("magenta","purple"), pch=c(15,18)) |> plot()
+  CA(variant = "Stand") |> samples(col=c("magenta","purple"), pch=c(15,18)) |> 
+  plot()
 ```
 
 <img src="man/figures/README-ca_standard-1.png" alt="" width="100%" />
