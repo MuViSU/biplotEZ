@@ -192,7 +192,7 @@ gg_biplot <- function(x, exp.factor = 1.2,
   p <- ggplot2::ggplot() +
     layers +
     scales +
-    ggplot2::coord_equal(xlim = xlim, ylim = ylim, expand = FALSE, clip = "on") +
+    ggplot2::coord_equal(xlim = xlim, ylim = ylim, expand = FALSE, clip = "off") +
     .theme_biplot()
   
   if (!is.null(x$Title)) p <- p + ggplot2::ggtitle(x$Title)
@@ -287,7 +287,8 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
       panel.border = ggplot2::element_rect(colour = "black", fill = NA,
                                            linewidth = 0.5),
       plot.title   = ggplot2::element_text(hjust = 0.5),
-      legend.title = ggplot2::element_text(size = 10)
+      legend.title = ggplot2::element_text(size = 10),
+      plot.margin  = ggplot2::margin(17, 17, 17, 17)
     )
 }
 
@@ -472,10 +473,10 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
     }
   }
   switch(side,
-         bottom = data.frame(x = at, y = usr[3] + inset, hjust = 0.5, vjust = 0),
-         top    = data.frame(x = at, y = usr[4] - inset, hjust = 0.5, vjust = 1),
-         left   = data.frame(x = usr[1] + inset, y = at, hjust = 0,   vjust = 0.5),
-         right  = data.frame(x = usr[2] - inset, y = at, hjust = 1,   vjust = 0.5))
+         bottom = data.frame(x = at, y = usr[3] - inset, hjust = 0.5, vjust = 1),
+         top    = data.frame(x = at, y = usr[4] + inset, hjust = 0.5, vjust = 0),
+         left   = data.frame(x = usr[1] - inset, y = at, hjust = 1,   vjust = 0.5),
+         right  = data.frame(x = usr[2] + inset, y = at, hjust = 0,   vjust = 0.5))
 }
 
 #' Tick segments and rotated tick labels (port of .marker.label)
