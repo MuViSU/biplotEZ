@@ -1,5 +1,10 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+
 
 # biplotEZ <img src="man/figures/logo.png" align="right" height="139" alt="biplotEZ logo" />
 
@@ -13,7 +18,7 @@ are included for visual enhancements and interpretation.
 ## Installation
 
 You can install the development version of biplotEZ like this:
-
+  
 ``` r
 library(devtools)
 devtools::install_github("MuViSU/biplotEZ")
@@ -22,35 +27,36 @@ devtools::install_github("MuViSU/biplotEZ")
 ## Example
 
 This is a basic example which shows you how to construct a PCA biplot:
+  
 
 ``` r
 library(biplotEZ)
-#> Welcome to biplotEZ! 
-#> This package is used to construct biplots 
-#> Run ?biplot or vignette() for more information
-#> 
-#> Attaching package: 'biplotEZ'
-#> The following object is masked from 'package:stats':
-#> 
-#>     biplot
 biplot (iris[,1:4], Title="Test PCA biplot") |> PCA() |> plot()
 ```
 
-<img src="man/figures/README-PCA_example-1.png" alt="" width="100%" />
+<div class="figure">
+<img src="man/figures/README-PCA_example-1.png" alt="plot of chunk PCA_example" width="100%" />
+<p class="caption">plot of chunk PCA_example</p>
+</div>
 
 While the PCA biplot provides a visual representation of the overall
 data set, optimally representing the variance in 1, 2 or 3 dimensions,
 the CVA biplot aims to optimally separate specified groups in the data.
 This is a basic example which shows you how to construct a CVA biplot:
+  
 
 ``` r
 biplot (iris[,1:4], Title="Test CVA biplot") |> CVA(classes=iris[,5]) |> plot()
 ```
 
-<img src="man/figures/README-CVA_example-1.png" alt="" width="100%" />
+<div class="figure">
+<img src="man/figures/README-CVA_example-1.png" alt="plot of chunk CVA_example" width="100%" />
+<p class="caption">plot of chunk CVA_example</p>
+</div>
 
-An over-the-top example of changing all the formatting and adding all
-the bells and whistles:
+An over-the-top example of changing all the formatting and adding all the
+bells and whistles:
+  
 
 ``` r
 biplot (iris[,1:4], group.aes=iris[,5]) |> PCA() |> 
@@ -68,20 +74,28 @@ biplot (iris[,1:4], group.aes=iris[,5]) |> PCA() |>
 #> Computing 2.15 -ellipse for versicolor
 ```
 
-<img src="man/figures/README-aes_example-1.png" alt="" width="100%" />
+<div class="figure">
+<img src="man/figures/README-aes_example-1.png" alt="plot of chunk aes_example" width="100%" />
+<p class="caption">plot of chunk aes_example</p>
+</div>
+
 
 ## CA biplot
 
-The default CA biplots represents row principal coordinates with a call
-such as:
+The default CA biplots represents row principal coordinates with a call such as:
+
 
 ``` r
 biplot(HairEyeColor[,,2], center = FALSE) |> CA() |> plot()
 ```
 
-<img src="man/figures/README-ca_default-1.png" alt="" width="100%" />
+<div class="figure">
+<img src="man/figures/README-ca_default-1.png" alt="plot of chunk ca_default" width="100%" />
+<p class="caption">plot of chunk ca_default</p>
+</div>
 
 To change to row standard coordinates use a call such as:
+
 
 ``` r
 biplot(HairEyeColor[,,2], center = FALSE) |> 
@@ -89,21 +103,28 @@ biplot(HairEyeColor[,,2], center = FALSE) |>
   plot()
 ```
 
-<img src="man/figures/README-ca_standard-1.png" alt="" width="100%" />
+<div class="figure">
+<img src="man/figures/README-ca_standard-1.png" alt="plot of chunk ca_standard" width="100%" />
+<p class="caption">plot of chunk ca_standard</p>
+</div>
 
 ## Regression biplot
 
-With the function `regress` linear regression biplot axes can be fitted
-to a biplot
+With the function `regress` linear regression biplot axes can be fitted to a biplot
+
 
 ``` r
 out <- biplot(iris) |> PCO(dist.func = sqrtManhattan) 
 biplot(iris) |> regress(out$Z) |> plot()
 ```
 
-<img src="man/figures/README-regress-1.png" alt="" width="100%" />
+<div class="figure">
+<img src="man/figures/README-regress-1.png" alt="plot of chunk regress" width="100%" />
+<p class="caption">plot of chunk regress</p>
+</div>
+
+
 
 ## Report Bugs and Support
-
-If you encounter any issues or have questions, please open an issue on
-the GitHub repository.
+If you encounter any issues or have questions,
+please open an issue on the GitHub repository.

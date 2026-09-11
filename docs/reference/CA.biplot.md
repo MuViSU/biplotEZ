@@ -56,6 +56,5 @@ an object of class CA, inherits from class biplot.
 
 ``` r
 biplot(HairEyeColor[,,2], center = FALSE) |> CA() |> plot()
-#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.
 
 ```

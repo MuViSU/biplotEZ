@@ -42,13 +42,13 @@ the bells and whistles:
 The default CA biplots represents row principal coordinates with a call
 such as:
 
-[`biplot`](reference/biplot.md)`(``HairEyeColor``[``,,``2``]``, center ``=`` ``FALSE``)`` ``|>`` `[`CA`](reference/CA.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base`` ``#> graphics.`
+[`biplot`](reference/biplot.md)`(``HairEyeColor``[``,,``2``]``, center ``=`` ``FALSE``)`` ``|>`` `[`CA`](reference/CA.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](reference/figures/README-ca_default-1.png)
 
 To change to row standard coordinates use a call such as:
 
-[`biplot`](reference/biplot.md)`(``HairEyeColor``[``,,``2``]``, center ``=`` ``FALSE``)`` ``|>`` `` `` `[`CA`](reference/CA.md)`(``variant ``=`` ``"Stand"``)`` ``|>`` `[`samples`](reference/samples.md)`(``col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"magenta"``,``"purple"``)``, pch``=`[`c`](https://rdrr.io/r/base/c.html)`(``15``,``18``)``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base`` ``#> graphics.`
+[`biplot`](reference/biplot.md)`(``HairEyeColor``[``,,``2``]``, center ``=`` ``FALSE``)`` ``|>`` `` `` `[`CA`](reference/CA.md)`(``variant ``=`` ``"Stand"``)`` ``|>`` `[`samples`](reference/samples.md)`(``col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"magenta"``,``"purple"``)``, pch``=`[`c`](https://rdrr.io/r/base/c.html)`(``15``,``18``)``)`` ``|>`` `` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](reference/figures/README-ca_standard-1.png)
 

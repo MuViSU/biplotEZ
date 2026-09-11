@@ -6,8 +6,8 @@ construction by approximation of the Pearson residuals.
 ## Usage
 
 ``` r
-CA(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant = "Princ", 
-lambda.scal = FALSE)
+CA(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), 
+       variant = "Princ", lambda.scal = FALSE)
 ```
 
 ## Arguments
@@ -120,15 +120,12 @@ A list with the following components is available:
 ``` r
 # Creating a CA biplot with rows in principal coordinates:
 biplot(HairEyeColor[,,2], center = FALSE) |> CA() |> plot()
-#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.
 
 # Creating a CA biplot with rows in standard coordinates:
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Stand") |> 
 samples(col=c("magenta","purple"), pch = c(15,17), label.col = "black") |> plot()
-#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.
 
 # Creating a CA biplot with rows and columns scaled equally:
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
 samples(col = c("magenta","purple"), pch = c(15,17), label.col = "black") |> plot()
-#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.
 ```

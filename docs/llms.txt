@@ -42,13 +42,13 @@ the bells and whistles:
 The default CA biplots represents row principal coordinates with a call
 such as:
 
-[`biplot`](reference/biplot.md)`(``HairEyeColor``[``,,``2``]``, center ``=`` ``FALSE``)`` ``|>`` `[`CA`](reference/CA.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base`` ``#> graphics.`
+[`biplot`](reference/biplot.md)`(``HairEyeColor``[``,,``2``]``, center ``=`` ``FALSE``)`` ``|>`` `[`CA`](reference/CA.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](reference/figures/README-ca_default-1.png)
 
 To change to row standard coordinates use a call such as:
 
-[`biplot`](reference/biplot.md)`(``HairEyeColor``[``,,``2``]``, center ``=`` ``FALSE``)`` ``|>`` `` `` `[`CA`](reference/CA.md)`(``variant ``=`` ``"Stand"``)`` ``|>`` `[`samples`](reference/samples.md)`(``col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"magenta"``,``"purple"``)``, pch``=`[`c`](https://rdrr.io/r/base/c.html)`(``15``,``18``)``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`` ``#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base`` ``#> graphics.`
+[`biplot`](reference/biplot.md)`(``HairEyeColor``[``,,``2``]``, center ``=`` ``FALSE``)`` ``|>`` `` `` `[`CA`](reference/CA.md)`(``variant ``=`` ``"Stand"``)`` ``|>`` `[`samples`](reference/samples.md)`(``col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"magenta"``,``"purple"``)``, pch``=`[`c`](https://rdrr.io/r/base/c.html)`(``15``,``18``)``)`` ``|>`` `` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](reference/figures/README-ca_standard-1.png)
 
@@ -98,6 +98,10 @@ the GitHub repository.
 
 - [`CatPCA(`*`<biplot>`*`)`](CatPCA.biplot.md) : Calculate elements for
   the CatPCA biplot
+
+- [`MCA()`](MCA.md) : Multiple Correspondence Analysis (MCA) method
+
+- [`MCA(`*`<biplot>`*`)`](MCA.biplot.md) : MCA biplot
 
 - [`PCA()`](PCA.md) : Perform Principal Components Analysis (PCA)
 
@@ -212,6 +216,6 @@ the GitHub repository.
 - [biplotEZ](biplotEZ.md):
 - [Biplots in 1D](Biplots_in_1D.md):
 - [Biplots in 3D](Biplots_in_3D.md):
-- [CA in biplotEZ](CA_in_biplotEZ.md):
+- [CA and MCA](CA_MCA.md):
 - [Class separation](Class_separation.md):
 - [MDS](MDS.md):

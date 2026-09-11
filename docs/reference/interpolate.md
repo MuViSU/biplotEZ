@@ -72,10 +72,15 @@ appended:
 ## Examples
 
 ``` r
-biplot(data = iris[1:145,]) |> PCA() |> interpolate(newdata = iris[146:150,]) |> plot()
+## PCA interpolation example
+
+biplot(data = iris[1:145,]) |> PCA() |> 
+interpolate(newdata = iris[146:150,]) |> plot()
+
+
+## CA interpolation example
 
 biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
      interpolate(newdata = HairEyeColor[,,1]) |> plot()
-#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.
 
 ```

@@ -15,8 +15,7 @@ Read more …
   for alpha-bags, ellipses, densities, interpolation, prediction,
   reflection, rotation, zoom and axes translation
 - `vignette("Class_sepeartion")` for grouped data
-- [`vignette("CA_in_biplotEZ")`](../articles/CA_in_biplotEZ.md) for
-  correspondence analysis
+- `vignette("CA_in_biplotEZ")` for correspondence analysis
 - [`vignette("MDS")`](../articles/MDS.md) for multidimensional scaling
   biplots
 
@@ -358,15 +357,16 @@ widths and line type 2, we need to following code:
 The following four arguments deal with the axis labels. The argument
 `label.dir` is based on the graphics parameter `las` and allows for
 labels to be either orthogonal to the axis direction (`Orthog`),
-horisontal (`Hor`) or parallel to the plot `Paral`. The argument
-`label.line` fulfills the role of the `line` argument in
-[`mtext()`](https://rdrr.io/r/graphics/mtext.html) to determine on which
-margin line (how far from the plot) the label is placed while
-`label.col` and `label.cex` is self-explanatory and defaults to the axis
-colour and size 0.75. Note in for the illustration the in the code below
-the colour vector has only three components, so that recycling is
-applied. These features are only available to base R plots where the
-user has to set `engine = "base"` in
+horisontal (`Hor`), parallel to the plot (`Paral`) or alongside the axis
+line itself (`Along`); the `ggplot2` engine defaults to `Along` and base
+graphics to `Orthog`. The argument `label.line` fulfills the role of the
+`line` argument in [`mtext()`](https://rdrr.io/r/graphics/mtext.html) to
+determine on which margin line (how far from the plot) the label is
+placed while `label.col` and `label.cex` is self-explanatory and
+defaults to the axis colour and size 0.75. Note in for the illustration
+the in the code below the colour vector has only three components, so
+that recycling is applied. These features are only available to base R
+plots where the user has to set `engine = "base"` in
 [`plot()`](https://rdrr.io/r/graphics/plot.default.html).
 
 [`biplot`](../reference/biplot.md)`(``rock``, scaled ``=`` ``TRUE``)`` ``|>`` `[`PCA`](../reference/PCA.md)`(``)`` ``|>`` `` `` `[`axes`](../reference/axes.md)`(``col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"lightskyblue"``,``"slategrey"``,``"blue"``)``,`` `` label.dir``=``"Hor"``, label.line``=`[`c`](https://rdrr.io/r/base/c.html)`(``0``,``0.5``,``1``,``1.5``)``)`` ``|>`` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``engine``=``"base"``)`
