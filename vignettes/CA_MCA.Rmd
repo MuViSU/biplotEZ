@@ -6,7 +6,7 @@ output:
     number_sections: true
 bibliography: references.bib
 vignette: >
-  %\VignetteIndexEntry{CA_MCA}
+  %\VignetteIndexEntry{CA and MCA}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 editor_options: 

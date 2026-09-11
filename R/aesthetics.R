@@ -304,7 +304,7 @@ means <- function (bp,  which = bp$samples$which, col = NULL,
 #' @param col the colour(s) for the axes, with default \code{grey(0.7)}. Alternatively, provide a vector of colours corresponding to \code{X.names}.
 #' @param lwd the line width(s) for the axes, with default \code{1}.
 #' @param lty the line type(s) for the axes, with default \code{1}.
-#' @param label.dir a character string indicating the placement of the axis titles to the side of the figure. One of "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure (default) , "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure.
+#' @param label.dir a character string indicating the placement of the axis titles. One of "\code{Along}" for axis titles to appear alongside the axis line itself, rotated to the slope of the axis, "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure, "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure. The default \code{NULL} uses "\code{Along}" with the \code{ggplot2} engine and "\code{Orthog}" with base graphics.
 #' @param label.col the colour(s) for the axis labels, with default, \code{col}.
 #' @param label.cex the label expansion for the axis labels, with default \code{0.75}.
 #' @param label.line the distance of the axis title from the side of the figure, with default \code{0.1}.
@@ -353,7 +353,7 @@ means <- function (bp,  which = bp$samples$which, col = NULL,
 #'
 #' @usage
 #' axes(bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), lwd = 1, lty = 1,
-#' label.dir = "Orthog", label.col = col, label.cex = 0.75, label.line = 0.1, 
+#' label.dir = NULL, label.col = col, label.cex = 0.75, label.line = 0.1, 
 #' label.offset=rep(0,4), ticks = 5, tick.col = col, tick.size = 1, tick.label = TRUE, 
 #' tick.label.side = "below", tick.label.col = tick.col, tick.label.cex = 0.6,
 #' predict.col = col, predict.lwd = lwd, predict.lty = lty, ax.names = X.names,
@@ -369,7 +369,7 @@ means <- function (bp,  which = bp$samples$which, col = NULL,
 #' biplot(iris[,1:4]) |> PCA() |> samples(col="purple",pch=15) |> axes() |> plot()
 #'
 axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), lwd = 1, lty = 1,
-                  label.dir = "Orthog", label.col = col, label.cex = 0.75, label.line = 0.1, 
+                  label.dir = NULL, label.col = col, label.cex = 0.75, label.line = 0.1, 
                   label.offset=rep(0,4), ticks = 5,
                   tick.col = col, tick.size = 1, tick.label = TRUE, tick.label.side = "below",
                   tick.label.col = tick.col, tick.label.cex = 0.6,
@@ -396,7 +396,7 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
     lty.len <- length(lty)
     lty <- lty[ifelse(1:ax.num%%lty.len==0,lty.len,1:ax.num%%lty.len)]
     if(is.null(lty)){lty <- rep(0, ax.num)}
-    if (label.dir != "Orthog" & label.dir != "Hor" & label.dir != "Paral")
+    if (!is.null(label.dir) && !label.dir %in% c("Orthog", "Hor", "Paral", "Along"))
       stop("Incorrect specification of axis label direction")
     
     label.col.len <- length(label.col)
@@ -488,7 +488,7 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
 #' @param col a list with each component the colour(s) for the levels of that axis.
 #' @param lwd the line width(s) for the axes, with default \code{1}.
 #' @param lty the line type(s) for the axes, with default \code{1}.
-#' @param label.dir a character string indicating the placement of the axis titles to the side of the figure. One of "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure (default) , "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure.
+#' @param label.dir a character string indicating the placement of the axis titles. One of "\code{Along}" for axis titles to appear alongside the axis line itself, rotated to the slope of the axis, "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure, "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure. The default \code{NULL} uses "\code{Along}" with the \code{ggplot2} engine and "\code{Orthog}" with base graphics.
 #' @param label.col the colour(s) for the axis labels, with default, \code{col}.
 #' @param label.cex the label expansion for the axis labels, with default \code{0.75}.
 #' @param label.line the distance of the axis title from the side of the figure, with default \code{0.1}.
@@ -536,7 +536,7 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
 #' @usage
 #' nom.axes(bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal"], 
 #'          which =1:sum(bp$ax.type$ax.type=="nominal"), col = NULL, lwd = 1, 
-#'          lty = 1, label.dir = "Orthog", label.col = "black", label.cex = 0.75, 
+#'          lty = 1, label.dir = NULL, label.col = "black", label.cex = 0.75, 
 #'          label.line = 0.1, label.offset=rep(0,4), ticks = 5, tick.col = "black", 
 #'          tick.size = 1, tick.label = TRUE, tick.label.side = "below", 
 #'          tick.label.col = tick.col, tick.label.cex = 0.6, predict.col = col, 
@@ -551,7 +551,7 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
 #'
 nom.axes <- function (bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal"], 
                       which =1:sum(bp$ax.type$ax.type=="nominal"), col = NULL, lwd = 1, 
-                      lty = 1, label.dir = "Orthog", label.col = "black", 
+                      lty = 1, label.dir = NULL, label.col = "black", 
                       label.cex = 0.75, 
                       label.line = 0.1, label.offset=rep(0,4), ticks = 5, tick.col = "black", 
                       tick.size = 1, tick.label = TRUE, tick.label.side = "below",
@@ -610,7 +610,7 @@ nom.axes <- function (bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal
     lty.len <- length(lty)
     lty <- lty[ifelse(1:ax.num%%lty.len==0,lty.len,1:ax.num%%lty.len)]
     if(is.null(lty)){lty <- rep(0, ax.num)}
-    if (label.dir != "Orthog" & label.dir != "Hor" & label.dir != "Paral")
+    if (!is.null(label.dir) && !label.dir %in% c("Orthog", "Hor", "Paral", "Along"))
       stop("Incorrect specification of axis label direction")
     
     label.col.len <- length(label.col)
@@ -706,7 +706,7 @@ nom.axes <- function (bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal
 #' @param reverse logical indicator to switch the narrow to wide calibration on the axis
 #' @param lwd the line width(s) for the axes, with default \code{1}.
 #' @param lty the line type(s) for the axes, with default \code{1}.
-#' @param label.dir a character string indicating the placement of the axis titles to the side of the figure. One of "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure (default) , "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure.
+#' @param label.dir a character string indicating the placement of the axis titles. One of "\code{Along}" for axis titles to appear alongside the axis line itself, rotated to the slope of the axis, "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure, "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure. The default \code{NULL} uses "\code{Along}" with the \code{ggplot2} engine and "\code{Orthog}" with base graphics.
 #' @param label.col the colour(s) for the axis labels, with default, \code{col}.
 #' @param label.cex the label expansion for the axis labels, with default \code{0.75}.
 #' @param label.line the distance of the axis title from the side of the figure, with default \code{0.1}.
@@ -755,7 +755,7 @@ nom.axes <- function (bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal
 #' ord.axes(bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="ordinal"], 
 #'          which =1:sum(bp$ax.type$ax.type=="ordinal"), col = grey(0.7), 
 #'          reverse = rep(FALSE, sum(bp$ax.type$ax.type=="ordinal")), lwd.factor = 1.5, 
-#'          lwd = 1, lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75, 
+#'          lwd = 1, lty = 1, label.dir = NULL, label.col = col, label.cex = 0.75, 
 #'          label.line = 0.1, label.offset=rep(0,4), ticks = 5, tick.col = col, 
 #'          tick.size = 1, tick.label = TRUE, tick.label.side = "below", 
 #'          tick.label.col = tick.col, tick.label.cex = 0.6, 
@@ -771,7 +771,7 @@ nom.axes <- function (bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal
 ord.axes <- function (bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="ordinal"], 
                       which =1:sum(bp$ax.type$ax.type=="ordinal"), col = grey(0.7), 
                       reverse = rep(FALSE, sum(bp$ax.type$ax.type=="ordinal")), lwd.factor = 1.5, 
-                      lwd = 1, lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75, 
+                      lwd = 1, lty = 1, label.dir = NULL, label.col = col, label.cex = 0.75, 
                       label.line = 0.1, label.offset=rep(0,4), ticks = 5, tick.col = col, 
                       tick.size = 1, tick.label = TRUE, tick.label.side = "below",
                       tick.label.col = tick.col, tick.label.cex = 0.6,
@@ -806,7 +806,7 @@ ord.axes <- function (bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="ordinal
     lty.len <- length(lty)
     lty <- lty[ifelse(1:ax.num%%lty.len==0,lty.len,1:ax.num%%lty.len)]
     if(is.null(lty)){lty <- rep(0, ax.num)}
-    if (label.dir != "Orthog" & label.dir != "Hor" & label.dir != "Paral")
+    if (!is.null(label.dir) && !label.dir %in% c("Orthog", "Hor", "Paral", "Along"))
       stop("Incorrect specification of axis label direction")
     
     label.col.len <- length(label.col)
@@ -1269,7 +1269,7 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
 #'
 #' @usage
 #' newaxes(bp, X.new.names=bp$var.names, which = 1:bp$num.vars, col = "orange", lwd = 1, 
-#' lty = 1, label.dir = "Orthog", label.col = col, label.cex = 0.75, label.line = 0.1, 
+#' lty = 1, label.dir = NULL, label.col = col, label.cex = 0.75, label.line = 0.1, 
 #' ticks = 5, tick.col = col, tick.size = 1, tick.label = TRUE, tick.label.col = tick.col, 
 #' tick.label.cex = 0.6, tick.label.side = "below", predict.col = col, predict.lwd = lwd, 
 #' predict.lty = lty, ax.names = X.new.names, orthogx = 0, orthogy = 0)
@@ -1279,7 +1279,7 @@ newsamples <- function (bp,  col = "darkorange1", pch = 1, cex = 1,
 #' biplot(data = iris[,1:2]) |> PCA() |> interpolate(newvariable = iris[3:4]) |> 
 #'   newaxes(col="gold") |> plot()
 newaxes <- function (bp, X.new.names=bp$var.names, which = 1:bp$num.vars, col = "orange", lwd = 1, lty = 1,
-                          label.dir = "Orthog", label.col = col, label.cex = 0.75, label.line = 0.1, ticks = 5,
+                          label.dir = NULL, label.col = col, label.cex = 0.75, label.line = 0.1, ticks = 5,
                           tick.col = col, tick.size = 1, tick.label = TRUE, tick.label.col = tick.col, 
                      tick.label.cex = 0.6, tick.label.side = "below",
                           predict.col = col, predict.lwd = lwd, predict.lty = lty, ax.names = X.new.names,
@@ -1296,7 +1296,7 @@ newaxes <- function (bp, X.new.names=bp$var.names, which = 1:bp$num.vars, col = 
   lwd <- as.vector(lwd[1:ax.num])
   while (length(lty) < ax.num) lty <- c(lty, lty)
   lty <- as.vector(lty[1:ax.num])
-  if (label.dir != "Orthog" & label.dir != "Hor" & label.dir != "Paral")
+  if (!is.null(label.dir) && !label.dir %in% c("Orthog", "Hor", "Paral", "Along"))
     stop("Incorrect specification of axis label direction")
   while (length(label.col) < ax.num) label.col <- c(label.col, label.col)
   label.col <- as.vector(label.col[1:ax.num])

@@ -42,7 +42,6 @@ colnames(sunspots) <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun",
                         "Jul", "Aug", "Sep", "Oct", "Nov", "Dec")
 century <-paste(floor((years-1)/100)+1, ifelse (floor((years-1)/100)+1<21, "th","st"), sep = "-")
 biplot(sunspots, group.aes=century) |> PCA() |>
-        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
         alpha.bags () |> 
         legend.type(bags = TRUE)  |> plot()
 ```
@@ -52,7 +51,6 @@ biplot as first argument. The next argument `alpha` can be specified as a single
 
 ```{r}
 biplot(sunspots, group.aes=century) |> PCA() |>
-        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
         alpha.bags (alpha = c(0.9, 0.95, 0.99), which = c(1,4), opacity = 0) |> 
         legend.type(bags = TRUE)  |> plot()
 ```
@@ -61,7 +59,6 @@ In the biplot above, the colours were recycled for each alpha value. To specify 
 
 ```{r}
 biplot(sunspots, group.aes=century) |> PCA() |>
-        axes (label.dir = "Hor", label.line = c(0.8, rep(0,10), 0.8)) |>
         samples (which = NULL) |>
         alpha.bags (alpha = c(0.9, 0.95, 0.99), lty = c(1,3,5), opacity=0.05) |> 
         legend.type(bags = TRUE)  |> plot()
@@ -72,7 +69,6 @@ For a completely custom combination of $\alpha$-bags, we do not rely on any recy
 ```{r}
 biplot(sunspots, group.aes = century) |>
   PCA() |>
-  axes(label.dir = "Hor", label.line = c(0.8, rep(0, 10), 0.8)) |>
   samples(which = NULL) |>
   alpha.bags(
     alpha = c(0.9, 0.95, 0.99, 0.5, 0.6, 0.7),
@@ -114,7 +110,6 @@ $\chi^{2}_{2,1-\alpha}$ denotes the $(1-\alpha)100$-th percentage point of the $
 ```{r}
 biplot(sunspots, group.aes = century) |>
   PCA() |>
-  axes(label.dir = "Hor", label.line = c(0.8, rep(0, 10), 0.8)) |>
   samples(which = NULL) |>
   ellipses(alpha = c(0.9, 0.95), lty = c(1, 3, 5), opacity = 0.1) |>
   legend.type(ellipses = TRUE) |>
@@ -122,7 +117,6 @@ biplot(sunspots, group.aes = century) |>
 
 biplot(sunspots, group.aes = century) |>
   PCA() |>
-  axes(label.dir = "Hor", label.line = c(0.8, rep(0, 10), 0.8)) |>
   samples(which = NULL) |>
   ellipses(kappa = 1:2, lty = c(1, 3, 5), opacity = 0.1) |>
   legend.type(ellipses = TRUE) |>

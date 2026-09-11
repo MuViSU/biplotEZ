@@ -192,7 +192,7 @@ gg_biplot <- function(x, exp.factor = 1.2,
   p <- ggplot2::ggplot() +
     layers +
     scales +
-    ggplot2::coord_equal(xlim = xlim, ylim = ylim, expand = FALSE, clip = "off") +
+    ggplot2::coord_equal(xlim = xlim, ylim = ylim, expand = FALSE, clip = "on") +
     .theme_biplot()
   
   if (!is.null(x$Title)) p <- p + ggplot2::ggtitle(x$Title)
@@ -287,8 +287,8 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
       panel.border = ggplot2::element_rect(colour = "black", fill = NA,
                                            linewidth = 0.5),
       plot.title   = ggplot2::element_text(hjust = 0.5),
-      legend.title = ggplot2::element_text(size = 10),
-      plot.margin  = ggplot2::margin(17, 17, 17, 17)
+      legend.title = ggplot2::element_text(size = 10)
+      # plot.margin  = ggplot2::margin(17, 17, 17, 17)
     )
 }
 
@@ -321,6 +321,7 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
                             predict.mat, predict_which)
 {
   d.list <- list()
+  ax.aes$label.dir <- .label.dir(ax.aes$label.dir, "ggplot2")
   
   for (i in seq_along(ax.aes$which)) {
     ax.num <- ax.aes$which[i]
@@ -337,8 +338,11 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
     line.df$lty <- ax.aes$lty[i]
     d.list$line <- rbind(d.list$line, line.df)
     
-    # ---- axis title at the panel edge ---------------------------------------
-    ttl.df <- .axis_title_position(this.axis, marker.mat, usr, mm)
+    # ---- axis title: at the panel edge, or alongside the axis line ----------
+    ttl.df <- if (identical(ax.aes$label.dir, "Along"))
+      .axis_title_along(this.axis, marker.mat, usr, mm,
+                        tick.side = ax.aes$tick.label.side[i])
+    else .axis_title_position(this.axis, marker.mat, usr, mm)
     if (!is.null(ttl.df)) {
       ttl.df$name <- ax.aes$names[i]
       ttl.df$col  <- ax.aes$label.col[i]
@@ -397,7 +401,8 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
   if (!is.null(d.list$title))
     out <- c(out, list(ggplot2::geom_text(
       data = d.list$title,
-      ggplot2::aes(x = .data$x, y = .data$y, label = .data$name),
+      ggplot2::aes(x = .data$x, y = .data$y, label = .data$name,
+                   angle = .data$angle),
       colour = d.list$title$col, size = 3.6 * d.list$title$cex,
       hjust = d.list$title$hjust, vjust = d.list$title$vjust,
       fontface = "italic")))
@@ -472,11 +477,85 @@ autoplot.biplot <- function(object, ...) gg_biplot(object, draw = FALSE, ...)$gg
       }
     }
   }
+
   switch(side,
-         bottom = data.frame(x = at, y = usr[3] - inset, hjust = 0.5, vjust = 1),
-         top    = data.frame(x = at, y = usr[4] + inset, hjust = 0.5, vjust = 0),
-         left   = data.frame(x = usr[1] - inset, y = at, hjust = 1,   vjust = 0.5),
-         right  = data.frame(x = usr[2] + inset, y = at, hjust = 0,   vjust = 0.5))
+         bottom = data.frame(x = at, y = usr[3] + inset, hjust = 0.5, vjust = 0,
+                             angle = 0),
+         top    = data.frame(x = at, y = usr[4] - inset, hjust = 0.5, vjust = 1,
+                             angle = 0),
+         left   = data.frame(x = usr[1] + inset, y = at, hjust = 0,   vjust = 0.5,
+                             angle = 0),
+         right  = data.frame(x = usr[2] - inset, y = at, hjust = 1,   vjust = 0.5,
+                             angle = 0))
+  
+  # switch(side,
+  #       bottom = data.frame(x = at, y = usr[3] - inset, hjust = 0.5, vjust = 1),
+  #       top    = data.frame(x = at, y = usr[4] + inset, hjust = 0.5, vjust = 0),
+  #       left   = data.frame(x = usr[1] - inset, y = at, hjust = 1,   vjust = 0.5),
+  #       right  = data.frame(x = usr[2] + inset, y = at, hjust = 0,   vjust = 0.5))
+
+
+}
+
+#' Position the axis title alongside the axis line (label.dir = "Along"):
+#' rotated to the slope of the axis and placed just inside the panel at the
+#' end where the marker values increase. The title sits on the side of the
+#' line opposite the tick labels; if that side would run out of the panel the
+#' anchor is moved further along the axis, or the title switches sides.
+#' Shared with the base engine (see .axis.title.along in plot2D.R).
+#' @param tick.side "below" (default) or "above": the tick label side
+#' @return data.frame(x, y, angle, hjust, vjust), or NULL if the axis misses
+#'   the panel
+#' @noRd
+.axis_title_along <- function(this.axis, marker.mat, usr, mm,
+                              tick.side = "below") {
+  ends <- .clip_line(this.axis$a, this.axis$b, this.axis$v, usr)
+  if (is.null(ends)) return(NULL)
+  E1 <- c(ends$x1, ends$y1); E2 <- c(ends$x2, ends$y2)
+  
+  # unit vector in the direction of increasing marker values (rows of
+  # marker.mat are sorted from the largest to the smallest marker)
+  k <- nrow(marker.mat)
+  u <- c(marker.mat[1, 1] - marker.mat[k, 1], marker.mat[1, 2] - marker.mat[k, 2])
+  if (sum(u^2) == 0) u <- E2 - E1
+  u <- u / sqrt(sum(u^2))
+  E <- if (sum(E1 * u) >= sum(E2 * u)) E1 else E2   # where the axis exits
+  
+  # angle in (-90, 90] so the title always reads left to right
+  ang <- atan2(u[2], u[1]) * 180 / pi
+  if (ang > 90)   ang <- ang - 180
+  if (ang <= -90) ang <- ang + 180
+  r <- c(cos(ang * pi / 180), sin(ang * pi / 180))   # reading direction
+  hjust <- if (sum(r * u) > 0) 1 else 0             # text ends / starts at E
+  
+  # side of the line: "up" in the text frame is the ticks' "above" side, so
+  # start on the side opposite the tick labels
+  up <- c(-r[2], r[1])
+  if (identical(tick.side, "above")) { n <- -up; vjust <- 1 } else { n <- up; vjust <- 0 }
+  
+  # inward normal of the panel edge the axis exits through (at a corner, the
+  # edge the axis crosses most squarely)
+  eps <- 1e-6 * (usr[2] - usr[1])
+  edges <- rbind(c(1, 0), c(-1, 0), c(0, 1), c(0, -1))
+  on.edge <- c(abs(E[1] - usr[1]) < eps, abs(E[1] - usr[2]) < eps,
+               abs(E[2] - usr[3]) < eps, abs(E[2] - usr[4]) < eps)
+  if (!any(on.edge)) on.edge[] <- TRUE
+  m <- edges[on.edge, , drop = FALSE]
+  m <- m[which.min(m %*% u), ]
+  
+  # keep the whole title inside the panel: slide the anchor along the axis
+  # if the text leans outwards, or switch sides when that is not enough
+  inset <- 2.5 * mm; gap <- 1.5 * mm; txt.h <- 3 * mm
+  lean <- -sum(n * m)
+  if (lean > 0) {
+    need <- (gap + txt.h) * lean / max(abs(sum(u * m)), 0.2) + mm
+    if (need <= 10 * mm) inset <- max(inset, need)
+    else { n <- -n; vjust <- 1 - vjust }
+  }
+  
+  anchor <- E - inset * u + gap * n
+  data.frame(x = anchor[1], y = anchor[2], angle = ang,
+             hjust = hjust, vjust = vjust)
 }
 
 #' Tick segments and rotated tick labels (port of .marker.label)

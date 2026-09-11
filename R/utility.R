@@ -444,3 +444,11 @@ ties <- function (d, delta, method = c("primary", "secondary"))
   }
   z
 }
+
+#' Resolve the label.dir default: NULL means "Along" with the ggplot2 engine
+#' and "Orthog" with base graphics
+#' @noRd
+.label.dir <- function(label.dir, engine = c("base", "ggplot2")) {
+  if (!is.null(label.dir)) return(label.dir)
+  if (match.arg(engine) == "ggplot2") "Along" else "Orthog"
+}

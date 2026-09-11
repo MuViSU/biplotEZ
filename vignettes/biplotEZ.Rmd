@@ -350,7 +350,7 @@ biplot(rock, scaled = TRUE) |> PCA() |>
                                plot()
 ```
 
-The following four arguments deal with the axis labels. The argument `label.dir` is based on the graphics parameter `las` and  allows for labels to be either orthogonal to the axis direction (`Orthog`), horisontal (`Hor`) or parallel to the plot `Paral`. The 
+The following four arguments deal with the axis labels. The argument `label.dir` is based on the graphics parameter `las` and  allows for labels to be either orthogonal to the axis direction (`Orthog`), horisontal (`Hor`), parallel to the plot (`Paral`) or alongside the axis line itself (`Along`); the `ggplot2` engine defaults to `Along` and base graphics to `Orthog`. The 
 argument `label.line` fulfills the role of the `line` argument in `mtext()` to determine on which margin line (how far from the plot) the label is placed while `label.col` and `label.cex` is self-explanatory and defaults to the axis colour and size 0.75. Note in for the illustration the in the code below the colour vector has only three components, so that recycling is applied. These features are only available to base R plots where the user has to set `engine = "base"` in `plot()`. 
 
 ```{r}

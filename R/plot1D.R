@@ -223,6 +223,7 @@
 #----------
 .lin.axes.plot1D <- function(z.axes, ax.aes, too.small, usr)
 {
+  ax.aes$label.dir <- .label.dir(ax.aes$label.dir, "base")
   for (i in 1:length(ax.aes$which))
   {
     ax.num <- ax.aes$which[i]
@@ -239,6 +240,11 @@
     #    graphics::abline(v = this.axis$v, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
     #  else
     graphics::abline(coef = lin.coef, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
+    if (ax.aes$label.dir == "Along")
+      .axis.title.along(this.axis, marker.mat, usr, name = ax.aes$names[i],
+                        col = ax.aes$label.col[i], cex = ax.aes$label.cex[i],
+                        tick.side = ax.aes$tick.label.side[i])
+    else {
     if (ax.aes$label.dir == "Hor") {
       graphics::par(las = 1)
       adjust <- c(0.5, 1, 0.5, 0)
@@ -304,6 +310,10 @@
         
       }
       
+      }   # end of sloped-axis title placement
+    }     # end of edge placement (label.dir != "Along")
+    if (!is.null(this.axis$b))
+    {
       invals <-x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
       std.markers <- marker.mat[invals, 3]
       if (is.numeric(std.markers))

@@ -503,6 +503,7 @@
 .lin.axes.plot <- function(z.axes, ax.aes, predict.mat, 
                            too.small, usr, predict_which)
 {
+  ax.aes$label.dir <- .label.dir(ax.aes$label.dir, "base")
   for (i in 1:length(ax.aes$which))
   {  ax.num <- ax.aes$which[i]
      if (!is.null(too.small)) if (ax.num %in% too.small) next
@@ -517,6 +518,11 @@
        graphics::abline(v = this.axis$v, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
      else
        graphics::abline(coef=c(this.axis$a, this.axis$b), col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
+     if (ax.aes$label.dir == "Along")
+       .axis.title.along(this.axis, marker.mat, usr, name = ax.aes$names[i],
+                         col = ax.aes$label.col[i], cex = ax.aes$label.cex[i],
+                         tick.side = ax.aes$tick.label.side[i])
+     else {
      if (ax.aes$label.dir == "Hor") 
      {  graphics::par(las = 1)
        adjust <- c(0.5, 1, 0.5, 0)       
@@ -594,6 +600,7 @@
                                   cex = ax.aes$label.cex[i])
          }
       }
+     }   # end of edge placement (label.dir != "Along")
      
   invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
   std.markers <- marker.mat[invals, 3]
@@ -616,6 +623,19 @@
   }
 }
 
+#' Axis title alongside the axis line (label.dir = "Along"), base engine.
+#' The geometry is shared with the ggplot2 engine: .axis_title_along().
+#' @noRd
+.axis.title.along <- function(this.axis, marker.mat, usr, name, col, cex,
+                              tick.side = "below")
+{
+  mm  <- 0.007 * (usr[2] - usr[1])
+  pos <- .axis_title_along(this.axis, marker.mat, usr, mm, tick.side)
+  if (is.null(pos)) return(invisible())
+  graphics::text(pos$x, pos$y, labels = name, srt = pos$angle,
+                 adj = c(pos$hjust, pos$vjust), col = col, cex = cex)
+}
+
 #' Plot linear nominal axes on biplots
 #'
 #' @param z.axes list containing all the info to draw axis. see below
@@ -631,6 +651,7 @@
 #' @noRd
 .nom.axes.plot <- function(z.axes, ax.aes, predict.mat, too.small, usr, predict_which)
 {
+  ax.aes$label.dir <- .label.dir(ax.aes$label.dir, "base")
   for (i in 1:length(ax.aes$which))
   {  ax.num <- ax.aes$which[i]
      if (!is.null(too.small)) if (ax.num %in% too.small) next
@@ -664,6 +685,11 @@
        ends.mat[nrow(ends.mat),2] <- this.axis$a + ends.mat[nrow(ends.mat),1]*this.axis$b
      }
      
+     if (ax.aes$label.dir == "Along")
+       .axis.title.along(this.axis, marker.mat, usr, name = ax.aes$names[i],
+                         col = ax.aes$label.col[i], cex = ax.aes$label.cex[i],
+                         tick.side = ax.aes$tick.label.side[i])
+     else {
      if (ax.aes$label.dir == "Hor") 
      {  graphics::par(las = 1)
         adjust <- c(0.5, 1, 0.5, 0)       
@@ -741,6 +767,7 @@
                               cex = ax.aes$label.cex[i])
     }
   }
+  }   # end of edge placement (label.dir != "Along")
   for (j in 2:nrow(ends.mat))
   {
      graphics::lines (x = ends.mat[(-1:0)+j, 1], y = ends.mat[(-1:0)+j, 2],
@@ -775,6 +802,7 @@
 #' @noRd
 .ord.axes.plot <- function(z.axes, ax.aes, predict.mat, too.small, usr, predict_which)
 {
+  ax.aes$label.dir <- .label.dir(ax.aes$label.dir, "base")
   for (i in 1:length(ax.aes$which))
   {  ax.num <- ax.aes$which[i]
      if (!is.null(too.small)) if (ax.num %in% too.small) next
@@ -807,6 +835,11 @@
        ends.mat[nrow(ends.mat),2] <- this.axis$a + ends.mat[nrow(ends.mat),1]*this.axis$b
      }
   
+     if (ax.aes$label.dir == "Along")
+       .axis.title.along(this.axis, marker.mat, usr, name = ax.aes$names[i],
+                         col = ax.aes$label.col[i], cex = ax.aes$label.cex[i],
+                         tick.side = ax.aes$tick.label.side[i])
+     else {
      if (ax.aes$label.dir == "Hor") 
      {  graphics::par(las = 1)
         adjust <- c(0.5, 1, 0.5, 0)       
@@ -884,6 +917,7 @@
                                     cex = ax.aes$label.cex[i])
           }
        }
+  }   # end of edge placement (label.dir != "Along")
   if (ax.aes$reverse[i]) lwd.vec <- (nrow(ends.mat)-1):1 else lwd.vec <- 1:(nrow(ends.mat)-1)
   lwd.vec <- lwd.vec * ax.aes$lwd.factor[i]
   for (j in 2:nrow(ends.mat))
