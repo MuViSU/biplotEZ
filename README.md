@@ -1,10 +1,5 @@
----
-output: github_document
----
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-
-
 
 # biplotEZ <img src="man/figures/logo.png" align="right" height="139" alt="biplotEZ logo" />
 
@@ -18,7 +13,7 @@ are included for visual enhancements and interpretation.
 ## Installation
 
 You can install the development version of biplotEZ like this:
-  
+
 ``` r
 library(devtools)
 devtools::install_github("MuViSU/biplotEZ")
@@ -27,36 +22,27 @@ devtools::install_github("MuViSU/biplotEZ")
 ## Example
 
 This is a basic example which shows you how to construct a PCA biplot:
-  
 
 ``` r
 library(biplotEZ)
 biplot (iris[,1:4], Title="Test PCA biplot") |> PCA() |> plot()
 ```
 
-<div class="figure">
-<img src="man/figures/README-PCA_example-1.png" alt="plot of chunk PCA_example" width="100%" />
-<p class="caption">plot of chunk PCA_example</p>
-</div>
+<img src="man/figures/README-PCA_example-1.png" alt="" width="100%" />
 
 While the PCA biplot provides a visual representation of the overall
 data set, optimally representing the variance in 1, 2 or 3 dimensions,
 the CVA biplot aims to optimally separate specified groups in the data.
 This is a basic example which shows you how to construct a CVA biplot:
-  
 
 ``` r
 biplot (iris[,1:4], Title="Test CVA biplot") |> CVA(classes=iris[,5]) |> plot()
 ```
 
-<div class="figure">
-<img src="man/figures/README-CVA_example-1.png" alt="plot of chunk CVA_example" width="100%" />
-<p class="caption">plot of chunk CVA_example</p>
-</div>
+<img src="man/figures/README-CVA_example-1.png" alt="" width="100%" />
 
-An over-the-top example of changing all the formatting and adding all the
-bells and whistles:
-  
+An over-the-top example of changing all the formatting and adding all
+the bells and whistles:
 
 ``` r
 biplot (iris[,1:4], group.aes=iris[,5]) |> PCA() |> 
@@ -74,28 +60,20 @@ biplot (iris[,1:4], group.aes=iris[,5]) |> PCA() |>
 #> Computing 2.15 -ellipse for versicolor
 ```
 
-<div class="figure">
-<img src="man/figures/README-aes_example-1.png" alt="plot of chunk aes_example" width="100%" />
-<p class="caption">plot of chunk aes_example</p>
-</div>
-
+<img src="man/figures/README-aes_example-1.png" alt="" width="100%" />
 
 ## CA biplot
 
-The default CA biplots represents row principal coordinates with a call such as:
-
+The default CA biplots represents row principal coordinates with a call
+such as:
 
 ``` r
 biplot(HairEyeColor[,,2], center = FALSE) |> CA() |> plot()
 ```
 
-<div class="figure">
-<img src="man/figures/README-ca_default-1.png" alt="plot of chunk ca_default" width="100%" />
-<p class="caption">plot of chunk ca_default</p>
-</div>
+<img src="man/figures/README-ca_default-1.png" alt="" width="100%" />
 
 To change to row standard coordinates use a call such as:
-
 
 ``` r
 biplot(HairEyeColor[,,2], center = FALSE) |> 
@@ -103,28 +81,21 @@ biplot(HairEyeColor[,,2], center = FALSE) |>
   plot()
 ```
 
-<div class="figure">
-<img src="man/figures/README-ca_standard-1.png" alt="plot of chunk ca_standard" width="100%" />
-<p class="caption">plot of chunk ca_standard</p>
-</div>
+<img src="man/figures/README-ca_standard-1.png" alt="" width="100%" />
 
 ## Regression biplot
 
-With the function `regress` linear regression biplot axes can be fitted to a biplot
-
+With the function `regress` linear regression biplot axes can be fitted
+to a biplot
 
 ``` r
 out <- biplot(iris) |> PCO(dist.func = sqrtManhattan) 
 biplot(iris) |> regress(out$Z) |> plot()
 ```
 
-<div class="figure">
-<img src="man/figures/README-regress-1.png" alt="plot of chunk regress" width="100%" />
-<p class="caption">plot of chunk regress</p>
-</div>
-
-
+<img src="man/figures/README-regress-1.png" alt="" width="100%" />
 
 ## Report Bugs and Support
-If you encounter any issues or have questions,
-please open an issue on the GitHub repository.
+
+If you encounter any issues or have questions, please open an issue on
+the GitHub repository.
