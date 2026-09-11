@@ -17,7 +17,7 @@ You can install the development version of biplotEZ like this:
 
 This is a basic example which shows you how to construct a PCA biplot:
 
-[`library`](https://rdrr.io/r/base/library.html)`(``biplotEZ``)`` ``#> Welcome to biplotEZ! `` ``#> This package is used to construct biplots `` ``#> Run ?biplot or vignette() for more information`` ``#> `` ``#> Attaching package: 'biplotEZ'`` ``#> The following object is masked from 'package:stats':`` ``#> `` ``#> biplot`` `[`biplot`](reference/biplot.md)` ``(``iris``[``,``1``:``4``]``, Title``=``"Test PCA biplot"``)`` ``|>`` `[`PCA`](reference/PCA.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`library`](https://rdrr.io/r/base/library.html)`(``biplotEZ``)`` `[`biplot`](reference/biplot.md)` ``(``iris``[``,``1``:``4``]``, Title``=``"Test PCA biplot"``)`` ``|>`` `[`PCA`](reference/PCA.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](reference/figures/README-PCA_example-1.png)
 

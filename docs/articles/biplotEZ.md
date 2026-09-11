@@ -15,7 +15,8 @@ Read more …
   for alpha-bags, ellipses, densities, interpolation, prediction,
   reflection, rotation, zoom and axes translation
 - `vignette("Class_sepeartion")` for grouped data
-- `vignette("CA_in_biplotEZ")` for correspondence analysis
+- [`vignette("CA_MCA")`](../articles/CA_MCA.md) for correspondence
+  analysis
 - [`vignette("MDS")`](../articles/MDS.md) for multidimensional scaling
   biplots
 

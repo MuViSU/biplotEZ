@@ -46,7 +46,7 @@
     <li><a class="dropdown-item" href="articles/biplotEZ_enhancements.html">biplotEZ enhancements</a></li>
     <li><a class="dropdown-item" href="articles/MDS.html">Multi-dimensional scaling</a></li>
     <li><a class="dropdown-item" href="articles/Class_separation.html">Biplots for separating classes</a></li>
-    <li><a class="dropdown-item" href="articles/CA_in_biplotEZ.html">Categorical biplots</a></li>
+    <li><a class="dropdown-item" href="articles/CA_MCA.html">Categorical biplots</a></li>
     <li><a class="dropdown-item" href="articles/Biplots_in_1D.html">One dimensional biplots</a></li>
     <li><a class="dropdown-item" href="articles/Biplots_in_3D.html">Three dimensional biplots</a></li>
   </ul>
@@ -84,14 +84,6 @@
 <p>This is a basic example which shows you how to construct a PCA biplot:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">biplotEZ</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Welcome to biplotEZ! </span></span>
-<span><span class="co">#&gt; This package is used to construct biplots </span></span>
-<span><span class="co">#&gt; Run ?biplot or vignette() for more information</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'biplotEZ'</span></span>
-<span><span class="co">#&gt; The following object is masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     biplot</span></span>
 <span><span class="fu"><a href="reference/biplot.html">biplot</a></span> <span class="op">(</span><span class="va">iris</span><span class="op">[</span>,<span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, Title<span class="op">=</span><span class="st">"Test PCA biplot"</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-PCA_example-1.png" alt="" width="100%"></p>
 <p>While the PCA biplot provides a visual representation of the overall data set, optimally representing the variance in 1, 2 or 3 dimensions, the CVA biplot aims to optimally separate specified groups in the data. This is a basic example which shows you how to construct a CVA biplot:</p>

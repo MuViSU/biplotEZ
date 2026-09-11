@@ -32,7 +32,7 @@ Read more ...
 * `vignette("Biplots_in_3D")` for 3-dimensional biplots
 * `vignette("biplotEZ_enhancements")` for alpha-bags, ellipses, densities, interpolation, prediction, reflection, rotation, zoom and axes translation
 * `vignette("Class_sepeartion")` for grouped data
-* `vignette("CA_in_biplotEZ")` for correspondence analysis
+* `vignette("CA_MCA")` for correspondence analysis
 * `vignette("MDS")` for multidimensional scaling biplots
 
 
