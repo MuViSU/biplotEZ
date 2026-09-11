@@ -48,6 +48,7 @@
     <li><a class="dropdown-item" href="../articles/Biplots_in_3D.html">Three dimensional biplots</a></li>
   </ul>
 </li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul>
 <ul class="navbar-nav">
 <li class="nav-item"><form class="form-inline" role="search">
@@ -93,7 +94,7 @@ zoom and axes translation</li>
 <li>
 <code>vignette("Class_sepeartion")</code> for grouped data</li>
 <li>
-<code><a href="../articles/CA_in_biplotEZ.html">vignette("CA_in_biplotEZ")</a></code> for correspondence
+<code>vignette("CA_in_biplotEZ")</code> for correspondence
 analysis</li>
 <li>
 <code><a href="../articles/MDS.html">vignette("MDS")</a></code> for multidimensional scaling
@@ -641,16 +642,19 @@ line widths and line type 2, we need to following code:</p>
 <p>The following four arguments deal with the axis labels. The argument
 <code>label.dir</code> is based on the graphics parameter
 <code>las</code> and allows for labels to be either orthogonal to the
-axis direction (<code>Orthog</code>), horisontal (<code>Hor</code>) or
-parallel to the plot <code>Paral</code>. The argument
-<code>label.line</code> fulfills the role of the <code>line</code>
-argument in <code><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">mtext()</a></code> to determine on which margin line (how
-far from the plot) the label is placed while <code>label.col</code> and
-<code>label.cex</code> is self-explanatory and defaults to the axis
-colour and size 0.75. Note in for the illustration the in the code below
-the colour vector has only three components, so that recycling is
-applied. These features are only available to base R plots where the
-user has to set <code>engine = "base"</code> in <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>.</p>
+axis direction (<code>Orthog</code>), horisontal (<code>Hor</code>),
+parallel to the plot (<code>Paral</code>) or alongside the axis line
+itself (<code>Along</code>); the <code>ggplot2</code> engine defaults to
+<code>Along</code> and base graphics to <code>Orthog</code>. The
+argument <code>label.line</code> fulfills the role of the
+<code>line</code> argument in <code><a href="https://rdrr.io/r/graphics/mtext.html" class="external-link">mtext()</a></code> to determine on which
+margin line (how far from the plot) the label is placed while
+<code>label.col</code> and <code>label.cex</code> is self-explanatory
+and defaults to the axis colour and size 0.75. Note in for the
+illustration the in the code below the colour vector has only three
+components, so that recycling is applied. These features are only
+available to base R plots where the user has to set
+<code>engine = "base"</code> in <code><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot()</a></code>.</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/biplot.html">biplot</a></span><span class="op">(</span><span class="va">rock</span>, scaled <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
 <span>                               <span class="fu"><a href="../reference/axes.html">axes</a></span><span class="op">(</span>col<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"lightskyblue"</span>,<span class="st">"slategrey"</span>,<span class="st">"blue"</span><span class="op">)</span>,</span>
