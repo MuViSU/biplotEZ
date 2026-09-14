@@ -48,21 +48,83 @@
 
 (November 2024)
 
+## New features
+
+* New `axes_coordinates()` and `CLRs()` (format aesthetics for category level regions).
+
+## Bug fixes
+
+* Fixed `which` in `samples()`.
+* Fixed `AoD()` and spline axes.
+* CA quality and interpolation corrected, with additional CA examples and an updated CA vignette.
+
+## Internal changes
+
+* `biplot.spline.axis()` and `plot3D()` are no longer exported.
+* `print.CA()` S3 method removed.
+
 # biplotEZ 2.1
 
 (September 2024)
+
+## New features
+
+* New `CLPs()` (format aesthetics for category level points) and `biplot.spline.axis()` for nonlinear (spline) biplot axes, added as compiled Fortran code.
+
+## Bug fixes
+
+* Documentation and `which`/`exp.factor` fixes for `CA()`.
 
 # biplotEZ 2.0
 
 (July 2024)
 
+## New features
+
+* New `CA()` for correspondence analysis biplots.
+* New `CATPCA()` for categorical PCA biplots.
+* New `PCO()` for principal coordinate analysis biplots and `regress()` for regression biplots, plus `AoD()` for biplots based on the Analysis of Distance method.
+* New `classification()`/`classify()` for classification regions, and `prediction()` for CVA and PCA biplots.
+* New `density1D()` and `density2D()` for density clouds.
+* New `newaxes()`, `translate_axes()`, `rotate()` and `reflect()` for constructing and transforming biplot axes.
+* New `extended.matching.coefficient()` and `sqrtManhattan()` distance measures, and `plot3D()` for 3D biplots.
+
+## Bug fixes
+
+* Fixed alpha-bags and `group.aes`.
+* Fixed a `ggrepel` error when group 1 is not plotted.
+* Fixed an issue where an incorrect `which` eliminated axes.
+* Partially fixed 1D density plots.
+* Corrected two-group CVA for `fit.measures()`.
+
+## Internal changes
+
+* Compiled (Fortran) code introduced for the first time, registered via `useDynLib()`.
+* Experimental `ggplot2`/`ggrepel`/`grid`-based plotting groundwork from 1.2.0 was removed; plotting remained base-graphics only.
+
 # biplotEZ 1.2.0
 
-(November 2023)
+(December 2023)
+
+## New features
+
+* New `newsamples()`, `interpolate()`, `means()`, `fit.measures()` and a `summary()` method for `biplot` objects.
+* `concentration.ellipse()` renamed to `ellipses()`.
+* Added `prcomp` and `princomp` support as input to `PCA()`.
+* `samples()` gains a `which` argument and `label.col`.
+* CVA and alpha-bags/ellipses vignette content completed.
 
 # biplotEZ 1.1.0
 
-(November 2023)
+(October 2023)
+
+## Bug fixes
+
+* Bug fixes following the initial v1.0 CRAN release.
+
+## Internal changes
+
+* Switched to using `inherits()` for class checks.
 
 # biplotEZ 1.0
 
