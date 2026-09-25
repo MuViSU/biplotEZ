@@ -4,7 +4,13 @@
 \alias{prediction}
 \title{Predict samples to display on the biplot}
 \usage{
-prediction(bp, predict.samples = NULL, predict.means = NULL, which = 1:bp$p)
+prediction(
+  bp,
+  predict.samples = NULL,
+  predict.means = NULL,
+  predict.newsamples = NULL,
+  which = 1:bp$p
+)
 }
 \arguments{
 \item{bp}{an object of class \code{biplot} obtained from preceding function \code{biplot()}.}
@@ -14,14 +20,18 @@ prediction(bp, predict.samples = NULL, predict.means = NULL, which = 1:bp$p)
 \item{predict.means}{a vector specifying which group means to predict.}
 
 \item{which}{a vector specifying which variable to do the prediction.}
+
+\item{precit.newsamples}{a vector specifying which new samples to predict.}
 }
 \value{
 A list object called \code{predict} appended to the object of class \code{biplot} with the following elements:
 \item{samples}{a vector of indices of samples which are being predicted.}
-\item{predict.means}{a vector of group names of groups for which the means are being predicted.}
+\item{means}{a vector of group names of groups for which the means are being predicted.}
+\itme{newsamples}{a vector of indices of the new samples which are being predicted.}
 \item{which}{the vector of indices variables which are being predicted.}
-\item{predict.mat}{the matrix of predicted samples.}
-\item{predict.means.mat}{the matrix of predicted group means.}
+\item{sasmples.mat}{the matrix of predicted samples.}
+\item{means.mat}{the matrix of predicted group means.}
+\item{newsamples.mat}{the matrix of predicted new samples.}
 }
 \description{
 This function makes predictions of sample points, variables and means and displays them on the biplot.
