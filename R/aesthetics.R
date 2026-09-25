@@ -315,7 +315,7 @@ means <- function (bp,  which = bp$samples$which, col = NULL,
 #' @param tick.label a logical value indicating whether the axes should be labelled, with default \code{TRUE}.
 #' @param tick.label.side a character string indicating the position of the tick label. One of "\code{below}" for the label to appear below the tick mark (default) or "\code{above}" for the label to appear above the tick mark.
 #' @param tick.label.col the colour(s) for the tick mark labels, with default \code{tick.col}.
-#' @param tick.label.cex the label expansion for the tick mark labels, with default \code{0.6}.
+#' @param tick.label.cex the label expansion for the tick mark labels, with default \code{0.75}.
 #' @param predict.col the colour(s) for the predicted samples, with default \code{col}.
 #' @param predict.lwd the line width(s) for the predicted samples, with default \code{lwd}.
 #' @param predict.lty the line type(s) for the predicted samples, with default \code{lty}.
@@ -355,7 +355,7 @@ means <- function (bp,  which = bp$samples$which, col = NULL,
 #' axes(bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), lwd = 1, lty = 1,
 #' label.dir = NULL, label.col = col, label.cex = 0.75, label.line = 0.1, 
 #' label.offset=rep(0,4), ticks = 5, tick.col = col, tick.size = 1, tick.label = TRUE, 
-#' tick.label.side = "below", tick.label.col = tick.col, tick.label.cex = 0.6,
+#' tick.label.side = "below", tick.label.col = tick.col, tick.label.cex = 0.75,
 #' predict.col = col, predict.lwd = lwd, predict.lty = lty, ax.names = X.names,
 #' orthogx = 0, orthogy = 0, vectors = FALSE, unit.circle=FALSE)
 #' @aliases axes
@@ -372,7 +372,7 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
                   label.dir = NULL, label.col = col, label.cex = 0.75, label.line = 0.1, 
                   label.offset=rep(0,4), ticks = 5,
                   tick.col = col, tick.size = 1, tick.label = TRUE, tick.label.side = "below",
-                  tick.label.col = tick.col, tick.label.cex = 0.6,
+                  tick.label.col = tick.col, tick.label.cex = 0.75,
                   predict.col = col, predict.lwd = lwd, predict.lty = lty, ax.names = X.names,
                   orthogx = 0, orthogy = 0,vectors = FALSE, unit.circle=FALSE)
 {
