@@ -782,7 +782,7 @@ interpolate <- function (bp, newdata=NULL, newvariable=NULL,
       stop("No observations left after deleting missing observations")
     else if (!is.null(na.vec.df))
       warning(paste(length(na.vec.df), "rows deleted due to missing values"))
-    newdata <- newdata[stats::complete.cases(newdata),]
+    newdata <- newdata[stats::complete.cases(newdata),,drop = FALSE]
     
     # Separating numeric and categorical data
     if (is.matrix(newdata))
