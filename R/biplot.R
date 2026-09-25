@@ -621,7 +621,7 @@ print.biplot <- function (x, ...)
   if (!is.null(x$predict$samples))
   {
     cat ("\n")
-    cat (paste ("Sample predictions for samples", 
+    cat (paste ("Sample predictions for samples ", 
                 paste(rownames(x$X)[x$predict$samples],collapse=", "), ".\n", sep=""))
   }
   
@@ -631,6 +631,14 @@ print.biplot <- function (x, ...)
     cat (paste("Class mean predictions for classes ", 
                paste(x$g.names[x$predict$means],collapse=", "), ".\n", sep=""))
   }
+  
+  if (!is.null(x$predict$newsamples))
+  {
+    cat ("\n")
+    cat (paste ("New sample predictions for samples ", 
+                paste(rownames(x$Xnew)[x$predict$newsamples],collapse=", "), ".\n", sep=""))
+  }
+  
 }
 
 # ----------------------------------------------------------------------------------------------
@@ -734,6 +742,14 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
     cat ("\n")
     cat ("Class mean predictions\n")
     mat <- object$predict$means.mat[,object$predict$which]
+    print (mat)
+  }
+  
+  if (!is.null(object$predict$newsamples))
+  {
+    cat ("\n")
+    cat ("New sample predictions\n")
+    mat <- object$predict$newsamples.mat[,object$predict$which]
     print (mat)
   }
   
@@ -957,14 +973,17 @@ interpolate <- function (bp, newdata=NULL, newvariable=NULL,
 #' @param bp an object of class \code{biplot} obtained from preceding function \code{biplot()}.
 #' @param predict.samples a vector specifying which samples to predict.
 #' @param predict.means a vector specifying which group means to predict.
+#' @param precit.newsamples a vector specifying which new samples to predict.
 #' @param which a vector specifying which variable to do the prediction.
 #'
 #' @return A list object called \code{predict} appended to the object of class \code{biplot} with the following elements:
 #' \item{samples}{a vector of indices of samples which are being predicted.}
-#' \item{predict.means}{a vector of group names of groups for which the means are being predicted.}
+#' \item{means}{a vector of group names of groups for which the means are being predicted.}
+#' \itme{newsamples}{a vector of indices of the new samples which are being predicted.}
 #' \item{which}{the vector of indices variables which are being predicted.}
-#' \item{predict.mat}{the matrix of predicted samples.}
-#' \item{predict.means.mat}{the matrix of predicted group means.}
+#' \item{sasmples.mat}{the matrix of predicted samples.}
+#' \item{means.mat}{the matrix of predicted group means.}
+#' \item{newsamples.mat}{the matrix of predicted new samples.}
 #'
 #'
 #' @export
@@ -973,7 +992,7 @@ interpolate <- function (bp, newdata=NULL, newvariable=NULL,
 #' biplot(data = iris[,1:4]) |> PCA(group.aes=iris[,5], show.class.means = TRUE) |> 
 #' prediction(141:145,1:3) |> plot()
 #'
-prediction <- function (bp, predict.samples=NULL,predict.means=NULL,which=1:bp$p)
+prediction <- function (bp, predict.samples=NULL,predict.means=NULL,predict.newsamples=NULL,which=1:bp$p)
 {
   if (!all(is.numeric(which))) which <- match(which, colnames(bp$X), nomatch = 0)
   p <- bp$p
@@ -995,6 +1014,12 @@ prediction <- function (bp, predict.samples=NULL,predict.means=NULL,which=1:bp$p
   if(length(predict.means)>0) { if(!bp$class.means) stop("Set show.class.means to TRUE in PCA()") }
   Zmeans <- bp$Zmeans
 
+  if (is.logical(predict.newsamples)) predict.newsamples <- 1:nrow(bp$Znew)
+  if (!all(is.numeric(predict.newsamples))) predict.newsamples <- match(predict.newsamples, rownames(bp$Xnew), nomatch = 0)
+  n2 <- nrow(bp$Znew)
+  predict.newsamples <- predict.newsamples[predict.newsamples <= n2]
+  predict.newsamples <- predict.newsamples[predict.newsamples > 0]
+
   if (!is.null(bp$Lmat)) Lrr <- solve(bp$Lmat)[bp$e.vects,,drop=F]
   else Lrr <- bp$Mrr
   
@@ -1010,18 +1035,29 @@ prediction <- function (bp, predict.samples=NULL,predict.means=NULL,which=1:bp$p
   if (!is.null(predict.means.mat))
     predict.means.mat <- scale(predict.means.mat, center = -bp$means, scale = F)
     
+  if (length(predict.newsamples)>0) 
+    predict.newmat <- scale(bp$Znew[predict.newsamples, , drop = F] %*% Lrr, center = F, scale = 1 / bp$sd)
+  else predict.newmat <- NULL
+  if (!is.null(predict.newmat))
+    predict.newmat <- scale(predict.newmat, center = -bp$means, scale = F)
+
   if (!is.null(predict.mat))
     dimnames(predict.mat) <- list(rownames(bp$X)[predict.samples], colnames(bp$X))
   if (!is.null(predict.means.mat))
     dimnames(predict.means.mat) <- list(bp$g.names[predict.means], colnames(bp$X))
-
+  if (!is.null(predict.newmat))
+    dimnames(predict.newmat) <- list(rownames(bp$Xnew)[predict.newsamples], colnames(bp$X))
+  
   if (length(predict.samples)==0) predict.samples <- NULL
   if (length(predict.means)==0) predict.means <- NULL
+  if (length(predict.newmat)==0) predict.new.mat <- NULL
   bp$predict <- list (samples = predict.samples, 
                       means = predict.means,
+                      newsamples = predict.newsamples,
                       which = which,
                       samples.mat = predict.mat,
-                      means.mat = predict.means.mat)
+                      means.mat = predict.means.mat,
+                      newsamples.mat = predict.newmat)
   bp
 }
 

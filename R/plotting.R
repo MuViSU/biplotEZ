@@ -61,6 +61,10 @@ plot.biplot <- function(x, engine = c("ggplot2","base"),
   if (!is.null(x$predict$means)) 
     predict.mat <- rbind(predict.mat, x$Zmeans[x$predict$means, , drop = F])
   
+  # Predict new samples 
+  if (!is.null(x$predict$newsamples)) 
+    predict.mat <- rbind(predict.mat, x$Znew[x$predict$newsamples, , drop = F])
+
   ### label = "ggrepel" is a ggplot2-engine feature: with base graphics the
   ### labels are placed in the ordinary way
   x <- .no.ggrepel(x)

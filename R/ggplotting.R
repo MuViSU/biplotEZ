@@ -69,6 +69,10 @@ gg_biplot <- function(x, exp.factor = 1.2,
     x$predict$means.mat <- .predicted_values(x, pm)
     predict.mat <- rbind(predict.mat, pm)
   }
+  if (!is.cat && !is.null(x$predict$newsamples)) {
+    predict.mat <- x$Znew[x$predict$newsamples, , drop = FALSE]
+    x$predict$newsamples.mat <- .predicted_values(x, predict.mat)
+  }
   
   # ---- fit measures for predictivity options -------------------------------
   ax.aes <- x$axes
