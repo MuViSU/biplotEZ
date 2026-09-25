@@ -31,6 +31,10 @@
 - [`CatPCA(`*`<biplot>`*`)`](CatPCA.biplot.md) : Calculate elements for
   the CatPCA biplot
 
+- [`MCA()`](MCA.md) : Multiple Correspondence Analysis (MCA) method
+
+- [`MCA(`*`<biplot>`*`)`](MCA.biplot.md) : MCA biplot
+
 - [`PCA()`](PCA.md) : Perform Principal Components Analysis (PCA)
 
 - [`PCA(`*`<biplot>`*`)`](PCA.biplot.md) : Calculate elements for the

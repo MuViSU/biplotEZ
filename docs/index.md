@@ -17,7 +17,7 @@ You can install the development version of biplotEZ like this:
 
 This is a basic example which shows you how to construct a PCA biplot:
 
-[`library`](https://rdrr.io/r/base/library.html)`(``biplotEZ``)`` ``#> `` ``#> Attaching package: 'biplotEZ'`` ``#> The following object is masked from 'package:stats':`` ``#> `` ``#> biplot`` `[`biplot`](reference/biplot.md)` ``(``iris``[``,``1``:``4``]``, Title``=``"Test PCA biplot"``)`` ``|>`` `[`PCA`](reference/PCA.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`library`](https://rdrr.io/r/base/library.html)`(``biplotEZ``)`` `[`biplot`](reference/biplot.md)` ``(``iris``[``,``1``:``4``]``, Title``=``"Test PCA biplot"``)`` ``|>`` `[`PCA`](reference/PCA.md)`(``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](reference/figures/README-PCA_example-1.png)
 
@@ -48,7 +48,7 @@ such as:
 
 To change to row standard coordinates use a call such as:
 
-[`biplot`](reference/biplot.md)`(``HairEyeColor``[``,,``2``]``, center ``=`` ``FALSE``)`` ``|>`` `` `` `[`CA`](reference/CA.md)`(``variant ``=`` ``"Stand"``)`` ``|>`` `[`samples`](reference/samples.md)`(``col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"magenta"``,``"purple"``)``, pch``=`[`c`](https://rdrr.io/r/base/c.html)`(``15``,``18``)``)`` ``|>`` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
+[`biplot`](reference/biplot.md)`(``HairEyeColor``[``,,``2``]``, center ``=`` ``FALSE``)`` ``|>`` `` `` `[`CA`](reference/CA.md)`(``variant ``=`` ``"Stand"``)`` ``|>`` `[`samples`](reference/samples.md)`(``col``=`[`c`](https://rdrr.io/r/base/c.html)`(``"magenta"``,``"purple"``)``, pch``=`[`c`](https://rdrr.io/r/base/c.html)`(``15``,``18``)``)`` ``|>`` `` `` `[`plot`](https://rdrr.io/r/graphics/plot.default.html)`(``)`
 
 ![](reference/figures/README-ca_standard-1.png)
 

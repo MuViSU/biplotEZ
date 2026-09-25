@@ -14,7 +14,7 @@
 }
 
 
-.samples.plot1D <- function(Z, samples.aes, group.aes, g.names,  usr)#ggrepel.labs,
+.samples.plot1D <- function(Z, samples.aes, group.aes, g.names,  usr)
 {
   group.member <- sapply((group.aes),function(x)which(x==g.names))
   which.indices <- group.member%in%samples.aes$which
@@ -60,7 +60,7 @@
   }
 }
 
-.samples.plot1D.CA <- function(Z, samples.aes, group.aes, g.names,  usr)#ggrepel.labs,
+.samples.plot1D.CA <- function(Z, samples.aes, group.aes, g.names,  usr)
 {
   print(group.aes)
   group.member <- sapply((group.aes),function(x)which(x==g.names))
@@ -118,7 +118,7 @@
   graphics::rect(borders[1], 0.5, borders[2], bounds[4], col = col, border = border) 
 }
 #----------
-.means.plot1D <- function(Z, means.aes, g.names,  usr)#ggrepel.labs,
+.means.plot1D <- function(Z, means.aes, g.names,  usr)
 {
   x.vals <- Z[, 1, drop = FALSE]
   y.vals <- rep(0, length(Z))
@@ -223,6 +223,7 @@
 #----------
 .lin.axes.plot1D <- function(z.axes, ax.aes, too.small, usr)
 {
+  ax.aes$label.dir <- .label.dir(ax.aes$label.dir, "base")
   for (i in 1:length(ax.aes$which))
   {
     ax.num <- ax.aes$which[i]
@@ -239,6 +240,11 @@
     #    graphics::abline(v = this.axis$v, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
     #  else
     graphics::abline(coef = lin.coef, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
+    if (ax.aes$label.dir == "Along")
+      .axis.title.along(this.axis, marker.mat, usr, name = ax.aes$names[i],
+                        col = ax.aes$label.col[i], cex = ax.aes$label.cex[i],
+                        tick.side = ax.aes$tick.label.side[i])
+    else {
     if (ax.aes$label.dir == "Hor") {
       graphics::par(las = 1)
       adjust <- c(0.5, 1, 0.5, 0)
@@ -304,6 +310,10 @@
         
       }
       
+      }   # end of sloped-axis title placement
+    }     # end of edge placement (label.dir != "Along")
+    if (!is.null(this.axis$b))
+    {
       invals <-x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
       std.markers <- marker.mat[invals, 3]
       if (is.numeric(std.markers))
@@ -377,7 +387,7 @@ plot_CA_1D <- function(bp, exp.factor=1.2, axis.predictivity=NULL, sample.predic
   
 }
   
-.samples.plot1D.CA <- function(Z, samples.aes, group.aes, g.names, c,r)#ggrepel.labs,
+.samples.plot1D.CA <- function(Z, samples.aes, group.aes, g.names, c,r)
 {
   nn <- nrow(Z)
   

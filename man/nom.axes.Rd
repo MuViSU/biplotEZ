@@ -6,7 +6,7 @@
 \usage{
 nom.axes(bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal"], 
          which =1:sum(bp$ax.type$ax.type=="nominal"), col = NULL, lwd = 1, 
-         lty = 1, label.dir = "Orthog", label.col = "black", label.cex = 0.75, 
+         lty = 1, label.dir = NULL, label.col = "black", label.cex = 0.75, 
          label.line = 0.1, label.offset=rep(0,4), ticks = 5, tick.col = "black", 
          tick.size = 1, tick.label = TRUE, tick.label.side = "below", 
          tick.label.col = tick.col, tick.label.cex = 0.6, predict.col = col, 
@@ -26,7 +26,7 @@ nom.axes(bp, X.names=colnames(bp$Xcat)[bp$ax.type$ax.type=="nominal"],
 
 \item{lty}{the line type(s) for the axes, with default \code{1}.}
 
-\item{label.dir}{a character string indicating the placement of the axis titles to the side of the figure. One of "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure (default) , "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure.}
+\item{label.dir}{a character string indicating the placement of the axis titles. One of "\code{Along}" for axis titles to appear alongside the axis line itself, rotated to the slope of the axis, "\code{Orthog}" for axis titles to appear orthogonal to the side of the figure, "\code{Hor}" for axis titles to appear horizontally or "\code{Paral}" for axis titles to appear parallel to the side of the figure. The default \code{NULL} uses "\code{Along}" with the \code{ggplot2} engine and "\code{Orthog}" with base graphics.}
 
 \item{label.col}{the colour(s) for the axis labels, with default, \code{col}.}
 

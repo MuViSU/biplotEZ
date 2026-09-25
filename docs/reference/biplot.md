@@ -91,7 +91,11 @@ A list with the following components is available:
 
 - p:
 
-  the number of variables.
+  the number of numeric variables.
+
+- p2:
+
+  the number of categorical variables.
 
 - group.aes:
 

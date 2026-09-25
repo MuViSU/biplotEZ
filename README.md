@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# biplotEZ
+# biplotEZ <img src="man/figures/logo.png" align="right" height="139" alt="biplotEZ logo" />
 
 The goal of biplotEZ is to provide users an EZ-to-use platform for
 visually representing their data with biplots. Currently, this package
@@ -69,7 +69,6 @@ such as:
 
 ``` r
 biplot(HairEyeColor[,,2], center = FALSE) |> CA() |> plot()
-#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.
 ```
 
 <img src="man/figures/README-ca_default-1.png" alt="" width="100%" />
@@ -78,8 +77,8 @@ To change to row standard coordinates use a call such as:
 
 ``` r
 biplot(HairEyeColor[,,2], center = FALSE) |> 
-  CA(variant = "Stand") |> samples(col=c("magenta","purple"), pch=c(15,18)) |> plot()
-#> Warning: The ggplot2 engine does not yet support CA maps; falling back to base graphics.
+  CA(variant = "Stand") |> samples(col=c("magenta","purple"), pch=c(15,18)) |> 
+  plot()
 ```
 
 <img src="man/figures/README-ca_standard-1.png" alt="" width="100%" />

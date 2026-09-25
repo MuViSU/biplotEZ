@@ -44,7 +44,9 @@ legend.type(bp, samples = FALSE, means = FALSE, bags = FALSE,
 - new:
 
   a logical value indicating whether the legend should appear in a new
-  window, with default `FALSE`.
+  window, with default `FALSE`. This is a base graphics feature: use
+  `plot(engine = "base")`, since the `ggplot2` engine always places the
+  legend next to the biplot.
 
 - ...:
 

@@ -139,7 +139,23 @@ The object of class `biplot` will be appended with a list called
 ## Examples
 
 ``` r
+## PCA example
 biplot(data = iris[1:145,]) |> PCA() |> samples(col = "grey") |>
 interpolate(newdata = iris[146:150,]) |> newsamples(col = rainbow(6), pch=15) |> plot()
 
+
+## Creating a sample to illustrate the grouping colours of interpolated samples
+set.seed(1148)
+smp <- sample(c(1:150),145)
+biplot(data = iris[smp,], group.aes =iris[smp,5]) |> PCA() |> 
+interpolate(newdata = iris[-smp,],new.group.aes=iris[-smp,5]) |> 
+newsamples(col = c("blue", "green", "gold"), pch=17, cex=2) |> plot()
+
+
+## CA example
+biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
+samples(pch = c(0,2)) |> interpolate(newdata = HairEyeColor[,,1]) |> 
+  newsamples(col = c("orange","purple"), pch = c(15,17), label = TRUE) |> plot()
+
+  
 ```

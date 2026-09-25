@@ -5,13 +5,12 @@
 #' @param sample.aes sample aesthetics
 #' @param n number of samples
 #' @param g.names names of the group levels
-#' @param ggrepel.labs ggrepel label positions
 #' @param too.small indices of points with predictivity below cutoff, excluded from plotting
 #' @param cex.vec vector of character expansion values
 #'
 #' @noRd
 .samples.plot <- function(Z, group.aes, sample.aes, n, g.names,
-                          ggrepel.labs, too.small, cex.vec, usr=usr,
+                          too.small, cex.vec, usr=usr,
                           alpha.bag.outside, alpha.bag.aes)
 {
   if (sample.aes$connected)
@@ -36,67 +35,35 @@
   
   groups <- levels(group.aes)
   
-  if (any(stats::na.omit(sample.aes$label=="ggrepel")))
+  ZZ <- data.frame (no=1:n, names=sample.aes$label.name, label=sample.aes$label,
+                    label.side = sample.aes$label.side, label.cex = sample.aes$label.cex,
+                    label.col = sample.aes$label.col, label.offset = sample.aes$label.offset,
+                    group.aes = group.aes, pch = rep(NA,n),
+                    col = rep(NA,n), cex = rep(NA,n),
+                    cex.vec, Z)
+  for(j in 1:length(sample.aes$which))
   {
-    ZZ <- data.frame (no=1:n, group.aes = group.aes, pch = rep(NA,n),
-                      col = rep(NA,n), cex = rep(NA,n),
-                      cex.vec, Z)
-    
-    for(j in 1:length(sample.aes$which))
-    {
-      ZZ$pch[group.aes==g.names[sample.aes$which[j]]] = sample.aes$pch[j]
-      ZZ$col[group.aes==g.names[sample.aes$which[j]]] = sample.aes$col[j]
-      ZZ$cex[group.aes==g.names[sample.aes$which[j]]] = sample.aes$cex[j]
-    }
-    ZZ <- ZZ[which.samples,]
-    ZZ <- ZZ[invals[which.samples],]
-    if (!is.null(too.small))
-      ZZ <- ZZ[-stats::na.omit(match(too.small,ZZ[,1])),]
-    ZZ <- ZZ[,-1]
-    ZZ.points <- ZZ[,2:5]
-    ZZ <- ZZ[,-(1:5)]
-    for (j in 1:nrow(ggrepel.labs$coords))
-      graphics::text(ggrepel.labs$coords[j, 1], ggrepel.labs$coords[j, 2], labels = sample.aes$label.name[j],
-                     cex = sample.aes$label.cex[ggrepel.labs$visible[j]],
-                     col = sample.aes$label.col[ggrepel.labs$visible[j]])
-    for (j in ggrepel.labs$textlines)
-    {
-      label.val <- rownames(Z)[j]
-      label.xy <- ggrepel.labs$coords[match(label.val, ggrepel.labs$coords[,3]),1:2]
-      graphics::lines (x=c(label.xy[1],Z[j,1]), y=c(label.xy[2],Z[j,2]), col=sample.aes$label.col[j])
-    }
+    ZZ$pch[group.aes==g.names[sample.aes$which[j]]] = sample.aes$pch[j]
+    ZZ$col[group.aes==g.names[sample.aes$which[j]]] = sample.aes$col[j]
+    ZZ$cex[group.aes==g.names[sample.aes$which[j]]] = sample.aes$cex[j]
   }
-  else
-  {
-    ZZ <- data.frame (no=1:n, names=sample.aes$label.name, label=sample.aes$label,
-                      label.side = sample.aes$label.side, label.cex = sample.aes$label.cex,
-                      label.col = sample.aes$label.col, label.offset = sample.aes$label.offset,
-                      group.aes = group.aes, pch = rep(NA,n),
-                      col = rep(NA,n), cex = rep(NA,n),
-                      cex.vec, Z)
-    for(j in 1:length(sample.aes$which))
-    {
-      ZZ$pch[group.aes==g.names[sample.aes$which[j]]] = sample.aes$pch[j]
-      ZZ$col[group.aes==g.names[sample.aes$which[j]]] = sample.aes$col[j]
-      ZZ$cex[group.aes==g.names[sample.aes$which[j]]] = sample.aes$cex[j]
-    }
-    ZZ <- ZZ[which.samples,]
-    ZZ <- ZZ[invals[which.samples],]
-    if (!is.null(too.small))
-      ZZ <- ZZ[-stats::na.omit(match(too.small,ZZ[,1])),]
-    ZZ <- ZZ[,-1]
-    ZZ.labels <- ZZ[,1:6]
-    ZZ <- ZZ[,-(1:6)]
-    ZZ.points <- ZZ[,2:5]
-    ZZ <- ZZ[,-(1:5)]
-    for (j in 1:nrow(ZZ.labels))
-    {  text.pos <- match(ZZ.labels$label.side[j], c("bottom", "left", "top", "right"))
-       if (ZZ.labels$label[j])
-          graphics::text(ZZ[j, 1], ZZ[j, 2], labels = ZZ.labels$names[j],
-                         cex = ZZ.labels$label.cex[j], col = ZZ.labels$label.col[j],
-                         pos = text.pos, offset = ZZ.labels$label.offset[j])
-    }
+  ZZ <- ZZ[which.samples,]
+  ZZ <- ZZ[invals[which.samples],]
+  if (!is.null(too.small))
+    ZZ <- ZZ[-stats::na.omit(match(too.small,ZZ[,1])),]
+  ZZ <- ZZ[,-1]
+  ZZ.labels <- ZZ[,1:6]
+  ZZ <- ZZ[,-(1:6)]
+  ZZ.points <- ZZ[,2:5]
+  ZZ <- ZZ[,-(1:5)]
+  for (j in 1:nrow(ZZ.labels))
+  {  text.pos <- match(ZZ.labels$label.side[j], c("bottom", "left", "top", "right"))
+     if (ZZ.labels$label[j])
+        graphics::text(ZZ[j, 1], ZZ[j, 2], labels = ZZ.labels$names[j],
+                       cex = ZZ.labels$label.cex[j], col = ZZ.labels$label.col[j],
+                       pos = text.pos, offset = ZZ.labels$label.offset[j])
   }
+
   for (i in 1:nrow(ZZ.points))
     points (x=ZZ[i,1], y=ZZ[i,2], pch=ZZ.points$pch[i],
             col=ZZ.points$col[i],
@@ -116,20 +83,20 @@
 #' @param g.names factor names
 #'
 #' @noRd
-.CA.plot <- function(rowcoor, colcoor, group.aes, sample.aes, r, c, g.names)
+.CA.plot <- function(bp, Z, group.aes, sample.aes, r, c, g.names)
 {
   #first factor rowcoor
-  graphics::points(x = rowcoor[,1], y = rowcoor[,2], pch = sample.aes$pch[1],
+  graphics::points(x = Z[1:bp$r,1], y = Z[1:bp$r,2], pch = sample.aes$pch[1],
                    col = sample.aes$col[1], cex = sample.aes$cex[1])
   text.pos <- match(sample.aes$label.side[1], c("bottom", "left", "top", "right"))
-  graphics::text(x = rowcoor[,1], y = rowcoor[,2], labels = rownames(rowcoor), 
+  graphics::text(x = Z[1:bp$r,1], y = Z[1:bp$r,2], labels = rownames(Z[1:bp$r,]), 
                  col = sample.aes$col[1], cex = sample.aes$label.cex[1],
                  pos = text.pos, offset = sample.aes$label.offset)
   #second factor colcoor
-  graphics::points(x = colcoor[,1], y = colcoor[,2], pch = sample.aes$pch[2],
+  graphics::points(x = Z[(bp$r+1):nrow(Z),1], y = bp$Z[(bp$r+1):nrow(Z),2], pch = sample.aes$pch[2],
                    col = sample.aes$col[2], cex = sample.aes$cex[2])
   text.pos <- match(sample.aes$label.side[2], c("bottom", "left", "top", "right"))
-  graphics::text(x = colcoor[,1], y = colcoor[,2], labels = rownames(colcoor),
+  graphics::text(x = Z[(bp$r+1):nrow(Z),1], y = Z[(bp$r+1):nrow(Z),2], labels = rownames(Z[(bp$r+1):nrow(Z),]),
                  col = sample.aes$col[2], cex = sample.aes$label.cex[2],
                  pos = text.pos, offset = sample.aes$label.offset)
 }
@@ -141,21 +108,31 @@
 #' @param newsamples newsamples aesthetics
 #'
 #' @noRd
-.newsamples.CA.plot <- function(newrowcoor, newcolcoor, newsamples)
+.newsamples.CA.plot <- function(bp, Znew, newsamples)
 {
+  
+  if(length(newsamples$label.col)==1){
+    label.col <- rep(newsamples$label.col, nrow(Znew))
+  } else
+  {
+    label.col <- newsamples$label.col}
+  if(is.null(newsamples$label.col)) {
+    label.col <- newsamples$col
+    }
+  
   #first factor newrowcoor
-  graphics::points(x = newrowcoor[,1], y = newrowcoor[,2], pch = newsamples$pch[1],
+  graphics::points(x = Znew[1:bp$r,1], y = Znew[1:bp$r,2], pch = newsamples$pch[1],
                    col = newsamples$col[1], cex = newsamples$cex[1])
   text.pos <- match(newsamples$label.side[1], c("bottom", "left", "top", "right"))
-  graphics::text(x = newrowcoor[,1], y = newrowcoor[,2], labels = rownames(newrowcoor), 
-                 col = newsamples$col[1], cex = newsamples$label.cex[1],
+  graphics::text(x = Znew[1:bp$r,1], y = Znew[1:bp$r,2], labels = rownames(Znew[1:bp$r,]), 
+                 col = label.col[1], cex = newsamples$label.cex[1],
                  pos = text.pos, offset = newsamples$label.offset)
   #second factor newcolcoor
-  graphics::points(x = newcolcoor[,1], y = newcolcoor[,2], pch = newsamples$pch[2],
-                   col = newsamples$col[2], cex = newsamples$cex[2])
-  text.pos <- match(newsamples$label.side[2], c("bottom", "left", "top", "right"))
-  graphics::text(x = newcolcoor[,1], y = newcolcoor[,2], labels = rownames(newcolcoor),
-                 col = newsamples$col[2], cex = newsamples$label.cex[2],
+  graphics::points(x = Znew[(bp$r+1):nrow(Znew),1], y = Znew[(bp$r+1):nrow(Znew),2], pch = newsamples$pch[(bp$r+1)],
+                   col = newsamples$col[(bp$r+1)], cex = newsamples$cex[(bp$r+1)])
+  text.pos <- match(newsamples$label.side[(bp$r+1)], c("bottom", "left", "top", "right"))
+  graphics::text(x = Znew[(bp$r+1):nrow(Znew),1], y = Znew[(bp$r+1):nrow(Znew),2], labels = rownames(Znew[(bp$r+1):nrow(Znew),]),
+                 col = label.col[(bp$r+1)], cex = newsamples$label.cex[(bp$r+1)],
                  pos = text.pos, offset = newsamples$label.offset)
 }
 #' Title
@@ -163,11 +140,10 @@
 #' @param Z Coordinates of class means
 #' @param sample.aes sample aesthetics
 #' @param g.names names of the group levels
-#' @param ggrepel.labs ggrepel label positions
 #'
 #'
 #' @noRd
-.means.plot <- function(Z, sample.aes, g.names, ggrepel.labs,usr)
+.means.plot <- function(Z, sample.aes, g.names, usr)
 {
   x.vals <- Z[, 1]
   y.vals <- Z[, 2]
@@ -180,32 +156,14 @@
   {
     toetsers<-invals[sample.aes$which]
     
-    if (sample.aes$label[1]=="ggrepel")
-    {
-      for (j in 1:nrow(ggrepel.labs$coords)){
-        graphics::text(ggrepel.labs$coords[j, 1], ggrepel.labs$coords[j, 2], 
-                       labels = ggrepel.labs$coords[j,3],
-                       cex = sample.aes$label.cex[ggrepel.labs$visible[j]],
-                       col = sample.aes$label.col[ggrepel.labs$visible[j]])
-      }
-      for (j in ggrepel.labs$textlines)
-      { 
-        label.val <- rownames(ZZ)[j]
-        label.xy <- ggrepel.labs$coords[match(label.val, ggrepel.labs$coords[,3]),1:2]
-        graphics::lines (x=c(label.xy[1],ZZ[j,1]), y=c(label.xy[2],ZZ[j,2]), col=sample.aes$label.col[j])
-      }
-    }
-    else
-    {
-      Z.labels <- rownames(Z)[sample.aes$which]
-      for (j in 1:length(sample.aes$label.side))
-      { if(!toetsers[j])
-        next
-        text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
-        if (sample.aes$label[j]) graphics::text(ZZ[j, 1], ZZ[j, 2], labels = Z.labels[j],
-                                                cex = sample.aes$label.cex[j], col = sample.aes$label.col[j],
-                                                pos = text.pos, offset = sample.aes$label.offset[j])
-      }
+    Z.labels <- rownames(Z)[sample.aes$which]
+    for (j in 1:length(sample.aes$label.side))
+    { if(!toetsers[j])
+      next
+      text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
+      if (sample.aes$label[j]) graphics::text(ZZ[j, 1], ZZ[j, 2], labels = Z.labels[j],
+                                              cex = sample.aes$label.cex[j], col = sample.aes$label.col[j],
+                                              pos = text.pos, offset = sample.aes$label.offset[j])
     }
     for (j in 1:length(sample.aes$which)){
       if(!toetsers[j])
@@ -220,10 +178,9 @@
 #'
 #' @param Z Coordinates of the new samples
 #' @param sample.aes sample aesthetics
-#' @param ggrepel.labs ggrepel label positions
 #'
 #' @noRd
-.newsamples.plot <- function(Z, sample.aes, ggrepel.labs, usr)
+.newsamples.plot <- function(Z, sample.aes, usr)
 {
   if(is.null(sample.aes$label.name[1]))
     label.names<-rownames(Z)
@@ -234,34 +191,30 @@
   x.vals <- Z[, 1]
   y.vals <- Z[, 2]
   invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
+  n.new <- length(invals)
+  # Clip the per-sample aesthetics along with the samples themselves: dropping a
+  # sample that falls outside the plotting region without dropping its colour,
+  # symbol and label shifts every remaining sample onto its neighbour's aesthetics.
+  sub <- function(v) if (length(v) == n.new) v[invals] else v
+  label.names <- sub(label.names)
+  pchs <- sub(sample.aes$pch)
+  cols <- sub(sample.aes$col)
+  cexs <- sub(sample.aes$cex)
+  lab.on <- sub(sample.aes$label)
+  lab.col <- sub(sample.aes$label.col)
+  lab.cex <- sub(sample.aes$label.cex)
+  lab.side <- sub(sample.aes$label.side)
+  lab.offset <- sub(sample.aes$label.offset)
   Z <- Z[invals, , drop = FALSE]
-  if (sample.aes$label[1]=="ggrepel")
-  {
-    ggrepel.labs$coords <- ggrepel.labs$coords[invals, ,drop=F]
-    ggrepel.labs$visible <- ggrepel.labs$visible[invals]
-    ggrepel.labs$textlines <- ggrepel.labs$textlines[invals]
-    for (j in 1:nrow(ggrepel.labs$coords))
-      graphics::text(ggrepel.labs$coords[j, 1], ggrepel.labs$coords[j, 2], labels = ggrepel.labs$coords[j,3],
-                     cex = sample.aes$label.cex[ggrepel.labs$visible[j]],
-                     col = sample.aes$label.col[ggrepel.labs$visible[j]])
-    for (j in ggrepel.labs$textlines)
-    {
-      label.val <- rownames(Z)[j]
-      label.xy <- ggrepel.labs$coords[match(label.val, ggrepel.labs$coords[,3]),1:2]
-      graphics::lines (x=c(label.xy[1],Z[j,1]), y=c(label.xy[2],Z[j,2]), col=sample.aes$label.col[j])
-    }
+  if (nrow(Z) == 0) return(invisible(NULL))
+  for (j in 1:nrow(Z))
+  {  text.pos <- match(lab.side[j], c("bottom", "left", "top", "right"))
+     if (lab.on[j]) graphics::text(Z[j, 1], Z[j, 2], labels = label.names[j],
+                                   cex = lab.cex[j], col = lab.col[j],
+                                   pos = text.pos, offset = lab.offset[j])
   }
-  else
-  {
-    for (j in 1:nrow(Z))
-    {  text.pos <- match(sample.aes$label.side[j], c("bottom", "left", "top", "right"))
-    if (sample.aes$label[j]) graphics::text(Z[j, 1], Z[j, 2], labels = label.names[j],
-                                            cex = sample.aes$label.cex[j], col = sample.aes$label.col[j],
-                                            pos = text.pos, offset = sample.aes$label.offset[j])
-    }
-  }
-  graphics::points(x = Z[, 1], y = Z[, 2], pch = sample.aes$pch, col = sample.aes$col,
-                   cex = sample.aes$cex)
+  graphics::points(x = Z[, 1], y = Z[, 2], pch = pchs, col = cols,
+                   cex = cexs)
 }
 
 #' Title
@@ -550,6 +503,7 @@
 .lin.axes.plot <- function(z.axes, ax.aes, predict.mat, 
                            too.small, usr, predict_which)
 {
+  ax.aes$label.dir <- .label.dir(ax.aes$label.dir, "base")
   for (i in 1:length(ax.aes$which))
   {  ax.num <- ax.aes$which[i]
      if (!is.null(too.small)) if (ax.num %in% too.small) next
@@ -564,6 +518,11 @@
        graphics::abline(v = this.axis$v, col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
      else
        graphics::abline(coef=c(this.axis$a, this.axis$b), col = ax.aes$col[i], lwd = ax.aes$lwd[i], lty = ax.aes$lty[i])
+     if (ax.aes$label.dir == "Along")
+       .axis.title.along(this.axis, marker.mat, usr, name = ax.aes$names[i],
+                         col = ax.aes$label.col[i], cex = ax.aes$label.cex[i],
+                         tick.side = ax.aes$tick.label.side[i])
+     else {
      if (ax.aes$label.dir == "Hor") 
      {  graphics::par(las = 1)
        adjust <- c(0.5, 1, 0.5, 0)       
@@ -641,6 +600,7 @@
                                   cex = ax.aes$label.cex[i])
          }
       }
+     }   # end of edge placement (label.dir != "Along")
      
   invals <- x.vals < usr[2] & x.vals > usr[1] & y.vals < usr[4] & y.vals > usr[3]
   std.markers <- marker.mat[invals, 3]
@@ -663,6 +623,19 @@
   }
 }
 
+#' Axis title alongside the axis line (label.dir = "Along"), base engine.
+#' The geometry is shared with the ggplot2 engine: .axis_title_along().
+#' @noRd
+.axis.title.along <- function(this.axis, marker.mat, usr, name, col, cex,
+                              tick.side = "below")
+{
+  mm  <- 0.007 * (usr[2] - usr[1])
+  pos <- .axis_title_along(this.axis, marker.mat, usr, mm, tick.side)
+  if (is.null(pos)) return(invisible())
+  graphics::text(pos$x, pos$y, labels = name, srt = pos$angle,
+                 adj = c(pos$hjust, pos$vjust), col = col, cex = cex)
+}
+
 #' Plot linear nominal axes on biplots
 #'
 #' @param z.axes list containing all the info to draw axis. see below
@@ -678,6 +651,7 @@
 #' @noRd
 .nom.axes.plot <- function(z.axes, ax.aes, predict.mat, too.small, usr, predict_which)
 {
+  ax.aes$label.dir <- .label.dir(ax.aes$label.dir, "base")
   for (i in 1:length(ax.aes$which))
   {  ax.num <- ax.aes$which[i]
      if (!is.null(too.small)) if (ax.num %in% too.small) next
@@ -711,6 +685,11 @@
        ends.mat[nrow(ends.mat),2] <- this.axis$a + ends.mat[nrow(ends.mat),1]*this.axis$b
      }
      
+     if (ax.aes$label.dir == "Along")
+       .axis.title.along(this.axis, marker.mat, usr, name = ax.aes$names[i],
+                         col = ax.aes$label.col[i], cex = ax.aes$label.cex[i],
+                         tick.side = ax.aes$tick.label.side[i])
+     else {
      if (ax.aes$label.dir == "Hor") 
      {  graphics::par(las = 1)
         adjust <- c(0.5, 1, 0.5, 0)       
@@ -788,6 +767,7 @@
                               cex = ax.aes$label.cex[i])
     }
   }
+  }   # end of edge placement (label.dir != "Along")
   for (j in 2:nrow(ends.mat))
   {
      graphics::lines (x = ends.mat[(-1:0)+j, 1], y = ends.mat[(-1:0)+j, 2],
@@ -822,6 +802,7 @@
 #' @noRd
 .ord.axes.plot <- function(z.axes, ax.aes, predict.mat, too.small, usr, predict_which)
 {
+  ax.aes$label.dir <- .label.dir(ax.aes$label.dir, "base")
   for (i in 1:length(ax.aes$which))
   {  ax.num <- ax.aes$which[i]
      if (!is.null(too.small)) if (ax.num %in% too.small) next
@@ -854,6 +835,11 @@
        ends.mat[nrow(ends.mat),2] <- this.axis$a + ends.mat[nrow(ends.mat),1]*this.axis$b
      }
   
+     if (ax.aes$label.dir == "Along")
+       .axis.title.along(this.axis, marker.mat, usr, name = ax.aes$names[i],
+                         col = ax.aes$label.col[i], cex = ax.aes$label.cex[i],
+                         tick.side = ax.aes$tick.label.side[i])
+     else {
      if (ax.aes$label.dir == "Hor") 
      {  graphics::par(las = 1)
         adjust <- c(0.5, 1, 0.5, 0)       
@@ -931,6 +917,7 @@
                                     cex = ax.aes$label.cex[i])
           }
        }
+  }   # end of edge placement (label.dir != "Along")
   if (ax.aes$reverse[i]) lwd.vec <- (nrow(ends.mat)-1):1 else lwd.vec <- 1:(nrow(ends.mat)-1)
   lwd.vec <- lwd.vec * ax.aes$lwd.factor[i]
   for (j in 2:nrow(ends.mat))
@@ -1005,49 +992,6 @@
     graphics::polygon(z.ellipse[[i]], border=ellipse.aes$col[i], lty=ellipse.aes$lty[i], lwd = ellipse.aes$lwd[i], 
                       col=grDevices::adjustcolor(ellipse.aes$col[i],ellipse.aes$opacity[i]))
 }
-
-#' Get coordinates from ggrepel
-#'
-#' @param df dataframe containing (x_coo, y_coo, marker)
-#'
-#' @noRd
-.get.ggrepel.coords <- function(df)
-{
-  if (!requireNamespace("ggplot2", quietly = TRUE)) {
-    stop("Package 'ggplot2' is required for this function. Please install it.", call. = FALSE)
-   }
-  if (!requireNamespace("ggrepel", quietly = TRUE)) {
-     stop("Package 'ggrepel' is required for this function. Please install it.", call. = FALSE)
-   }
-  if (!requireNamespace("grid", quietly = TRUE)) {
-     stop("Package 'grid' is required for this function. Please install it.", call. = FALSE)
-   }
-  pp <- ggplot2::ggplot (df, ggplot2::aes(df$x,df$y,label=df$z)) + 
-           ggplot2::geom_point() + 
-           ggrepel::geom_text_repel()
-  xrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$x.range
-  yrg <- ggplot2::ggplot_build(pp)$layout$panel_params[[1]]$y.range
-  print(pp)
-  grid::grid.force()
-  kids <- grid::childNames(grid::grid.get("textrepeltree", grep=TRUE))
-  textrepels <- grep("textrepelgrob", kids)
-  textlines <- kids[-textrepels]
-  textlines <- as.numeric(substring(textlines,17,19))
-  textvisible <- kids[textrepels]
-  textvisible <- as.numeric(substring(textvisible,14,16))
-  kids <- kids[textrepels]
-  get.xy.pos.labs <- function(n)
-  {
-    grb <- grid::grid.get(n)
-    data.frame(x = xrg[1]+diff(xrg)*grid::convertX(grb$x, "native", valueOnly = TRUE),
-               y = yrg[1]+diff(yrg)*grid::convertY(grb$y, "native", valueOnly = TRUE))
-  }
-  ggrepel.labs <- do.call (rbind, lapply(kids, get.xy.pos.labs))
-  ggrepel.labs$lab <- df$z[textvisible]
-  list (coords = ggrepel.labs, visible=textvisible, textlines=textlines)
-}
-
-
 
 #' Title
 #'
@@ -1326,4 +1270,53 @@ biplot.spline.axis <- function(j, X, Y, means, sd,
         )
     }
   }
+}
+
+#' Revert label = "ggrepel" to ordinary labels
+#'
+#' \code{ggrepel} label placement is only available with the \code{ggplot2}
+#' engine. Every aesthetic requesting it is reverted to ordinary labels, which
+#' \code{samples()}, \code{means()} and \code{newsamples()} have already
+#' prepared by expanding \code{label.side} and \code{label.offset} whether or
+#' not ggrepel was asked for.
+#'
+#' @param bp an object of class \code{biplot}
+#'
+#' @noRd
+.no.ggrepel <- function(bp)
+{
+  wants.ggrepel <- function(aes)
+    !is.null(aes$label) && any(stats::na.omit(aes$label == "ggrepel"))
+
+  # samples not in `which` carry NA labels: keep them switched off
+  plain <- function(aes)
+  {
+    aes$label <- ifelse(is.na(aes$label), NA, TRUE)
+    aes
+  }
+
+  changed <- FALSE
+
+  if (wants.ggrepel(bp$samples))
+  {
+    bp$samples <- plain(bp$samples)
+    changed <- TRUE
+  }
+
+  if (isTRUE(bp$class.means) && wants.ggrepel(bp$means.aes))
+  {
+    bp$means.aes <- plain(bp$means.aes)
+    changed <- TRUE
+  }
+
+  if (wants.ggrepel(bp$newsamples))
+  {
+    bp$newsamples <- plain(bp$newsamples)
+    changed <- TRUE
+  }
+
+  if (changed)
+    warning('label = "ggrepel" is only supported by the ggplot2 engine; ',
+            'ordinary labels are used with engine = "base".', call. = FALSE)
+  bp
 }

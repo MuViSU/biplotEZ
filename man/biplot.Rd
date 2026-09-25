@@ -32,7 +32,8 @@ A list with the following components is available:
 \item{means}{the vector of means for each numeric variable.}
 \item{sd}{the vector of standard deviations for each numeric variable.}
 \item{n}{the number of observations.}
-\item{p}{the number of variables.}
+\item{p}{the number of numeric variables.}
+\item{p2}{the number of categorical variables.}
 \item{group.aes}{the vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
 \item{g.names}{the descriptive names to be used for group labels.}
 \item{g}{the number of groups.}

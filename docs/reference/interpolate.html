@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">biplotEZ</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -23,10 +23,11 @@
     <li><a class="dropdown-item" href="../articles/biplotEZ_enhancements.html">biplotEZ enhancements</a></li>
     <li><a class="dropdown-item" href="../articles/MDS.html">Multi-dimensional scaling</a></li>
     <li><a class="dropdown-item" href="../articles/Class_separation.html">Biplots for separating classes</a></li>
-    <li><a class="dropdown-item" href="../articles/CA_in_biplotEZ.html">Categorical biplots</a></li>
+    <li><a class="dropdown-item" href="../articles/CA_MCA.html">Categorical biplots</a></li>
     <li><a class="dropdown-item" href="../articles/Biplots_in_1D.html">One dimensional biplots</a></li>
     <li><a class="dropdown-item" href="../articles/Biplots_in_3D.html">Three dimensional biplots</a></li>
   </ul></li>
+<li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
       </ul></div>
@@ -102,11 +103,16 @@ containing supplementary variables to be added onto the biplot.</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="biplot.html">biplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">145</span>,<span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu">interpolate</span><span class="op">(</span>newdata <span class="op">=</span> <span class="va">iris</span><span class="op">[</span><span class="fl">146</span><span class="op">:</span><span class="fl">150</span>,<span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co">## PCA interpolation example</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu"><a href="biplot.html">biplot</a></span><span class="op">(</span>data <span class="op">=</span> <span class="va">iris</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">145</span>,<span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="PCA.html">PCA</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
+<span class="r-in"><span><span class="fu">interpolate</span><span class="op">(</span>newdata <span class="op">=</span> <span class="va">iris</span><span class="op">[</span><span class="fl">146</span><span class="op">:</span><span class="fl">150</span>,<span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="interpolate-1.png" alt="" width="700" height="433"></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co">## CA interpolation example</span></span></span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu"><a href="biplot.html">biplot</a></span><span class="op">(</span><span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">2</span><span class="op">]</span>, center <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="CA.html">CA</a></span><span class="op">(</span>variant <span class="op">=</span> <span class="st">"Symmetric"</span><span class="op">)</span> <span class="op">|&gt;</span> </span></span>
 <span class="r-in"><span>     <span class="fu">interpolate</span><span class="op">(</span>newdata <span class="op">=</span> <span class="va">HairEyeColor</span><span class="op">[</span>,,<span class="fl">1</span><span class="op">]</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The ggplot2 engine does not yet support CA maps; falling back to base graphics.</span>
 <span class="r-plt img"><img src="interpolate-2.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

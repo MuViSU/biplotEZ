@@ -4,7 +4,7 @@
 <url><loc>/LICENSE.html</loc></url>
 <url><loc>/articles/Biplots_in_1D.html</loc></url>
 <url><loc>/articles/Biplots_in_3D.html</loc></url>
-<url><loc>/articles/CA_in_biplotEZ.html</loc></url>
+<url><loc>/articles/CA_MCA.html</loc></url>
 <url><loc>/articles/Class_separation.html</loc></url>
 <url><loc>/articles/MDS.html</loc></url>
 <url><loc>/articles/biplotEZ.html</loc></url>
@@ -13,6 +13,7 @@
 <url><loc>/authors 2.html</loc></url>
 <url><loc>/authors.html</loc></url>
 <url><loc>/index.html</loc></url>
+<url><loc>/news/index.html</loc></url>
 <url><loc>/reference/AoD.biplot.html</loc></url>
 <url><loc>/reference/AoD.html</loc></url>
 <url><loc>/reference/CA.biplot.html</loc></url>
@@ -24,6 +25,8 @@
 <url><loc>/reference/CVA.html</loc></url>
 <url><loc>/reference/CVAlowdim.html</loc></url>
 <url><loc>/reference/CatPCA.biplot.html</loc></url>
+<url><loc>/reference/MCA.biplot.html</loc></url>
+<url><loc>/reference/MCA.html</loc></url>
 <url><loc>/reference/PCA.biplot.html</loc></url>
 <url><loc>/reference/PCA.html</loc></url>
 <url><loc>/reference/PCO.biplot.html</loc></url>

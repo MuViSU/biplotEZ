@@ -39,7 +39,8 @@
 #' \item{means}{the vector of means for each numeric variable.}
 #' \item{sd}{the vector of standard deviations for each numeric variable.}
 #' \item{n}{the number of observations.}
-#' \item{p}{the number of variables.}
+#' \item{p}{the number of numeric variables.}
+#' \item{p2}{the number of categorical variables.}
 #' \item{group.aes}{the vector of category levels for the grouping variable. This is to be used for \code{colour}, \code{pch} and \code{cex} specifications.}
 #' \item{g.names}{the descriptive names to be used for group labels.}
 #' \item{g}{the number of groups.}
@@ -447,6 +448,12 @@ fit.measures <- function (bp)
     bp$row.predictivities <- row.predictivities
   }
   
+  if(inherits(bp, "MCA")){
+    
+    quality <- sum((bp$SVD[[1]]^2)[bp$e.vects[1:bp$dim.biplot]])/sum((bp$SVD[[1]]^2))
+    bp$quality <- quality
+  }
+  
   bp
 }
 # ---------------------------------------------------------------------------------------------
@@ -470,7 +477,7 @@ ez.col <- c("blue","green","gold","cyan","magenta","black","red","grey","purple"
 #' @param bags a logical value indicating whether a legend should be printed for bags, with default \code{FALSE}.
 #' @param ellipses a logical value indicating whether a legend should be printed for concentration ellipses, with default \code{FALSE}.
 #' @param regions a logical value indicating whether a legend should be printed for classification regions, with default \code{FALSE}.
-#' @param new a logical value indicating whether the legend should appear in a new window, with default \code{FALSE}.
+#' @param new a logical value indicating whether the legend should appear in a new window, with default \code{FALSE}. This is a base graphics feature: use \code{plot(engine = "base")}, since the \code{ggplot2} engine always places the legend next to the biplot.
 #' @param ... additional arguments to be sent to \code{legend()}.
 #'
 #' @return A list with the following components is available:
@@ -760,7 +767,13 @@ summary.biplot <- function (object, adequacy = TRUE, axis.predictivity = TRUE,
 #' @export
 #' 
 #' @examples
-#' biplot(data = iris[1:145,]) |> PCA() |> interpolate(newdata = iris[146:150,]) |> plot()
+#' ## PCA interpolation example
+#' 
+#' biplot(data = iris[1:145,]) |> PCA() |> 
+#' interpolate(newdata = iris[146:150,]) |> plot()
+#' 
+#' ## CA interpolation example
+#' 
 #' biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |> 
 #'      interpolate(newdata = HairEyeColor[,,1]) |> plot()
 #'
@@ -877,6 +890,9 @@ interpolate <- function (bp, newdata=NULL, newvariable=NULL,
       bp$newrowcoor <- newrowcoor
       bp$newcolcoor <- newcolcoor
       bp$Znew <- Znew
+      bp$new.g <- 2
+      bp$new.group.aes <- bp$group.aes
+      bp$new.g.names <- bp$g.names
     }
 }
   
