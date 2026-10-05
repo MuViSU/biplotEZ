@@ -51,15 +51,11 @@ export(samples)
 export(sqrtManhattan)
 export(translate_axes)
 importFrom(Rcpp,sourceCpp)
-importFrom(grDevices,
-  chull,
-  colorRampPalette,
-  grey
-)
-importFrom(graphics,
-  lines,
-  mtext,
-  points,
-  text
-)
+importFrom(grDevices,chull)
+importFrom(grDevices,colorRampPalette)
+importFrom(grDevices,grey)
+importFrom(graphics,lines)
+importFrom(graphics,mtext)
+importFrom(graphics,points)
+importFrom(graphics,text)
 useDynLib(biplotEZ, .registration = TRUE)

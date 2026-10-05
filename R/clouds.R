@@ -164,7 +164,7 @@ density1D <- function(bp,which = NULL, h = "nrd0", kernel="gaussian",
 #' biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> alpha.bags(alpha=0.95) |> plot()
 #' biplot (iris[,1:4],group.aes=iris[,5]) |> PCA() |> alpha.bags(alpha=0.95) |> plot()
 #'
-alpha.bags <- function(bp, alpha=0.95, which = NULL, col = ez.col[which], lty = 1, 
+alpha.bags <- function(bp, alpha=0.95, which = NULL, col = bp$sample$col[which], lty = 1, 
                        lwd = 1, max = 2500, trace = TRUE, opacity = 0.25,
                        outlying=FALSE)
 { 
