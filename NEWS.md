@@ -34,6 +34,9 @@
 * Fixed label aesthetics and label placement.
 * `ggrepel` is no longer used in base graphics plotting.
 * Fixed a typo in the CVA vignette.
+* CA variants `Princ` and `Stand`.
+* Consistent missing data handling for `PCA()` when group.aes is specified in `biplot()` or `PCA()`.
+* `alpha.bags()` colours inherited from `samples()`.
 
 ## Internal changes
 
