@@ -89,7 +89,7 @@ PCA.biplot <- function (bp, dim.biplot = c(2, 1, 3), e.vects = 1:ncol(bp$X), gro
   if (dim.biplot != 1 & dim.biplot != 2 & dim.biplot != 3) stop("Only 1D, 2D and 3D biplots")
   e.vects <- e.vects[1:dim.biplot]
   if (!is.null(group.aes)) { 
-    group.aes <- group.aes[-bp$na.action]
+    #group.aes <- group.aes[-bp$na.action]
     bp$group.aes <- factor(group.aes)
   bp$g.names <-levels(factor(group.aes))
   bp$g <- length(bp$g.names)
