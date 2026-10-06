@@ -137,7 +137,7 @@ density1D <- function(bp,which = NULL, h = "nrd0", kernel="gaussian",
 #' @param bp an object of class \code{biplot}.
 #' @param alpha numeric vector between 0 and 1 to determine coverage of the bag (\eqn{\alpha}), with default \code{0.95}.
 #' @param which numeric vector indicating the selection of groups or classes to be fitted with \eqn{\alpha}-bags.
-#' @param col vector of colours for the \eqn{\alpha}-bags. Multiple \eqn{\alpha} bags for one group will be displayed in the same colour.
+#' @param col vector of colours for the \eqn{\alpha}-bags. Multiple \eqn{\alpha} bags for one group will be displayed in the same colour. Default is the colours specfied in \code{samples()}.
 #' @param lty vector of line types for the \eqn{\alpha}-bags. The same line type will be used per value of \eqn{\alpha}.
 #' @param lwd vector of line widths for the \eqn{\alpha}-bags. The same line width will be used per value of \eqn{\alpha}.
 #' @param max maximum number of samples to include in \eqn{\alpha}-bag calculations, with default 2500. If
@@ -156,7 +156,7 @@ density1D <- function(bp,which = NULL, h = "nrd0", kernel="gaussian",
 #' Gower, J., Gardner-Lubbe, S. & Le Roux, N. (2011, ISBN: 978-0-470-01255-0) \emph{Understanding Biplots.} Chichester, England: John Wiley & Sons Ltd.
 #'
 #' @export
-#' @usage alpha.bags(bp, alpha = 0.95, which = NULL, col = ez.col[which], lty = 1,
+#' @usage alpha.bags(bp, alpha = 0.95, which = NULL, col = NULL, lty = 1,
 #' lwd = 1, max = 2500, trace = TRUE, opacity = 0.25, outlying=FALSE)
 #' @aliases alpha.bags
 #'
@@ -164,7 +164,7 @@ density1D <- function(bp,which = NULL, h = "nrd0", kernel="gaussian",
 #' biplot (iris[,1:4]) |> PCA(group.aes=iris[,5]) |> alpha.bags(alpha=0.95) |> plot()
 #' biplot (iris[,1:4],group.aes=iris[,5]) |> PCA() |> alpha.bags(alpha=0.95) |> plot()
 #'
-alpha.bags <- function(bp, alpha=0.95, which = NULL, col = bp$sample$col[which], lty = 1, 
+alpha.bags <- function(bp, alpha=0.95, which = NULL, col = NULL, lty = 1, 
                        lwd = 1, max = 2500, trace = TRUE, opacity = 0.25,
                        outlying=FALSE)
 { 
