@@ -79,7 +79,9 @@ translate_axes<-function(bp, delta=0,swop=FALSE,distances=NULL){
     bp$axes$orthogx<-orthog_x
     bp$axes$orthogy<-orthog_y
   }
-  names(distShifted)<-bp$axes$names
+  dist.names<-colnames(bp$X)
+  dist.names[bp$axes$which]<-bp$axes$names
+  names(distShifted)<-dist.names
   bp$axes$translate_distance<-distShifted
   
   return(bp)

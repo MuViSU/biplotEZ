@@ -103,8 +103,8 @@ CA.biplot <- function(bp, dim.biplot = c(2,1,3), e.vects = 1:ncol(bp$X), variant
   if(variant == "Princ") gamma <- 1
   if(variant == "Symmetric") gamma <- 0.5
   
-  rowcoor <- svd.out[[2]]%*%(diag(svd.out[[1]])^gamma)
-  colcoor <- svd.out[[3]]%*%(diag(svd.out[[1]])^(1-gamma))
+  rowcoor <- svd.out[[2]]%*%(diag(svd.out[[1]]^gamma))
+  colcoor <- svd.out[[3]]%*%(diag(svd.out[[1]]^(1-gamma)))
   
   rownames(rowcoor) <- rownames(X)
   rownames(colcoor) <- colnames(X)

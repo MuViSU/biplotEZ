@@ -4,7 +4,7 @@
 \alias{alpha.bags}
 \title{Create alpha bags}
 \usage{
-alpha.bags(bp, alpha = 0.95, which = NULL, col = ez.col[which], lty = 1,
+alpha.bags(bp, alpha = 0.95, which = NULL, col = NULL, lty = 1,
 lwd = 1, max = 2500, trace = TRUE, opacity = 0.25, outlying=FALSE)
 }
 \arguments{
@@ -14,7 +14,7 @@ lwd = 1, max = 2500, trace = TRUE, opacity = 0.25, outlying=FALSE)
 
 \item{which}{numeric vector indicating the selection of groups or classes to be fitted with \eqn{\alpha}-bags.}
 
-\item{col}{vector of colours for the \eqn{\alpha}-bags. Multiple \eqn{\alpha} bags for one group will be displayed in the same colour.}
+\item{col}{vector of colours for the \eqn{\alpha}-bags. Multiple \eqn{\alpha} bags for one group will be displayed in the same colour. Default is the colours specfied in \code{samples()}.}
 
 \item{lty}{vector of line types for the \eqn{\alpha}-bags. The same line type will be used per value of \eqn{\alpha}.}
 

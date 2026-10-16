@@ -454,13 +454,14 @@ axes <- function (bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), l
     ax.names.len <- length(ax.names)
     ax.names <- ax.names[ifelse(1:p%%ax.names.len==0,ax.names.len,1:p%%ax.names.len)]
     if(is.null(ax.names)){ax.names <- rep("", p)}
+    ax.names <- ax.names[which]
 
     orthogx.len <- length(orthogx)
     orthogx <- orthogx[ifelse(1:p%%orthogx.len==0,orthogx.len,1:p%%orthogx.len)]
     if(is.null(orthogx)){orthogx <- rep("", p)}
     
     orthogy.len <- length(orthogy)
-    orthogy <- orthogx[ifelse(1:p%%orthogy.len==0,orthogy.len,1:p%%orthogy.len)]
+    orthogy <- orthogy[ifelse(1:p%%orthogy.len==0,orthogy.len,1:p%%orthogy.len)]
     if(is.null(orthogy)){orthogy <- rep("", p)}
 
     bp$axes = list(which = which, col = col, lwd = lwd, lty = lty, label.dir = label.dir, label.col = label.col, label.cex = label.cex,

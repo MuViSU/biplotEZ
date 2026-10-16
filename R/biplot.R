@@ -1050,7 +1050,7 @@ prediction <- function (bp, predict.samples=NULL,predict.means=NULL,predict.news
   
   if (length(predict.samples)==0) predict.samples <- NULL
   if (length(predict.means)==0) predict.means <- NULL
-  if (length(predict.newmat)==0) predict.new.mat <- NULL
+  if (length(predict.newsamples)==0) predict.newsamples <- NULL
   bp$predict <- list (samples = predict.samples, 
                       means = predict.means,
                       newsamples = predict.newsamples,
