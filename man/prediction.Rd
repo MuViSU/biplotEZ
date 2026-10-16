@@ -27,7 +27,7 @@ prediction(
 A list object called \code{predict} appended to the object of class \code{biplot} with the following elements:
 \item{samples}{a vector of indices of samples which are being predicted.}
 \item{means}{a vector of group names of groups for which the means are being predicted.}
-\itme{newsamples}{a vector of indices of the new samples which are being predicted.}
+\item{newsamples}{a vector of indices of the new samples which are being predicted.}
 \item{which}{the vector of indices variables which are being predicted.}
 \item{sasmples.mat}{the matrix of predicted samples.}
 \item{means.mat}{the matrix of predicted group means.}

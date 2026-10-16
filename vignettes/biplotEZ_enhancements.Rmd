@@ -223,7 +223,7 @@ To add prediction of the sample points to the biplot, the function `prediction()
 out <- biplot(rock, scale = TRUE) |>
   PCA() |>
   prediction(predict.samples = TRUE) |>
-  plot()
+  plot(engine = "base")
 ```
 
 In addition the predictions are computed and can be accessed with the `summary.method`.
@@ -240,7 +240,7 @@ out <- biplot(state.x77, scale = TRUE) |>
   prediction(
     predict.means = 3:4,
     which = c("Income", "Murder", "Population")) |>
-  plot()
+  plot(engine = "base")
 summary(out)
 ```
 

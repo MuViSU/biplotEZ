@@ -7,7 +7,7 @@
 axes(bp, X.names=colnames(bp$X), which = 1:bp$p, col = grey(0.7), lwd = 1, lty = 1,
 label.dir = NULL, label.col = col, label.cex = 0.75, label.line = 0.1, 
 label.offset=rep(0,4), ticks = 5, tick.col = col, tick.size = 1, tick.label = TRUE, 
-tick.label.side = "below", tick.label.col = tick.col, tick.label.cex = 0.6,
+tick.label.side = "below", tick.label.col = tick.col, tick.label.cex = 0.75,
 predict.col = col, predict.lwd = lwd, predict.lty = lty, ax.names = X.names,
 orthogx = 0, orthogy = 0, vectors = FALSE, unit.circle=FALSE)
 }
@@ -46,7 +46,7 @@ orthogx = 0, orthogy = 0, vectors = FALSE, unit.circle=FALSE)
 
 \item{tick.label.col}{the colour(s) for the tick mark labels, with default \code{tick.col}.}
 
-\item{tick.label.cex}{the label expansion for the tick mark labels, with default \code{0.6}.}
+\item{tick.label.cex}{the label expansion for the tick mark labels, with default \code{0.75}.}
 
 \item{predict.col}{the colour(s) for the predicted samples, with default \code{col}.}
 

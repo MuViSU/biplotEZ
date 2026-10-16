@@ -41,7 +41,7 @@ predict.lty = lty, ax.names = X.new.names, orthogx = 0, orthogy = 0)
 
 \item{tick.label.col}{the colour(s) for the tick mark labels, with default \code{tick.col}.}
 
-\item{tick.label.cex}{the label expansion for the tick mark labels, with default \code{0.6}.}
+\item{tick.label.cex}{the label expansion for the tick mark labels, with default \code{0.75}.}
 
 \item{tick.label.side}{a character string indicating the position of the tick label. One of "\code{below}" for the label to appear below the tick mark (default) or "\code{above}" for the label to appear above the tick mark.}
 
