@@ -228,48 +228,48 @@ plot.biplot <- function(x, engine = c("ggplot2","base"),
       }
       }
         
-      # Nominal and ordinal axes
-      if(inherits(x,"catPCA"))
-      {
-        if (sum(x$ax.type == "nominal") > 0)
-        {
-          nom.one.unit <- x$all.ax.one.unit[x$ax.type$ax.type == "nominal",,drop = FALSE]
-          if (is.null(x$nom.axes)) x <- nom.axes(x)
+#      # Nominal and ordinal axes
+#      if(inherits(x,"catPCA"))
+#      {
+#        if (sum(x$ax.type == "nominal") > 0)
+#        {
+#          nom.one.unit <- x$all.ax.one.unit[x$ax.type$ax.type == "nominal",,drop = FALSE]
+#          if (is.null(x$nom.axes)) x <- nom.axes(x)
+#
+#          z.axes <- lapply(1:length(x$nom.axes$which), .calibrate.cat.axis, 
+#                           nom.one.unit, x$nom.axes$which, x$nom.axes$orthogx, 
+#                           x$nom.axes$orthogy, x$nom.levels)
+#          .nom.axes.plot(z.axes, x$nom.axes, predict.mat, too.small,
+#                         usr = usr, predict_which = x$predict$which)
+#        }
 
-          z.axes <- lapply(1:length(x$nom.axes$which), .calibrate.cat.axis, 
-                           nom.one.unit, x$nom.axes$which, x$nom.axes$orthogx, 
-                           x$nom.axes$orthogy, x$nom.levels)
-          .nom.axes.plot(z.axes, x$nom.axes, predict.mat, too.small,
-                         usr = usr, predict_which = x$predict$which)
-        }
-
-        if (sum(x$ax.type == "ordinal") > 0)
-        {
-          ord.one.unit <- x$all.ax.one.unit[x$ax.type$ax.type == "ordinal",,drop = FALSE]
-          if (is.null(x$ord.axes)) x <- ord.axes(x)
-          for (j in 1:length(x$ord.levels))
-          {
-            current.markers <- x$ord.levels[[j]]
-            i <- 1
-            while (i < length(current.markers) - 1)
-            {
-              if (abs(current.markers[i]-current.markers[i+1]) < 1.5*.Machine$double.eps)
-              {
-                names(current.markers[i]) <- paste(names(current.markers[i]),
-                                                   names(current.markers[i+1]), sep="*")
-                current.markers <- current.markers[-(i+1)]
-              }
-              else i <- i + 1
-            }
-            x$ord.levels[[j]] <- current.markers
-          }
-          z.axes <- lapply(1:length(x$ord.axes$which), .calibrate.cat.axis,  
-                           ord.one.unit, x$ord.axes$which, x$ord.axes$orthogx, 
-                           x$ord.axes$orthogy, x$ord.levels)
-          .ord.axes.plot(z.axes, x$ord.axes, predict.mat, too.small,
-                         usr = usr,predict_which = x$predict$which)
-        }
-      }
+#        if (sum(x$ax.type == "ordinal") > 0)
+#        {
+#          ord.one.unit <- x$all.ax.one.unit[x$ax.type$ax.type == "ordinal",,drop = FALSE]
+#          if (is.null(x$ord.axes)) x <- ord.axes(x)
+#          for (j in 1:length(x$ord.levels))
+#          {
+#            current.markers <- x$ord.levels[[j]]
+#            i <- 1
+#            while (i < length(current.markers) - 1)
+#            {
+#              if (abs(current.markers[i]-current.markers[i+1]) < 1.5*.Machine$double.eps)
+#              {
+#                names(current.markers[i]) <- paste(names(current.markers[i]),
+#                                                   names(current.markers[i+1]), sep="*")
+#                current.markers <- current.markers[-(i+1)]
+#              }
+#              else i <- i + 1
+#            }
+#            x$ord.levels[[j]] <- current.markers
+#          }
+#          z.axes <- lapply(1:length(x$ord.axes$which), .calibrate.cat.axis,  
+#                           ord.one.unit, x$ord.axes$which, x$ord.axes$orthogx, 
+#                           x$ord.axes$orthogy, x$ord.levels)
+#          .ord.axes.plot(z.axes, x$ord.axes, predict.mat, too.small,
+#                         usr = usr,predict_which = x$predict$which)
+#        }
+#      }
       
       # Fit measures 
       too.small <- NULL
