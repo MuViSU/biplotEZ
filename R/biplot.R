@@ -594,7 +594,11 @@ print.biplot <- function (x, ...)
     cat ("\nThe following", length(x$na.action), "sample-rows where removed due to missing values\n", x$na.action, "\n")
 
   if (!is.null(x$quality))
-    if (!is.list(x$quality))
+    if (inherits(x$quality, "knitr_kable")) {
+      print(x$quality)
+    } else if (is.numeric(x$quality)) {
+      cat("\nQuality of fit =", paste(round(x$quality * 100, 1), "%", sep = ""), "\n")
+    } else if (!is.list(x$quality))
       cat ("\nQuality of fit =", paste(round(x$quality*100,1),"%",sep=""), "\n")
   else
   {
