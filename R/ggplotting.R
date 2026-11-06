@@ -10,6 +10,8 @@
 #' @param legend logical; show the ggplot legend for sample groups (default:
 #'   shown when there is more than one group). Legends for bags, ellipses and
 #'   means are controlled by \code{legend.type()}.
+#' @param draw logical; if \code{TRUE} (default) the plot is drawn as a side
+#'   effect. Set to \code{FALSE} to only build the ggplot object.
 #' @param ... reserved.
 #'
 #' @return the biplot object, invisibly carrying the ggplot in \code{$gg},
@@ -213,6 +215,8 @@ gg_biplot <- function(x, exp.factor = 1.2,
 #' Printing a gg_biplot displays the stored ggplot, then (as base
 #' print.biplot does) reports any predictions - here with the actual
 #' predicted values, which base leaves to be read off the axes.
+#' @param x an object of class \code{gg_biplot}.
+#' @param ... further arguments (currently ignored).
 #' @export
 print.gg_biplot <- function(x, ...) {
   print(x$gg)
@@ -230,11 +234,14 @@ print.gg_biplot <- function(x, ...) {
 }
 
 #' plot() on a gg_biplot re-displays the ggplot
+#' @param x an object of class \code{gg_biplot}.
+#' @param ... further arguments (currently ignored).
 #' @export
 plot.gg_biplot <- function(x, ...) { print(x$gg); invisible(x) }
 
 #' `+` composes with ggplot components and returns a plain ggplot, so
 #' `bp |> gg_biplot() + labs(...)` still works.
+#' @param e1,e2 a \code{gg_biplot} object and a ggplot2 component (in either order).
 #' @export
 "+.gg_biplot" <- function(e1, e2) {
   if (inherits(e1, "gg_biplot")) e1$gg + e2 else e1 + e2$gg

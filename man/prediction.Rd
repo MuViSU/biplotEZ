@@ -19,9 +19,9 @@ prediction(
 
 \item{predict.means}{a vector specifying which group means to predict.}
 
-\item{which}{a vector specifying which variable to do the prediction.}
+\item{predict.newsamples}{a vector specifying which new samples to predict.}
 
-\item{precit.newsamples}{a vector specifying which new samples to predict.}
+\item{which}{a vector specifying which variable to do the prediction.}
 }
 \value{
 A list object called \code{predict} appended to the object of class \code{biplot} with the following elements:

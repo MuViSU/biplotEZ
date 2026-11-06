@@ -7,6 +7,9 @@
 \usage{
 \method{+}{gg_biplot}(e1, e2)
 }
+\arguments{
+\item{e1, e2}{a \code{gg_biplot} object and a ggplot2 component (in either order).}
+}
 \description{
 \code{+} composes with ggplot components and returns a plain ggplot, so
 \code{bp |> gg_biplot() + labs(...)} still works.

@@ -8,6 +8,11 @@ predicted values, which base leaves to be read off the axes.}
 \usage{
 \method{print}{gg_biplot}(x, ...)
 }
+\arguments{
+\item{x}{an object of class \code{gg_biplot}.}
+
+\item{...}{further arguments (currently ignored).}
+}
 \description{
 Printing a gg_biplot displays the stored ggplot, then (as base
 print.biplot does) reports any predictions - here with the actual

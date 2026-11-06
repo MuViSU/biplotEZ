@@ -49,6 +49,7 @@ Imports:
     Rcpp,
     splines,
     stats,
+    utils,
     withr
 NeedsCompilation: yes
 LinkingTo: 

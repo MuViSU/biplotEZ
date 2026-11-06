@@ -31,6 +31,9 @@ gg_biplot(
 \item{square}{logical; pad the narrower data range so the panel is square,
 mimicking base \code{pty = "s"} with \code{asp = 1}. Default TRUE.}
 
+\item{draw}{logical; if \code{TRUE} (default) the plot is drawn as a side
+effect. Set to \code{FALSE} to only build the ggplot object.}
+
 \item{legend}{logical; show the ggplot legend for sample groups (default:
 shown when there is more than one group). Legends for bags, ellipses and
 means are controlled by \code{legend.type()}.}

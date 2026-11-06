@@ -977,7 +977,7 @@ interpolate <- function (bp, newdata=NULL, newvariable=NULL,
 #' @param bp an object of class \code{biplot} obtained from preceding function \code{biplot()}.
 #' @param predict.samples a vector specifying which samples to predict.
 #' @param predict.means a vector specifying which group means to predict.
-#' @param precit.newsamples a vector specifying which new samples to predict.
+#' @param predict.newsamples a vector specifying which new samples to predict.
 #' @param which a vector specifying which variable to do the prediction.
 #'
 #' @return A list object called \code{predict} appended to the object of class \code{biplot} with the following elements:

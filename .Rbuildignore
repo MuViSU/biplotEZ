@@ -14,3 +14,9 @@
 
 ^\.claude$
 ^\.positai$
+^vignettes/.*\.html$
+^vignettes/.*_files$
+^README\.html$
+^Rplots\.pdf$
+^.*\.tar\.gz$
+^\.quarto$

@@ -58,3 +58,6 @@
 #' @useDynLib biplotEZ, .registration = TRUE
 ## usethis namespace: end
 NULL
+
+# `.data` is the rlang/ggplot2 pronoun used inside ggplot2::aes()
+utils::globalVariables(".data")

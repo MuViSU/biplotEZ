@@ -6,6 +6,11 @@
 \usage{
 \method{plot}{gg_biplot}(x, ...)
 }
+\arguments{
+\item{x}{an object of class \code{gg_biplot}.}
+
+\item{...}{further arguments (currently ignored).}
+}
 \description{
 plot() on a gg_biplot re-displays the ggplot
 }
