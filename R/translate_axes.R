@@ -8,7 +8,7 @@
 #' @param distances numeric vector of distances. Used to manually parallel translate the axes.
 #' 
 #' @details
-#' This function uses the same algorithm implemented in \code{\link[bipl5]{TDAbiplot}}
+#' This function uses the same algorithm.
 #' in the \code{bipl5} package. It translates the axes out of the center of the plot. 
 #' Correlated axes generally gets translated in the same direction.
 #' 
