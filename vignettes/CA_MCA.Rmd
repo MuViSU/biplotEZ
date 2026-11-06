@@ -298,7 +298,7 @@ biplot(HairEyeColor[,,2], center = FALSE) |> CA(variant = "Symmetric") |>
 
 ## Additional example
 
-Consider the South African Crime data set 2008, extracted from the South African police website (http://www.saps.gov.za/). @UB2011 :312.
+Consider the South African Crime data set 2008, extracted from the South African police website [http://www.saps.gov.za/](http://www.saps.gov.za/). @UB2011 :312.
 
 ```{r}
 SACrime <- matrix(c(1235,432,1824,1322,573,588,624,169,629,34479,16833,46993,30606,13670,
